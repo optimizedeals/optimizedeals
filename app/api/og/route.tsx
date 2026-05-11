@@ -117,11 +117,9 @@ export async function GET(request: NextRequest) {
 
   // Generate the appropriate OG image
   const imageContent =
-    pageType === "article"
-      ? renderArticleOG(title, description, category)
-      : pageType === "homepage"
-        ? renderHomepageOG(title, description)
-        : renderPageOG(title, description, badge);
+    pageType === "homepage"
+      ? renderHomepageOG(title, description)
+      : renderPageOG(title, description, badge);
 
   return new ImageResponse(imageContent, {
     width: OG_CONFIG.width,
@@ -192,45 +190,6 @@ function renderPageOG(title: string, description?: string, badge?: string) {
         {badge && <OGPageBadge>{badge}</OGPageBadge>}
         <OGTitle>{title}</OGTitle>
         {description && <OGDescription>{description}</OGDescription>}
-      </div>
-    </div>
-  );
-}
-
-function renderArticleOG(
-  title: string,
-  description?: string,
-  category?: string,
-) {
-  return (
-    <div
-      style={{
-        width: OG_CONFIG.width,
-        height: OG_CONFIG.height,
-        display: "flex",
-        flexDirection: "column",
-        position: "relative",
-      }}
-    >
-      <OGBackground />
-      <OGLogo size="small" />
-
-      <div
-        style={{
-          position: "absolute",
-          left: OG_CONFIG.spacing.contentLeft,
-          right: OG_CONFIG.spacing.contentRight,
-          bottom: 70,
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-        }}
-      >
-        {category && <OGCategoryBadge>{category}</OGCategoryBadge>}
-        <OGTitle maxWidth={1000}>{title}</OGTitle>
-        {description && (
-          <OGDescription maxLength={180}>{description}</OGDescription>
-        )}
       </div>
     </div>
   );

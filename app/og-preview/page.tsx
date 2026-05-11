@@ -1,0 +1,127 @@
+import { Metadata } from "next";
+import { getAllArticles } from "@/lib/mdx";
+
+export const metadata: Metadata = {
+  title: "OG Preview",
+  robots: { index: false, follow: false },
+};
+
+const PAGES: { path: string; label: string }[] = [
+  { path: "", label: "Homepage" },
+  { path: "solutions", label: "Solutions" },
+  { path: "products", label: "Products" },
+  { path: "labs", label: "Labs" },
+  { path: "insights", label: "Insights" },
+  { path: "company", label: "Company" },
+  { path: "careers", label: "Careers" },
+  { path: "book", label: "Book" },
+];
+
+function buildPageOgUrl(path: string) {
+  const params = new URLSearchParams();
+  if (path) params.set("path", path);
+  const qs = params.toString();
+  return `/api/og${qs ? `?${qs}` : ""}`;
+}
+
+function buildArticleOgUrl(article: {
+  title: string;
+  description?: string;
+  category?: string;
+}) {
+  const params = new URLSearchParams({
+    title: article.title,
+    description: article.description || "",
+    category: article.category || "",
+  });
+  return `/api/og?${params.toString()}`;
+}
+
+export default async function OgPreviewPage() {
+  const articles = await getAllArticles();
+
+  return (
+    <main className="min-h-screen bg-[#000216] text-[#F0F5FB] py-16 px-6">
+      <div className="max-w-6xl mx-auto">
+        <header className="mb-12">
+          <h1 className="text-3xl md:text-4xl font-medium mb-2">OG Preview</h1>
+          <p className="text-[#7A8BA7] text-sm">
+            Live render of every Open Graph image. Pages on top, articles below.
+          </p>
+        </header>
+
+        <section className="mb-16">
+          <h2 className="text-xl font-medium mb-6 text-[#7A8BA7] uppercase tracking-wider text-xs font-mono">
+            Pages
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {PAGES.map(({ path, label }) => {
+              const url = buildPageOgUrl(path);
+              return (
+                <figure
+                  key={path || "home"}
+                  className="rounded-xl overflow-hidden border border-[#002A6B]/50 bg-[#001535]/30"
+                >
+                  <img
+                    src={url}
+                    alt={`OG image for ${label}`}
+                    width={1200}
+                    height={630}
+                    className="w-full h-auto block"
+                  />
+                  <figcaption className="px-4 py-3 flex items-center justify-between text-sm">
+                    <span className="font-medium">{label}</span>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-xs text-[#3B80EC] hover:text-[#F0F5FB] truncate ml-4"
+                    >
+                      {url}
+                    </a>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-medium mb-6 text-[#7A8BA7] uppercase tracking-wider text-xs font-mono">
+            Articles ({articles.length})
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {articles.map((article) => {
+              const url = buildArticleOgUrl(article);
+              return (
+                <figure
+                  key={article.slug}
+                  className="rounded-xl overflow-hidden border border-[#002A6B]/50 bg-[#001535]/30"
+                >
+                  <img
+                    src={url}
+                    alt={`OG image for ${article.title}`}
+                    width={1200}
+                    height={630}
+                    className="w-full h-auto block"
+                  />
+                  <figcaption className="px-4 py-3 flex flex-col gap-1 text-sm">
+                    <span className="font-medium line-clamp-2">
+                      {article.title}
+                    </span>
+                    <a
+                      href={`/insights/${article.slug}`}
+                      className="font-mono text-xs text-[#3B80EC] hover:text-[#F0F5FB] truncate"
+                    >
+                      /insights/{article.slug}
+                    </a>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}

@@ -4,17 +4,15 @@ import { OG_CONFIG } from "./config";
  * OptimizeDeals Logo component for OG images
  * SVG logo with wordmark - positioned top-left
  */
-export function OGLogo({ size = "default" }: { size?: "default" | "small" }) {
-  const scale = size === "small" ? 0.8 : 1;
-  const logoHeight = Math.round(70 * scale);
-  const logoWidth = Math.round(378 * scale);
+export function OGLogo() {
+  const logoHeight = 70;
+  const logoWidth = 378;
 
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        gap: Math.round(12 * scale),
         position: "absolute",
         top: OG_CONFIG.spacing.logoTop,
         left: OG_CONFIG.spacing.logoLeft,
