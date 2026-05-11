@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
 })
 
+// Base URL for OG images
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://optimize.deals'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://optimize.deals'),
+  metadataBase: new URL(baseUrl),
   title: {
     default: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
     template: '%s | OptimizeDeals',
@@ -38,13 +41,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://optimize.deals',
+    url: baseUrl,
     siteName: 'OptimizeDeals',
     title: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
     description: 'Engineering scalable frontend systems for modern products.',
     images: [
       {
-        url: '/og-image.png',
+        url: `${baseUrl}/api/og?path=`,
         width: 1200,
         height: 630,
         alt: 'OptimizeDeals - Frontend Architecture Studio',
@@ -55,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'OptimizeDeals | Frontend Architecture Studio',
     description: 'Engineering scalable frontend systems for modern products.',
-    images: ['/og-image.png'],
+    images: [`${baseUrl}/api/og?path=`],
   },
   icons: {
     icon: [
@@ -65,7 +68,7 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   alternates: {
-    canonical: 'https://optimize.deals',
+    canonical: baseUrl,
   },
 }
 
