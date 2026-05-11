@@ -47,7 +47,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
   const featuredArticles = articles.filter((a) => a.featured);
   const filteredArticles =
     activeCategory === "all"
-      ? articles.filter((a) => !a.featured)
+      ? articles
       : articles.filter(
           (a) =>
             a.category.toLowerCase().replace(/\s+/g, "-") === activeCategory,
