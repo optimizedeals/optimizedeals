@@ -1,18 +1,25 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Calendar, Clock, Video, ArrowLeft, Mail, CheckCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import Image from "next/image"
-import Script from "next/script"
+import { motion } from "framer-motion";
+import {
+  Calendar,
+  Clock,
+  Video,
+  ArrowLeft,
+  Mail,
+  CheckCircle,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import Script from "next/script";
 
 const benefits = [
   "Discuss your technical challenges",
   "Explore architecture solutions",
   "Review project scope and timeline",
   "No obligation consultation",
-]
+];
 
 export default function BookPage() {
   return (
@@ -24,12 +31,12 @@ export default function BookPage() {
         onLoad={() => {
           // @ts-expect-error Cal is loaded from external script
           if (window.Cal) {
-            // @ts-expect-error Cal is loaded from external script  
-            window.Cal("init", { origin: "https://cal.com" })
+            // @ts-expect-error Cal is loaded from external script
+            window.Cal("init", { origin: "https://cal.com" });
           }
         }}
       />
-      
+
       <main className="min-h-screen bg-[#000216]">
         {/* Background elements */}
         <div className="fixed inset-0 pointer-events-none">
@@ -41,8 +48,18 @@ export default function BookPage() {
         <div className="fixed inset-0 opacity-5 pointer-events-none">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="bookGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+              <pattern
+                id="bookGrid"
+                width="60"
+                height="60"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 60 0 L 0 0 0 60"
+                  fill="none"
+                  stroke="#3B80EC"
+                  strokeWidth="0.5"
+                />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#bookGrid)" />
@@ -57,8 +74,8 @@ export default function BookPage() {
                 src="/logo-white.svg"
                 alt="OptimizeDeals"
                 width={160}
-                height={30}
-                className="h-7 w-auto"
+                height={36}
+                className="h-9 w-auto"
                 priority
               />
             </Link>
@@ -99,7 +116,8 @@ export default function BookPage() {
               </h1>
 
               <p className="text-lg text-[#7A8BA7] mb-8 text-pretty">
-                Architecture, modernization, AI systems and scalable frontend engineering.
+                Architecture, modernization, AI systems and scalable frontend
+                engineering.
               </p>
 
               {/* Call details */}
@@ -125,7 +143,10 @@ export default function BookPage() {
                 </h3>
                 <ul className="space-y-3">
                   {benefits.map((benefit, index) => (
-                    <li key={index} className="flex items-center gap-3 text-sm text-[#7A8BA7]">
+                    <li
+                      key={index}
+                      className="flex items-center gap-3 text-sm text-[#7A8BA7]"
+                    >
                       <CheckCircle className="w-4 h-4 text-[#0054D6]" />
                       {benefit}
                     </li>
@@ -161,11 +182,11 @@ export default function BookPage() {
                   data-cal-link="optimizedeals/discovery"
                   data-cal-config='{"layout":"month_view","theme":"dark"}'
                   className="w-full min-h-[600px]"
-                  style={{ 
+                  style={{
                     colorScheme: "dark",
                   }}
                 />
-                
+
                 {/* Fallback content while loading */}
                 <noscript>
                   <div className="p-8 text-center">
@@ -176,7 +197,10 @@ export default function BookPage() {
                     <p className="text-sm text-[#7A8BA7] mb-4">
                       JavaScript is required to load the calendar.
                     </p>
-                    <Button asChild className="bg-[#0054D6] hover:bg-[#3B80EC] text-white">
+                    <Button
+                      asChild
+                      className="bg-[#0054D6] hover:bg-[#3B80EC] text-white"
+                    >
                       <a
                         href="https://cal.com/optimizedeals/discovery"
                         target="_blank"
@@ -198,5 +222,5 @@ export default function BookPage() {
         </div>
       </main>
     </>
-  )
+  );
 }

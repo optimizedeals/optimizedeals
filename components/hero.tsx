@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ArrowRight, Calendar } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const floatingLabels = [
   { text: "Runtime Federation", x: "10%", y: "20%", delay: 0 },
@@ -11,7 +11,7 @@ const floatingLabels = [
   { text: "Edge Rendering", x: "5%", y: "70%", delay: 0.6 },
   { text: "Platform Engineering", x: "80%", y: "45%", delay: 0.8 },
   { text: "Modular Systems", x: "15%", y: "45%", delay: 1 },
-]
+];
 
 function GridBackground() {
   return (
@@ -20,20 +20,34 @@ function GridBackground() {
       <div className="absolute inset-0 opacity-20">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+            <pattern
+              id="grid"
+              width="60"
+              height="60"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 60 0 L 0 0 0 60"
+                fill="none"
+                stroke="#3B80EC"
+                strokeWidth="0.5"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
       </div>
-      
+
       {/* Radial gradient overlays */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#0054D6]/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#3B80EC]/10 rounded-full blur-[100px]" />
-      
+
       {/* Animated orbit lines */}
-      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+      <svg
+        className="absolute inset-0 w-full h-full opacity-30"
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid slice"
+      >
         <defs>
           <linearGradient id="orbitGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#0054D6" stopOpacity="0" />
@@ -68,7 +82,7 @@ function GridBackground() {
           style={{ transformOrigin: "center" }}
         />
       </svg>
-      
+
       {/* Animated connection dots */}
       {[...Array(20)].map((_, i) => (
         <motion.div
@@ -90,10 +104,20 @@ function GridBackground() {
         />
       ))}
     </div>
-  )
+  );
 }
 
-function FloatingLabel({ text, x, y, delay }: { text: string; x: string; y: string; delay: number }) {
+function FloatingLabel({
+  text,
+  x,
+  y,
+  delay,
+}: {
+  text: string;
+  x: string;
+  y: string;
+  delay: number;
+}) {
   return (
     <motion.div
       className="absolute hidden lg:block"
@@ -105,24 +129,28 @@ function FloatingLabel({ text, x, y, delay }: { text: string; x: string; y: stri
       <motion.div
         className="px-3 py-1.5 bg-[#001535]/80 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] backdrop-blur-sm"
         animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4 + delay, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          duration: 4 + delay,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
       >
         {text}
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <GridBackground />
-      
+
       {/* Floating technical labels */}
       {floatingLabels.map((label) => (
         <FloatingLabel key={label.text} {...label} />
       ))}
-      
+
       {/* Main content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <motion.div
@@ -140,7 +168,7 @@ export function Hero() {
             <span className="w-2 h-2 bg-[#0054D6] rounded-full animate-pulse" />
             Frontend Architecture Studio
           </motion.div>
-          
+
           {/* Headline */}
           <motion.h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-[#F0F5FB] mb-6 text-balance"
@@ -154,7 +182,7 @@ export function Hero() {
             </span>{" "}
             for modern products.
           </motion.h1>
-          
+
           {/* Subheadline */}
           <motion.p
             className="text-lg md:text-xl text-[#7A8BA7] max-w-3xl mx-auto mb-10 text-pretty"
@@ -162,10 +190,10 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            We build high-performance React and AI-powered platforms focused on 
+            We build high-performance React and AI-powered platforms focused on
             scalability, architecture and execution speed.
           </motion.p>
-          
+
           {/* CTA Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -173,8 +201,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
               asChild
             >
@@ -183,8 +211,8 @@ export function Hero() {
                 Book a Call
               </a>
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
               asChild
@@ -196,27 +224,31 @@ export function Hero() {
             </Button>
           </motion.div>
         </motion.div>
-        
-        {/* Scroll indicator */}
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+      >
         <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          className="w-6 h-10 border-2 border-[#002A6B] rounded-full flex justify-center"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
-            className="w-6 h-10 border-2 border-[#002A6B] rounded-full flex justify-center"
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <motion.div
-              className="w-1.5 h-3 bg-[#0054D6] rounded-full mt-2"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
+            className="w-1.5 h-3 bg-[#0054D6] rounded-full mt-2"
+            animate={{ y: [0, 12, 0] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
-  )
+  );
 }

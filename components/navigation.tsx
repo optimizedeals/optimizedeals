@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -13,19 +13,19 @@ const navLinks = [
   { href: "#stack", label: "Stack" },
   { href: "#insights", label: "Insights" },
   { href: "#about", label: "About" },
-]
+];
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -46,8 +46,8 @@ export function Navigation() {
               src="/logo-white.svg"
               alt="OptimizeDeals"
               width={160}
-              height={30}
-              className="h-7 w-auto"
+              height={36}
+              className="h-9 w-auto"
               priority
             />
           </Link>
@@ -141,5 +141,5 @@ export function Navigation() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

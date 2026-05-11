@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 // Company logos - using text representations for cleaner rendering
 const companies = [
@@ -15,7 +15,7 @@ const companies = [
   { name: "ByteDance", width: 100 },
   { name: "John Deere", width: 100 },
   { name: "Valor Software", width: 120 },
-]
+];
 
 function CompanyLogo({ name, index }: { name: string; index: number }) {
   return (
@@ -30,18 +30,18 @@ function CompanyLogo({ name, index }: { name: string; index: number }) {
         {name}
       </span>
     </motion.div>
-  )
+  );
 }
 
 export function TrustSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#001535]/30 to-transparent" />
-      
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#000216]/30 to-transparent" />
+
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header */}
         <motion.div
@@ -58,26 +58,25 @@ export function TrustSection() {
           >
             Experience
           </motion.span>
-          
+
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#F0F5FB] mb-6 text-balance">
             Built through real-world{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
               engineering ecosystems
             </span>
           </h2>
-          
+
           <p className="text-lg text-[#7A8BA7] max-w-2xl mx-auto text-pretty">
-            Professional experience contributing to products, platforms and engineering 
-            initiatives connected to globally recognized companies.
+            Professional experience contributing to products, platforms and
+            engineering initiatives connected to globally recognized companies.
           </p>
         </motion.div>
 
         {/* Logo cloud with infinite scroll effect */}
         <div className="relative">
-          {/* Gradient masks */}
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#000216] to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#000216] to-transparent z-10" />
-          
+
           {/* Logo container */}
           <div className="overflow-hidden">
             <motion.div
@@ -93,9 +92,15 @@ export function TrustSection() {
               }}
             >
               {/* Duplicate logos for seamless loop */}
-              {[...companies, ...companies, ...companies].map((company, index) => (
-                <CompanyLogo key={`${company.name}-${index}`} name={company.name} index={index % companies.length} />
-              ))}
+              {[...companies, ...companies, ...companies].map(
+                (company, index) => (
+                  <CompanyLogo
+                    key={`${company.name}-${index}`}
+                    name={company.name}
+                    index={index % companies.length}
+                  />
+                ),
+              )}
             </motion.div>
           </div>
         </div>
@@ -107,9 +112,10 @@ export function TrustSection() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          Logos represent previous professional experience and ecosystem participation.
+          Logos represent previous professional experience and ecosystem
+          participation.
         </motion.p>
       </div>
     </section>
-  )
+  );
 }

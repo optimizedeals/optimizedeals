@@ -1,35 +1,58 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronDown, Layers, Box, Beaker, BookOpen, Building2, Users, ArrowRight, Cpu, Workflow, Zap, Brain, Wrench, ExternalLink, FlaskConical, FileText, Lightbulb, Target, Heart, Calendar } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { usePathname } from "next/navigation"
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Layers,
+  Box,
+  Beaker,
+  BookOpen,
+  Building2,
+  Users,
+  ArrowRight,
+  Cpu,
+  Workflow,
+  Zap,
+  Brain,
+  Wrench,
+  ExternalLink,
+  FlaskConical,
+  FileText,
+  Lightbulb,
+  Target,
+  Heart,
+  Calendar,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 type NavItem = {
-  label: string
-  href?: string
+  label: string;
+  href?: string;
   dropdown?: {
     sections: {
-      title?: string
+      title?: string;
       items: {
-        icon: React.ComponentType<{ className?: string }>
-        label: string
-        description: string
-        href: string
-        external?: boolean
-      }[]
-    }[]
+        icon: React.ComponentType<{ className?: string }>;
+        label: string;
+        description: string;
+        href: string;
+        external?: boolean;
+      }[];
+    }[];
     featured?: {
-      title: string
-      description: string
-      href: string
-      image?: string
-    }
-  }
-}
+      title: string;
+      description: string;
+      href: string;
+      image?: string;
+    };
+  };
+};
 
 const navItems: NavItem[] = [
   {
@@ -79,7 +102,8 @@ const navItems: NavItem[] = [
       ],
       featured: {
         title: "Engineering systems built for scale",
-        description: "Discover how we help companies modernize products and scale frontend ecosystems.",
+        description:
+          "Discover how we help companies modernize products and scale frontend ecosystems.",
         href: "/solutions",
       },
     },
@@ -121,7 +145,8 @@ const navItems: NavItem[] = [
       ],
       featured: {
         title: "Products built through engineering-first thinking",
-        description: "Explore our portfolio of production applications and experimental systems.",
+        description:
+          "Explore our portfolio of production applications and experimental systems.",
         href: "/products",
       },
     },
@@ -156,7 +181,8 @@ const navItems: NavItem[] = [
       ],
       featured: {
         title: "Engineering research and experimental systems",
-        description: "Explore our cutting-edge research in frontend architecture and AI systems.",
+        description:
+          "Explore our cutting-edge research in frontend architecture and AI systems.",
         href: "/labs",
       },
     },
@@ -191,7 +217,8 @@ const navItems: NavItem[] = [
       ],
       featured: {
         title: "Technical writing and engineering insights",
-        description: "In-depth articles on modern frontend architecture and AI engineering.",
+        description:
+          "In-depth articles on modern frontend architecture and AI engineering.",
         href: "/insights",
       },
     },
@@ -226,15 +253,22 @@ const navItems: NavItem[] = [
       ],
       featured: {
         title: "A studio built for engineering excellence",
-        description: "Learn about our founder-led approach to technical consulting.",
+        description:
+          "Learn about our founder-led approach to technical consulting.",
         href: "/company",
       },
     },
   },
-]
+];
 
-function DropdownContent({ item, onClose }: { item: NavItem; onClose: () => void }) {
-  if (!item.dropdown) return null
+function DropdownContent({
+  item,
+  onClose,
+}: {
+  item: NavItem;
+  onClose: () => void;
+}) {
+  if (!item.dropdown) return null;
 
   return (
     <motion.div
@@ -250,8 +284,18 @@ function DropdownContent({ item, onClose }: { item: NavItem; onClose: () => void
           <div className="absolute inset-0 opacity-5">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <pattern id="megaMenuGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+                <pattern
+                  id="megaMenuGrid"
+                  width="40"
+                  height="40"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <path
+                    d="M 40 0 L 0 0 0 40"
+                    fill="none"
+                    stroke="#3B80EC"
+                    strokeWidth="0.5"
+                  />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#megaMenuGrid)" />
@@ -270,13 +314,15 @@ function DropdownContent({ item, onClose }: { item: NavItem; onClose: () => void
                   )}
                   <div className="space-y-1">
                     {section.items.map((subItem, subIndex) => {
-                      const Icon = subItem.icon
+                      const Icon = subItem.icon;
                       return (
                         <Link
                           key={subIndex}
                           href={subItem.href}
                           target={subItem.external ? "_blank" : undefined}
-                          rel={subItem.external ? "noopener noreferrer" : undefined}
+                          rel={
+                            subItem.external ? "noopener noreferrer" : undefined
+                          }
                           onClick={onClose}
                           className="group flex items-start gap-3 p-3 rounded-xl hover:bg-[#002A6B]/30 transition-all duration-200"
                         >
@@ -297,7 +343,7 @@ function DropdownContent({ item, onClose }: { item: NavItem; onClose: () => void
                             </p>
                           </div>
                         </Link>
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -331,17 +377,25 @@ function DropdownContent({ item, onClose }: { item: NavItem; onClose: () => void
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
-function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [expandedItems, setExpandedItems] = useState<string[]>([])
+function MobileMenu({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const toggleExpanded = (label: string) => {
     setExpandedItems((prev) =>
-      prev.includes(label) ? prev.filter((item) => item !== label) : [...prev, label]
-    )
-  }
+      prev.includes(label)
+        ? prev.filter((item) => item !== label)
+        : [...prev, label],
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -352,7 +406,10 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-[#000216]/98 backdrop-blur-lg" onClick={onClose} />
+          <div
+            className="absolute inset-0 bg-[#000216]/98 backdrop-blur-lg"
+            onClick={onClose}
+          />
           <motion.nav
             className="absolute top-20 left-0 right-0 bottom-0 overflow-y-auto p-6"
             initial={{ opacity: 0, y: -20 }}
@@ -372,7 +429,9 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         {item.label}
                         <ChevronDown
                           className={`w-5 h-5 text-[#7A8BA7] transition-transform ${
-                            expandedItems.includes(item.label) ? "rotate-180" : ""
+                            expandedItems.includes(item.label)
+                              ? "rotate-180"
+                              : ""
                           }`}
                         />
                       </button>
@@ -386,30 +445,44 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                             className="overflow-hidden"
                           >
                             <div className="pb-4 pl-4 space-y-4">
-                              {item.dropdown.sections.map((section, sectionIndex) => (
-                                <div key={sectionIndex}>
-                                  {section.title && (
-                                    <h4 className="text-xs font-mono text-[#585F78] uppercase tracking-wider mb-2">
-                                      {section.title}
-                                    </h4>
-                                  )}
-                                  <div className="space-y-2">
-                                    {section.items.map((subItem, subIndex) => (
-                                      <Link
-                                        key={subIndex}
-                                        href={subItem.href}
-                                        target={subItem.external ? "_blank" : undefined}
-                                        rel={subItem.external ? "noopener noreferrer" : undefined}
-                                        onClick={onClose}
-                                        className="flex items-center gap-2 py-2 text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors"
-                                      >
-                                        {subItem.label}
-                                        {subItem.external && <ExternalLink className="w-3 h-3" />}
-                                      </Link>
-                                    ))}
+                              {item.dropdown.sections.map(
+                                (section, sectionIndex) => (
+                                  <div key={sectionIndex}>
+                                    {section.title && (
+                                      <h4 className="text-xs font-mono text-[#585F78] uppercase tracking-wider mb-2">
+                                        {section.title}
+                                      </h4>
+                                    )}
+                                    <div className="space-y-2">
+                                      {section.items.map(
+                                        (subItem, subIndex) => (
+                                          <Link
+                                            key={subIndex}
+                                            href={subItem.href}
+                                            target={
+                                              subItem.external
+                                                ? "_blank"
+                                                : undefined
+                                            }
+                                            rel={
+                                              subItem.external
+                                                ? "noopener noreferrer"
+                                                : undefined
+                                            }
+                                            onClick={onClose}
+                                            className="flex items-center gap-2 py-2 text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors"
+                                          >
+                                            {subItem.label}
+                                            {subItem.external && (
+                                              <ExternalLink className="w-3 h-3" />
+                                            )}
+                                          </Link>
+                                        ),
+                                      )}
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ),
+                              )}
                             </div>
                           </motion.div>
                         )}
@@ -441,41 +514,41 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  );
 }
 
 export function MegaMenu() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const pathname = usePathname()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
-    setActiveDropdown(null)
-    setIsMobileMenuOpen(false)
-  }, [pathname])
+    setActiveDropdown(null);
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const handleMouseEnter = (label: string) => {
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
     }
-    setActiveDropdown(label)
-  }
+    setActiveDropdown(label);
+  };
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null)
-    }, 150)
-  }
+      setActiveDropdown(null);
+    }, 150);
+  };
 
   return (
     <>
@@ -496,8 +569,8 @@ export function MegaMenu() {
               src="/logo-white.svg"
               alt="OptimizeDeals"
               width={160}
-              height={30}
-              className="h-7 w-auto"
+              height={36}
+              className="h-9 w-auto"
               priority
             />
           </Link>
@@ -508,7 +581,9 @@ export function MegaMenu() {
               <div
                 key={item.label}
                 className="relative"
-                onMouseEnter={() => item.dropdown && handleMouseEnter(item.label)}
+                onMouseEnter={() =>
+                  item.dropdown && handleMouseEnter(item.label)
+                }
                 onMouseLeave={handleMouseLeave}
               >
                 {item.href ? (
@@ -521,7 +596,9 @@ export function MegaMenu() {
                 ) : (
                   <button
                     className={`flex items-center gap-1 px-4 py-2 text-sm transition-colors duration-200 ${
-                      activeDropdown === item.label ? "text-[#F0F5FB]" : "text-[#7A8BA7] hover:text-[#F0F5FB]"
+                      activeDropdown === item.label
+                        ? "text-[#F0F5FB]"
+                        : "text-[#7A8BA7] hover:text-[#F0F5FB]"
                     }`}
                   >
                     {item.label}
@@ -562,13 +639,20 @@ export function MegaMenu() {
         {/* Desktop Dropdown */}
         <AnimatePresence>
           {activeDropdown && (
-            <div onMouseEnter={() => handleMouseEnter(activeDropdown)} onMouseLeave={handleMouseLeave}>
+            <div
+              onMouseEnter={() => handleMouseEnter(activeDropdown)}
+              onMouseLeave={handleMouseLeave}
+            >
               {navItems.map(
                 (item) =>
                   item.label === activeDropdown &&
                   item.dropdown && (
-                    <DropdownContent key={item.label} item={item} onClose={() => setActiveDropdown(null)} />
-                  )
+                    <DropdownContent
+                      key={item.label}
+                      item={item}
+                      onClose={() => setActiveDropdown(null)}
+                    />
+                  ),
               )}
             </div>
           )}
@@ -576,7 +660,10 @@ export function MegaMenu() {
       </motion.header>
 
       {/* Mobile Menu */}
-      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
     </>
-  )
+  );
 }
