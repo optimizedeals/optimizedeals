@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/navigation"
+import { MegaMenu } from "@/components/mega-menu"
 import { Hero } from "@/components/hero"
 import { TrustSection } from "@/components/trust-section"
 import { ServicesSection } from "@/components/services-section"
@@ -14,7 +14,7 @@ import { Footer } from "@/components/footer"
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-[#000216] overflow-hidden">
-      <Navigation />
+      <MegaMenu />
       <Hero />
       <TrustSection />
       <ServicesSection />
