@@ -12,7 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
+import Cal, { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
 
 const benefits = [
   "Discuss your technical challenges",
@@ -22,21 +23,15 @@ const benefits = [
 ];
 
 export default function BookPage() {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    })();
+  }, []);
+
   return (
     <>
-      {/* Cal.com embed script */}
-      <Script
-        src="https://app.cal.com/embed/embed.js"
-        strategy="lazyOnload"
-        onLoad={() => {
-          // @ts-expect-error Cal is loaded from external script
-          if (window.Cal) {
-            // @ts-expect-error Cal is loaded from external script
-            window.Cal("init", { origin: "https://cal.com" });
-          }
-        }}
-      />
-
       <main className="min-h-screen bg-[#000216]">
         {/* Background elements */}
         <div className="fixed inset-0 pointer-events-none">
@@ -178,12 +173,14 @@ export default function BookPage() {
             >
               <div className="bg-[#001535]/50 border border-[#002A6B]/50 rounded-2xl overflow-hidden">
                 {/* Cal.com inline embed */}
-                <div
-                  data-cal-link="optimizedeals/discovery"
-                  data-cal-config='{"layout":"month_view","theme":"dark"}'
-                  className="w-full min-h-[600px]"
-                  style={{
-                    colorScheme: "dark",
+                <Cal
+                  namespace="30min"
+                  calLink="optimizedeals/30min"
+                  style={{ width: "100%", height: "100%", overflow: "scroll" }}
+                  config={{
+                    layout: "month_view",
+                    useSlotsViewOnSmallScreen: "true",
+                    theme: "light",
                   }}
                 />
 
