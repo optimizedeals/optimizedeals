@@ -1,16 +1,29 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Zap, Brain, Target, Workflow, Sparkles, GitBranch, ArrowRight, Activity, Layers, Box, Clock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/page-hero"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import {
+  Zap,
+  Brain,
+  Target,
+  Workflow,
+  Sparkles,
+  GitBranch,
+  ArrowRight,
+  Activity,
+  Layers,
+  Box,
+  Clock,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/page-hero";
+import Link from "next/link";
 
 const experiments = [
   {
     id: "runtime-federation",
     title: "Runtime Federation Lab",
-    description: "Exploring advanced module federation patterns for runtime composition of independently deployed frontend applications.",
+    description:
+      "Exploring advanced module federation patterns for runtime composition of independently deployed frontend applications.",
     status: "Active",
     icon: Box,
     color: "#0054D6",
@@ -29,7 +42,8 @@ const experiments = [
   {
     id: "ai-streaming",
     title: "AI Streaming Interfaces",
-    description: "Research into optimal UX patterns for AI-generated content, including streaming responses, loading states, and contextual interactions.",
+    description:
+      "Research into optimal UX patterns for AI-generated content, including streaming responses, loading states, and contextual interactions.",
     status: "Active",
     icon: Brain,
     color: "#3B80EC",
@@ -43,12 +57,18 @@ const experiments = [
       "Context preservation",
       "Multi-modal responses",
     ],
-    technologies: ["Vercel AI SDK", "React Server Components", "OpenAI", "Anthropic"],
+    technologies: [
+      "Vercel AI SDK",
+      "React Server Components",
+      "OpenAI",
+      "Anthropic",
+    ],
   },
   {
     id: "performance",
     title: "Frontend Performance Experiments",
-    description: "Testing advanced optimization techniques for Core Web Vitals, bundle size reduction, and runtime performance.",
+    description:
+      "Testing advanced optimization techniques for Core Web Vitals, bundle size reduction, and runtime performance.",
     status: "Active",
     icon: Target,
     color: "#22C55E",
@@ -62,12 +82,18 @@ const experiments = [
       "Prefetch optimization",
       "Memory management",
     ],
-    technologies: ["React Compiler", "Partytown", "Qwik Insights", "Lighthouse CI"],
+    technologies: [
+      "React Compiler",
+      "Partytown",
+      "Qwik Insights",
+      "Lighthouse CI",
+    ],
   },
   {
     id: "rag-ux",
     title: "RAG UX Systems",
-    description: "Developing UX patterns for retrieval-augmented generation interfaces, including citation displays and context visualization.",
+    description:
+      "Developing UX patterns for retrieval-augmented generation interfaces, including citation displays and context visualization.",
     status: "Research",
     icon: Sparkles,
     color: "#F59E0B",
@@ -86,7 +112,8 @@ const experiments = [
   {
     id: "motion-systems",
     title: "Motion Systems Research",
-    description: "Creating a systematic approach to animation and motion design in modern frontend applications.",
+    description:
+      "Creating a systematic approach to animation and motion design in modern frontend applications.",
     status: "Beta",
     icon: Activity,
     color: "#8B5CF6",
@@ -105,7 +132,8 @@ const experiments = [
   {
     id: "distributed-frontends",
     title: "Distributed Frontend Architectures",
-    description: "Investigating patterns for globally distributed frontend deployments with edge computing and regional optimization.",
+    description:
+      "Investigating patterns for globally distributed frontend deployments with edge computing and regional optimization.",
     status: "Research",
     icon: Layers,
     color: "#EC4899",
@@ -114,24 +142,53 @@ const experiments = [
       value: "<10ms",
     },
     areas: [
-      "Edge rendering strategies",
+      "Edge computing strategies",
       "Regional data sync",
       "Consistency models",
       "Failover patterns",
     ],
-    technologies: ["Vercel Edge", "Cloudflare Workers", "Deno Deploy", "Fly.io"],
+    technologies: [
+      "Vercel Edge",
+      "Cloudflare Workers",
+      "Deno Deploy",
+      "Fly.io",
+    ],
   },
-]
+];
 
-const statusConfig: Record<string, { bg: string; text: string; border: string; dot: string }> = {
-  Active: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-500/30", dot: "bg-emerald-400" },
-  Beta: { bg: "bg-[#0054D6]/10", text: "text-[#3B80EC]", border: "border-[#0054D6]/30", dot: "bg-[#3B80EC]" },
-  Research: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/30", dot: "bg-amber-400" },
-}
+const statusConfig: Record<
+  string,
+  { bg: string; text: string; border: string; dot: string }
+> = {
+  Active: {
+    bg: "bg-emerald-500/10",
+    text: "text-emerald-400",
+    border: "border-emerald-500/30",
+    dot: "bg-emerald-400",
+  },
+  Beta: {
+    bg: "bg-[#0054D6]/10",
+    text: "text-[#3B80EC]",
+    border: "border-[#0054D6]/30",
+    dot: "bg-[#3B80EC]",
+  },
+  Research: {
+    bg: "bg-amber-500/10",
+    text: "text-amber-400",
+    border: "border-amber-500/30",
+    dot: "bg-amber-400",
+  },
+};
 
-function ExperimentCard({ experiment, index }: { experiment: typeof experiments[0]; index: number }) {
-  const Icon = experiment.icon
-  const status = statusConfig[experiment.status] || statusConfig.Research
+function ExperimentCard({
+  experiment,
+  index,
+}: {
+  experiment: (typeof experiments)[0];
+  index: number;
+}) {
+  const Icon = experiment.icon;
+  const status = statusConfig[experiment.status] || statusConfig.Research;
 
   return (
     <motion.div
@@ -147,11 +204,25 @@ function ExperimentCard({ experiment, index }: { experiment: typeof experiments[
         <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id={`grid-${experiment.id}`} width="30" height="30" patternUnits="userSpaceOnUse">
-                <path d="M 30 0 L 0 0 0 30" fill="none" stroke={experiment.color} strokeWidth="0.5" />
+              <pattern
+                id={`grid-${experiment.id}`}
+                width="30"
+                height="30"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 30 0 L 0 0 0 30"
+                  fill="none"
+                  stroke={experiment.color}
+                  strokeWidth="0.5"
+                />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill={`url(#grid-${experiment.id})`} />
+            <rect
+              width="100%"
+              height="100%"
+              fill={`url(#grid-${experiment.id})`}
+            />
           </svg>
         </div>
 
@@ -177,24 +248,36 @@ function ExperimentCard({ experiment, index }: { experiment: typeof experiments[
               </motion.div>
               <div>
                 <div className="flex items-center gap-3 mb-1">
-                  <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-mono rounded-full ${status.bg} ${status.text} ${status.border} border`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${status.dot} animate-pulse`} />
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-mono rounded-full ${status.bg} ${status.text} ${status.border} border`}
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${status.dot} animate-pulse`}
+                    />
                     {experiment.status}
                   </span>
                 </div>
-                <h3 className="text-xl font-medium text-[#F0F5FB]">{experiment.title}</h3>
+                <h3 className="text-xl font-medium text-[#F0F5FB]">
+                  {experiment.title}
+                </h3>
               </div>
             </div>
 
             {/* Metric badge */}
             <div className="hidden md:block px-4 py-2 bg-[#002A6B]/30 border border-[#002A6B]/50 rounded-lg text-right">
-              <div className="text-xs text-[#585F78] font-mono">{experiment.metrics.label}</div>
-              <div className="text-lg font-medium text-[#F0F5FB]">{experiment.metrics.value}</div>
+              <div className="text-xs text-[#585F78] font-mono">
+                {experiment.metrics.label}
+              </div>
+              <div className="text-lg font-medium text-[#F0F5FB]">
+                {experiment.metrics.value}
+              </div>
             </div>
           </div>
 
           {/* Description */}
-          <p className="text-[#7A8BA7] leading-relaxed mb-6">{experiment.description}</p>
+          <p className="text-[#7A8BA7] leading-relaxed mb-6">
+            {experiment.description}
+          </p>
 
           {/* Research areas */}
           <div className="grid grid-cols-2 gap-3 mb-6">
@@ -230,7 +313,7 @@ function ExperimentCard({ experiment, index }: { experiment: typeof experiments[
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
 function LabsVisualization() {
@@ -246,8 +329,18 @@ function LabsVisualization() {
       <div className="absolute inset-0 opacity-20">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="labsGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+            <pattern
+              id="labsGrid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="#3B80EC"
+                strokeWidth="0.5"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#labsGrid)" />
@@ -257,11 +350,11 @@ function LabsVisualization() {
       {/* Animated nodes */}
       <div className="absolute inset-0 flex items-center justify-center">
         {experiments.slice(0, 4).map((exp, i) => {
-          const angle = (i / 4) * Math.PI * 2 - Math.PI / 2
-          const radius = 120
-          const x = Math.cos(angle) * radius
-          const y = Math.sin(angle) * radius
-          const Icon = exp.icon
+          const angle = (i / 4) * Math.PI * 2 - Math.PI / 2;
+          const radius = 120;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+          const Icon = exp.icon;
 
           return (
             <motion.div
@@ -288,7 +381,7 @@ function LabsVisualization() {
                 <Icon className="w-6 h-6" style={{ color: exp.color }} />
               </div>
             </motion.div>
-          )
+          );
         })}
 
         {/* Center node */}
@@ -316,12 +409,12 @@ function LabsVisualization() {
             </linearGradient>
           </defs>
           {[0, 1, 2, 3].map((i) => {
-            const angle = (i / 4) * Math.PI * 2 - Math.PI / 2
-            const radius = 120
-            const endX = Math.cos(angle) * radius
-            const endY = Math.sin(angle) * radius
-            const centerX = 0
-            const centerY = 0
+            const angle = (i / 4) * Math.PI * 2 - Math.PI / 2;
+            const radius = 120;
+            const endX = Math.cos(angle) * radius;
+            const endY = Math.sin(angle) * radius;
+            const centerX = 0;
+            const centerY = 0;
 
             return (
               <motion.line
@@ -336,7 +429,7 @@ function LabsVisualization() {
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 1.5, delay: i * 0.2 }}
               />
-            )
+            );
           })}
         </svg>
       </div>
@@ -354,12 +447,11 @@ function LabsVisualization() {
           Real-time
         </div>
         <div className="flex items-center gap-2 text-xs font-mono text-[#585F78]">
-          <GitBranch className="w-3 h-3" />
-          6 Active
+          <GitBranch className="w-3 h-3" />6 Active
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export default function LabsPage() {
@@ -409,13 +501,18 @@ export default function LabsPage() {
               Active Experiments
             </h2>
             <p className="text-[#7A8BA7] max-w-2xl">
-              Deep dives into emerging technologies and architectural patterns that shape the future of frontend development.
+              Deep dives into emerging technologies and architectural patterns
+              that shape the future of frontend development.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {experiments.map((experiment, index) => (
-              <ExperimentCard key={experiment.id} experiment={experiment} index={index} />
+              <ExperimentCard
+                key={experiment.id}
+                experiment={experiment}
+                index={index}
+              />
             ))}
           </div>
         </div>
@@ -433,7 +530,8 @@ export default function LabsPage() {
               Interested in our research?
             </h2>
             <p className="text-[#7A8BA7] mb-8 max-w-2xl mx-auto">
-              We share our findings through technical articles and open-source contributions. Follow our insights or get in touch to collaborate.
+              We share our findings through technical articles and open-source
+              contributions. Follow our insights or get in touch to collaborate.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
@@ -459,5 +557,5 @@ export default function LabsPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

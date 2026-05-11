@@ -8,7 +8,7 @@ const floatingLabels = [
   { text: "Runtime Federation", x: "10%", y: "20%", delay: 0 },
   { text: "Nx Monorepos", x: "85%", y: "15%", delay: 0.2 },
   { text: "AI Workflows", x: "75%", y: "75%", delay: 0.4 },
-  { text: "Edge Rendering", x: "5%", y: "70%", delay: 0.6 },
+  { text: "Edge Computing", x: "5%", y: "70%", delay: 0.6 },
   { text: "Platform Engineering", x: "80%", y: "45%", delay: 0.8 },
   { text: "Modular Systems", x: "15%", y: "45%", delay: 1 },
 ];
