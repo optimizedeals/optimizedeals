@@ -6,8 +6,8 @@ import { OG_CONFIG } from "./config";
  */
 export function OGLogo({ size = "default" }: { size?: "default" | "small" }) {
   const scale = size === "small" ? 0.8 : 1;
-  const logoHeight = Math.round(40 * scale);
-  const logoWidth = Math.round(280 * scale);
+  const logoHeight = Math.round(70 * scale);
+  const logoWidth = Math.round(378 * scale);
 
   return (
     <div
