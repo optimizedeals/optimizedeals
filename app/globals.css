@@ -1,0 +1,179 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* OptimizeDeals Brand Colors */
+:root {
+  /* Brand Colors */
+  --brand-blue: #0054D6;
+  --brand-blue-light: #3B80EC;
+  --brand-blue-soft: #F0F5FB;
+  --brand-navy: #000216;
+  --brand-navy-medium: #001535;
+  --brand-navy-dark: #002A6B;
+  --brand-gray: #585F78;
+  --brand-gray-light: #7A8BA7;
+  --brand-gold: #A17D33;
+  
+  /* Dark Mode Design Tokens */
+  --background: #000216;
+  --foreground: #F0F5FB;
+  --card: #001535;
+  --card-foreground: #F0F5FB;
+  --popover: #001535;
+  --popover-foreground: #F0F5FB;
+  --primary: #0054D6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #002A6B;
+  --secondary-foreground: #F0F5FB;
+  --muted: #001535;
+  --muted-foreground: #7A8BA7;
+  --accent: #3B80EC;
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: #002A6B;
+  --input: #002A6B;
+  --ring: #3B80EC;
+  --chart-1: #0054D6;
+  --chart-2: #3B80EC;
+  --chart-3: #585F78;
+  --chart-4: #7A8BA7;
+  --chart-5: #A17D33;
+  --radius: 0.625rem;
+  --sidebar: #001535;
+  --sidebar-foreground: #F0F5FB;
+  --sidebar-primary: #0054D6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #002A6B;
+  --sidebar-accent-foreground: #F0F5FB;
+  --sidebar-border: #002A6B;
+  --sidebar-ring: #3B80EC;
+}
+
+.dark {
+  --background: #000216;
+  --foreground: #F0F5FB;
+  --card: #001535;
+  --card-foreground: #F0F5FB;
+  --popover: #001535;
+  --popover-foreground: #F0F5FB;
+  --primary: #0054D6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #002A6B;
+  --secondary-foreground: #F0F5FB;
+  --muted: #001535;
+  --muted-foreground: #7A8BA7;
+  --accent: #3B80EC;
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: #002A6B;
+  --input: #002A6B;
+  --ring: #3B80EC;
+  --chart-1: #0054D6;
+  --chart-2: #3B80EC;
+  --chart-3: #585F78;
+  --chart-4: #7A8BA7;
+  --chart-5: #A17D33;
+  --sidebar: #001535;
+  --sidebar-foreground: #F0F5FB;
+  --sidebar-primary: #0054D6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #002A6B;
+  --sidebar-accent-foreground: #F0F5FB;
+  --sidebar-border: #002A6B;
+  --sidebar-ring: #3B80EC;
+}
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Brand specific colors */
+  --color-brand-blue: #0054D6;
+  --color-brand-blue-light: #3B80EC;
+  --color-brand-blue-soft: #F0F5FB;
+  --color-brand-navy: #000216;
+  --color-brand-navy-medium: #001535;
+  --color-brand-navy-dark: #002A6B;
+  --color-brand-gray: #585F78;
+  --color-brand-gray-light: #7A8BA7;
+  --color-brand-gold: #A17D33;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #001535;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #002A6B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0054D6;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(0, 84, 214, 0.3);
+  color: #F0F5FB;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
