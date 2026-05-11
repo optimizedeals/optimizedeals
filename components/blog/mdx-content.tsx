@@ -1,0 +1,384 @@
+"use client"
+
+import { useMemo } from "react"
+import { MDXRemote } from "next-mdx-remote"
+import { serialize } from "next-mdx-remote/serialize"
+import rehypeSlug from "rehype-slug"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import rehypePrettyCode from "rehype-pretty-code"
+import { CodeBlock } from "./mdx-components/code-block"
+import { Callout } from "./mdx-components/callout"
+import { ArchitectureDiagram } from "./mdx-components/architecture-diagram"
+import { MetricsCard } from "./mdx-components/metrics-card"
+import { ArticleImage } from "./mdx-components/article-image"
+import { QuoteBlock } from "./mdx-components/quote-block"
+import { Steps } from "./mdx-components/steps"
+import { ComparisonTable } from "./mdx-components/comparison-table"
+
+const components = {
+  CodeBlock,
+  Callout,
+  ArchitectureDiagram,
+  MetricsCard,
+  ArticleImage,
+  QuoteBlock,
+  Steps,
+  ComparisonTable,
+  // Override default elements
+  pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+    <pre {...props} className="not-prose">
+      {children}
+    </pre>
+  ),
+  code: ({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+    // Check if this is an inline code block
+    const isInline = !className?.includes("language-")
+    if (isInline) {
+      return (
+        <code
+          className="px-1.5 py-0.5 bg-[#002A6B]/50 border border-[#002A6B] rounded text-sm font-mono text-[#3B80EC]"
+          {...props}
+        >
+          {children}
+        </code>
+      )
+    }
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    )
+  },
+  h2: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2
+      id={id}
+      className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24"
+      {...props}
+    >
+      {children}
+    </h2>
+  ),
+  h3: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h3
+      id={id}
+      className="text-xl md:text-2xl font-medium text-[#F0F5FB] mt-10 mb-4 scroll-mt-24"
+      {...props}
+    >
+      {children}
+    </h3>
+  ),
+  h4: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h4 className="text-lg font-medium text-[#F0F5FB] mt-8 mb-3" {...props}>
+      {children}
+    </h4>
+  ),
+  p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
+    <p className="text-[#7A8BA7] leading-relaxed mb-6" {...props}>
+      {children}
+    </p>
+  ),
+  ul: ({ children, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
+    <ul className="list-disc list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4" {...props}>
+      {children}
+    </ul>
+  ),
+  ol: ({ children, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
+    <ol className="list-decimal list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4" {...props}>
+      {children}
+    </ol>
+  ),
+  li: ({ children, ...props }: React.HTMLAttributes<HTMLLIElement>) => (
+    <li className="text-[#7A8BA7]" {...props}>
+      {children}
+    </li>
+  ),
+  a: ({ children, href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a
+      href={href}
+      className="text-[#3B80EC] hover:text-[#F0F5FB] underline underline-offset-4 transition-colors"
+      target={href?.startsWith("http") ? "_blank" : undefined}
+      rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+      {...props}
+    >
+      {children}
+    </a>
+  ),
+  blockquote: ({ children, ...props }: React.HTMLAttributes<HTMLQuoteElement>) => (
+    <blockquote
+      className="border-l-4 border-[#0054D6] pl-6 my-8 italic text-[#7A8BA7]"
+      {...props}
+    >
+      {children}
+    </blockquote>
+  ),
+  table: ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
+    <div className="overflow-x-auto my-8 rounded-xl border border-[#002A6B]/50">
+      <table className="w-full text-sm" {...props}>
+        {children}
+      </table>
+    </div>
+  ),
+  thead: ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead className="bg-[#001535]/50 border-b border-[#002A6B]/50" {...props}>
+      {children}
+    </thead>
+  ),
+  th: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+    <th
+      className="text-left px-4 py-3 text-[#F0F5FB] font-medium"
+      {...props}
+    >
+      {children}
+    </th>
+  ),
+  td: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+    <td className="px-4 py-3 text-[#7A8BA7] border-t border-[#002A6B]/30" {...props}>
+      {children}
+    </td>
+  ),
+  hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
+    <hr className="my-12 border-[#002A6B]/50" {...props} />
+  ),
+}
+
+interface MDXContentProps {
+  content: string
+}
+
+export function MDXContent({ content }: MDXContentProps) {
+  // For now, render as basic markdown-styled content
+  // In a full implementation, you'd use MDXRemote with serialization
+  return (
+    <div className="mdx-content">
+      <MDXRenderer content={content} />
+    </div>
+  )
+}
+
+function MDXRenderer({ content }: { content: string }) {
+  // Simple markdown-to-JSX conversion for basic content
+  // This is a simplified version - for full MDX support, use proper serialization
+  const rendered = useMemo(() => {
+    const lines = content.split("\n")
+    const elements: React.ReactNode[] = []
+    let currentCodeBlock: string[] = []
+    let inCodeBlock = false
+    let codeLanguage = ""
+    let codeFilename = ""
+
+    lines.forEach((line, index) => {
+      // Check for code block start/end
+      if (line.startsWith("```")) {
+        if (!inCodeBlock) {
+          inCodeBlock = true
+          const match = line.match(/```(\w+)?(?:\s+(.+))?/)
+          codeLanguage = match?.[1] || "text"
+          codeFilename = match?.[2] || ""
+        } else {
+          elements.push(
+            <CodeBlock
+              key={`code-${index}`}
+              language={codeLanguage}
+              filename={codeFilename}
+            >
+              {currentCodeBlock.join("\n")}
+            </CodeBlock>
+          )
+          currentCodeBlock = []
+          inCodeBlock = false
+          codeLanguage = ""
+          codeFilename = ""
+        }
+        return
+      }
+
+      if (inCodeBlock) {
+        currentCodeBlock.push(line)
+        return
+      }
+
+      // Skip empty lines (they'll be handled as spacing)
+      if (line.trim() === "") {
+        return
+      }
+
+      // MDX Component: <Callout>
+      if (line.includes("<Callout")) {
+        const typeMatch = line.match(/type="(\w+)"/)
+        const titleMatch = line.match(/title="([^"]+)"/)
+        const contentMatch = content.match(new RegExp(`<Callout[^>]*>([\\s\\S]*?)</Callout>`))
+        if (contentMatch) {
+          elements.push(
+            <Callout
+              key={`callout-${index}`}
+              type={(typeMatch?.[1] as "info" | "warning" | "success" | "error") || "info"}
+              title={titleMatch?.[1]}
+            >
+              {contentMatch[1].trim()}
+            </Callout>
+          )
+        }
+        return
+      }
+
+      // Headings
+      if (line.startsWith("## ")) {
+        const text = line.slice(3)
+        const id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "")
+        elements.push(
+          <h2 key={`h2-${index}`} id={id} className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24">
+            {text}
+          </h2>
+        )
+        return
+      }
+
+      if (line.startsWith("### ")) {
+        const text = line.slice(4)
+        const id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "")
+        elements.push(
+          <h3 key={`h3-${index}`} id={id} className="text-xl md:text-2xl font-medium text-[#F0F5FB] mt-10 mb-4 scroll-mt-24">
+            {text}
+          </h3>
+        )
+        return
+      }
+
+      if (line.startsWith("#### ")) {
+        elements.push(
+          <h4 key={`h4-${index}`} className="text-lg font-medium text-[#F0F5FB] mt-8 mb-3">
+            {line.slice(5)}
+          </h4>
+        )
+        return
+      }
+
+      // Blockquotes
+      if (line.startsWith("> ")) {
+        elements.push(
+          <blockquote
+            key={`quote-${index}`}
+            className="border-l-4 border-[#0054D6] pl-6 my-8 italic text-[#7A8BA7]"
+          >
+            <p>{line.slice(2)}</p>
+          </blockquote>
+        )
+        return
+      }
+
+      // Lists
+      if (line.startsWith("- ") || line.startsWith("* ")) {
+        elements.push(
+          <li key={`li-${index}`} className="text-[#7A8BA7] ml-4 list-disc">
+            {parseInlineMarkdown(line.slice(2))}
+          </li>
+        )
+        return
+      }
+
+      // Numbered lists
+      if (/^\d+\.\s/.test(line)) {
+        elements.push(
+          <li key={`li-${index}`} className="text-[#7A8BA7] ml-4 list-decimal">
+            {parseInlineMarkdown(line.replace(/^\d+\.\s/, ""))}
+          </li>
+        )
+        return
+      }
+
+      // Regular paragraphs
+      elements.push(
+        <p key={`p-${index}`} className="text-[#7A8BA7] leading-relaxed mb-6">
+          {parseInlineMarkdown(line)}
+        </p>
+      )
+    })
+
+    return elements
+  }, [content])
+
+  return <>{rendered}</>
+}
+
+function parseInlineMarkdown(text: string): React.ReactNode {
+  // Handle inline code
+  const parts: React.ReactNode[] = []
+  let remaining = text
+  let keyIndex = 0
+
+  while (remaining.length > 0) {
+    // Check for inline code
+    const codeMatch = remaining.match(/`([^`]+)`/)
+    if (codeMatch && codeMatch.index !== undefined) {
+      // Add text before code
+      if (codeMatch.index > 0) {
+        parts.push(parseBoldItalic(remaining.slice(0, codeMatch.index), keyIndex++))
+      }
+      // Add inline code
+      parts.push(
+        <code
+          key={`code-inline-${keyIndex++}`}
+          className="px-1.5 py-0.5 bg-[#002A6B]/50 border border-[#002A6B] rounded text-sm font-mono text-[#3B80EC]"
+        >
+          {codeMatch[1]}
+        </code>
+      )
+      remaining = remaining.slice(codeMatch.index + codeMatch[0].length)
+    } else {
+      parts.push(parseBoldItalic(remaining, keyIndex++))
+      remaining = ""
+    }
+  }
+
+  return parts.length === 1 ? parts[0] : parts
+}
+
+function parseBoldItalic(text: string, baseKey: number): React.ReactNode {
+  // Handle **bold** and *italic*
+  const boldMatch = text.match(/\*\*([^*]+)\*\*/)
+  if (boldMatch && boldMatch.index !== undefined) {
+    return (
+      <>
+        {boldMatch.index > 0 && text.slice(0, boldMatch.index)}
+        <strong key={`bold-${baseKey}`} className="text-[#F0F5FB] font-medium">
+          {boldMatch[1]}
+        </strong>
+        {text.slice(boldMatch.index + boldMatch[0].length)}
+      </>
+    )
+  }
+
+  const italicMatch = text.match(/\*([^*]+)\*/)
+  if (italicMatch && italicMatch.index !== undefined) {
+    return (
+      <>
+        {italicMatch.index > 0 && text.slice(0, italicMatch.index)}
+        <em key={`italic-${baseKey}`}>{italicMatch[1]}</em>
+        {text.slice(italicMatch.index + italicMatch[0].length)}
+      </>
+    )
+  }
+
+  // Handle links [text](url)
+  const linkMatch = text.match(/\[([^\]]+)\]\(([^)]+)\)/)
+  if (linkMatch && linkMatch.index !== undefined) {
+    const isExternal = linkMatch[2].startsWith("http")
+    return (
+      <>
+        {linkMatch.index > 0 && text.slice(0, linkMatch.index)}
+        <a
+          key={`link-${baseKey}`}
+          href={linkMatch[2]}
+          className="text-[#3B80EC] hover:text-[#F0F5FB] underline underline-offset-4 transition-colors"
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+        >
+          {linkMatch[1]}
+        </a>
+        {text.slice(linkMatch.index + linkMatch[0].length)}
+      </>
+    )
+  }
+
+  return text
+}

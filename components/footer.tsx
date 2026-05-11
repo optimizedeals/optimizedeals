@@ -33,7 +33,7 @@ const navigation = {
   social: [
     { name: "GitHub", href: "https://github.com/optimizedeals", icon: Github },
     { name: "LinkedIn", href: "https://linkedin.com/company/optimizedeals", icon: Linkedin },
-    { name: "Email", href: "mailto:hello@optimizedeals.com", icon: Mail },
+    { name: "Email", href: "mailto:contact@optimize.deals", icon: Mail },
   ],
 }
 

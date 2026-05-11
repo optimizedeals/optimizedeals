@@ -177,3 +177,75 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* =============================================
+   PROGRESSIVE ENHANCEMENT / NO-JS SUPPORT
+   =============================================
+   Ensures content is visible and accessible 
+   even when JavaScript is disabled.
+   ============================================= */
+
+/* Ensure all content is visible by default (no opacity:0 initial states) */
+@layer base {
+  /* Remove motion for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Fallback styles when JS is not available */
+@supports not (animation-timeline: view()) {
+  /* Framer Motion elements should be visible by default */
+  [style*="opacity: 0"],
+  [style*="opacity:0"] {
+    opacity: 1 !important;
+  }
+  
+  [style*="transform: translateY"] {
+    transform: none !important;
+  }
+}
+
+/* Ensure navigation is always visible */
+header,
+nav,
+.navigation {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Ensure hero content is always visible */
+section h1,
+section h2,
+section h3,
+section p,
+section a,
+section button {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Print styles for SEO and accessibility */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  header,
+  nav,
+  footer {
+    display: none !important;
+  }
+  
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+}
