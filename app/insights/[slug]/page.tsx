@@ -4,6 +4,8 @@ import { getArticleBySlug, getAllArticles, getRelatedArticles, getLatestArticles
 import { ArticleLayout } from "@/components/blog/article-layout"
 import { MDXContent } from "@/components/blog/mdx-content"
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://optimize.deals'
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }
@@ -25,6 +27,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
+  // Generate dynamic OG image URL for this article with metadata params
+  const ogParams = new URLSearchParams({
+    title: article.title,
+    description: article.description || '',
+    category: article.category || '',
+  })
+  const ogImageUrl = `${baseUrl}/api/og?${ogParams.toString()}`
+
   return {
     title: article.title,
     description: article.description,
@@ -35,13 +45,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "article",
       publishedTime: article.date,
       authors: [article.author],
-      images: article.image ? [{ url: article.image }] : [],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: article.title,
       description: article.description,
-      images: article.image ? [article.image] : [],
+      images: [ogImageUrl],
     },
   }
 }
