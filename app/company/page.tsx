@@ -317,17 +317,23 @@ export default function CompanyPage() {
               <Button
                 size="lg"
                 className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+                asChild
               >
-                <Calendar className="mr-2 h-4 w-4" />
-                Book a Discovery Call
+                <Link href="/book">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  Book a Discovery Call
+                </Link>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg group"
+                asChild
               >
-                <Mail className="mr-2 h-4 w-4" />
-                hello@optimizedeals.com
+                <a href="mailto:contact@optimize.deals">
+                  <Mail className="mr-2 h-4 w-4" />
+                  contact@optimize.deals
+                </a>
               </Button>
             </div>
 

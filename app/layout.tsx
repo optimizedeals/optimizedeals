@@ -14,28 +14,58 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
+  metadataBase: new URL('https://optimize.deals'),
+  title: {
+    default: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
+    template: '%s | OptimizeDeals',
+  },
   description: 'We build high-performance React and AI-powered platforms focused on scalability, architecture and execution speed. Specializing in micro-frontends, Module Federation, Nx monorepos, and AI integrations.',
   keywords: ['frontend architecture', 'React', 'Next.js', 'micro-frontends', 'Module Federation', 'Nx', 'platform engineering', 'AI integration', 'TypeScript'],
   authors: [{ name: 'OptimizeDeals' }],
   creator: 'OptimizeDeals',
+  publisher: 'OptimizeDeals',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
+    url: 'https://optimize.deals',
     siteName: 'OptimizeDeals',
     title: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
     description: 'Engineering scalable frontend systems for modern products.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'OptimizeDeals - Frontend Architecture Studio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'OptimizeDeals | Frontend Architecture Studio',
     description: 'Engineering scalable frontend systems for modern products.',
+    images: ['/og-image.png'],
   },
   icons: {
     icon: [
       { url: '/favicon.ico' },
       { url: '/icon.svg', type: 'image/svg+xml' },
     ],
+    apple: '/apple-touch-icon.png',
+  },
+  alternates: {
+    canonical: 'https://optimize.deals',
   },
 }
 

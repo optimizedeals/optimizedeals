@@ -340,7 +340,7 @@ export default function SolutionsPage() {
             className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
             asChild
           >
-            <Link href="/company#contact">Start a Project</Link>
+            <Link href="/book">Start a Project</Link>
           </Button>
           <Button
             variant="outline"
@@ -434,7 +434,7 @@ export default function SolutionsPage() {
               className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
               asChild
             >
-              <Link href="/company#contact">Book a Discovery Call</Link>
+              <Link href="/book">Book a Discovery Call</Link>
             </Button>
           </motion.div>
         </div>

@@ -432,8 +432,9 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
               <Button
                 className="w-full bg-[#0054D6] hover:bg-[#3B80EC] text-white py-6 text-base font-medium rounded-lg"
                 onClick={onClose}
+                asChild
               >
-                Book a Call
+                <Link href="/book">Book a Call</Link>
               </Button>
             </div>
           </motion.nav>
@@ -544,7 +545,7 @@ export function MegaMenu() {
               className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300"
               asChild
             >
-              <Link href="/company#contact">Book a Call</Link>
+              <Link href="/book">Book a Call</Link>
             </Button>
           </div>
 

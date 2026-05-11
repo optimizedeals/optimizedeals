@@ -176,17 +176,23 @@ export function Hero() {
             <Button 
               size="lg" 
               className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
+              asChild
             >
-              <Calendar className="mr-2 h-4 w-4" />
-              Book a Call
+              <a href="/book">
+                <Calendar className="mr-2 h-4 w-4" />
+                Book a Call
+              </a>
             </Button>
             <Button 
               variant="outline" 
               size="lg"
               className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
+              asChild
             >
-              Explore Systems
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <a href="/solutions">
+                Explore Systems
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
             </Button>
           </motion.div>
         </motion.div>
