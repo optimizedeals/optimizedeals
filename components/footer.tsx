@@ -39,7 +39,7 @@ const navigation = {
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-[#002A6B]/50">
+    <footer className="relative border-t border-[#002A6B]/50 overflow-hidden">
       {/* Background grid */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">

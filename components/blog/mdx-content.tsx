@@ -1,19 +1,83 @@
-"use client"
+"use client";
 
-import { useMemo } from "react"
-import { MDXRemote } from "next-mdx-remote"
-import { serialize } from "next-mdx-remote/serialize"
-import rehypeSlug from "rehype-slug"
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
-import rehypePrettyCode from "rehype-pretty-code"
-import { CodeBlock } from "./mdx-components/code-block"
-import { Callout } from "./mdx-components/callout"
-import { ArchitectureDiagram } from "./mdx-components/architecture-diagram"
-import { MetricsCard } from "./mdx-components/metrics-card"
-import { ArticleImage } from "./mdx-components/article-image"
-import { QuoteBlock } from "./mdx-components/quote-block"
-import { Steps } from "./mdx-components/steps"
-import { ComparisonTable } from "./mdx-components/comparison-table"
+import { useMemo } from "react";
+import { MDXRemote } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrettyCode from "rehype-pretty-code";
+import { Link as LinkIcon } from "lucide-react";
+import { CodeBlock } from "./mdx-components/code-block";
+import { Callout } from "./mdx-components/callout";
+import { ArchitectureDiagram } from "./mdx-components/architecture-diagram";
+import { MetricsCard } from "./mdx-components/metrics-card";
+import { ArticleImage } from "./mdx-components/article-image";
+import { QuoteBlock } from "./mdx-components/quote-block";
+import { Steps } from "./mdx-components/steps";
+import { ComparisonTable } from "./mdx-components/comparison-table";
+
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]/g, "");
+
+function HeadingAnchor({
+  id,
+  level,
+  children,
+}: {
+  id: string;
+  level: 2 | 3 | 4;
+  children: React.ReactNode;
+}) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const url = `${window.location.origin}${window.location.pathname}#${id}`;
+    window.history.replaceState(null, "", `#${id}`);
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(url).catch(() => {});
+    }
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+
+  const headingClass = {
+    2: "group text-2xl md:text-3xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24",
+    3: "group text-xl md:text-2xl font-medium text-[#F0F5FB] mt-10 mb-4 scroll-mt-24",
+    4: "group text-lg font-medium text-[#F0F5FB] mt-8 mb-3 scroll-mt-24",
+  }[level];
+
+  const inner = (
+    <a
+      href={`#${id}`}
+      onClick={handleClick}
+      className="group/anchor relative inline-flex items-baseline gap-2 no-underline break-words"
+      aria-label={`Link to this section`}
+    >
+      <span
+        aria-hidden="true"
+        className="hidden md:inline absolute -left-6 top-0 text-[#3B80EC]/0 group-hover:text-[#3B80EC]/40 group-hover/anchor:text-[#3B80EC] transition-colors select-none"
+      >
+        #
+      </span>
+      <span className="min-w-0 break-words">{children}</span>
+      <LinkIcon
+        aria-hidden="true"
+        size={18}
+        strokeWidth={2}
+        className="shrink-0 self-center opacity-0 group-hover:opacity-40 group-hover/anchor:opacity-100 text-[#3B80EC] transition-opacity"
+      />
+    </a>
+  );
+
+  if (level === 2) return <h2 id={id} className={headingClass}>{inner}</h2>;
+  if (level === 3) return <h3 id={id} className={headingClass}>{inner}</h3>;
+  return <h4 id={id} className={headingClass}>{inner}</h4>;
+}
 
 const components = {
   CodeBlock,
@@ -30,9 +94,13 @@ const components = {
       {children}
     </pre>
   ),
-  code: ({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+  code: ({
+    children,
+    className,
+    ...props
+  }: React.HTMLAttributes<HTMLElement>) => {
     // Check if this is an inline code block
-    const isInline = !className?.includes("language-")
+    const isInline = !className?.includes("language-");
     if (isInline) {
       return (
         <code
@@ -41,36 +109,37 @@ const components = {
         >
           {children}
         </code>
-      )
+      );
     }
     return (
       <code className={className} {...props}>
         {children}
       </code>
-    )
+    );
   },
-  h2: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      id={id}
-      className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24"
-      {...props}
-    >
+  h2: ({
+    children,
+    id,
+  }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <HeadingAnchor id={id || slugify(String(children))} level={2}>
       {children}
-    </h2>
+    </HeadingAnchor>
   ),
-  h3: ({ children, id, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3
-      id={id}
-      className="text-xl md:text-2xl font-medium text-[#F0F5FB] mt-10 mb-4 scroll-mt-24"
-      {...props}
-    >
+  h3: ({
+    children,
+    id,
+  }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <HeadingAnchor id={id || slugify(String(children))} level={3}>
       {children}
-    </h3>
+    </HeadingAnchor>
   ),
-  h4: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className="text-lg font-medium text-[#F0F5FB] mt-8 mb-3" {...props}>
+  h4: ({
+    children,
+    id,
+  }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <HeadingAnchor id={id || slugify(String(children))} level={4}>
       {children}
-    </h4>
+    </HeadingAnchor>
   ),
   p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p className="text-[#7A8BA7] leading-relaxed mb-6" {...props}>
@@ -78,12 +147,18 @@ const components = {
     </p>
   ),
   ul: ({ children, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="list-disc list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4" {...props}>
+    <ul
+      className="list-disc list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4"
+      {...props}
+    >
       {children}
     </ul>
   ),
   ol: ({ children, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className="list-decimal list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4" {...props}>
+    <ol
+      className="list-decimal list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4"
+      {...props}
+    >
       {children}
     </ol>
   ),
@@ -92,7 +167,11 @@ const components = {
       {children}
     </li>
   ),
-  a: ({ children, href, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+  a: ({
+    children,
+    href,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
       href={href}
       className="text-[#3B80EC] hover:text-[#F0F5FB] underline underline-offset-4 transition-colors"
@@ -103,7 +182,10 @@ const components = {
       {children}
     </a>
   ),
-  blockquote: ({ children, ...props }: React.HTMLAttributes<HTMLQuoteElement>) => (
+  blockquote: ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
       className="border-l-4 border-[#0054D6] pl-6 my-8 italic text-[#7A8BA7]"
       {...props}
@@ -118,31 +200,34 @@ const components = {
       </table>
     </div>
   ),
-  thead: ({ children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+  thead: ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLTableSectionElement>) => (
     <thead className="bg-[#001535]/50 border-b border-[#002A6B]/50" {...props}>
       {children}
     </thead>
   ),
   th: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th
-      className="text-left px-4 py-3 text-[#F0F5FB] font-medium"
-      {...props}
-    >
+    <th className="text-left px-4 py-3 text-[#F0F5FB] font-medium" {...props}>
       {children}
     </th>
   ),
   td: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td className="px-4 py-3 text-[#7A8BA7] border-t border-[#002A6B]/30" {...props}>
+    <td
+      className="px-4 py-3 text-[#7A8BA7] border-t border-[#002A6B]/30"
+      {...props}
+    >
       {children}
     </td>
   ),
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
     <hr className="my-12 border-[#002A6B]/50" {...props} />
   ),
-}
+};
 
 interface MDXContentProps {
-  content: string
+  content: string;
 }
 
 export function MDXContent({ content }: MDXContentProps) {
@@ -152,28 +237,57 @@ export function MDXContent({ content }: MDXContentProps) {
     <div className="mdx-content">
       <MDXRenderer content={content} />
     </div>
-  )
+  );
 }
 
 function MDXRenderer({ content }: { content: string }) {
   // Simple markdown-to-JSX conversion for basic content
   // This is a simplified version - for full MDX support, use proper serialization
   const rendered = useMemo(() => {
-    const lines = content.split("\n")
-    const elements: React.ReactNode[] = []
-    let currentCodeBlock: string[] = []
-    let inCodeBlock = false
-    let codeLanguage = ""
-    let codeFilename = ""
+    const lines = content.split("\n");
+    const elements: React.ReactNode[] = [];
+    let currentCodeBlock: string[] = [];
+    let inCodeBlock = false;
+    let codeLanguage = "";
+    let codeFilename = "";
+    let listBuffer: React.ReactNode[] = [];
+    let listType: "ul" | "ol" | null = null;
+    let listStartIndex = 0;
+
+    const flushList = () => {
+      if (listBuffer.length === 0 || listType === null) return;
+      if (listType === "ol") {
+        elements.push(
+          <ol
+            key={`ol-${listStartIndex}`}
+            className="list-decimal list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4"
+          >
+            {listBuffer}
+          </ol>,
+        );
+      } else {
+        elements.push(
+          <ul
+            key={`ul-${listStartIndex}`}
+            className="list-disc list-inside space-y-2 text-[#7A8BA7] mb-6 ml-4"
+          >
+            {listBuffer}
+          </ul>,
+        );
+      }
+      listBuffer = [];
+      listType = null;
+    };
 
     lines.forEach((line, index) => {
       // Check for code block start/end
       if (line.startsWith("```")) {
         if (!inCodeBlock) {
-          inCodeBlock = true
-          const match = line.match(/```(\w+)?(?:\s+(.+))?/)
-          codeLanguage = match?.[1] || "text"
-          codeFilename = match?.[2] || ""
+          flushList();
+          inCodeBlock = true;
+          const match = line.match(/```(\w+)?(?:\s+(.+))?/);
+          codeLanguage = match?.[1] || "text";
+          codeFilename = match?.[2] || "";
         } else {
           elements.push(
             <CodeBlock
@@ -182,75 +296,86 @@ function MDXRenderer({ content }: { content: string }) {
               filename={codeFilename}
             >
               {currentCodeBlock.join("\n")}
-            </CodeBlock>
-          )
-          currentCodeBlock = []
-          inCodeBlock = false
-          codeLanguage = ""
-          codeFilename = ""
+            </CodeBlock>,
+          );
+          currentCodeBlock = [];
+          inCodeBlock = false;
+          codeLanguage = "";
+          codeFilename = "";
         }
-        return
+        return;
       }
 
       if (inCodeBlock) {
-        currentCodeBlock.push(line)
-        return
+        currentCodeBlock.push(line);
+        return;
       }
 
       // Skip empty lines (they'll be handled as spacing)
       if (line.trim() === "") {
-        return
+        return;
+      }
+
+      const isBullet = line.startsWith("- ") || line.startsWith("* ");
+      const isNumbered = /^\d+\.\s/.test(line);
+
+      if (!isBullet && !isNumbered) {
+        flushList();
       }
 
       // MDX Component: <Callout>
       if (line.includes("<Callout")) {
-        const typeMatch = line.match(/type="(\w+)"/)
-        const titleMatch = line.match(/title="([^"]+)"/)
-        const contentMatch = content.match(new RegExp(`<Callout[^>]*>([\\s\\S]*?)</Callout>`))
+        const typeMatch = line.match(/type="(\w+)"/);
+        const titleMatch = line.match(/title="([^"]+)"/);
+        const contentMatch = content.match(
+          new RegExp(`<Callout[^>]*>([\\s\\S]*?)</Callout>`),
+        );
         if (contentMatch) {
           elements.push(
             <Callout
               key={`callout-${index}`}
-              type={(typeMatch?.[1] as "info" | "warning" | "success" | "error") || "info"}
+              type={
+                (typeMatch?.[1] as "info" | "warning" | "success" | "error") ||
+                "info"
+              }
               title={titleMatch?.[1]}
             >
               {contentMatch[1].trim()}
-            </Callout>
-          )
+            </Callout>,
+          );
         }
-        return
+        return;
       }
 
       // Headings
       if (line.startsWith("## ")) {
-        const text = line.slice(3)
-        const id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "")
+        const text = line.slice(3);
         elements.push(
-          <h2 key={`h2-${index}`} id={id} className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24">
+          <HeadingAnchor key={`h2-${index}`} id={slugify(text)} level={2}>
             {text}
-          </h2>
-        )
-        return
+          </HeadingAnchor>,
+        );
+        return;
       }
 
       if (line.startsWith("### ")) {
-        const text = line.slice(4)
-        const id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "")
+        const text = line.slice(4);
         elements.push(
-          <h3 key={`h3-${index}`} id={id} className="text-xl md:text-2xl font-medium text-[#F0F5FB] mt-10 mb-4 scroll-mt-24">
+          <HeadingAnchor key={`h3-${index}`} id={slugify(text)} level={3}>
             {text}
-          </h3>
-        )
-        return
+          </HeadingAnchor>,
+        );
+        return;
       }
 
       if (line.startsWith("#### ")) {
+        const text = line.slice(5);
         elements.push(
-          <h4 key={`h4-${index}`} className="text-lg font-medium text-[#F0F5FB] mt-8 mb-3">
-            {line.slice(5)}
-          </h4>
-        )
-        return
+          <HeadingAnchor key={`h4-${index}`} id={slugify(text)} level={4}>
+            {text}
+          </HeadingAnchor>,
+        );
+        return;
       }
 
       // Blockquotes
@@ -261,58 +386,72 @@ function MDXRenderer({ content }: { content: string }) {
             className="border-l-4 border-[#0054D6] pl-6 my-8 italic text-[#7A8BA7]"
           >
             <p>{line.slice(2)}</p>
-          </blockquote>
-        )
-        return
+          </blockquote>,
+        );
+        return;
       }
 
       // Lists
-      if (line.startsWith("- ") || line.startsWith("* ")) {
-        elements.push(
-          <li key={`li-${index}`} className="text-[#7A8BA7] ml-4 list-disc">
+      if (isBullet) {
+        if (listType !== "ul") {
+          flushList();
+          listType = "ul";
+          listStartIndex = index;
+        }
+        listBuffer.push(
+          <li key={`li-${index}`} className="text-[#7A8BA7]">
             {parseInlineMarkdown(line.slice(2))}
-          </li>
-        )
-        return
+          </li>,
+        );
+        return;
       }
 
       // Numbered lists
-      if (/^\d+\.\s/.test(line)) {
-        elements.push(
-          <li key={`li-${index}`} className="text-[#7A8BA7] ml-4 list-decimal">
+      if (isNumbered) {
+        if (listType !== "ol") {
+          flushList();
+          listType = "ol";
+          listStartIndex = index;
+        }
+        listBuffer.push(
+          <li key={`li-${index}`} className="text-[#7A8BA7]">
             {parseInlineMarkdown(line.replace(/^\d+\.\s/, ""))}
-          </li>
-        )
-        return
+          </li>,
+        );
+        return;
       }
 
       // Regular paragraphs
       elements.push(
         <p key={`p-${index}`} className="text-[#7A8BA7] leading-relaxed mb-6">
           {parseInlineMarkdown(line)}
-        </p>
-      )
-    })
+        </p>,
+      );
+    });
 
-    return elements
-  }, [content])
+    flushList();
 
-  return <>{rendered}</>
+    return elements;
+  }, [content]);
+
+  return <>{rendered}</>;
 }
 
 function parseInlineMarkdown(text: string): React.ReactNode {
   // Handle inline code
-  const parts: React.ReactNode[] = []
-  let remaining = text
-  let keyIndex = 0
+  const parts: React.ReactNode[] = [];
+  let remaining = text;
+  let keyIndex = 0;
 
   while (remaining.length > 0) {
     // Check for inline code
-    const codeMatch = remaining.match(/`([^`]+)`/)
+    const codeMatch = remaining.match(/`([^`]+)`/);
     if (codeMatch && codeMatch.index !== undefined) {
       // Add text before code
       if (codeMatch.index > 0) {
-        parts.push(parseBoldItalic(remaining.slice(0, codeMatch.index), keyIndex++))
+        parts.push(
+          parseBoldItalic(remaining.slice(0, codeMatch.index), keyIndex++),
+        );
       }
       // Add inline code
       parts.push(
@@ -321,21 +460,21 @@ function parseInlineMarkdown(text: string): React.ReactNode {
           className="px-1.5 py-0.5 bg-[#002A6B]/50 border border-[#002A6B] rounded text-sm font-mono text-[#3B80EC]"
         >
           {codeMatch[1]}
-        </code>
-      )
-      remaining = remaining.slice(codeMatch.index + codeMatch[0].length)
+        </code>,
+      );
+      remaining = remaining.slice(codeMatch.index + codeMatch[0].length);
     } else {
-      parts.push(parseBoldItalic(remaining, keyIndex++))
-      remaining = ""
+      parts.push(parseBoldItalic(remaining, keyIndex++));
+      remaining = "";
     }
   }
 
-  return parts.length === 1 ? parts[0] : parts
+  return parts.length === 1 ? parts[0] : parts;
 }
 
 function parseBoldItalic(text: string, baseKey: number): React.ReactNode {
   // Handle **bold** and *italic*
-  const boldMatch = text.match(/\*\*([^*]+)\*\*/)
+  const boldMatch = text.match(/\*\*([^*]+)\*\*/);
   if (boldMatch && boldMatch.index !== undefined) {
     return (
       <>
@@ -345,10 +484,10 @@ function parseBoldItalic(text: string, baseKey: number): React.ReactNode {
         </strong>
         {text.slice(boldMatch.index + boldMatch[0].length)}
       </>
-    )
+    );
   }
 
-  const italicMatch = text.match(/\*([^*]+)\*/)
+  const italicMatch = text.match(/\*([^*]+)\*/);
   if (italicMatch && italicMatch.index !== undefined) {
     return (
       <>
@@ -356,13 +495,13 @@ function parseBoldItalic(text: string, baseKey: number): React.ReactNode {
         <em key={`italic-${baseKey}`}>{italicMatch[1]}</em>
         {text.slice(italicMatch.index + italicMatch[0].length)}
       </>
-    )
+    );
   }
 
   // Handle links [text](url)
-  const linkMatch = text.match(/\[([^\]]+)\]\(([^)]+)\)/)
+  const linkMatch = text.match(/\[([^\]]+)\]\(([^)]+)\)/);
   if (linkMatch && linkMatch.index !== undefined) {
-    const isExternal = linkMatch[2].startsWith("http")
+    const isExternal = linkMatch[2].startsWith("http");
     return (
       <>
         {linkMatch.index > 0 && text.slice(0, linkMatch.index)}
@@ -377,8 +516,8 @@ function parseBoldItalic(text: string, baseKey: number): React.ReactNode {
         </a>
         {text.slice(linkMatch.index + linkMatch[0].length)}
       </>
-    )
+    );
   }
 
-  return text
+  return text;
 }
