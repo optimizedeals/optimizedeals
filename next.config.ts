@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.vercel-storage.com",
       },
+      {
+        protocol: "https",
+        hostname: "media3.giphy.com",
+      },
+      {
+        protocol: "https",
+        hostname: "media*.giphy.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.giphy.com",
+      },
     ],
   },
   typescript: {

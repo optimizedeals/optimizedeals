@@ -24,7 +24,10 @@ export function ArticleImage({
 
   return (
     <>
-      <figure className="my-8">
+      <figure
+        className="my-8"
+        style={width !== 800 ? { maxWidth: width, marginLeft: "auto", marginRight: "auto" } : undefined}
+      >
         <div
           className="relative group cursor-zoom-in overflow-hidden rounded-xl border border-[#002A6B]/30"
           onClick={() => setIsLightboxOpen(true)}
@@ -35,6 +38,7 @@ export function ArticleImage({
             width={width}
             height={height}
             className="w-full h-auto"
+            unoptimized={src.endsWith(".gif")}
           />
           <div className="absolute inset-0 bg-[#000216]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <ZoomIn className="w-8 h-8 text-[#F0F5FB]" />
@@ -77,6 +81,7 @@ export function ArticleImage({
                 width={width * 2}
                 height={height * 2}
                 className="w-full h-auto rounded-xl"
+                unoptimized={src.endsWith(".gif")}
               />
               {caption && (
                 <p className="mt-4 text-center text-sm text-[#7A8BA7]">

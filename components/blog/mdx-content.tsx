@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeSlug from "rehype-slug";
@@ -15,6 +16,7 @@ import { ArticleImage } from "./mdx-components/article-image";
 import { QuoteBlock } from "./mdx-components/quote-block";
 import { Steps } from "./mdx-components/steps";
 import { ComparisonTable } from "./mdx-components/comparison-table";
+import { cn } from "@/lib/utils";
 
 const slugify = (text: string) =>
   text
@@ -74,9 +76,23 @@ function HeadingAnchor({
     </a>
   );
 
-  if (level === 2) return <h2 id={id} className={headingClass}>{inner}</h2>;
-  if (level === 3) return <h3 id={id} className={headingClass}>{inner}</h3>;
-  return <h4 id={id} className={headingClass}>{inner}</h4>;
+  if (level === 2)
+    return (
+      <h2 id={id} className={headingClass}>
+        {inner}
+      </h2>
+    );
+  if (level === 3)
+    return (
+      <h3 id={id} className={headingClass}>
+        {inner}
+      </h3>
+    );
+  return (
+    <h4 id={id} className={headingClass}>
+      {inner}
+    </h4>
+  );
 }
 
 const components = {
@@ -117,26 +133,17 @@ const components = {
       </code>
     );
   },
-  h2: ({
-    children,
-    id,
-  }: React.HTMLAttributes<HTMLHeadingElement>) => (
+  h2: ({ children, id }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <HeadingAnchor id={id || slugify(String(children))} level={2}>
       {children}
     </HeadingAnchor>
   ),
-  h3: ({
-    children,
-    id,
-  }: React.HTMLAttributes<HTMLHeadingElement>) => (
+  h3: ({ children, id }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <HeadingAnchor id={id || slugify(String(children))} level={3}>
       {children}
     </HeadingAnchor>
   ),
-  h4: ({
-    children,
-    id,
-  }: React.HTMLAttributes<HTMLHeadingElement>) => (
+  h4: ({ children, id }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <HeadingAnchor id={id || slugify(String(children))} level={4}>
       {children}
     </HeadingAnchor>
@@ -241,8 +248,6 @@ export function MDXContent({ content }: MDXContentProps) {
 }
 
 function MDXRenderer({ content }: { content: string }) {
-  // Simple markdown-to-JSX conversion for basic content
-  // This is a simplified version - for full MDX support, use proper serialization
   const rendered = useMemo(() => {
     const lines = content.split("\n");
     const elements: React.ReactNode[] = [];
@@ -253,6 +258,10 @@ function MDXRenderer({ content }: { content: string }) {
     let listBuffer: React.ReactNode[] = [];
     let listType: "ul" | "ol" | null = null;
     let listStartIndex = 0;
+    let componentTagBuffer: string[] = [];
+    let inComponentTag = false;
+    let componentTagName = "";
+    let componentStartIndex = 0;
 
     const flushList = () => {
       if (listBuffer.length === 0 || listType === null) return;
@@ -279,7 +288,65 @@ function MDXRenderer({ content }: { content: string }) {
       listType = null;
     };
 
+    const flushComponentTag = () => {
+      if (componentTagBuffer.length === 0) return;
+      const fullTag = componentTagBuffer.join(" ");
+      if (componentTagName === "Image") {
+        const srcMatch = fullTag.match(/src="([^"]+)"/);
+        const altMatch = fullTag.match(/alt="([^"]+)"/);
+        const widthMatch = fullTag.match(/width="(\d+)"/);
+        const heightMatch = fullTag.match(/height="(\d+)"/);
+        const classNameMatch = fullTag.match(/className="([^"]+)"/);
+        if (srcMatch && altMatch) {
+          elements.push(
+            <Image
+              key={`img-${componentStartIndex}`}
+              src={srcMatch[1]}
+              alt={altMatch[1]}
+              width={widthMatch ? parseInt(widthMatch[1]) : 800}
+              height={heightMatch ? parseInt(heightMatch[1]) : 450}
+              className={cn(
+                "w-full h-auto rounded-xl mx-auto my-2",
+                classNameMatch?.[1],
+              )}
+              unoptimized={srcMatch[1].endsWith(".gif")}
+            />,
+          );
+        }
+      } else if (componentTagName === "ArticleImage") {
+        const srcMatch = fullTag.match(/src="([^"]+)"/);
+        const altMatch = fullTag.match(/alt="([^"]+)"/);
+        const captionMatch = fullTag.match(/caption="([^"]+)"/);
+        const widthMatch = fullTag.match(/width="(\d+)"/);
+        const heightMatch = fullTag.match(/height="(\d+)"/);
+        if (srcMatch && altMatch) {
+          elements.push(
+            <ArticleImage
+              key={`article-img-${componentStartIndex}`}
+              src={srcMatch[1]}
+              alt={altMatch[1]}
+              caption={captionMatch?.[1]}
+              width={widthMatch ? parseInt(widthMatch[1]) : 800}
+              height={heightMatch ? parseInt(heightMatch[1]) : 450}
+            />,
+          );
+        }
+      }
+      componentTagBuffer = [];
+      inComponentTag = false;
+      componentTagName = "";
+    };
+
     lines.forEach((line, index) => {
+      // Handle multiline component tag buffering
+      if (inComponentTag) {
+        componentTagBuffer.push(line);
+        if (line.includes("/>")) {
+          flushComponentTag();
+        }
+        return;
+      }
+
       // Check for code block start/end
       if (line.startsWith("```")) {
         if (!inCodeBlock) {
@@ -311,7 +378,7 @@ function MDXRenderer({ content }: { content: string }) {
         return;
       }
 
-      // Skip empty lines (they'll be handled as spacing)
+      // Skip empty lines
       if (line.trim() === "") {
         return;
       }
@@ -323,8 +390,29 @@ function MDXRenderer({ content }: { content: string }) {
         flushList();
       }
 
+      // MDX Components: <Image> and <ArticleImage>
+      const startsWithImage = /^<Image\b/.test(line);
+      const startsWithArticleImage = /^<ArticleImage\b/.test(line);
+      if (startsWithImage || startsWithArticleImage) {
+        flushList();
+        const isSelfClosing = line.includes("/>");
+        if (isSelfClosing) {
+          componentTagBuffer = [line];
+          componentTagName = startsWithImage ? "Image" : "ArticleImage";
+          componentStartIndex = index;
+          flushComponentTag();
+        } else {
+          inComponentTag = true;
+          componentTagBuffer = [line];
+          componentTagName = startsWithImage ? "Image" : "ArticleImage";
+          componentStartIndex = index;
+        }
+        return;
+      }
+
       // MDX Component: <Callout>
-      if (line.includes("<Callout")) {
+      if (/^<Callout\b/.test(line)) {
+        flushList();
         const typeMatch = line.match(/type="(\w+)"/);
         const titleMatch = line.match(/title="([^"]+)"/);
         const contentMatch = content.match(
@@ -349,6 +437,7 @@ function MDXRenderer({ content }: { content: string }) {
 
       // Headings
       if (line.startsWith("## ")) {
+        flushList();
         const text = line.slice(3);
         elements.push(
           <HeadingAnchor key={`h2-${index}`} id={slugify(text)} level={2}>
@@ -359,6 +448,7 @@ function MDXRenderer({ content }: { content: string }) {
       }
 
       if (line.startsWith("### ")) {
+        flushList();
         const text = line.slice(4);
         elements.push(
           <HeadingAnchor key={`h3-${index}`} id={slugify(text)} level={3}>
@@ -369,6 +459,7 @@ function MDXRenderer({ content }: { content: string }) {
       }
 
       if (line.startsWith("#### ")) {
+        flushList();
         const text = line.slice(5);
         elements.push(
           <HeadingAnchor key={`h4-${index}`} id={slugify(text)} level={4}>
@@ -380,6 +471,7 @@ function MDXRenderer({ content }: { content: string }) {
 
       // Blockquotes
       if (line.startsWith("> ")) {
+        flushList();
         elements.push(
           <blockquote
             key={`quote-${index}`}
@@ -430,6 +522,7 @@ function MDXRenderer({ content }: { content: string }) {
     });
 
     flushList();
+    if (inComponentTag) flushComponentTag();
 
     return elements;
   }, [content]);
