@@ -51,7 +51,7 @@ interface DescriptionProps {
  */
 export function OGDescription({
   children,
-  maxLength = 150,
+  maxLength = 170,
   maxWidth,
 }: DescriptionProps) {
   const text = truncateText(children, maxLength);
