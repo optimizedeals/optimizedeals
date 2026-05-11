@@ -1,0 +1,512 @@
+---
+title: "RAG Systems Are Not About LLMs"
+description: "What we learned building a multimodal AI platform for transcription, diarization, retrieval, semantic chunking, and long-context intelligence."
+publishedAt: "2026-05-11"
+author: "Bruno Silva"
+category: "AI Engineering"
+tags:
+  - AI
+  - RAG
+  - LLM
+  - Vector Database
+  - WhisperX
+  - Retrieval
+  - Embeddings
+  - Architecture
+  - Diarization
+  - Engineering
+
+featured: true
+---
+
+## RAG Systems Are Not About LLMs
+
+Most companies still think the “intelligence” of an AI system lives inside the LLM.
+
+It does not.
+
+The LLM is usually the last layer in the pipeline.
+
+The real intelligence comes from:
+
+- how data is ingested
+- how information is structured
+- how context is preserved
+- how retrieval is executed
+- how ranking decisions are made
+- how failures are handled
+- how multimodal evidence is correlated
+
+Over the last months, while building Interloquia, a multimodal intelligence platform focused on transcripts, media, and contextual reasoning, we learned that modern AI systems behave much more like distributed operating systems than simple chatbot applications.
+
+This article summarizes some of the most important engineering lessons we learned while building:
+
+- large-scale transcription pipelines
+- speaker diarization systems
+- semantic chunking
+- hybrid retrieval pipelines
+- long-context RAG architectures
+- multimodal evidence correlation
+- export/rendering pipelines
+- GPU orchestration systems
+- context-aware retrieval engines
+
+Without exposing proprietary code, this post explains the architectural concepts that matter when building production-grade RAG systems.
+
+## The Biggest Mistake Companies Make
+
+Most teams start from the wrong direction.
+
+They start with the LLM.
+
+Instead, they should start with:
+
+1. ingestion
+2. indexing
+3. structure
+4. retrieval
+5. ranking
+6. observability
+7. context construction
+
+Only then should the LLM enter the picture.
+
+A weak retrieval system connected to a powerful LLM still produces weak intelligence.
+
+A strong retrieval system connected to a smaller model can outperform much larger systems.
+
+That realization changes everything.
+
+## Transcriptions Tend Toward Infinity
+
+One of the first major lessons we learned is that transcriptions are not “documents”.
+
+They are streams.
+
+This changes the architecture entirely.
+
+A transcription system dealing with:
+
+- interviews
+- legal hearings
+- podcasts
+- meetings
+- investigations
+- bodycam footage
+- surveillance material
+
+cannot assume bounded context.
+
+A 30-second audio behaves very differently from a 9-hour hearing.
+
+At small scale, you can keep everything in memory.
+
+At large scale, everything breaks.
+
+You start facing problems like:
+
+- exploding token counts
+- speaker drift
+- overlapping speech
+- timestamp inconsistencies
+- retrieval degradation
+- embedding cost explosions
+- memory pressure
+- chunk duplication
+- semantic fragmentation
+
+The solution is not “larger context windows”.
+
+The solution is architecture.
+
+## Chunking Is More Important Than The Model
+
+One of the biggest misconceptions around RAG is that embeddings alone solve retrieval.
+
+They do not.
+
+Chunk quality defines retrieval quality.
+
+Bad chunking destroys context.
+
+We experimented with multiple chunking strategies:
+
+- fixed token chunking
+- timestamp chunking
+- silence-based chunking
+- semantic chunking
+- section-aware chunking
+- speaker-aware chunking
+- hybrid chunking
+
+Simple fixed-size chunking performed poorly for conversational systems.
+
+Why?
+
+Because conversations are not linear text.
+
+They contain:
+
+- interruptions
+- context shifts
+- speaker changes
+- emotional transitions
+- references to previous events
+- incomplete sentences
+
+A transcript chunk that splits a sentence in the middle may destroy retrieval quality entirely.
+
+Eventually, we realized that chunking needed to become domain-aware.
+
+For example:
+
+- testimonies behave differently from interviews
+- legal complaints behave differently from conversations
+- investigative material behaves differently from meetings
+
+The chunking strategy itself became contextual.
+
+This dramatically improved retrieval precision.
+
+## Diarization Is Not Just “Who Spoke”
+
+Speaker diarization sounds simple on paper.
+
+It is not.
+
+The moment you start processing real-world audio, everything becomes messy.
+
+People interrupt each other.
+
+People speak simultaneously.
+
+Background noise corrupts embeddings.
+
+Microphones change.
+
+Distances change.
+
+Voices drift over time.
+
+Different chunks may assign different speaker IDs to the same person.
+
+One of the most difficult engineering challenges was speaker reconciliation across distributed chunks.
+
+Especially when processing long media in parallel.
+
+The problem becomes:
+
+> “How do you guarantee speaker consistency across independently processed chunks?”
+
+This becomes a clustering problem.
+
+Not a transcription problem.
+
+You start needing:
+
+- speaker embeddings
+- similarity thresholds
+- reconciliation heuristics
+- incremental merging
+- overlap removal
+- confidence scoring
+
+At scale, diarization becomes a graph problem.
+
+Not an audio problem.
+
+## Long Context Does Not Solve Retrieval
+
+Modern models support massive context windows.
+
+That does not eliminate retrieval problems.
+
+Large context windows introduce new issues:
+
+- attention dilution
+- context pollution
+- hallucination amplification
+- irrelevant evidence contamination
+- latency growth
+- cost growth
+
+More context does not necessarily mean more intelligence.
+
+In many situations, smaller and cleaner context performs dramatically better.
+
+The challenge becomes:
+
+> selecting the right evidence, not all evidence.
+
+This is where retrieval engineering becomes critical.
+
+## Hybrid Retrieval Beats Pure Semantic Search
+
+Pure vector search is not enough.
+
+This surprises many developers.
+
+Semantic retrieval alone often fails on:
+
+- names
+- numbers
+- legal references
+- dates
+- IDs
+- locations
+- exact terminology
+
+Keyword search alone also fails because it lacks semantic understanding.
+
+The solution is hybrid retrieval.
+
+Modern RAG systems need both:
+
+- semantic similarity
+- structured filtering
+
+The retrieval pipeline eventually becomes something like:
+
+1. entity extraction
+2. metadata filtering
+3. semantic retrieval
+4. keyword boosting
+5. reranking
+6. quality gating
+7. context assembly
+
+This drastically reduces hallucinations.
+
+Because the model stops receiving noisy context.
+
+## Reranking Is Where Quality Emerges
+
+One of the most underrated components in AI systems is reranking.
+
+Initial retrieval is noisy.
+
+Always.
+
+The first-stage retriever prioritizes recall.
+
+The reranker prioritizes precision.
+
+This distinction matters enormously.
+
+Without reranking:
+
+- relevant chunks get buried
+- duplicated evidence appears
+- semantically similar but irrelevant chunks dominate
+- conversational context becomes unstable
+
+We learned that reranking quality often matters more than the base LLM itself.
+
+Especially in legal and investigative systems.
+
+A good reranker behaves like a reasoning filter before reasoning even begins.
+
+## AI Systems Need Deterministic Layers
+
+One of the biggest architectural mistakes is trying to solve everything with the LLM.
+
+LLMs should not own deterministic problems.
+
+For example:
+
+- timestamps
+- ordering
+- deduplication
+- ownership rules
+- authorization
+- media state
+- retries
+- orchestration
+- chunk boundaries
+
+Those should remain deterministic.
+
+We gradually evolved toward a layered architecture:
+
+- deterministic systems first
+- probabilistic systems second
+
+This dramatically improved stability.
+
+The more deterministic your system becomes before the LLM stage, the more reliable the final intelligence becomes.
+
+## GPU Orchestration Becomes Infrastructure Engineering
+
+Another major realization:
+
+AI systems quickly stop being “application development”.
+
+They become infrastructure engineering.
+
+For example, in development environments, GPU availability becomes scarce.
+
+You cannot keep heavy workers alive forever.
+
+We eventually adopted ephemeral GPU workers:
+
+- worker starts
+- processes media
+- returns results
+- dies
+
+This reduced resource pressure enormously.
+
+But it introduced orchestration complexity:
+
+- worker lifecycle management
+- retries
+- distributed processing
+- callback coordination
+- failure recovery
+- transient infrastructure state
+
+At some point, your AI platform starts behaving like a distributed compute cluster.
+
+Because that is exactly what it becomes.
+
+## The Hardest Problems Were Not AI Problems
+
+Interestingly, many of the hardest problems were not related to models.
+
+They were related to:
+
+- synchronization
+- observability
+- consistency
+- retries
+- idempotency
+- state management
+- distributed coordination
+
+For example:
+
+- handling chunk failures
+- preventing duplicated segments
+- synchronizing export pipelines
+- reconciling speaker identities
+- preserving timestamps
+- avoiding storage corruption
+- maintaining deterministic exports
+
+Most production AI challenges resemble distributed systems engineering much more than prompt engineering.
+
+## Why Multimodal Systems Change Everything
+
+Text alone is limited.
+
+Real-world intelligence is multimodal.
+
+Once you start combining:
+
+- video
+- audio
+- transcripts
+- metadata
+- timestamps
+- entities
+- embeddings
+- conversations
+- documents
+
+the system becomes exponentially more powerful.
+
+A transcript stops being “text”.
+
+It becomes contextual evidence.
+
+That changes the entire retrieval strategy.
+
+Now the system can correlate:
+
+- spoken statements
+- timeline events
+- visual evidence
+- legal entities
+- structured metadata
+- semantic relationships
+
+This is where AI systems become genuinely useful for enterprises.
+
+## Context Engineering Is The New Prompt Engineering
+
+Prompt engineering became popular because it was easy to visualize.
+
+Context engineering is harder.
+
+But infinitely more important.
+
+The quality of a modern AI system depends on:
+
+- retrieval quality
+- context assembly
+- evidence ordering
+- token budgeting
+- deduplication
+- semantic compression
+- metadata preservation
+
+The prompt itself becomes only a thin wrapper around a deeply engineered context pipeline.
+
+This is the future of enterprise AI.
+
+Not bigger prompts.
+
+Better context systems.
+
+## The Future Belongs To Companies That Understand Their Own Data
+
+Most organizations already possess massive amounts of intelligence internally.
+
+The problem is not lack of data.
+
+The problem is lack of structure.
+
+RAG systems fundamentally change how organizations interact with information.
+
+Instead of searching documents manually, systems start understanding relationships between information.
+
+That transition is profound.
+
+Especially for:
+
+- legal systems
+- healthcare
+- finance
+- investigations
+- compliance
+- enterprise knowledge management
+
+The companies that learn how to structure, index, retrieve, and reason over their own information will have enormous advantages over those that only consume generic AI APIs.
+
+## Final Thoughts
+
+The most important lesson we learned is simple:
+
+LLMs are not the system.
+
+They are one component inside the system.
+
+The real challenge of modern AI engineering is designing the architecture around the model.
+
+That includes:
+
+- ingestion
+- chunking
+- retrieval
+- ranking
+- orchestration
+- observability
+- context construction
+- multimodal correlation
+- deterministic infrastructure
+
+The future of AI will not belong to companies with the biggest prompts.
+
+It will belong to companies that deeply understand their own information architecture.
+
+And that changes how we should think about AI entirely.
