@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { LogoLink } from "@/components/logo-link";
 
 const navigation = {
   solutions: [
@@ -85,7 +86,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 lg:gap-12 mb-16">
           {/* Brand column */}
           <div className="col-span-2">
-            <Link href="/" className="inline-block mb-6">
+            <LogoLink className="inline-block mb-6">
               <Image
                 src="/logo-white.svg"
                 alt="OptimizeDeals"
@@ -93,7 +94,7 @@ export function Footer() {
                 height={36}
                 className="h-9 w-auto"
               />
-            </Link>
+            </LogoLink>
             <p className="text-sm text-muted-foreground max-w-sm mb-6 leading-relaxed">
               Engineering scalable frontend and AI-native systems for modern
               products.
