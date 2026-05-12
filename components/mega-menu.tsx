@@ -279,7 +279,7 @@ function DropdownContent({
       className="absolute top-full left-0 right-0 mt-2"
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-[#001535]/95 backdrop-blur-xl border border-[#002A6B]/60 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
+        <div className="bg-card/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
           {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-5">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -293,7 +293,7 @@ function DropdownContent({
                   <path
                     d="M 40 0 L 0 0 0 40"
                     fill="none"
-                    stroke="#3B80EC"
+                    stroke="var(--accent)"
                     strokeWidth="0.5"
                   />
                 </pattern>
@@ -308,7 +308,7 @@ function DropdownContent({
               {item.dropdown.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
                   {section.title && (
-                    <h4 className="text-xs font-mono text-[#585F78] uppercase tracking-wider mb-4 pl-2">
+                    <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-4 pl-2">
                       {section.title}
                     </h4>
                   )}
@@ -324,21 +324,21 @@ function DropdownContent({
                             subItem.external ? "noopener noreferrer" : undefined
                           }
                           onClick={onClose}
-                          className="group flex items-start gap-3 p-3 rounded-xl hover:bg-[#002A6B]/30 transition-all duration-200"
+                          className="group flex items-start gap-3 p-3 rounded-xl hover:bg-border/30 transition-all duration-200"
                         >
-                          <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#002A6B]/50 border border-[#002A6B] flex items-center justify-center text-[#3B80EC] group-hover:text-[#F0F5FB] group-hover:border-[#3B80EC]/50 transition-colors">
+                          <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-border/50 border border-border flex items-center justify-center text-accent group-hover:text-foreground group-hover:border-accent/50 transition-colors">
                             <Icon className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-[#F0F5FB] group-hover:text-white transition-colors">
+                              <span className="text-sm font-medium text-foreground group-hover:text-white transition-colors">
                                 {subItem.label}
                               </span>
                               {subItem.external && (
-                                <ExternalLink className="w-3 h-3 text-[#585F78]" />
+                                <ExternalLink className="w-3 h-3 text-brand-gray" />
                               )}
                             </div>
-                            <p className="text-xs text-[#7A8BA7] mt-0.5 leading-relaxed">
+                            <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                               {subItem.description}
                             </p>
                           </div>
@@ -352,20 +352,20 @@ function DropdownContent({
 
             {/* Featured section */}
             {item.dropdown.featured && (
-              <div className="col-span-4 bg-[#002A6B]/20 border-l border-[#002A6B]/40 p-6">
+              <div className="col-span-4 bg-border/20 border-l border-border/40 p-6">
                 <div className="h-full flex flex-col">
                   <div className="flex-1">
-                    <h3 className="text-base font-medium text-[#F0F5FB] mb-2">
+                    <h3 className="text-base font-medium text-foreground mb-2">
                       {item.dropdown.featured.title}
                     </h3>
-                    <p className="text-sm text-[#7A8BA7] leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {item.dropdown.featured.description}
                     </p>
                   </div>
                   <Link
                     href={item.dropdown.featured.href}
                     onClick={onClose}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-[#3B80EC] hover:text-[#F0F5FB] transition-colors mt-4 group"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-foreground transition-colors mt-4 group"
                   >
                     Learn more
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -407,7 +407,7 @@ function MobileMenu({
           exit={{ opacity: 0 }}
         >
           <div
-            className="absolute inset-0 bg-[#000216]/98 backdrop-blur-lg"
+            className="absolute inset-0 bg-background/98 backdrop-blur-lg"
             onClick={onClose}
           />
           <motion.nav
@@ -419,16 +419,16 @@ function MobileMenu({
           >
             <div className="space-y-2">
               {navItems.map((item) => (
-                <div key={item.label} className="border-b border-[#002A6B]/50">
+                <div key={item.label} className="border-b border-border/50">
                   {item.dropdown ? (
                     <>
                       <button
                         onClick={() => toggleExpanded(item.label)}
-                        className="w-full flex items-center justify-between py-4 text-lg text-[#F0F5FB]"
+                        className="w-full flex items-center justify-between py-4 text-lg text-foreground"
                       >
                         {item.label}
                         <ChevronDown
-                          className={`w-5 h-5 text-[#7A8BA7] transition-transform ${
+                          className={`w-5 h-5 text-muted-foreground transition-transform ${
                             expandedItems.includes(item.label)
                               ? "rotate-180"
                               : ""
@@ -449,7 +449,7 @@ function MobileMenu({
                                 (section, sectionIndex) => (
                                   <div key={sectionIndex}>
                                     {section.title && (
-                                      <h4 className="text-xs font-mono text-[#585F78] uppercase tracking-wider mb-2">
+                                      <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-2">
                                         {section.title}
                                       </h4>
                                     )}
@@ -470,7 +470,7 @@ function MobileMenu({
                                                 : undefined
                                             }
                                             onClick={onClose}
-                                            className="flex items-center gap-2 py-2 text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors"
+                                            className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                                           >
                                             {subItem.label}
                                             {subItem.external && (
@@ -492,7 +492,7 @@ function MobileMenu({
                     <Link
                       href={item.href || "#"}
                       onClick={onClose}
-                      className="block py-4 text-lg text-[#F0F5FB]"
+                      className="block py-4 text-lg text-foreground"
                     >
                       {item.label}
                     </Link>
@@ -503,7 +503,7 @@ function MobileMenu({
 
             <div className="mt-8">
               <Button
-                className="w-full bg-[#0054D6] hover:bg-[#3B80EC] text-white py-6 text-base font-medium rounded-lg"
+                className="w-full bg-primary hover:bg-accent text-white py-6 text-base font-medium rounded-lg"
                 onClick={onClose}
                 asChild
               >
@@ -555,7 +555,7 @@ export function MegaMenu() {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || activeDropdown
-            ? "bg-[#000216]/90 backdrop-blur-xl border-b border-[#002A6B]/50"
+            ? "bg-background/90 backdrop-blur-xl border-b border-border/50"
             : "bg-transparent"
         }`}
         initial={{ y: -100 }}
@@ -589,7 +589,7 @@ export function MegaMenu() {
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className="flex items-center gap-1 px-4 py-2 text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors duration-200"
+                    className="flex items-center gap-1 px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
                     {item.label}
                   </Link>
@@ -597,8 +597,8 @@ export function MegaMenu() {
                   <button
                     className={`flex items-center gap-1 px-4 py-2 text-sm transition-colors duration-200 ${
                       activeDropdown === item.label
-                        ? "text-[#F0F5FB]"
-                        : "text-[#7A8BA7] hover:text-[#F0F5FB]"
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {item.label}
@@ -619,7 +619,7 @@ export function MegaMenu() {
           <div className="hidden lg:flex items-center gap-4">
             <Button
               size="sm"
-              className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300"
+              className="bg-primary hover:bg-accent text-white px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300"
               asChild
             >
               <Link href="/book">Book a Call</Link>
@@ -628,7 +628,7 @@ export function MegaMenu() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-[#F0F5FB] p-2"
+            className="lg:hidden text-foreground p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >

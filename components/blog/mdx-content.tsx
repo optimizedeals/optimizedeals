@@ -74,7 +74,7 @@ const mdxComponents = {
   h1: ({ children, id }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       id={id}
-      className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24"
+      className="text-3xl md:text-4xl font-medium text-foreground mt-12 mb-6 scroll-mt-24"
     >
       {children}
     </h1>
@@ -95,13 +95,13 @@ const mdxComponents = {
     </HeadingAnchor>
   ),
   p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-[#7A8BA7] leading-relaxed mb-6" {...props}>
+    <p className="text-muted-foreground leading-relaxed mb-6" {...props}>
       {children}
     </p>
   ),
   ul: ({ children, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
     <ul
-      className="list-disc list-outside space-y-2 text-[#7A8BA7] mb-6 ml-6"
+      className="list-disc list-outside space-y-2 text-muted-foreground mb-6 ml-6"
       {...props}
     >
       {children}
@@ -109,14 +109,14 @@ const mdxComponents = {
   ),
   ol: ({ children, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
     <ol
-      className="list-decimal list-outside space-y-2 text-[#7A8BA7] mb-6 ml-6"
+      className="list-decimal list-outside space-y-2 text-muted-foreground mb-6 ml-6"
       {...props}
     >
       {children}
     </ol>
   ),
   li: ({ children, ...props }: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="text-[#7A8BA7] pl-1" {...props}>
+    <li className="text-muted-foreground pl-1" {...props}>
       {children}
     </li>
   ),
@@ -127,7 +127,7 @@ const mdxComponents = {
   }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
       href={href}
-      className="text-[#3B80EC] hover:text-[#F0F5FB] underline underline-offset-4 transition-colors"
+      className="text-accent hover:text-foreground underline underline-offset-4 transition-colors"
       target={href?.startsWith("http") ? "_blank" : undefined}
       rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
       {...props}
@@ -139,7 +139,7 @@ const mdxComponents = {
     children,
     ...props
   }: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="text-[#F0F5FB] font-medium" {...props}>
+    <strong className="text-foreground font-medium" {...props}>
       {children}
     </strong>
   ),
@@ -153,14 +153,14 @@ const mdxComponents = {
     ...props
   }: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="border-l-4 border-[#0054D6] pl-6 my-8 italic text-[#7A8BA7]"
+      className="border-l-4 border-primary pl-6 my-8 italic text-muted-foreground"
       {...props}
     >
       {children}
     </blockquote>
   ),
   table: ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="overflow-x-auto my-8 rounded-xl border border-[#002A6B]/50 not-prose">
+    <div className="overflow-x-auto my-8 rounded-xl border border-border/50 not-prose">
       <table className="w-full text-sm" {...props}>
         {children}
       </table>
@@ -170,25 +170,25 @@ const mdxComponents = {
     children,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead className="bg-[#001535]/50 border-b border-[#002A6B]/50" {...props}>
+    <thead className="bg-card/50 border-b border-border/50" {...props}>
       {children}
     </thead>
   ),
   th: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th className="text-left px-4 py-3 text-[#F0F5FB] font-medium" {...props}>
+    <th className="text-left px-4 py-3 text-foreground font-medium" {...props}>
       {children}
     </th>
   ),
   td: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
-      className="px-4 py-3 text-[#7A8BA7] border-t border-[#002A6B]/30"
+      className="px-4 py-3 text-muted-foreground border-t border-border/30"
       {...props}
     >
       {children}
     </td>
   ),
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-    <hr className="my-12 border-[#002A6B]/50" {...props} />
+    <hr className="my-12 border-border/50" {...props} />
   ),
   code: ({
     children,
@@ -207,7 +207,7 @@ const mdxComponents = {
     }
     return (
       <code
-        className="px-1.5 py-0.5 bg-[#002A6B]/50 border border-[#002A6B] rounded text-sm font-mono text-[#3B80EC]"
+        className="px-1.5 py-0.5 bg-border/50 border border-border rounded text-sm font-mono text-accent"
         {...props}
       >
         {children}

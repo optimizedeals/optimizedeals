@@ -32,7 +32,7 @@ export function Navigation() {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-[#000216]/80 backdrop-blur-lg border-b border-[#002A6B]/50"
+            ? "bg-background/80 backdrop-blur-lg border-b border-border/50"
             : "bg-transparent"
         }`}
         initial={{ y: -100 }}
@@ -58,7 +58,7 @@ export function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors duration-200"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -69,7 +69,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-4">
             <Button
               size="sm"
-              className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300"
+              className="bg-primary hover:bg-accent text-white px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300"
             >
               Get in Touch
             </Button>
@@ -77,7 +77,7 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-[#F0F5FB] p-2"
+            className="md:hidden text-foreground p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -96,7 +96,7 @@ export function Navigation() {
             exit={{ opacity: 0 }}
           >
             <div
-              className="absolute inset-0 bg-[#000216]/95 backdrop-blur-lg"
+              className="absolute inset-0 bg-background/95 backdrop-blur-lg"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.nav
@@ -116,7 +116,7 @@ export function Navigation() {
                   >
                     <Link
                       href={link.href}
-                      className="block text-lg text-[#F0F5FB] py-3 border-b border-[#002A6B]"
+                      className="block text-lg text-foreground py-3 border-b border-border"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {link.label}
@@ -129,7 +129,7 @@ export function Navigation() {
                   transition={{ delay: navLinks.length * 0.1 }}
                 >
                   <Button
-                    className="w-full mt-4 bg-[#0054D6] hover:bg-[#3B80EC] text-white py-6 text-base font-medium rounded-lg"
+                    className="w-full mt-4 bg-primary hover:bg-accent text-white py-6 text-base font-medium rounded-lg"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Get in Touch

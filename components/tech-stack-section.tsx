@@ -45,7 +45,7 @@ const techStack = {
 function TechItem({ name, color, index }: { name: string; color: string; index: number }) {
   return (
     <motion.div
-      className="group relative px-4 py-3 bg-[#001535]/40 border border-[#002A6B]/50 rounded-lg hover:border-[#002A6B] transition-all duration-300 cursor-default"
+      className="group relative px-4 py-3 bg-card/40 border border-border/50 rounded-lg hover:border-border transition-all duration-300 cursor-default"
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ delay: index * 0.05, duration: 0.3 }}
@@ -57,7 +57,7 @@ function TechItem({ name, color, index }: { name: string; color: string; index: 
           className="w-2 h-2 rounded-full"
           style={{ backgroundColor: color }}
         />
-        <span className="text-sm text-[#7A8BA7] group-hover:text-[#F0F5FB] transition-colors font-mono">
+        <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors font-mono">
           {name}
         </span>
       </div>
@@ -77,7 +77,7 @@ function CategorySection({ category, items, categoryIndex }: {
       transition={{ delay: categoryIndex * 0.1, duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <h3 className="text-sm font-mono text-[#585F78] uppercase tracking-wider mb-4">
+      <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
         {category}
       </h3>
       <div className="flex flex-wrap gap-3">
@@ -102,7 +102,7 @@ export function TechStackSection() {
     <section id="stack" ref={ref} className="relative py-24 md:py-32">
       {/* Background elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#0054D6]/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
       </div>
       
       <div className="relative max-w-7xl mx-auto px-6">
@@ -114,7 +114,7 @@ export function TechStackSection() {
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block px-4 py-1.5 mb-6 bg-[#001535]/60 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] uppercase tracking-wider"
+            className="inline-block px-4 py-1.5 mb-6 bg-card/60 border border-border rounded-full text-xs font-mono text-muted-foreground uppercase tracking-wider"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -122,14 +122,14 @@ export function TechStackSection() {
             Technology
           </motion.span>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#F0F5FB] mb-6 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Modern stack for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               modern products
             </span>
           </h2>
           
-          <p className="text-lg text-[#7A8BA7] max-w-2xl mx-auto text-pretty">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
             We leverage cutting-edge technologies to build performant, 
             scalable, and maintainable solutions.
           </p>

@@ -91,32 +91,32 @@ export function ArchitectureDiagram({
   const getNodeStyle = (type?: string) => {
     switch (type) {
       case "primary":
-        return "bg-[#0054D6]/20 border-[#0054D6]/50 text-[#3B80EC]"
+        return "bg-primary/20 border-primary/50 text-accent"
       case "secondary":
-        return "bg-[#002A6B]/30 border-[#002A6B] text-[#F0F5FB]"
+        return "bg-border/30 border-border text-foreground"
       case "tertiary":
-        return "bg-[#001535]/50 border-[#002A6B]/50 text-[#7A8BA7]"
+        return "bg-card/50 border-border/50 text-muted-foreground"
       default:
-        return "bg-[#002A6B]/30 border-[#002A6B] text-[#F0F5FB]"
+        return "bg-border/30 border-border text-foreground"
     }
   }
 
   return (
-    <div className="my-8 p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl">
+    <div className="my-8 p-6 bg-card/30 border border-border/30 rounded-xl">
       {title && (
-        <h4 className="text-sm font-medium text-[#F0F5FB] mb-2">{title}</h4>
+        <h4 className="text-sm font-medium text-foreground mb-2">{title}</h4>
       )}
       {description && (
-        <p className="text-xs text-[#7A8BA7] mb-6">{description}</p>
+        <p className="text-xs text-muted-foreground mb-6">{description}</p>
       )}
 
-      <div className="relative w-full aspect-[16/9] bg-[#000216]/50 rounded-lg overflow-hidden">
+      <div className="relative w-full aspect-[16/9] bg-background/50 rounded-lg overflow-hidden">
         {/* Grid background */}
         <div className="absolute inset-0 opacity-20">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id={gridId} width="30" height="30" patternUnits="userSpaceOnUse">
-                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill={`url(#${gridId})`} />
@@ -137,7 +137,7 @@ export function ArchitectureDiagram({
                 y1={`${fromNode.y + 5}%`}
                 x2={`${toNode.x}%`}
                 y2={`${toNode.y - 5}%`}
-                stroke="#3B80EC"
+                stroke="var(--accent)"
                 strokeWidth="0.5"
                 strokeDasharray="2,2"
                 initial={{ pathLength: 0, opacity: 0 }}

@@ -29,7 +29,7 @@ export function ArticleImage({
         style={width !== 800 ? { maxWidth: width, marginLeft: "auto", marginRight: "auto" } : undefined}
       >
         <div
-          className="relative group cursor-zoom-in overflow-hidden rounded-xl border border-[#002A6B]/30"
+          className="relative group cursor-zoom-in overflow-hidden rounded-xl border border-border/30"
           onClick={() => setIsLightboxOpen(true)}
         >
           <Image
@@ -40,12 +40,12 @@ export function ArticleImage({
             className="w-full h-auto"
             unoptimized={src.endsWith(".gif")}
           />
-          <div className="absolute inset-0 bg-[#000216]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <ZoomIn className="w-8 h-8 text-[#F0F5FB]" />
+          <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <ZoomIn className="w-8 h-8 text-foreground" />
           </div>
         </div>
         {caption && (
-          <figcaption className="mt-3 text-center text-sm text-[#7A8BA7]">
+          <figcaption className="mt-3 text-center text-sm text-muted-foreground">
             {caption}
           </figcaption>
         )}
@@ -55,14 +55,14 @@ export function ArticleImage({
       <AnimatePresence>
         {isLightboxOpen && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#000216]/95 backdrop-blur-lg"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsLightboxOpen(false)}
           >
             <button
-              className="absolute top-4 right-4 p-2 text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors"
+              className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setIsLightboxOpen(false)}
               aria-label="Close lightbox"
             >
@@ -84,7 +84,7 @@ export function ArticleImage({
                 unoptimized={src.endsWith(".gif")}
               />
               {caption && (
-                <p className="mt-4 text-center text-sm text-[#7A8BA7]">
+                <p className="mt-4 text-center text-sm text-muted-foreground">
                   {caption}
                 </p>
               )}

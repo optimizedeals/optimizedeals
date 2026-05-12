@@ -167,10 +167,10 @@ const statusConfig: Record<
     dot: "bg-emerald-400",
   },
   Beta: {
-    bg: "bg-[#0054D6]/10",
-    text: "text-[#3B80EC]",
-    border: "border-[#0054D6]/30",
-    dot: "bg-[#3B80EC]",
+    bg: "bg-primary/10",
+    text: "text-accent",
+    border: "border-primary/30",
+    dot: "bg-accent",
   },
   Research: {
     bg: "bg-amber-500/10",
@@ -199,7 +199,7 @@ function ExperimentCard({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.1, duration: 0.6 }}
     >
-      <div className="relative p-8 bg-[#001535]/40 border border-[#002A6B]/40 rounded-2xl overflow-hidden hover:border-[#002A6B]/70 transition-all duration-500">
+      <div className="relative p-8 bg-card/40 border border-border/40 rounded-2xl overflow-hidden hover:border-border/70 transition-all duration-500">
         {/* Animated background grid */}
         <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -257,25 +257,25 @@ function ExperimentCard({
                     {experiment.status}
                   </span>
                 </div>
-                <h3 className="text-xl font-medium text-[#F0F5FB]">
+                <h3 className="text-xl font-medium text-foreground">
                   {experiment.title}
                 </h3>
               </div>
             </div>
 
             {/* Metric badge */}
-            <div className="hidden md:block px-4 py-2 bg-[#002A6B]/30 border border-[#002A6B]/50 rounded-lg text-right">
-              <div className="text-xs text-[#585F78] font-mono">
+            <div className="hidden md:block px-4 py-2 bg-border/30 border border-border/50 rounded-lg text-right">
+              <div className="text-xs text-brand-gray font-mono">
                 {experiment.metrics.label}
               </div>
-              <div className="text-lg font-medium text-[#F0F5FB]">
+              <div className="text-lg font-medium text-foreground">
                 {experiment.metrics.value}
               </div>
             </div>
           </div>
 
           {/* Description */}
-          <p className="text-[#7A8BA7] leading-relaxed mb-6">
+          <p className="text-muted-foreground leading-relaxed mb-6">
             {experiment.description}
           </p>
 
@@ -284,7 +284,7 @@ function ExperimentCard({
             {experiment.areas.map((area, i) => (
               <motion.div
                 key={i}
-                className="flex items-center gap-2 text-sm text-[#7A8BA7]"
+                className="flex items-center gap-2 text-sm text-muted-foreground"
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -304,7 +304,7 @@ function ExperimentCard({
             {experiment.technologies.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 text-xs font-mono bg-[#002A6B]/20 border border-[#002A6B]/40 rounded-full text-[#585F78]"
+                className="px-3 py-1 text-xs font-mono bg-border/20 border border-border/40 rounded-full text-brand-gray"
               >
                 {tech}
               </span>
@@ -319,7 +319,7 @@ function ExperimentCard({
 function LabsVisualization() {
   return (
     <motion.div
-      className="relative w-full aspect-video bg-[#001535]/20 border border-[#002A6B]/30 rounded-2xl overflow-hidden"
+      className="relative w-full aspect-video bg-card/20 border border-border/30 rounded-2xl overflow-hidden"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -386,7 +386,7 @@ function LabsVisualization() {
 
         {/* Center node */}
         <motion.div
-          className="w-20 h-20 rounded-2xl bg-[#0054D6]/20 border border-[#0054D6]/40 flex items-center justify-center backdrop-blur-sm"
+          className="w-20 h-20 rounded-2xl bg-primary/20 border border-primary/40 flex items-center justify-center backdrop-blur-sm"
           animate={{
             boxShadow: [
               "0 0 20px rgba(0, 84, 214, 0.2)",
@@ -396,7 +396,7 @@ function LabsVisualization() {
           }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <Workflow className="w-8 h-8 text-[#0054D6]" />
+          <Workflow className="w-8 h-8 text-primary" />
         </motion.div>
 
         {/* Connecting lines */}
@@ -435,18 +435,18 @@ function LabsVisualization() {
       </div>
 
       {/* Status badge */}
-      <div className="absolute top-4 left-4 px-3 py-1.5 bg-[#001535]/80 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] flex items-center gap-2">
+      <div className="absolute top-4 left-4 px-3 py-1.5 bg-card/80 border border-border rounded-full text-xs font-mono text-muted-foreground flex items-center gap-2">
         <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
         Labs Active
       </div>
 
       {/* Metrics */}
       <div className="absolute bottom-4 right-4 flex items-center gap-4">
-        <div className="flex items-center gap-2 text-xs font-mono text-[#585F78]">
+        <div className="flex items-center gap-2 text-xs font-mono text-brand-gray">
           <Clock className="w-3 h-3" />
           Real-time
         </div>
-        <div className="flex items-center gap-2 text-xs font-mono text-[#585F78]">
+        <div className="flex items-center gap-2 text-xs font-mono text-brand-gray">
           <GitBranch className="w-3 h-3" />6 Active
         </div>
       </div>
@@ -456,7 +456,7 @@ function LabsVisualization() {
 
 export default function LabsPage() {
   return (
-    <main className="min-h-screen bg-[#000216]">
+    <main className="min-h-screen bg-background">
       <PageHero
         badge="Research & Development"
         title="Engineering research and"
@@ -472,14 +472,14 @@ export default function LabsPage() {
       </section>
 
       {/* Research Status */}
-      <section className="py-12 border-y border-[#002A6B]/30">
+      <section className="py-12 border-y border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-wrap items-center justify-center gap-8">
             {Object.entries(statusConfig).map(([label, config]) => (
               <div key={label} className="flex items-center gap-3">
                 <span className={`w-2 h-2 rounded-full ${config.dot}`} />
-                <span className="text-sm text-[#7A8BA7]">{label}</span>
-                <span className="text-sm font-mono text-[#585F78]">
+                <span className="text-sm text-muted-foreground">{label}</span>
+                <span className="text-sm font-mono text-brand-gray">
                   ({experiments.filter((e) => e.status === label).length})
                 </span>
               </div>
@@ -497,10 +497,10 @@ export default function LabsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Active Experiments
             </h2>
-            <p className="text-[#7A8BA7] max-w-2xl">
+            <p className="text-muted-foreground max-w-2xl">
               Deep dives into emerging technologies and architectural patterns
               that shape the future of frontend development.
             </p>
@@ -519,24 +519,24 @@ export default function LabsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Interested in our research?
             </h2>
-            <p className="text-[#7A8BA7] mb-8 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
               We share our findings through technical articles and open-source
               contributions. Follow our insights or get in touch to collaborate.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+                className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
                 asChild
               >
                 <Link href="/insights">Read Insights</Link>
@@ -544,7 +544,7 @@ export default function LabsPage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg group"
+                className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg group"
                 asChild
               >
                 <Link href="/company#contact">

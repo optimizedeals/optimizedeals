@@ -41,17 +41,17 @@ export default async function OgPreviewPage() {
   const articles = await getAllArticles();
 
   return (
-    <main className="min-h-screen bg-[#000216] text-[#F0F5FB] py-16 px-6">
+    <main className="min-h-screen bg-background text-foreground py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <header className="mb-12">
           <h1 className="text-3xl md:text-4xl font-medium mb-2">OG Preview</h1>
-          <p className="text-[#7A8BA7] text-sm">
+          <p className="text-muted-foreground text-sm">
             Live render of every Open Graph image. Pages on top, articles below.
           </p>
         </header>
 
         <section className="mb-16">
-          <h2 className="text-xl font-medium mb-6 text-[#7A8BA7] uppercase tracking-wider text-xs font-mono">
+          <h2 className="text-xl font-medium mb-6 text-muted-foreground uppercase tracking-wider text-xs font-mono">
             Pages
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -60,7 +60,7 @@ export default async function OgPreviewPage() {
               return (
                 <figure
                   key={path || "home"}
-                  className="rounded-xl overflow-hidden border border-[#002A6B]/50 bg-[#001535]/30"
+                  className="rounded-xl overflow-hidden border border-border/50 bg-card/30"
                 >
                   <img
                     src={url}
@@ -75,7 +75,7 @@ export default async function OgPreviewPage() {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-xs text-[#3B80EC] hover:text-[#F0F5FB] truncate ml-4"
+                      className="font-mono text-xs text-accent hover:text-foreground truncate ml-4"
                     >
                       {url}
                     </a>
@@ -87,7 +87,7 @@ export default async function OgPreviewPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium mb-6 text-[#7A8BA7] uppercase tracking-wider text-xs font-mono">
+          <h2 className="text-xl font-medium mb-6 text-muted-foreground uppercase tracking-wider text-xs font-mono">
             Articles ({articles.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -96,7 +96,7 @@ export default async function OgPreviewPage() {
               return (
                 <figure
                   key={article.slug}
-                  className="rounded-xl overflow-hidden border border-[#002A6B]/50 bg-[#001535]/30"
+                  className="rounded-xl overflow-hidden border border-border/50 bg-card/30"
                 >
                   <img
                     src={url}
@@ -111,7 +111,7 @@ export default async function OgPreviewPage() {
                     </span>
                     <a
                       href={`/insights/${article.slug}`}
-                      className="font-mono text-xs text-[#3B80EC] hover:text-[#F0F5FB] truncate"
+                      className="font-mono text-xs text-accent hover:text-foreground truncate"
                     >
                       /insights/{article.slug}
                     </a>

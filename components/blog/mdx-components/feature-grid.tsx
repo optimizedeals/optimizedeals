@@ -27,17 +27,17 @@ export function FeatureGrid({ features, columns = 2 }: FeatureGridProps) {
         return (
           <div
             key={i}
-            className="p-5 rounded-xl border border-[#002A6B]/50 bg-[#001535]/30 hover:border-[#002A6B] transition-colors"
+            className="p-5 rounded-xl border border-border/50 bg-card/30 hover:border-border transition-colors"
           >
             {IconComp && (
-              <div className="w-10 h-10 rounded-lg bg-[#0054D6]/10 border border-[#0054D6]/30 flex items-center justify-center mb-4">
-                <IconComp className="w-5 h-5 text-[#3B80EC]" />
+              <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center mb-4">
+                <IconComp className="w-5 h-5 text-accent" />
               </div>
             )}
-            <h4 className="text-base font-medium text-[#F0F5FB] mb-2">
+            <h4 className="text-base font-medium text-foreground mb-2">
               {feature.title}
             </h4>
-            <p className="text-sm text-[#7A8BA7] leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               {feature.description}
             </p>
           </div>

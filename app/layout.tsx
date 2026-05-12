@@ -84,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-[#000216]">
+    <html lang="en" className="bg-background">
       <head>
         {/*
           When JavaScript is disabled (search engine crawlers, no-JS users),
@@ -107,11 +107,11 @@ export default function RootLayout({
           `}</style>
         </noscript>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-[#000216] text-[#F0F5FB]`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
         {/* Keyboard-first skip link. Visually hidden until focused. */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-[#0054D6] focus:text-white focus:outline-none focus:ring-2 focus:ring-[#3B80EC]"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-primary focus:text-white focus:outline-none focus:ring-2 focus:ring-accent"
         >
           Skip to main content
         </a>

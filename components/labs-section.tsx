@@ -52,7 +52,7 @@ const experiments = [
 const statusColors: Record<string, string> = {
   Active: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
   Research: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-  Beta: "bg-[#0054D6]/20 text-[#3B80EC] border-[#0054D6]/30",
+  Beta: "bg-primary/20 text-accent border-primary/30",
 };
 
 function ExperimentCard({
@@ -66,15 +66,15 @@ function ExperimentCard({
 
   return (
     <motion.div
-      className="group relative p-6 bg-[#001535]/30 border border-[#002A6B]/40 rounded-xl hover:bg-[#001535]/50 hover:border-[#002A6B]/60 transition-all duration-300"
+      className="group relative p-6 bg-card/30 border border-border/40 rounded-xl hover:bg-card/50 hover:border-border/60 transition-all duration-300"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
       viewport={{ once: true }}
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#002A6B]/40 border border-[#002A6B]">
-          <Icon className="w-5 h-5 text-[#3B80EC]" />
+        <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-border/40 border border-border">
+          <Icon className="w-5 h-5 text-accent" />
         </div>
         <span
           className={`px-2 py-0.5 text-xs font-mono rounded-full border ${statusColors[experiment.status]}`}
@@ -83,11 +83,11 @@ function ExperimentCard({
         </span>
       </div>
 
-      <h4 className="text-base font-medium text-[#F0F5FB] mb-2 group-hover:text-white transition-colors flex items-center gap-2">
+      <h4 className="text-base font-medium text-foreground mb-2 group-hover:text-white transition-colors flex items-center gap-2">
         {experiment.title}
       </h4>
 
-      <p className="text-sm text-[#7A8BA7] leading-relaxed">
+      <p className="text-sm text-muted-foreground leading-relaxed">
         {experiment.description}
       </p>
     </motion.div>
@@ -101,7 +101,7 @@ export function LabsSection() {
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#001535]/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/20 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header */}
@@ -112,7 +112,7 @@ export function LabsSection() {
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block px-4 py-1.5 mb-6 bg-[#001535]/60 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] uppercase tracking-wider"
+            className="inline-block px-4 py-1.5 mb-6 bg-card/60 border border-border rounded-full text-xs font-mono text-muted-foreground uppercase tracking-wider"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -120,14 +120,14 @@ export function LabsSection() {
             Labs
           </motion.span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#F0F5FB] mb-6 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Engineering Research &{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               Experimental Systems
             </span>
           </h2>
 
-          <p className="text-lg text-[#7A8BA7] max-w-2xl mx-auto text-pretty">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
             Exploring the boundaries of frontend architecture through research,
             experimentation, and open-source contributions.
           </p>

@@ -23,14 +23,14 @@ export function CodePre({ children, className, ...props }: CodePreProps) {
   };
 
   return (
-    <div className="not-prose my-6 rounded-xl overflow-hidden border border-[#002A6B]/50 bg-[#001535]/50 relative group">
-      <div className="flex items-center justify-between px-4 py-2 bg-[#001535] border-b border-[#002A6B]/50">
-        <span className="text-xs font-mono text-[#585F78]">
+    <div className="not-prose my-6 rounded-xl overflow-hidden border border-border/50 bg-card/50 relative group">
+      <div className="flex items-center justify-between px-4 py-2 bg-card border-b border-border/50">
+        <span className="text-xs font-mono text-brand-gray">
           {language || "text"}
         </span>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 text-xs text-[#585F78] hover:text-[#F0F5FB] transition-colors"
+          className="flex items-center gap-1 text-xs text-brand-gray hover:text-foreground transition-colors"
           aria-label="Copy code"
         >
           {copied ? (
@@ -49,7 +49,7 @@ export function CodePre({ children, className, ...props }: CodePreProps) {
       <pre
         ref={ref}
         {...props}
-        className={`overflow-x-auto p-4 text-sm font-mono text-[#F0F5FB] leading-relaxed ${className ?? ""}`}
+        className={`overflow-x-auto p-4 text-sm font-mono text-foreground leading-relaxed ${className ?? ""}`}
       >
         {children}
       </pre>

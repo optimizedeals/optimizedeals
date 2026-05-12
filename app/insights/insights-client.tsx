@@ -65,7 +65,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
   return (
     <>
       <MegaMenu />
-      <main className="min-h-screen bg-[#000216]">
+      <main className="min-h-screen bg-background">
         <PageHero
           badge="Technical Content"
           title="Technical writing and"
@@ -74,7 +74,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
         />
 
         {/* Category Filter */}
-        <section className="py-8 border-b border-[#002A6B]/30">
+        <section className="py-8 border-b border-border/30">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-wrap items-center gap-3">
               {allCategories.map((category) => {
@@ -86,8 +86,8 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                     onClick={() => setActiveCategory(category.id)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-200 ${
                       isActive
-                        ? "bg-[#0054D6] text-white"
-                        : "bg-[#001535]/50 border border-[#002A6B]/50 text-[#7A8BA7] hover:text-[#F0F5FB] hover:border-[#002A6B]"
+                        ? "bg-primary text-white"
+                        : "bg-card/50 border border-border/50 text-muted-foreground hover:text-foreground hover:border-border"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -109,7 +109,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-2xl font-medium text-[#F0F5FB]">
+                <h2 className="text-2xl font-medium text-foreground">
                   Featured Articles
                 </h2>
               </motion.div>
@@ -127,7 +127,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
         <section
           className={
             activeCategory === "all" && featuredArticles.length > 0
-              ? "py-16 border-t border-[#002A6B]/30"
+              ? "py-16 border-t border-border/30"
               : "py-16"
           }
         >
@@ -138,12 +138,12 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-2xl font-medium text-[#F0F5FB]">
+              <h2 className="text-2xl font-medium text-foreground">
                 {activeCategory === "all"
                   ? "All Articles"
                   : allCategories.find((c) => c.id === activeCategory)?.label}
               </h2>
-              <span className="text-sm text-[#585F78] font-mono">
+              <span className="text-sm text-brand-gray font-mono">
                 {filteredArticles.length} article
                 {filteredArticles.length !== 1 ? "s" : ""}
               </span>
@@ -165,11 +165,11 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <Search className="w-12 h-12 text-[#002A6B] mx-auto mb-4" />
-                <p className="text-[#7A8BA7] mb-4">
+                <Search className="w-12 h-12 text-border mx-auto mb-4" />
+                <p className="text-muted-foreground mb-4">
                   No articles published yet.
                 </p>
-                <p className="text-sm text-[#585F78]">
+                <p className="text-sm text-brand-gray">
                   Check back soon for engineering insights.
                 </p>
               </motion.div>
@@ -179,8 +179,8 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <Search className="w-12 h-12 text-[#002A6B] mx-auto mb-4" />
-                <p className="text-[#7A8BA7]">
+                <Search className="w-12 h-12 text-border mx-auto mb-4" />
+                <p className="text-muted-foreground">
                   No articles found in this category yet.
                 </p>
               </motion.div>
@@ -189,24 +189,24 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
         </section>
 
         {/* Newsletter CTA */}
-        <section className="py-20 border-t border-[#002A6B]/30">
+        <section className="py-20 border-t border-border/30">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+              <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
                 Stay updated on engineering insights
               </h2>
-              <p className="text-[#7A8BA7] mb-8 max-w-2xl mx-auto">
+              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Get notified when we publish new technical articles on frontend
                 architecture, AI engineering, and modern development practices.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button
                   size="lg"
-                  className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+                  className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
                   asChild
                 >
                   <Link href="/book">Book a Call</Link>
@@ -214,7 +214,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg group"
+                  className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg group"
                   asChild
                 >
                   <Link href="/labs">
@@ -244,32 +244,32 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
       transition={{ duration: 0.6 }}
     >
       <Link href={`/insights/${article.slug}`} className="block">
-        <div className="relative p-8 md:p-10 bg-gradient-to-br from-[#001535]/60 to-[#001535]/30 border border-[#002A6B]/50 rounded-2xl overflow-hidden hover:border-[#002A6B] transition-all duration-300">
+        <div className="relative p-8 md:p-10 bg-gradient-to-br from-card/60 to-card/30 border border-border/50 rounded-2xl overflow-hidden hover:border-border transition-all duration-300">
           {/* Background decoration */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#0054D6]/5 rounded-full blur-[100px]" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px]" />
 
           <div className="relative">
             {/* Category badge */}
             <div className="flex items-center gap-3 mb-4">
-              <span className="inline-flex items-center gap-2 px-3 py-1 bg-[#0054D6]/10 border border-[#0054D6]/30 rounded-full text-xs font-mono text-[#3B80EC]">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-xs font-mono text-accent">
                 <CategoryIcon className="w-3 h-3" />
                 {article.category}
               </span>
-              <span className="px-2 py-0.5 bg-[#A17D33]/10 border border-[#A17D33]/30 rounded-full text-xs font-mono text-[#A17D33]">
+              <span className="px-2 py-0.5 bg-brand-gold/10 border border-brand-gold/30 rounded-full text-xs font-mono text-brand-gold">
                 Featured
               </span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mb-4 group-hover:text-white transition-colors">
+            <h2 className="text-2xl md:text-3xl font-medium text-foreground mb-4 group-hover:text-white transition-colors">
               {article.title}
             </h2>
 
-            <p className="text-[#7A8BA7] leading-relaxed mb-6 max-w-3xl">
+            <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
               {article.description}
             </p>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4 text-sm text-[#585F78]">
+              <div className="flex items-center gap-4 text-sm text-brand-gray">
                 <span className="flex items-center gap-2">
                   <User className="w-4 h-4" />
                   {article.author}
@@ -280,7 +280,7 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
                 </span>
               </div>
 
-              <span className="flex items-center gap-2 text-sm font-medium text-[#3B80EC] group-hover:text-[#F0F5FB] transition-colors">
+              <span className="flex items-center gap-2 text-sm font-medium text-accent group-hover:text-foreground transition-colors">
                 Read article
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </span>
@@ -310,22 +310,22 @@ function ArticleCard({
       transition={{ delay: index * 0.1, duration: 0.5 }}
     >
       <Link href={`/insights/${article.slug}`} className="block">
-        <div className="h-full p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl hover:border-[#002A6B]/60 hover:bg-[#001535]/50 transition-all duration-300">
+        <div className="h-full p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 hover:bg-card/50 transition-all duration-300">
           {/* Category */}
           <div className="flex items-center gap-2 mb-4">
-            <CategoryIcon className="w-4 h-4 text-[#3B80EC]" />
-            <span className="text-xs font-mono text-[#585F78]">
+            <CategoryIcon className="w-4 h-4 text-accent" />
+            <span className="text-xs font-mono text-brand-gray">
               {article.category}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-medium text-[#F0F5FB] mb-3 group-hover:text-white transition-colors line-clamp-2">
+          <h3 className="text-lg font-medium text-foreground mb-3 group-hover:text-white transition-colors line-clamp-2">
             {article.title}
           </h3>
 
           {/* Excerpt */}
-          <p className="text-sm text-[#7A8BA7] leading-relaxed mb-4 line-clamp-3">
+          <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
             {article.description}
           </p>
 
@@ -335,7 +335,7 @@ function ArticleCard({
               {article.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-mono bg-[#002A6B]/30 border border-[#002A6B]/50 rounded text-[#7A8BA7]"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-mono bg-border/30 border border-border/50 rounded text-muted-foreground"
                 >
                   <Tag className="w-2.5 h-2.5" />
                   {tag}
@@ -345,7 +345,7 @@ function ArticleCard({
           )}
 
           {/* Meta */}
-          <div className="flex items-center gap-3 text-xs text-[#585F78]">
+          <div className="flex items-center gap-3 text-xs text-brand-gray">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {article.readingTime}

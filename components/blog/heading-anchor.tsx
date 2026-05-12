@@ -25,9 +25,9 @@ export function HeadingAnchor({ id, level, children }: HeadingAnchorProps) {
   };
 
   const headingClass = {
-    2: "group text-2xl md:text-3xl font-medium text-[#F0F5FB] mt-12 mb-6 scroll-mt-24",
-    3: "group text-xl md:text-2xl font-medium text-[#F0F5FB] mt-10 mb-4 scroll-mt-24",
-    4: "group text-lg font-medium text-[#F0F5FB] mt-8 mb-3 scroll-mt-24",
+    2: "group text-2xl md:text-3xl font-medium text-foreground mt-12 mb-6 scroll-mt-24",
+    3: "group text-xl md:text-2xl font-medium text-foreground mt-10 mb-4 scroll-mt-24",
+    4: "group text-lg font-medium text-foreground mt-8 mb-3 scroll-mt-24",
   }[level];
 
   const inner = (
@@ -39,7 +39,7 @@ export function HeadingAnchor({ id, level, children }: HeadingAnchorProps) {
     >
       <span
         aria-hidden="true"
-        className="hidden md:inline absolute -left-6 top-0 text-[#3B80EC]/0 group-hover:text-[#3B80EC]/40 group-hover/anchor:text-[#3B80EC] transition-colors select-none"
+        className="hidden md:inline absolute -left-6 top-0 text-accent/0 group-hover:text-accent/40 group-hover/anchor:text-accent transition-colors select-none"
       >
         #
       </span>
@@ -48,7 +48,7 @@ export function HeadingAnchor({ id, level, children }: HeadingAnchorProps) {
         aria-hidden="true"
         size={18}
         strokeWidth={2}
-        className="shrink-0 self-center opacity-0 group-hover:opacity-40 group-hover/anchor:opacity-100 text-[#3B80EC] transition-opacity"
+        className="shrink-0 self-center opacity-0 group-hover:opacity-40 group-hover/anchor:opacity-100 text-accent transition-opacity"
       />
     </a>
   );

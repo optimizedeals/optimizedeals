@@ -21,7 +21,7 @@ export function YouTube({
   return (
     <figure className="my-8 not-prose">
       <div
-        className="relative overflow-hidden rounded-xl border border-[#002A6B]/30 bg-black"
+        className="relative overflow-hidden rounded-xl border border-border/30 bg-black"
         style={{ aspectRatio }}
       >
         <iframe
@@ -34,7 +34,7 @@ export function YouTube({
         />
       </div>
       {caption && (
-        <figcaption className="mt-3 text-center text-sm text-[#7A8BA7]">
+        <figcaption className="mt-3 text-center text-sm text-muted-foreground">
           {caption}
         </figcaption>
       )}

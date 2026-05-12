@@ -65,15 +65,15 @@ export function AudioPlayer({ src, title, caption }: AudioPlayerProps) {
 
   return (
     <figure className="my-8 not-prose">
-      <div className="rounded-xl border border-[#002A6B]/50 bg-[#001535]/50 p-4">
+      <div className="rounded-xl border border-border/50 bg-card/50 p-4">
         {title && (
-          <div className="text-sm font-medium text-[#F0F5FB] mb-3">{title}</div>
+          <div className="text-sm font-medium text-foreground mb-3">{title}</div>
         )}
         <div className="flex items-center gap-3">
           <button
             onClick={toggle}
             aria-label={playing ? "Pause" : "Play"}
-            className="w-10 h-10 rounded-full bg-[#0054D6] hover:bg-[#3B80EC] flex items-center justify-center text-white transition-colors flex-shrink-0"
+            className="w-10 h-10 rounded-full bg-primary hover:bg-accent flex items-center justify-center text-white transition-colors flex-shrink-0"
           >
             {playing ? (
               <Pause className="w-4 h-4" />
@@ -82,7 +82,7 @@ export function AudioPlayer({ src, title, caption }: AudioPlayerProps) {
             )}
           </button>
           <div className="flex-1 flex items-center gap-3 min-w-0">
-            <span className="text-xs font-mono text-[#7A8BA7] w-10 text-right">
+            <span className="text-xs font-mono text-muted-foreground w-10 text-right">
               {fmt(progress)}
             </span>
             <input
@@ -91,16 +91,16 @@ export function AudioPlayer({ src, title, caption }: AudioPlayerProps) {
               max={duration || 0}
               value={progress}
               onChange={seek}
-              className="flex-1 h-1 bg-[#002A6B] rounded-full appearance-none cursor-pointer accent-[#3B80EC]"
+              className="flex-1 h-1 bg-border rounded-full appearance-none cursor-pointer accent-accent"
             />
-            <span className="text-xs font-mono text-[#7A8BA7] w-10">
+            <span className="text-xs font-mono text-muted-foreground w-10">
               {fmt(duration)}
             </span>
           </div>
           <button
             onClick={toggleMute}
             aria-label={muted ? "Unmute" : "Mute"}
-            className="text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors flex-shrink-0"
+            className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
           >
             {muted ? (
               <VolumeX className="w-4 h-4" />
@@ -112,7 +112,7 @@ export function AudioPlayer({ src, title, caption }: AudioPlayerProps) {
         <audio ref={audioRef} src={src} preload="metadata" />
       </div>
       {caption && (
-        <figcaption className="mt-3 text-center text-sm text-[#7A8BA7]">
+        <figcaption className="mt-3 text-center text-sm text-muted-foreground">
           {caption}
         </figcaption>
       )}

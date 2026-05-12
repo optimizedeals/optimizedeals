@@ -24,21 +24,21 @@ function Node({ node, depth }: { node: FileTreeNode; depth: number }) {
       <div
         className={cn(
           "flex items-center gap-2 py-1 px-2 rounded",
-          node.highlight && "bg-[#0054D6]/10 text-[#3B80EC]",
-          !node.highlight && "text-[#7A8BA7]",
+          node.highlight && "bg-primary/10 text-accent",
+          !node.highlight && "text-muted-foreground",
         )}
         style={{ paddingLeft: `${depth * 16 + 8}px` }}
       >
         <Icon
           className={cn(
             "w-4 h-4 flex-shrink-0",
-            isFolder ? "text-[#3B80EC]" : "text-[#585F78]",
-            node.highlight && "text-[#3B80EC]",
+            isFolder ? "text-accent" : "text-brand-gray",
+            node.highlight && "text-accent",
           )}
         />
-        <span className={isFolder ? "text-[#F0F5FB]" : ""}>{node.name}</span>
+        <span className={isFolder ? "text-foreground" : ""}>{node.name}</span>
         {node.comment && (
-          <span className="text-xs text-[#585F78] ml-2">{node.comment}</span>
+          <span className="text-xs text-brand-gray ml-2">{node.comment}</span>
         )}
       </div>
       {node.children && (
@@ -54,9 +54,9 @@ function Node({ node, depth }: { node: FileTreeNode; depth: number }) {
 
 export function FileTree({ title, data }: FileTreeProps) {
   return (
-    <div className="not-prose my-8 rounded-xl border border-[#002A6B]/50 bg-[#001535]/30 overflow-hidden">
+    <div className="not-prose my-8 rounded-xl border border-border/50 bg-card/30 overflow-hidden">
       {title && (
-        <div className="px-4 py-2 bg-[#001535] border-b border-[#002A6B]/50 text-xs font-mono text-[#585F78]">
+        <div className="px-4 py-2 bg-card border-b border-border/50 text-xs font-mono text-brand-gray">
           {title}
         </div>
       )}

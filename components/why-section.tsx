@@ -50,20 +50,20 @@ function HighlightCard({ highlight, index }: { highlight: typeof highlights[0]; 
   
   return (
     <motion.div
-      className="flex items-start gap-4 p-5 rounded-xl bg-[#001535]/30 border border-[#002A6B]/30 hover:bg-[#001535]/50 hover:border-[#002A6B]/60 transition-all duration-300"
+      className="flex items-start gap-4 p-5 rounded-xl bg-card/30 border border-border/30 hover:bg-card/50 hover:border-border/60 transition-all duration-300"
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-[#002A6B]/40 border border-[#002A6B]">
-        <Icon className="w-5 h-5 text-[#3B80EC]" />
+      <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-border/40 border border-border">
+        <Icon className="w-5 h-5 text-accent" />
       </div>
       <div>
-        <h4 className="text-base font-medium text-[#F0F5FB] mb-1">
+        <h4 className="text-base font-medium text-foreground mb-1">
           {highlight.title}
         </h4>
-        <p className="text-sm text-[#7A8BA7] leading-relaxed">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           {highlight.description}
         </p>
       </div>
@@ -78,7 +78,7 @@ export function WhySection() {
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#001535]/20 via-transparent to-[#001535]/20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-card/20 via-transparent to-card/20" />
       
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -89,7 +89,7 @@ export function WhySection() {
             transition={{ duration: 0.6 }}
           >
             <motion.span
-              className="inline-block px-4 py-1.5 mb-6 bg-[#001535]/60 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] uppercase tracking-wider"
+              className="inline-block px-4 py-1.5 mb-6 bg-card/60 border border-border rounded-full text-xs font-mono text-muted-foreground uppercase tracking-wider"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: 0.2, duration: 0.5 }}
@@ -97,14 +97,14 @@ export function WhySection() {
               Why Optimize
             </motion.span>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#F0F5FB] mb-6 text-balance">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
               Not another{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                 software agency
               </span>
             </h2>
             
-            <p className="text-lg text-[#7A8BA7] mb-8 leading-relaxed text-pretty">
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed text-pretty">
               We operate as a specialized engineering studio focused on architecture, 
               scalability and long-term technical sustainability. Our approach combines 
               deep frontend expertise with systems thinking to deliver solutions that 
@@ -114,16 +114,16 @@ export function WhySection() {
             {/* Stats */}
             <div className="flex gap-12">
               <div>
-                <div className="text-4xl font-bold text-[#0054D6] mb-1">10+</div>
-                <div className="text-sm text-[#7A8BA7]">Years Experience</div>
+                <div className="text-4xl font-bold text-primary mb-1">10+</div>
+                <div className="text-sm text-muted-foreground">Years Experience</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-[#0054D6] mb-1">50+</div>
-                <div className="text-sm text-[#7A8BA7]">Projects Delivered</div>
+                <div className="text-4xl font-bold text-primary mb-1">50+</div>
+                <div className="text-sm text-muted-foreground">Projects Delivered</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-[#0054D6] mb-1">100%</div>
-                <div className="text-sm text-[#7A8BA7]">Senior Engineers</div>
+                <div className="text-4xl font-bold text-primary mb-1">100%</div>
+                <div className="text-sm text-muted-foreground">Senior Engineers</div>
               </div>
             </div>
           </motion.div>

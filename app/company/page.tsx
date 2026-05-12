@@ -76,7 +76,7 @@ const stats = [
 
 export default function CompanyPage() {
   return (
-    <main className="min-h-screen bg-[#000216]">
+    <main className="min-h-screen bg-background">
       <PageHero
         badge="About OptimizeDeals"
         title="A studio built for"
@@ -95,10 +95,10 @@ export default function CompanyPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-6">
+              <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-6">
                 Philosophy
               </h2>
-              <div className="space-y-6 text-[#7A8BA7] leading-relaxed">
+              <div className="space-y-6 text-muted-foreground leading-relaxed">
                 <p>
                   We believe that exceptional engineering is the foundation of exceptional products. In a world where frontend complexity continues to grow, having a partner who understands both the technical depth and business context is invaluable.
                 </p>
@@ -124,13 +124,13 @@ export default function CompanyPage() {
                 return (
                   <div
                     key={stat.label}
-                    className="p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl text-center"
+                    className="p-6 bg-card/30 border border-border/30 rounded-xl text-center"
                   >
-                    <Icon className="w-6 h-6 text-[#0054D6] mx-auto mb-4" />
-                    <div className="text-3xl font-medium text-[#F0F5FB] mb-1">
+                    <Icon className="w-6 h-6 text-primary mx-auto mb-4" />
+                    <div className="text-3xl font-medium text-foreground mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-[#7A8BA7]">{stat.label}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </div>
                 )
               })}
@@ -140,7 +140,7 @@ export default function CompanyPage() {
       </section>
 
       {/* Engineering Principles */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -148,13 +148,13 @@ export default function CompanyPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               How We Work
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Engineering Principles
             </h2>
-            <p className="text-[#7A8BA7] max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               The values and standards that guide every project we undertake.
             </p>
           </motion.div>
@@ -165,17 +165,17 @@ export default function CompanyPage() {
               return (
                 <motion.div
                   key={principle.title}
-                  className="p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl hover:border-[#002A6B]/60 transition-colors duration-300"
+                  className="p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 transition-colors duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Icon className="w-8 h-8 text-[#0054D6] mb-4" />
-                  <h3 className="text-lg font-medium text-[#F0F5FB] mb-2">
+                  <Icon className="w-8 h-8 text-primary mb-4" />
+                  <h3 className="text-lg font-medium text-foreground mb-2">
                     {principle.title}
                   </h3>
-                  <p className="text-sm text-[#7A8BA7] leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {principle.description}
                   </p>
                 </motion.div>
@@ -186,7 +186,7 @@ export default function CompanyPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -194,17 +194,17 @@ export default function CompanyPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               Journey
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Engineering Journey
             </h2>
           </motion.div>
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#0054D6] via-[#002A6B] to-transparent" />
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-border to-transparent" />
 
             <div className="space-y-12">
               {timeline.map((item, index) => (
@@ -219,17 +219,17 @@ export default function CompanyPage() {
                   transition={{ delay: index * 0.1 }}
                 >
                   {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#0054D6] border-4 border-[#000216]" />
+                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary border-4 border-background" />
 
                   {/* Content */}
                   <div className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? "md:pr-16 md:text-right" : "md:pl-16"}`}>
-                    <span className="text-sm font-mono text-[#0054D6] mb-1 block">
+                    <span className="text-sm font-mono text-primary mb-1 block">
                       {item.year}
                     </span>
-                    <h3 className="text-xl font-medium text-[#F0F5FB] mb-2">
+                    <h3 className="text-xl font-medium text-foreground mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-[#7A8BA7]">
+                    <p className="text-sm text-muted-foreground">
                       {item.description}
                     </p>
                   </div>
@@ -244,7 +244,7 @@ export default function CompanyPage() {
       </section>
 
       {/* Professional Experience */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -252,10 +252,10 @@ export default function CompanyPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               Experience
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Professional Experience Across Engineering Ecosystems
             </h2>
           </motion.div>
@@ -271,7 +271,7 @@ export default function CompanyPage() {
             {companies.map((company, index) => (
               <motion.div
                 key={company}
-                className="px-6 py-3 bg-[#001535]/30 border border-[#002A6B]/30 rounded-lg text-[#7A8BA7] font-medium hover:text-[#F0F5FB] hover:border-[#002A6B]/60 transition-all duration-300"
+                className="px-6 py-3 bg-card/30 border border-border/30 rounded-lg text-muted-foreground font-medium hover:text-foreground hover:border-border/60 transition-all duration-300"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -284,7 +284,7 @@ export default function CompanyPage() {
 
           {/* Disclaimer */}
           <motion.p
-            className="text-center text-xs text-[#585F78] font-mono max-w-2xl mx-auto"
+            className="text-center text-xs text-brand-gray font-mono max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -295,7 +295,7 @@ export default function CompanyPage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 border-t border-[#002A6B]/30 scroll-mt-24">
+      <section id="contact" className="py-20 border-t border-border/30 scroll-mt-24">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             className="text-center"
@@ -303,20 +303,20 @@ export default function CompanyPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               Get in Touch
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Ready to discuss your project?
             </h2>
-            <p className="text-[#7A8BA7] mb-10 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
               Book a discovery call to discuss your engineering challenges and explore how we can help.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Button
                 size="lg"
-                className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+                className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
                 asChild
               >
                 <Link href="/book">
@@ -327,7 +327,7 @@ export default function CompanyPage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg group"
+                className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg group"
                 asChild
               >
                 <a href="mailto:contact@optimize.deals">
@@ -343,7 +343,7 @@ export default function CompanyPage() {
                 href="https://linkedin.com/company/optimizedeals"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 flex items-center justify-center rounded-xl bg-[#001535]/50 border border-[#002A6B]/50 text-[#7A8BA7] hover:text-[#F0F5FB] hover:border-[#002A6B] transition-all duration-300"
+                className="w-12 h-12 flex items-center justify-center rounded-xl bg-card/50 border border-border/50 text-muted-foreground hover:text-foreground hover:border-border transition-all duration-300"
               >
                 <Linkedin className="w-5 h-5" />
                 <span className="sr-only">LinkedIn</span>
@@ -352,7 +352,7 @@ export default function CompanyPage() {
                 href="https://github.com/optimizedeals"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 flex items-center justify-center rounded-xl bg-[#001535]/50 border border-[#002A6B]/50 text-[#7A8BA7] hover:text-[#F0F5FB] hover:border-[#002A6B] transition-all duration-300"
+                className="w-12 h-12 flex items-center justify-center rounded-xl bg-card/50 border border-border/50 text-muted-foreground hover:text-foreground hover:border-border transition-all duration-300"
               >
                 <Github className="w-5 h-5" />
                 <span className="sr-only">GitHub</span>

@@ -58,7 +58,7 @@ export function Accordion({
     <div className="not-prose my-8">
       <RadixAccordion
         {...rootProps}
-        className="rounded-xl border border-[#002A6B]/50 bg-[#001535]/30 divide-y divide-[#002A6B]/30"
+        className="rounded-xl border border-border/50 bg-card/30 divide-y divide-border/30"
       >
         {enriched.map((item) => (
           <AccordionItem
@@ -69,10 +69,10 @@ export function Accordion({
             data-toc-text={item.title}
             className="border-b-0 px-4 scroll-mt-24"
           >
-            <AccordionTrigger className="text-[#F0F5FB] hover:text-[#3B80EC] font-medium text-base">
+            <AccordionTrigger className="text-foreground hover:text-accent font-medium text-base">
               {item.title}
             </AccordionTrigger>
-            <AccordionContent className="text-sm text-[#7A8BA7] leading-relaxed">
+            <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
               {item.content}
             </AccordionContent>
           </AccordionItem>

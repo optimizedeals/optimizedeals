@@ -72,7 +72,7 @@ export function Video({
       <div
         ref={containerRef}
         className={cn(
-          "relative overflow-hidden rounded-xl border border-[#002A6B]/30 bg-black",
+          "relative overflow-hidden rounded-xl border border-border/30 bg-black",
           "group",
         )}
         style={{ aspectRatio }}
@@ -95,7 +95,7 @@ export function Video({
             <button
               onClick={togglePlay}
               aria-label={isPlaying ? "Pause" : "Play"}
-              className="text-[#F0F5FB] hover:text-[#3B80EC] transition-colors"
+              className="text-foreground hover:text-accent transition-colors"
             >
               {isPlaying ? (
                 <Pause className="w-5 h-5" />
@@ -106,7 +106,7 @@ export function Video({
             <button
               onClick={toggleMute}
               aria-label={isMuted ? "Unmute" : "Mute"}
-              className="text-[#F0F5FB] hover:text-[#3B80EC] transition-colors"
+              className="text-foreground hover:text-accent transition-colors"
             >
               {isMuted ? (
                 <VolumeX className="w-5 h-5" />
@@ -118,7 +118,7 @@ export function Video({
             <button
               onClick={toggleFullscreen}
               aria-label="Fullscreen"
-              className="text-[#F0F5FB] hover:text-[#3B80EC] transition-colors"
+              className="text-foreground hover:text-accent transition-colors"
             >
               <Maximize className="w-5 h-5" />
             </button>
@@ -126,7 +126,7 @@ export function Video({
         )}
       </div>
       {caption && (
-        <figcaption className="mt-3 text-center text-sm text-[#7A8BA7]">
+        <figcaption className="mt-3 text-center text-sm text-muted-foreground">
           {caption}
         </figcaption>
       )}

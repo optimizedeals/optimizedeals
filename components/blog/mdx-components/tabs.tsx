@@ -29,12 +29,12 @@ export function Tabs({ items, defaultValue }: TabsProps) {
   return (
     <div className="not-prose my-8">
       <RadixTabs defaultValue={initial} className="w-full">
-        <TabsList className="bg-[#001535]/50 border border-[#002A6B]/50 p-1 h-auto flex flex-wrap gap-1">
+        <TabsList className="bg-card/50 border border-border/50 p-1 h-auto flex flex-wrap gap-1">
           {normalised.map((item) => (
             <TabsTrigger
               key={item.value}
               value={item.value!}
-              className="text-[#7A8BA7] data-[state=active]:bg-[#0054D6]/20 data-[state=active]:text-[#3B80EC] data-[state=active]:border-[#0054D6]/30 data-[state=active]:shadow-none rounded-md text-sm font-mono"
+              className="text-muted-foreground data-[state=active]:bg-primary/20 data-[state=active]:text-accent data-[state=active]:border-primary/30 data-[state=active]:shadow-none rounded-md text-sm font-mono"
             >
               {item.label}
             </TabsTrigger>
@@ -44,7 +44,7 @@ export function Tabs({ items, defaultValue }: TabsProps) {
           <TabsContent
             key={item.value}
             value={item.value!}
-            className="mt-4 p-6 rounded-xl border border-[#002A6B]/50 bg-[#001535]/30"
+            className="mt-4 p-6 rounded-xl border border-border/50 bg-card/30"
           >
             {item.content}
           </TabsContent>

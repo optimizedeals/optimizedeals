@@ -21,26 +21,26 @@ export function ComparisonTable({ title, headers, rows }: ComparisonTableProps) 
       return <X className="w-5 h-5 text-red-500 mx-auto" />
     }
     if (value === null) {
-      return <Minus className="w-5 h-5 text-[#585F78] mx-auto" />
+      return <Minus className="w-5 h-5 text-brand-gray mx-auto" />
     }
-    return <span className="text-sm text-[#7A8BA7]">{value}</span>
+    return <span className="text-sm text-muted-foreground">{value}</span>
   }
 
   return (
     <div className="my-8 overflow-x-auto">
       {title && (
-        <h4 className="text-sm font-medium text-[#F0F5FB] mb-4">{title}</h4>
+        <h4 className="text-sm font-medium text-foreground mb-4">{title}</h4>
       )}
-      <table className="w-full border-collapse rounded-xl overflow-hidden border border-[#002A6B]/50">
+      <table className="w-full border-collapse rounded-xl overflow-hidden border border-border/50">
         <thead>
-          <tr className="bg-[#001535]/50">
-            <th className="text-left px-4 py-3 text-sm font-medium text-[#F0F5FB] border-b border-[#002A6B]/50">
+          <tr className="bg-card/50">
+            <th className="text-left px-4 py-3 text-sm font-medium text-foreground border-b border-border/50">
               Feature
             </th>
             {headers.map((header, index) => (
               <th
                 key={index}
-                className="text-center px-4 py-3 text-sm font-medium text-[#F0F5FB] border-b border-[#002A6B]/50"
+                className="text-center px-4 py-3 text-sm font-medium text-foreground border-b border-border/50"
               >
                 {header}
               </th>
@@ -52,11 +52,11 @@ export function ComparisonTable({ title, headers, rows }: ComparisonTableProps) 
             <tr
               key={rowIndex}
               className={cn(
-                "border-b border-[#002A6B]/30 last:border-b-0",
-                rowIndex % 2 === 0 ? "bg-transparent" : "bg-[#001535]/20"
+                "border-b border-border/30 last:border-b-0",
+                rowIndex % 2 === 0 ? "bg-transparent" : "bg-card/20"
               )}
             >
-              <td className="px-4 py-3 text-sm text-[#7A8BA7]">
+              <td className="px-4 py-3 text-sm text-muted-foreground">
                 {row.feature}
               </td>
               {row.values.map((value, valueIndex) => (

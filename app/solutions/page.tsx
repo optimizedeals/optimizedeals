@@ -137,26 +137,26 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
         {/* Left column - Overview */}
         <div>
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-[#0054D6]/10 border border-[#0054D6]/20 flex items-center justify-center text-[#0054D6]">
+            <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
               <Icon className="w-6 h-6" />
             </div>
-            <span className="text-xs font-mono text-[#585F78] uppercase tracking-wider">
+            <span className="text-xs font-mono text-brand-gray uppercase tracking-wider">
               0{index + 1}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-3">
+          <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-3">
             {solution.title}
           </h2>
-          <p className="text-lg text-[#3B80EC] mb-6">{solution.tagline}</p>
-          <p className="text-[#7A8BA7] leading-relaxed mb-8">{solution.description}</p>
+          <p className="text-lg text-accent mb-6">{solution.tagline}</p>
+          <p className="text-muted-foreground leading-relaxed mb-8">{solution.description}</p>
 
           {/* Problem statement */}
-          <div className="p-6 bg-[#001535]/50 border border-[#002A6B]/50 rounded-xl mb-6">
-            <h4 className="text-xs font-mono text-[#585F78] uppercase tracking-wider mb-3">
+          <div className="p-6 bg-card/50 border border-border/50 rounded-xl mb-6">
+            <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-3">
               The Problem
             </h4>
-            <p className="text-sm text-[#7A8BA7] leading-relaxed">{solution.problem}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{solution.problem}</p>
           </div>
 
           {/* Technologies */}
@@ -164,7 +164,7 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
             {solution.technologies.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 text-xs font-mono bg-[#002A6B]/30 border border-[#002A6B]/50 rounded-full text-[#7A8BA7]"
+                className="px-3 py-1 text-xs font-mono bg-border/30 border border-border/50 rounded-full text-muted-foreground"
               >
                 {tech}
               </span>
@@ -175,34 +175,34 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
         {/* Right column - Approach & Outcomes */}
         <div className="space-y-6">
           {/* Approach */}
-          <div className="p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl">
-            <h4 className="text-sm font-medium text-[#F0F5FB] mb-4 flex items-center gap-2">
-              <Workflow className="w-4 h-4 text-[#3B80EC]" />
+          <div className="p-6 bg-card/30 border border-border/30 rounded-xl">
+            <h4 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
+              <Workflow className="w-4 h-4 text-accent" />
               Engineering Approach
             </h4>
             <ul className="space-y-3">
               {solution.approach.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-[#0054D6]/10 border border-[#0054D6]/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs text-[#3B80EC]">{i + 1}</span>
+                  <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-xs text-accent">{i + 1}</span>
                   </div>
-                  <span className="text-sm text-[#7A8BA7]">{item}</span>
+                  <span className="text-sm text-muted-foreground">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Outcomes */}
-          <div className="p-6 bg-gradient-to-br from-[#0054D6]/10 to-transparent border border-[#0054D6]/20 rounded-xl">
-            <h4 className="text-sm font-medium text-[#F0F5FB] mb-4 flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-[#0054D6]" />
+          <div className="p-6 bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl">
+            <h4 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-primary" />
               Expected Outcomes
             </h4>
             <ul className="space-y-3">
               {solution.outcomes.map((item, i) => (
                 <li key={i} className="flex items-center gap-3">
-                  <Zap className="w-4 h-4 text-[#0054D6]" />
-                  <span className="text-sm text-[#7A8BA7]">{item}</span>
+                  <Zap className="w-4 h-4 text-primary" />
+                  <span className="text-sm text-muted-foreground">{item}</span>
                 </li>
               ))}
             </ul>
@@ -216,7 +216,7 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
 function ArchitectureDiagram() {
   return (
     <motion.div
-      className="relative w-full aspect-[16/9] bg-[#001535]/30 border border-[#002A6B]/30 rounded-2xl overflow-hidden"
+      className="relative w-full aspect-[16/9] bg-card/30 border border-border/30 rounded-2xl overflow-hidden"
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
@@ -227,7 +227,7 @@ function ArchitectureDiagram() {
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="archGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#archGrid)" />
@@ -239,18 +239,18 @@ function ArchitectureDiagram() {
           {/* Client Layer */}
           <div className="flex flex-col items-center gap-4">
             <motion.div
-              className="w-20 h-20 rounded-xl bg-[#0054D6]/20 border border-[#0054D6]/40 flex items-center justify-center"
+              className="w-20 h-20 rounded-xl bg-primary/20 border border-primary/40 flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Globe className="w-8 h-8 text-[#0054D6]" />
+              <Globe className="w-8 h-8 text-primary" />
             </motion.div>
-            <span className="text-xs font-mono text-[#585F78]">Client</span>
+            <span className="text-xs font-mono text-brand-gray">Client</span>
           </div>
 
           {/* Connection line */}
           <motion.div
-            className="w-16 h-0.5 bg-gradient-to-r from-[#0054D6] to-[#3B80EC]"
+            className="w-16 h-0.5 bg-gradient-to-r from-primary to-accent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -260,18 +260,18 @@ function ArchitectureDiagram() {
           {/* Edge Layer */}
           <div className="flex flex-col items-center gap-4">
             <motion.div
-              className="w-20 h-20 rounded-xl bg-[#3B80EC]/20 border border-[#3B80EC]/40 flex items-center justify-center"
+              className="w-20 h-20 rounded-xl bg-accent/20 border border-accent/40 flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
             >
-              <Server className="w-8 h-8 text-[#3B80EC]" />
+              <Server className="w-8 h-8 text-accent" />
             </motion.div>
-            <span className="text-xs font-mono text-[#585F78]">Edge</span>
+            <span className="text-xs font-mono text-brand-gray">Edge</span>
           </div>
 
           {/* Connection line */}
           <motion.div
-            className="w-16 h-0.5 bg-gradient-to-r from-[#3B80EC] to-[#0054D6]"
+            className="w-16 h-0.5 bg-gradient-to-r from-accent to-primary"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -281,18 +281,18 @@ function ArchitectureDiagram() {
           {/* Origin Layer */}
           <div className="flex flex-col items-center gap-4">
             <motion.div
-              className="w-20 h-20 rounded-xl bg-[#002A6B]/50 border border-[#002A6B] flex items-center justify-center"
+              className="w-20 h-20 rounded-xl bg-border/50 border border-border flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             >
-              <Cpu className="w-8 h-8 text-[#7A8BA7]" />
+              <Cpu className="w-8 h-8 text-muted-foreground" />
             </motion.div>
-            <span className="text-xs font-mono text-[#585F78]">Origin</span>
+            <span className="text-xs font-mono text-brand-gray">Origin</span>
           </div>
 
           {/* Connection line */}
           <motion.div
-            className="w-16 h-0.5 bg-gradient-to-r from-[#002A6B] to-[#0054D6]"
+            className="w-16 h-0.5 bg-gradient-to-r from-border to-primary"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -302,20 +302,20 @@ function ArchitectureDiagram() {
           {/* Data Layer */}
           <div className="flex flex-col items-center gap-4">
             <motion.div
-              className="w-20 h-20 rounded-xl bg-[#0054D6]/10 border border-[#0054D6]/30 flex items-center justify-center"
+              className="w-20 h-20 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
             >
-              <Database className="w-8 h-8 text-[#0054D6]" />
+              <Database className="w-8 h-8 text-primary" />
             </motion.div>
-            <span className="text-xs font-mono text-[#585F78]">Data</span>
+            <span className="text-xs font-mono text-brand-gray">Data</span>
           </div>
         </div>
       </div>
 
       {/* Floating labels */}
       <motion.div
-        className="absolute top-4 left-4 px-3 py-1.5 bg-[#001535]/80 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7]"
+        className="absolute top-4 left-4 px-3 py-1.5 bg-card/80 border border-border rounded-full text-xs font-mono text-muted-foreground"
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
@@ -327,7 +327,7 @@ function ArchitectureDiagram() {
 
 export default function SolutionsPage() {
   return (
-    <main className="min-h-screen bg-[#000216]">
+    <main className="min-h-screen bg-background">
       <PageHero
         badge="Engineering Services"
         title="Engineering systems built for"
@@ -337,7 +337,7 @@ export default function SolutionsPage() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             size="lg"
-            className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+            className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
             asChild
           >
             <Link href="/book">Start a Project</Link>
@@ -345,7 +345,7 @@ export default function SolutionsPage() {
           <Button
             variant="outline"
             size="lg"
-            className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg group"
+            className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg group"
             asChild
           >
             <Link href="/labs">
@@ -357,7 +357,7 @@ export default function SolutionsPage() {
       </PageHero>
 
       {/* Stats */}
-      <section className="py-16 border-y border-[#002A6B]/30">
+      <section className="py-16 border-y border-border/30">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
@@ -371,11 +371,11 @@ export default function SolutionsPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Icon className="w-5 h-5 text-[#0054D6] mx-auto mb-3" />
-                  <div className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-1">
+                  <Icon className="w-5 h-5 text-primary mx-auto mb-3" />
+                  <div className="text-3xl md:text-4xl font-medium text-foreground mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-[#7A8BA7]">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </motion.div>
               )
             })}
@@ -392,10 +392,10 @@ export default function SolutionsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-2xl md:text-3xl font-medium text-foreground mb-4">
               Modern Architecture Patterns
             </h2>
-            <p className="text-[#7A8BA7] max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               We design systems optimized for performance, scalability, and developer experience.
             </p>
           </motion.div>
@@ -415,23 +415,23 @@ export default function SolutionsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Shield className="w-12 h-12 text-[#0054D6] mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <Shield className="w-12 h-12 text-primary mx-auto mb-6" />
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Ready to scale your engineering?
             </h2>
-            <p className="text-[#7A8BA7] mb-8 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
               Let&apos;s discuss how we can help modernize your frontend architecture and accelerate your product development.
             </p>
             <Button
               size="lg"
-              className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+              className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
               asChild
             >
               <Link href="/book">Book a Discovery Call</Link>

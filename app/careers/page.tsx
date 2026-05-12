@@ -71,7 +71,7 @@ const howWeThink = [
 
 export default function CareersPage() {
   return (
-    <main className="min-h-screen bg-[#000216]">
+    <main className="min-h-screen bg-background">
       <PageHero
         badge="Join Our Team"
         title="Build systems that"
@@ -88,13 +88,13 @@ export default function CareersPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               Our Culture
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               Engineering Culture
             </h2>
-            <p className="text-[#7A8BA7] max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               The principles and values that define how we work and build together.
             </p>
           </motion.div>
@@ -105,19 +105,19 @@ export default function CareersPage() {
               return (
                 <motion.div
                   key={value.title}
-                  className="group p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl hover:border-[#002A6B]/60 transition-all duration-300"
+                  className="group p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#0054D6]/10 border border-[#0054D6]/20 flex items-center justify-center mb-4 group-hover:bg-[#0054D6]/20 transition-colors">
-                    <Icon className="w-6 h-6 text-[#0054D6]" />
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                    <Icon className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-lg font-medium text-[#F0F5FB] mb-2">
+                  <h3 className="text-lg font-medium text-foreground mb-2">
                     {value.title}
                   </h3>
-                  <p className="text-sm text-[#7A8BA7] leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {value.description}
                   </p>
                 </motion.div>
@@ -128,7 +128,7 @@ export default function CareersPage() {
       </section>
 
       {/* Technical Standards */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -136,13 +136,13 @@ export default function CareersPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+              <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
                 Standards
               </span>
-              <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+              <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
                 Technical Standards
               </h2>
-              <p className="text-[#7A8BA7] mb-8">
+              <p className="text-muted-foreground mb-8">
                 Our engineering standards ensure consistency, quality, and maintainability across all projects.
               </p>
 
@@ -156,8 +156,8 @@ export default function CareersPage() {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <CheckCircle className="w-5 h-5 text-[#0054D6] flex-shrink-0" />
-                    <span className="text-sm text-[#7A8BA7]">{standard}</span>
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span className="text-sm text-muted-foreground">{standard}</span>
                   </motion.div>
                 ))}
               </div>
@@ -170,13 +170,13 @@ export default function CareersPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="relative aspect-square bg-[#001535]/30 border border-[#002A6B]/30 rounded-2xl overflow-hidden">
+              <div className="relative aspect-square bg-card/30 border border-border/30 rounded-2xl overflow-hidden">
                 {/* Grid background */}
                 <div className="absolute inset-0 opacity-20">
                   <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <pattern id="standardsGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-                        <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
+                        <path d="M 30 0 L 0 0 0 30" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
                       </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#standardsGrid)" />
@@ -186,14 +186,14 @@ export default function CareersPage() {
                 {/* Animated elements */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    className="w-24 h-24 rounded-2xl bg-[#0054D6]/20 border border-[#0054D6]/40 flex items-center justify-center"
+                    className="w-24 h-24 rounded-2xl bg-primary/20 border border-primary/40 flex items-center justify-center"
                     animate={{
                       scale: [1, 1.05, 1],
                       rotate: [0, 5, 0],
                     }}
                     transition={{ duration: 4, repeat: Infinity }}
                   >
-                    <Code className="w-10 h-10 text-[#0054D6]" />
+                    <Code className="w-10 h-10 text-primary" />
                   </motion.div>
                 </div>
 
@@ -216,7 +216,7 @@ export default function CareersPage() {
                       }}
                       transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
                     >
-                      <div className="w-full h-full rounded-lg bg-[#002A6B]/50 border border-[#002A6B]" />
+                      <div className="w-full h-full rounded-lg bg-border/50 border border-border" />
                     </motion.div>
                   )
                 })}
@@ -227,7 +227,7 @@ export default function CareersPage() {
       </section>
 
       {/* How We Think */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -235,10 +235,10 @@ export default function CareersPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               Mindset
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-4">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
               How We Think
             </h2>
           </motion.div>
@@ -247,21 +247,21 @@ export default function CareersPage() {
             {howWeThink.map((item, index) => (
               <motion.div
                 key={item.title}
-                className="p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl"
+                className="p-6 bg-card/30 border border-border/30 rounded-xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
                 <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#0054D6]/10 border border-[#0054D6]/30 flex items-center justify-center text-sm font-mono text-[#3B80EC]">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-sm font-mono text-accent">
                     {index + 1}
                   </span>
                   <div>
-                    <h3 className="text-lg font-medium text-[#F0F5FB] mb-2">
+                    <h3 className="text-lg font-medium text-foreground mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-[#7A8BA7] leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -273,7 +273,7 @@ export default function CareersPage() {
       </section>
 
       {/* Open Positions */}
-      <section className="py-20 border-t border-[#002A6B]/30">
+      <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             className="text-center"
@@ -281,18 +281,18 @@ export default function CareersPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-mono text-[#0054D6] uppercase tracking-wider mb-2 block">
+            <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
               Open Positions
             </span>
-            <h2 className="text-3xl md:text-4xl font-medium text-[#F0F5FB] mb-8">
+            <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-8">
               Join Our Team
             </h2>
 
             {/* No positions message */}
-            <div className="p-8 bg-[#001535]/30 border border-[#002A6B]/30 rounded-2xl mb-8">
-              <Users className="w-12 h-12 text-[#002A6B] mx-auto mb-4" />
-              <p className="text-[#7A8BA7] mb-2">No open positions currently.</p>
-              <p className="text-sm text-[#585F78]">
+            <div className="p-8 bg-card/30 border border-border/30 rounded-2xl mb-8">
+              <Users className="w-12 h-12 text-border mx-auto mb-4" />
+              <p className="text-muted-foreground mb-2">No open positions currently.</p>
+              <p className="text-sm text-brand-gray">
                 We&apos;re always interested in connecting with talented engineers.
               </p>
             </div>
@@ -300,7 +300,7 @@ export default function CareersPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg"
+                className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
               >
                 <Mail className="mr-2 h-4 w-4" />
                 Reach Out
@@ -308,7 +308,7 @@ export default function CareersPage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg group"
+                className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg group"
                 asChild
               >
                 <Link href="/company">

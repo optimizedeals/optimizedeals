@@ -13,13 +13,13 @@ interface BadgeProps {
 }
 
 const variants: Record<NonNullable<BadgeProps["variant"]>, string> = {
-  default: "bg-[#0054D6]/10 text-[#3B80EC] border-[#0054D6]/30",
-  info: "bg-[#0054D6]/10 text-[#3B80EC] border-[#0054D6]/30",
+  default: "bg-primary/10 text-accent border-primary/30",
+  info: "bg-primary/10 text-accent border-primary/30",
   success: "bg-green-500/10 text-green-400 border-green-500/30",
-  warning: "bg-[#A17D33]/10 text-[#A17D33] border-[#A17D33]/30",
+  warning: "bg-brand-gold/10 text-brand-gold border-brand-gold/30",
   error: "bg-red-500/10 text-red-400 border-red-500/30",
-  neutral: "bg-[#002A6B]/30 text-[#7A8BA7] border-[#002A6B]/50",
-  accent: "bg-[#3B80EC]/10 text-[#3B80EC] border-[#3B80EC]/30",
+  neutral: "bg-border/30 text-muted-foreground border-border/50",
+  accent: "bg-accent/10 text-accent border-accent/30",
 };
 
 export function Badge({ variant = "default", children }: BadgeProps) {

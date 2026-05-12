@@ -91,13 +91,13 @@ export function TableOfContents() {
   }
 
   return (
-    <nav className="flex flex-col p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl max-h-[calc(100vh-7rem)]">
-      <h3 className="text-xs font-mono text-[#585F78] uppercase tracking-wider mb-4 shrink-0">
+    <nav className="flex flex-col p-6 bg-card/30 border border-border/30 rounded-xl max-h-[calc(100vh-7rem)]">
+      <h3 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-4 shrink-0">
         On This Page
       </h3>
       <ul
         ref={listRef}
-        className="space-y-2 overflow-y-auto pr-2 -mr-2 scrollbar-thin scrollbar-thumb-[#002A6B] scrollbar-track-transparent"
+        className="space-y-2 overflow-y-auto pr-2 -mr-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent"
       >
         {headings.map((heading) => (
           <li
@@ -110,8 +110,8 @@ export function TableOfContents() {
               className={cn(
                 "block text-sm transition-colors duration-200 py-1",
                 activeId === heading.id
-                  ? "text-[#3B80EC]"
-                  : "text-[#7A8BA7] hover:text-[#F0F5FB]",
+                  ? "text-accent"
+                  : "text-muted-foreground hover:text-foreground",
               )}
               onClick={(e) => {
                 e.preventDefault();

@@ -26,7 +26,7 @@ function CompanyLogo({ name, index }: { name: string; index: number }) {
       transition={{ delay: index * 0.1, duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <span className="text-xl md:text-2xl font-medium text-[#585F78] hover:text-[#7A8BA7] transition-colors duration-300 whitespace-nowrap">
+      <span className="text-xl md:text-2xl font-medium text-brand-gray hover:text-muted-foreground transition-colors duration-300 whitespace-nowrap">
         {name}
       </span>
     </motion.div>
@@ -40,7 +40,7 @@ export function TrustSection() {
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#000216]/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header */}
@@ -51,7 +51,7 @@ export function TrustSection() {
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block px-4 py-1.5 mb-6 bg-[#001535]/60 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] uppercase tracking-wider"
+            className="inline-block px-4 py-1.5 mb-6 bg-card/60 border border-border rounded-full text-xs font-mono text-muted-foreground uppercase tracking-wider"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -59,14 +59,14 @@ export function TrustSection() {
             Experience
           </motion.span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#F0F5FB] mb-6 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Built through real-world{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               engineering ecosystems
             </span>
           </h2>
 
-          <p className="text-lg text-[#7A8BA7] max-w-2xl mx-auto text-pretty">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
             Professional experience contributing to products, platforms and
             engineering initiatives connected to globally recognized companies.
           </p>
@@ -74,8 +74,8 @@ export function TrustSection() {
 
         {/* Logo cloud with infinite scroll effect */}
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#000216] to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#000216] to-transparent z-10" />
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
 
           {/* Logo container */}
           <div className="overflow-hidden">
@@ -107,7 +107,7 @@ export function TrustSection() {
 
         {/* Disclaimer */}
         <motion.p
-          className="text-center text-xs text-[#585F78] mt-12 font-mono"
+          className="text-center text-xs text-brand-gray mt-12 font-mono"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.8, duration: 0.5 }}

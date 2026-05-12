@@ -53,7 +53,7 @@ const navigation = {
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-[#002A6B]/50 overflow-hidden">
+    <footer className="relative border-t border-border/50 overflow-hidden">
       {/* Background grid */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +67,7 @@ export function Footer() {
               <path
                 d="M 60 0 L 0 0 0 60"
                 fill="none"
-                stroke="#3B80EC"
+                stroke="var(--accent)"
                 strokeWidth="0.5"
               />
             </pattern>
@@ -77,8 +77,8 @@ export function Footer() {
       </div>
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#001535]/50 to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#0054D6]/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-16">
         {/* Main footer content */}
@@ -94,7 +94,7 @@ export function Footer() {
                 className="h-9 w-auto"
               />
             </Link>
-            <p className="text-sm text-[#7A8BA7] max-w-sm mb-6 leading-relaxed">
+            <p className="text-sm text-muted-foreground max-w-sm mb-6 leading-relaxed">
               Engineering scalable frontend and AI-native systems for modern
               products.
             </p>
@@ -109,7 +109,7 @@ export function Footer() {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#001535]/50 border border-[#002A6B]/50 text-[#7A8BA7] hover:text-[#F0F5FB] hover:border-[#002A6B] transition-all duration-300"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-card/50 border border-border/50 text-muted-foreground hover:text-foreground hover:border-border transition-all duration-300"
                     whileHover={{ y: -2 }}
                   >
                     <Icon className="w-4 h-4" />
@@ -122,7 +122,7 @@ export function Footer() {
 
           {/* Solutions column */}
           <div>
-            <h4 className="text-sm font-mono text-[#585F78] uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Solutions
             </h4>
             <ul className="space-y-3">
@@ -130,7 +130,7 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors duration-200"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
                     {item.name}
                   </Link>
@@ -141,7 +141,7 @@ export function Footer() {
 
           {/* Products column */}
           <div>
-            <h4 className="text-sm font-mono text-[#585F78] uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Products
             </h4>
             <ul className="space-y-3">
@@ -151,7 +151,7 @@ export function Footer() {
                     href={item.href}
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors duration-200"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
                     {item.name}
                   </Link>
@@ -162,7 +162,7 @@ export function Footer() {
 
           {/* Resources column */}
           <div>
-            <h4 className="text-sm font-mono text-[#585F78] uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Resources
             </h4>
             <ul className="space-y-3">
@@ -170,7 +170,7 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors duration-200"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
                     {item.name}
                   </Link>
@@ -181,7 +181,7 @@ export function Footer() {
 
           {/* Company column */}
           <div>
-            <h4 className="text-sm font-mono text-[#585F78] uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Company
             </h4>
             <ul className="space-y-3">
@@ -191,7 +191,7 @@ export function Footer() {
                     href={item.href}
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-[#7A8BA7] hover:text-[#F0F5FB] transition-colors duration-200"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
                     {item.name}
                   </Link>
@@ -202,23 +202,23 @@ export function Footer() {
         </div>
 
         {/* Separator */}
-        <div className="h-px bg-gradient-to-r from-transparent via-[#002A6B]/50 to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-border/50 to-transparent mb-8" />
 
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#585F78] font-mono">
+          <p className="text-xs text-brand-gray font-mono">
             © {new Date().getFullYear()} OptimizeDeals. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link
               href="/company"
-              className="text-xs text-[#585F78] hover:text-[#7A8BA7] transition-colors"
+              className="text-xs text-brand-gray hover:text-muted-foreground transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/company"
-              className="text-xs text-[#585F78] hover:text-[#7A8BA7] transition-colors"
+              className="text-xs text-brand-gray hover:text-muted-foreground transition-colors"
             >
               Terms of Service
             </Link>

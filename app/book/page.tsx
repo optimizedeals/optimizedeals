@@ -32,11 +32,11 @@ export default function BookPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-[#000216]">
+      <main className="min-h-screen bg-background">
         {/* Background elements */}
         <div className="fixed inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#0054D6]/5 rounded-full blur-[150px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#3B80EC]/5 rounded-full blur-[120px]" />
+          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px]" />
         </div>
 
         {/* Grid pattern */}
@@ -77,7 +77,7 @@ export default function BookPage() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-[#7A8BA7] hover:text-[#F0F5FB] hover:bg-[#001535]/50"
+              className="text-muted-foreground hover:text-foreground hover:bg-card/50"
               asChild
             >
               <Link href="/">
@@ -98,51 +98,51 @@ export default function BookPage() {
               transition={{ duration: 0.6 }}
             >
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-[#001535]/60 border border-[#002A6B] rounded-full text-sm text-[#7A8BA7]">
-                <span className="w-2 h-2 bg-[#0054D6] rounded-full animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-card/60 border border-border rounded-full text-sm text-muted-foreground">
+                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                 Discovery Call
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium text-[#F0F5FB] mb-4 text-balance">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium text-foreground mb-4 text-balance">
                 Let&apos;s discuss your{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
                   engineering challenges.
                 </span>
               </h1>
 
-              <p className="text-lg text-[#7A8BA7] mb-8 text-pretty">
+              <p className="text-lg text-muted-foreground mb-8 text-pretty">
                 Architecture, modernization, AI systems and scalable frontend
                 engineering.
               </p>
 
               {/* Call details */}
               <div className="space-y-4 mb-8">
-                <div className="flex items-center gap-3 text-[#7A8BA7]">
-                  <div className="w-10 h-10 rounded-lg bg-[#001535]/50 border border-[#002A6B]/50 flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-[#3B80EC]" />
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <div className="w-10 h-10 rounded-lg bg-card/50 border border-border/50 flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-accent" />
                   </div>
                   <span>30 minute consultation</span>
                 </div>
-                <div className="flex items-center gap-3 text-[#7A8BA7]">
-                  <div className="w-10 h-10 rounded-lg bg-[#001535]/50 border border-[#002A6B]/50 flex items-center justify-center">
-                    <Video className="w-5 h-5 text-[#3B80EC]" />
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <div className="w-10 h-10 rounded-lg bg-card/50 border border-border/50 flex items-center justify-center">
+                    <Video className="w-5 h-5 text-accent" />
                   </div>
                   <span>Google Meet video call</span>
                 </div>
               </div>
 
               {/* Benefits */}
-              <div className="p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl mb-8">
-                <h3 className="text-sm font-medium text-[#F0F5FB] mb-4">
+              <div className="p-6 bg-card/30 border border-border/30 rounded-xl mb-8">
+                <h3 className="text-sm font-medium text-foreground mb-4">
                   What we&apos;ll cover
                 </h3>
                 <ul className="space-y-3">
                   {benefits.map((benefit, index) => (
                     <li
                       key={index}
-                      className="flex items-center gap-3 text-sm text-[#7A8BA7]"
+                      className="flex items-center gap-3 text-sm text-muted-foreground"
                     >
-                      <CheckCircle className="w-4 h-4 text-[#0054D6]" />
+                      <CheckCircle className="w-4 h-4 text-primary" />
                       {benefit}
                     </li>
                   ))}
@@ -150,13 +150,13 @@ export default function BookPage() {
               </div>
 
               {/* Alternative contact */}
-              <div className="p-4 bg-[#002A6B]/20 border border-[#002A6B]/30 rounded-lg">
-                <p className="text-sm text-[#7A8BA7] mb-2">
+              <div className="p-4 bg-border/20 border border-border/30 rounded-lg">
+                <p className="text-sm text-muted-foreground mb-2">
                   Prefer email? Reach out directly:
                 </p>
                 <a
                   href="mailto:contact@optimize.deals"
-                  className="inline-flex items-center gap-2 text-sm text-[#3B80EC] hover:text-[#F0F5FB] transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-accent hover:text-foreground transition-colors"
                 >
                   <Mail className="w-4 h-4" />
                   contact@optimize.deals
@@ -171,7 +171,7 @@ export default function BookPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="bg-[#001535]/50 border border-[#002A6B]/50 rounded-2xl overflow-hidden">
+              <div className="bg-card/50 border border-border/50 rounded-2xl overflow-hidden">
                 {/* Cal.com inline embed */}
                 <Cal
                   namespace="30min"
@@ -187,16 +187,16 @@ export default function BookPage() {
                 {/* Fallback content while loading */}
                 <noscript>
                   <div className="p-8 text-center">
-                    <Calendar className="w-12 h-12 text-[#0054D6] mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-[#F0F5FB] mb-2">
+                    <Calendar className="w-12 h-12 text-primary mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-foreground mb-2">
                       Schedule a Discovery Call
                     </h3>
-                    <p className="text-sm text-[#7A8BA7] mb-4">
+                    <p className="text-sm text-muted-foreground mb-4">
                       JavaScript is required to load the calendar.
                     </p>
                     <Button
                       asChild
-                      className="bg-[#0054D6] hover:bg-[#3B80EC] text-white"
+                      className="bg-primary hover:bg-accent text-white"
                     >
                       <a
                         href="https://cal.com/optimizedeals/"
@@ -211,7 +211,7 @@ export default function BookPage() {
               </div>
 
               {/* Powered by Cal.com */}
-              <p className="text-center text-xs text-[#585F78] mt-4 font-mono">
+              <p className="text-center text-xs text-brand-gray mt-4 font-mono">
                 Powered by Cal.com
               </p>
             </motion.div>

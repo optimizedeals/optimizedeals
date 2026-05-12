@@ -22,24 +22,24 @@ export function MetricsCard({ title, metrics, columns = 3 }: MetricsCardProps) {
   }
 
   return (
-    <div className="my-8 p-6 bg-[#001535]/30 border border-[#002A6B]/30 rounded-xl">
+    <div className="my-8 p-6 bg-card/30 border border-border/30 rounded-xl">
       {title && (
-        <h4 className="text-sm font-medium text-[#F0F5FB] mb-6">{title}</h4>
+        <h4 className="text-sm font-medium text-foreground mb-6">{title}</h4>
       )}
       <div className={cn("grid gap-6", gridCols[columns])}>
         {metrics.map((metric, index) => (
           <div key={index} className="text-center">
-            <div className="text-2xl md:text-3xl font-medium text-[#F0F5FB] mb-1">
+            <div className="text-2xl md:text-3xl font-medium text-foreground mb-1">
               {metric.value}
             </div>
-            <div className="text-xs text-[#7A8BA7] mb-2">{metric.label}</div>
+            <div className="text-xs text-muted-foreground mb-2">{metric.label}</div>
             {metric.change && (
               <div
                 className={cn(
                   "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-mono",
                   metric.trend === "up" && "bg-green-500/10 text-green-400",
                   metric.trend === "down" && "bg-red-500/10 text-red-400",
-                  metric.trend === "neutral" && "bg-[#002A6B]/50 text-[#7A8BA7]"
+                  metric.trend === "neutral" && "bg-border/50 text-muted-foreground"
                 )}
               >
                 {metric.trend === "up" && <TrendingUp className="w-3 h-3" />}

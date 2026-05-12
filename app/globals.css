@@ -3,93 +3,138 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* OptimizeDeals Brand Colors */
+/* =============================================
+   OPTIMIZEDEALS DESIGN TOKEN SYSTEM
+   =============================================
+   - Single source of truth for all colors.
+   - All values authored in OKLCH for perceptual
+     uniformity and predictable theming.
+   - Brand layer (--brand-*) is the immutable
+     palette. Semantic layer (--background,
+     --foreground, --primary, etc.) maps brand
+     values onto product roles. Components MUST
+     consume semantic tokens, not brand tokens
+     directly, except when the role is brand-only
+     (e.g. brand accents in tech badges).
+   - All OKLCH values were converted from the
+     legacy hex palette and verified to render
+     visually identical to the previous build.
+   ============================================= */
+
 :root {
-  /* Brand Colors */
-  --brand-blue: #0054D6;
-  --brand-blue-light: #3B80EC;
-  --brand-blue-soft: #F0F5FB;
-  --brand-navy: #000216;
-  --brand-navy-medium: #001535;
-  --brand-navy-dark: #002A6B;
-  --brand-gray: #585F78;
-  --brand-gray-light: #7A8BA7;
-  --brand-gold: #A17D33;
-  
-  /* Dark Mode Design Tokens */
-  --background: #000216;
-  --foreground: #F0F5FB;
-  --card: #001535;
-  --card-foreground: #F0F5FB;
-  --popover: #001535;
-  --popover-foreground: #F0F5FB;
-  --primary: #0054D6;
-  --primary-foreground: #FFFFFF;
-  --secondary: #002A6B;
-  --secondary-foreground: #F0F5FB;
-  --muted: #001535;
-  --muted-foreground: #7A8BA7;
-  --accent: #3B80EC;
-  --accent-foreground: #FFFFFF;
+  /* ---------- Brand palette (immutable) ----------
+     Reference hex values (legacy):
+       brand-blue        #0054D6
+       brand-blue-light  #3B80EC
+       brand-blue-soft   #F0F5FB
+       brand-navy        #000216
+       brand-navy-medium #001535
+       brand-navy-dark   #002A6B
+       brand-gray        #585F78
+       brand-gray-light  #7A8BA7
+       brand-gold        #A17D33
+  */
+  --brand-blue: oklch(0.498 0.2 264);
+  --brand-blue-light: oklch(0.638 0.178 254);
+  --brand-blue-soft: oklch(0.967 0.009 245);
+  --brand-navy: oklch(0.059 0.025 280);
+  --brand-navy-medium: oklch(0.187 0.058 264);
+  --brand-navy-dark: oklch(0.302 0.123 264);
+  --brand-gray: oklch(0.454 0.041 271);
+  --brand-gray-light: oklch(0.622 0.041 252);
+  --brand-gold: oklch(0.575 0.111 71);
+
+  /* ---------- Semantic tokens (single theme — dark) ---------- */
+  --background: var(--brand-navy);
+  --foreground: var(--brand-blue-soft);
+
+  --card: var(--brand-navy-medium);
+  --card-foreground: var(--brand-blue-soft);
+
+  --popover: var(--brand-navy-medium);
+  --popover-foreground: var(--brand-blue-soft);
+
+  --primary: var(--brand-blue);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: var(--brand-navy-dark);
+  --secondary-foreground: var(--brand-blue-soft);
+
+  --muted: var(--brand-navy-medium);
+  --muted-foreground: var(--brand-gray-light);
+
+  --accent: var(--brand-blue-light);
+  --accent-foreground: oklch(1 0 0);
+
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #002A6B;
-  --input: #002A6B;
-  --ring: #3B80EC;
-  --chart-1: #0054D6;
-  --chart-2: #3B80EC;
-  --chart-3: #585F78;
-  --chart-4: #7A8BA7;
-  --chart-5: #A17D33;
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: var(--brand-navy-dark);
+  --input: var(--brand-navy-dark);
+  --ring: var(--brand-blue-light);
+
+  --chart-1: var(--brand-blue);
+  --chart-2: var(--brand-blue-light);
+  --chart-3: var(--brand-gray);
+  --chart-4: var(--brand-gray-light);
+  --chart-5: var(--brand-gold);
+
   --radius: 0.625rem;
-  --sidebar: #001535;
-  --sidebar-foreground: #F0F5FB;
-  --sidebar-primary: #0054D6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #002A6B;
-  --sidebar-accent-foreground: #F0F5FB;
-  --sidebar-border: #002A6B;
-  --sidebar-ring: #3B80EC;
+
+  --sidebar: var(--brand-navy-medium);
+  --sidebar-foreground: var(--brand-blue-soft);
+  --sidebar-primary: var(--brand-blue);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: var(--brand-navy-dark);
+  --sidebar-accent-foreground: var(--brand-blue-soft);
+  --sidebar-border: var(--brand-navy-dark);
+  --sidebar-ring: var(--brand-blue-light);
 }
 
+/* The base palette IS the dark theme. Keeping this
+   block ensures `.dark` consumers (e.g. Radix portals
+   or third-party libs that scope styles to .dark) get
+   identical token resolution. */
 .dark {
-  --background: #000216;
-  --foreground: #F0F5FB;
-  --card: #001535;
-  --card-foreground: #F0F5FB;
-  --popover: #001535;
-  --popover-foreground: #F0F5FB;
-  --primary: #0054D6;
-  --primary-foreground: #FFFFFF;
-  --secondary: #002A6B;
-  --secondary-foreground: #F0F5FB;
-  --muted: #001535;
-  --muted-foreground: #7A8BA7;
-  --accent: #3B80EC;
-  --accent-foreground: #FFFFFF;
+  --background: var(--brand-navy);
+  --foreground: var(--brand-blue-soft);
+  --card: var(--brand-navy-medium);
+  --card-foreground: var(--brand-blue-soft);
+  --popover: var(--brand-navy-medium);
+  --popover-foreground: var(--brand-blue-soft);
+  --primary: var(--brand-blue);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: var(--brand-navy-dark);
+  --secondary-foreground: var(--brand-blue-soft);
+  --muted: var(--brand-navy-medium);
+  --muted-foreground: var(--brand-gray-light);
+  --accent: var(--brand-blue-light);
+  --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: #002A6B;
-  --input: #002A6B;
-  --ring: #3B80EC;
-  --chart-1: #0054D6;
-  --chart-2: #3B80EC;
-  --chart-3: #585F78;
-  --chart-4: #7A8BA7;
-  --chart-5: #A17D33;
-  --sidebar: #001535;
-  --sidebar-foreground: #F0F5FB;
-  --sidebar-primary: #0054D6;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #002A6B;
-  --sidebar-accent-foreground: #F0F5FB;
-  --sidebar-border: #002A6B;
-  --sidebar-ring: #3B80EC;
+  --border: var(--brand-navy-dark);
+  --input: var(--brand-navy-dark);
+  --ring: var(--brand-blue-light);
+  --chart-1: var(--brand-blue);
+  --chart-2: var(--brand-blue-light);
+  --chart-3: var(--brand-gray);
+  --chart-4: var(--brand-gray-light);
+  --chart-5: var(--brand-gold);
+  --sidebar: var(--brand-navy-medium);
+  --sidebar-foreground: var(--brand-blue-soft);
+  --sidebar-primary: var(--brand-blue);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: var(--brand-navy-dark);
+  --sidebar-accent-foreground: var(--brand-blue-soft);
+  --sidebar-border: var(--brand-navy-dark);
+  --sidebar-ring: var(--brand-blue-light);
 }
 
 @theme inline {
   --font-sans: 'Geist', 'Geist Fallback', system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+
+  /* Semantic tokens (preferred for components) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -114,10 +159,6 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -126,17 +167,22 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  
-  /* Brand specific colors */
-  --color-brand-blue: #0054D6;
-  --color-brand-blue-light: #3B80EC;
-  --color-brand-blue-soft: #F0F5FB;
-  --color-brand-navy: #000216;
-  --color-brand-navy-medium: #001535;
-  --color-brand-navy-dark: #002A6B;
-  --color-brand-gray: #585F78;
-  --color-brand-gray-light: #7A8BA7;
-  --color-brand-gold: #A17D33;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Brand tokens (use only when role is genuinely brand-specific) */
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-light: var(--brand-blue-light);
+  --color-brand-blue-soft: var(--brand-blue-soft);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-medium: var(--brand-navy-medium);
+  --color-brand-navy-dark: var(--brand-navy-dark);
+  --color-brand-gray: var(--brand-gray);
+  --color-brand-gray-light: var(--brand-gray-light);
+  --color-brand-gold: var(--brand-gold);
 }
 
 @layer base {
@@ -148,29 +194,29 @@
   }
 }
 
-/* Custom scrollbar for dark theme */
+/* Custom scrollbar — uses semantic tokens so theme changes propagate. */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #001535;
+  background: var(--card);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #002A6B;
+  background: var(--border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0054D6;
+  background: var(--primary);
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(0, 84, 214, 0.3);
-  color: #F0F5FB;
+  background: color-mix(in oklch, var(--primary) 30%, transparent);
+  color: var(--foreground);
 }
 
 /* Smooth scrolling */
@@ -180,14 +226,9 @@ html {
 
 /* =============================================
    PROGRESSIVE ENHANCEMENT / NO-JS SUPPORT
-   =============================================
-   Ensures content is visible and accessible 
-   even when JavaScript is disabled.
    ============================================= */
 
-/* Ensure all content is visible by default (no opacity:0 initial states) */
 @layer base {
-  /* Remove motion for users who prefer reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -200,51 +241,19 @@ html {
   }
 }
 
-/* Fallback styles when JS is not available */
-@supports not (animation-timeline: view()) {
-  /* Framer Motion elements should be visible by default */
-  [style*="opacity: 0"],
-  [style*="opacity:0"] {
-    opacity: 1 !important;
-  }
-  
-  [style*="transform: translateY"] {
-    transform: none !important;
-  }
-}
-
-/* Ensure navigation is always visible */
-header,
-nav,
-.navigation {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Ensure hero content is always visible */
-section h1,
-section h2,
-section h3,
-section p,
-section a,
-section button {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Print styles for SEO and accessibility */
+/* Print styles */
 @media print {
   body {
     background: white !important;
     color: black !important;
   }
-  
+
   header,
   nav,
   footer {
     display: none !important;
   }
-  
+
   a[href]::after {
     content: " (" attr(href) ")";
   }

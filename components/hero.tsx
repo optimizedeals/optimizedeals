@@ -29,7 +29,7 @@ function GridBackground() {
               <path
                 d="M 60 0 L 0 0 0 60"
                 fill="none"
-                stroke="#3B80EC"
+                stroke="var(--accent)"
                 strokeWidth="0.5"
               />
             </pattern>
@@ -39,8 +39,8 @@ function GridBackground() {
       </div>
 
       {/* Radial gradient overlays */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#0054D6]/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#3B80EC]/10 rounded-full blur-[100px]" />
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px]" />
 
       {/* Animated orbit lines */}
       <svg
@@ -50,9 +50,9 @@ function GridBackground() {
       >
         <defs>
           <linearGradient id="orbitGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0054D6" stopOpacity="0" />
-            <stop offset="50%" stopColor="#3B80EC" stopOpacity="1" />
-            <stop offset="100%" stopColor="#0054D6" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--primary)" stopOpacity="0" />
+            <stop offset="50%" stopColor="var(--accent)" stopOpacity="1" />
+            <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
           </linearGradient>
         </defs>
         <motion.ellipse
@@ -87,7 +87,7 @@ function GridBackground() {
       {[...Array(20)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-[#3B80EC] rounded-full"
+          className="absolute w-1 h-1 bg-accent rounded-full"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
@@ -127,7 +127,7 @@ function FloatingLabel({
       transition={{ delay: delay + 0.5, duration: 0.6 }}
     >
       <motion.div
-        className="px-3 py-1.5 bg-[#001535]/80 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] backdrop-blur-sm"
+        className="px-3 py-1.5 bg-card/80 border border-border rounded-full text-xs font-mono text-muted-foreground backdrop-blur-sm"
         animate={{ y: [0, -8, 0] }}
         transition={{
           duration: 4 + delay,
@@ -163,21 +163,21 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-[#001535]/60 border border-[#002A6B] rounded-full text-sm text-[#7A8BA7] backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-card/60 border border-border rounded-full text-sm text-muted-foreground backdrop-blur-sm"
           >
-            <span className="w-2 h-2 bg-[#0054D6] rounded-full animate-pulse" />
+            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             Frontend Architecture Studio
           </motion.div>
 
           {/* Headline */}
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-[#F0F5FB] mb-6 text-balance"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground mb-6 text-balance"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             Engineering scalable frontend{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               systems
             </span>{" "}
             for modern products.
@@ -185,7 +185,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <motion.p
-            className="text-lg md:text-xl text-[#7A8BA7] max-w-3xl mx-auto mb-10 text-pretty"
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 text-pretty"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -203,7 +203,7 @@ export function Hero() {
           >
             <Button
               size="lg"
-              className="bg-[#0054D6] hover:bg-[#3B80EC] text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
+              className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
               asChild
             >
               <a href="/book">
@@ -214,7 +214,7 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              className="border-[#002A6B] bg-transparent hover:bg-[#001535] text-[#F0F5FB] px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
+              className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
               asChild
             >
               <a href="/solutions">
@@ -234,12 +234,12 @@ export function Hero() {
         transition={{ delay: 1.2 }}
       >
         <motion.div
-          className="w-6 h-10 border-2 border-[#002A6B] rounded-full flex justify-center"
+          className="w-6 h-10 border-2 border-border rounded-full flex justify-center"
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
-            className="w-1.5 h-3 bg-[#0054D6] rounded-full mt-2"
+            className="w-1.5 h-3 bg-primary rounded-full mt-2"
             animate={{ y: [0, 12, 0] }}
             transition={{
               duration: 1.5,

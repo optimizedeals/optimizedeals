@@ -10,17 +10,17 @@ interface CalloutProps {
 const calloutConfig = {
   info: {
     icon: Info,
-    bgColor: "bg-[#0054D6]/10",
-    borderColor: "border-[#0054D6]/30",
-    iconColor: "text-[#0054D6]",
-    titleColor: "text-[#3B80EC]",
+    bgColor: "bg-primary/10",
+    borderColor: "border-primary/30",
+    iconColor: "text-primary",
+    titleColor: "text-accent",
   },
   warning: {
     icon: AlertTriangle,
-    bgColor: "bg-[#A17D33]/10",
-    borderColor: "border-[#A17D33]/30",
-    iconColor: "text-[#A17D33]",
-    titleColor: "text-[#A17D33]",
+    bgColor: "bg-brand-gold/10",
+    borderColor: "border-brand-gold/30",
+    iconColor: "text-brand-gold",
+    titleColor: "text-brand-gold",
   },
   success: {
     icon: CheckCircle,
@@ -38,17 +38,17 @@ const calloutConfig = {
   },
   tip: {
     icon: Lightbulb,
-    bgColor: "bg-[#3B80EC]/10",
-    borderColor: "border-[#3B80EC]/30",
-    iconColor: "text-[#3B80EC]",
-    titleColor: "text-[#3B80EC]",
+    bgColor: "bg-accent/10",
+    borderColor: "border-accent/30",
+    iconColor: "text-accent",
+    titleColor: "text-accent",
   },
   performance: {
     icon: Zap,
-    bgColor: "bg-[#A17D33]/10",
-    borderColor: "border-[#A17D33]/30",
-    iconColor: "text-[#A17D33]",
-    titleColor: "text-[#A17D33]",
+    bgColor: "bg-brand-gold/10",
+    borderColor: "border-brand-gold/30",
+    iconColor: "text-brand-gold",
+    titleColor: "text-brand-gold",
   },
 }
 
@@ -72,7 +72,7 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
               {title}
             </h4>
           )}
-          <div className="text-sm text-[#7A8BA7] leading-relaxed [&>*]:m-0 [&>*+*]:mt-3">
+          <div className="text-sm text-muted-foreground leading-relaxed [&>*]:m-0 [&>*+*]:mt-3">
             {children}
           </div>
         </div>

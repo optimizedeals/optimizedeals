@@ -13,7 +13,7 @@ import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#000216] overflow-hidden">
+    <main className="relative min-h-screen bg-background overflow-hidden">
       <MegaMenu />
       <Hero />
       <TrustSection />

@@ -35,7 +35,7 @@ const articles = [
 function ArticleCard({ article, index }: { article: typeof articles[0]; index: number }) {
   return (
     <motion.article
-      className="group relative p-6 bg-[#001535]/30 border border-[#002A6B]/40 rounded-xl hover:bg-[#001535]/50 hover:border-[#002A6B]/60 transition-all duration-300 cursor-pointer"
+      className="group relative p-6 bg-card/30 border border-border/40 rounded-xl hover:bg-card/50 hover:border-border/60 transition-all duration-300 cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
@@ -43,27 +43,27 @@ function ArticleCard({ article, index }: { article: typeof articles[0]; index: n
     >
       {/* Category & Read time */}
       <div className="flex items-center justify-between mb-4">
-        <span className="px-3 py-1 text-xs font-mono text-[#3B80EC] bg-[#002A6B]/30 rounded-full border border-[#002A6B]">
+        <span className="px-3 py-1 text-xs font-mono text-accent bg-border/30 rounded-full border border-border">
           {article.category}
         </span>
-        <div className="flex items-center gap-1 text-xs text-[#585F78]">
+        <div className="flex items-center gap-1 text-xs text-brand-gray">
           <Clock className="w-3 h-3" />
           {article.readTime}
         </div>
       </div>
       
       {/* Title */}
-      <h3 className="text-lg font-medium text-[#F0F5FB] mb-3 group-hover:text-white transition-colors leading-snug">
+      <h3 className="text-lg font-medium text-foreground mb-3 group-hover:text-white transition-colors leading-snug">
         {article.title}
       </h3>
       
       {/* Excerpt */}
-      <p className="text-sm text-[#7A8BA7] mb-4 leading-relaxed">
+      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
         {article.excerpt}
       </p>
       
       {/* Read more link */}
-      <div className="flex items-center text-sm text-[#3B80EC] font-medium group-hover:text-[#0054D6] transition-colors">
+      <div className="flex items-center text-sm text-accent font-medium group-hover:text-primary transition-colors">
         Read article
         <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
       </div>
@@ -86,7 +86,7 @@ export function InsightsSection() {
           transition={{ duration: 0.6 }}
         >
           <motion.span
-            className="inline-block px-4 py-1.5 mb-6 bg-[#001535]/60 border border-[#002A6B] rounded-full text-xs font-mono text-[#7A8BA7] uppercase tracking-wider"
+            className="inline-block px-4 py-1.5 mb-6 bg-card/60 border border-border rounded-full text-xs font-mono text-muted-foreground uppercase tracking-wider"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -94,14 +94,14 @@ export function InsightsSection() {
             Insights
           </motion.span>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#F0F5FB] mb-6 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Technical writing &{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0054D6] to-[#3B80EC]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               engineering insights
             </span>
           </h2>
           
-          <p className="text-lg text-[#7A8BA7] max-w-2xl mx-auto text-pretty">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
             Thoughts on frontend architecture, AI integration, and modern 
             product engineering.
           </p>
