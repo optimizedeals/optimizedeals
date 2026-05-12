@@ -3,54 +3,75 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import type { SimpleIcon as SI } from "simple-icons";
+import {
+  siReact,
+  siNextdotjs,
+  siTypescript,
+  siTailwindcss,
+  siVite,
+  siNx,
+  siTurborepo,
+  siNodedotjs,
+  siNestjs,
+  siHono,
+  siAnthropic,
+  siDocker,
+  siCloudflare,
+  siVercel,
+  siWagmi,
+  siEthers,
+  siSolidity,
+} from "simple-icons";
+import { SimpleIcon } from "@/components/icons/simple-icon";
 
-const techStack = {
+interface TechEntry {
+  name: string;
+  /** simple-icons brand glyph; undefined entries fall back to a colored dot. */
+  icon?: SI;
+  /** Used for the dot fallback only. */
+  color?: string;
+}
+
+const techStack: Record<string, TechEntry[]> = {
   Frontend: [
-    { name: "React", color: "#61DAFB" },
-    { name: "Next.js", color: "#FFFFFF" },
-    { name: "TypeScript", color: "#3178C6" },
-    { name: "Tailwind", color: "#06B6D4" },
-    { name: "Vite", color: "#646CFF" },
+    { name: "React", icon: siReact },
+    { name: "Next.js", icon: siNextdotjs },
+    { name: "TypeScript", icon: siTypescript },
+    { name: "Tailwind", icon: siTailwindcss },
+    { name: "Vite", icon: siVite },
     { name: "Rspack", color: "#FF6D00" },
   ],
   Architecture: [
-    { name: "Nx", color: "#143055" },
+    { name: "Nx", icon: siNx },
     { name: "Module Federation", color: "#3B80EC" },
-    { name: "Turborepo", color: "#EF4444" },
+    { name: "Turborepo", icon: siTurborepo },
   ],
   Backend: [
-    { name: "Node.js", color: "#339933" },
-    { name: "NestJS", color: "#E0234E" },
-    { name: "Hono", color: "#FF6B35" },
+    { name: "Node.js", icon: siNodedotjs },
+    { name: "NestJS", icon: siNestjs },
+    { name: "Hono", icon: siHono },
   ],
   AI: [
-    { name: "OpenAI", color: "#00A67E" },
-    { name: "Anthropic", color: "#D4A574" },
+    { name: "OpenAI", color: "#10A37F" },
+    { name: "Anthropic", icon: siAnthropic },
     { name: "RAG", color: "#9333EA" },
     { name: "Vector Search", color: "#EC4899" },
   ],
   Infrastructure: [
-    { name: "Docker", color: "#2496ED" },
-    { name: "Cloudflare", color: "#F38020" },
-    { name: "Vercel", color: "#FFFFFF" },
+    { name: "Docker", icon: siDocker },
+    { name: "Cloudflare", icon: siCloudflare },
+    { name: "Vercel", icon: siVercel },
   ],
   Web3: [
-    { name: "Viem", color: "#1C1C1C" },
-    { name: "Wagmi", color: "#1C1C1C" },
-    { name: "Ethers.js", color: "#2535A0" },
-    { name: "Solidity", color: "#363636" },
+    { name: "Viem", color: "#7B3FE4" },
+    { name: "Wagmi", icon: siWagmi },
+    { name: "Ethers.js", icon: siEthers },
+    { name: "Solidity", icon: siSolidity },
   ],
 };
 
-function TechItem({
-  name,
-  color,
-  index,
-}: {
-  name: string;
-  color: string;
-  index: number;
-}) {
+function TechItem({ entry, index }: { entry: TechEntry; index: number }) {
   return (
     <motion.div
       className="group relative px-4 py-3 bg-card/40 border border-border/50 rounded-lg hover:border-border transition-all duration-300 cursor-default"
@@ -61,12 +82,22 @@ function TechItem({
       whileHover={{ y: -2 }}
     >
       <div className="flex items-center gap-3">
-        <div
-          className="w-2 h-2 rounded-full"
-          style={{ backgroundColor: color }}
-        />
+        {entry.icon ? (
+          <SimpleIcon
+            icon={entry.icon}
+            size={16}
+            color={`#${entry.icon.hex}`}
+            title={entry.name}
+          />
+        ) : (
+          <div
+            className="w-2 h-2 rounded-full"
+            style={{ backgroundColor: entry.color ?? "currentColor" }}
+            aria-hidden="true"
+          />
+        )}
         <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors font-mono">
-          {name}
+          {entry.name}
         </span>
       </div>
     </motion.div>
@@ -79,7 +110,7 @@ function CategorySection({
   categoryIndex,
 }: {
   category: string;
-  items: typeof techStack.Frontend;
+  items: TechEntry[];
   categoryIndex: number;
 }) {
   return (
@@ -94,12 +125,7 @@ function CategorySection({
       </h3>
       <div className="flex flex-wrap gap-3">
         {items.map((item, index) => (
-          <TechItem
-            key={item.name}
-            name={item.name}
-            color={item.color}
-            index={index}
-          />
+          <TechItem key={item.name} entry={item} index={index} />
         ))}
       </div>
     </motion.div>

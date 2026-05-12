@@ -16,9 +16,11 @@ import { MegaMenu } from "@/components/mega-menu";
 import { Footer } from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
 import { ReadingProgress } from "./reading-progress";
+import { ShareRow } from "./share-row";
 import { ArticleMeta } from "@/lib/mdx";
 
 interface ArticleLayoutProps {
+  slug: string;
   title: string;
   description: string;
   date: string;
@@ -32,7 +34,12 @@ interface ArticleLayoutProps {
   children: React.ReactNode;
 }
 
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_BASE_URL || "https://optimize.deals"
+).replace(/\/$/, "");
+
 export function ArticleLayout({
+  slug,
   title,
   description,
   date,
@@ -45,6 +52,7 @@ export function ArticleLayout({
   latestArticles,
   children,
 }: ArticleLayoutProps) {
+  const articleUrl = `${SITE_URL}/insights/${slug}`;
   const tagsAndShare = (
     <div className="space-y-8">
       {/* Tags */}
@@ -73,36 +81,7 @@ export function ArticleLayout({
         <h3 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-4">
           Share
         </h3>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1 border-border bg-transparent hover:bg-border/30 text-muted-foreground hover:text-foreground"
-            asChild
-          >
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(`https://optimize.deals/insights/${title.toLowerCase().replace(/\s+/g, "-")}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Twitter
-            </a>
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1 border-border bg-transparent hover:bg-border/30 text-muted-foreground hover:text-foreground"
-            asChild
-          >
-            <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://optimize.deals/insights/${title.toLowerCase().replace(/\s+/g, "-")}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </Button>
-        </div>
+        <ShareRow title={title} url={articleUrl} />
       </div>
     </div>
   );

@@ -128,6 +128,7 @@ export default async function ArticlePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ArticleLayout
+        slug={article.slug}
         title={article.title}
         description={article.description}
         date={formatDate(article.date)}
