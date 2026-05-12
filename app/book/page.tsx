@@ -199,7 +199,7 @@ export default function BookPage() {
                       className="bg-[#0054D6] hover:bg-[#3B80EC] text-white"
                     >
                       <a
-                        href="https://cal.com/optimizedeals/discovery"
+                        href="https://cal.com/optimizedeals/"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
