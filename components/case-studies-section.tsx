@@ -74,7 +74,6 @@ function CaseStudyCard({
           <span className="px-3 py-1 text-xs font-mono text-accent bg-border/30 rounded-full border border-border">
             {study.category}
           </span>
-          <ArrowUpRight className="w-5 h-5 text-brand-gray group-hover:text-accent transition-colors" />
         </div>
 
         {/* Title */}
