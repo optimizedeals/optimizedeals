@@ -303,14 +303,14 @@ function ArticleCard({
 
   return (
     <motion.article
-      className="group"
+      className="group h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
     >
-      <Link href={`/insights/${article.slug}`} className="block">
-        <div className="h-full p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 hover:bg-card/50 transition-all duration-300">
+      <Link href={`/insights/${article.slug}`} className="block h-full">
+        <div className="h-full flex flex-col p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 hover:bg-card/50 transition-all duration-300">
           {/* Category */}
           <div className="flex items-center gap-2 mb-4">
             <CategoryIcon className="w-4 h-4 text-accent" />
@@ -329,9 +329,9 @@ function ArticleCard({
             {article.description}
           </p>
 
-          {/* Tags */}
+          {/* Tags — pushed to the bottom so cards align even with short descriptions */}
           {article.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="mt-auto flex flex-wrap gap-2 pt-2 mb-4">
               {article.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
@@ -344,8 +344,10 @@ function ArticleCard({
             </div>
           )}
 
-          {/* Meta */}
-          <div className="flex items-center gap-3 text-xs text-brand-gray">
+          {/* Meta — always at the very bottom */}
+          <div
+            className={`flex items-center gap-3 text-xs text-brand-gray ${article.tags.length > 0 ? "" : "mt-auto pt-2"}`}
+          >
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {article.readingTime}

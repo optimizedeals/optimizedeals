@@ -193,13 +193,13 @@ function ExperimentCard({
   return (
     <motion.div
       id={experiment.id}
-      className="group relative scroll-mt-24"
+      className="group relative scroll-mt-24 h-full"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.1, duration: 0.6 }}
     >
-      <div className="relative p-8 bg-card/40 border border-border/40 rounded-2xl overflow-hidden hover:border-border/70 transition-all duration-500">
+      <div className="h-full flex flex-col relative p-8 bg-card/40 border border-border/40 rounded-2xl overflow-hidden hover:border-border/70 transition-all duration-500">
         {/* Animated background grid */}
         <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -232,7 +232,7 @@ function ExperimentCard({
           style={{ background: experiment.color }}
         />
 
-        <div className="relative">
+        <div className="relative flex flex-col flex-1">
           {/* Header */}
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center gap-4">
@@ -299,8 +299,8 @@ function ExperimentCard({
             ))}
           </div>
 
-          {/* Technologies */}
-          <div className="flex flex-wrap gap-2">
+          {/* Technologies — pinned to the bottom so cards align in the grid */}
+          <div className="mt-auto pt-2 flex flex-wrap gap-2">
             {experiment.technologies.map((tech) => (
               <span
                 key={tech}
