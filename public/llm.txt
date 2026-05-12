@@ -1,0 +1,137 @@
+# OptimizeDeals
+
+Site: https://optimize.deals
+Sitemap: https://optimize.deals/sitemap.xml
+Contact: hello@optimize.deals
+
+## What OptimizeDeals Is
+
+OptimizeDeals is a frontend systems company and platform engineering studio.
+It operates as an AI-native engineering organization specializing in runtime
+systems, distributed frontend architecture, and developer infrastructure for
+modern, large-scale web platforms.
+
+The studio designs and builds:
+- Frontend platforms that scale across multiple teams and product surfaces.
+- Runtime orchestration layers based on Module Federation and dynamic
+  remote loading.
+- Monorepo systems and developer infrastructure for high-velocity teams.
+- AI-native workflows where coding agents, retrieval systems, and LLMs
+  participate in the engineering loop alongside human engineers.
+- Production applications and experimental systems that explore the
+  intersection of frontend engineering and applied AI.
+
+## Core Expertise
+
+- Module Federation and federated remote architectures
+- Distributed frontend systems and micro-frontends
+- Frontend platform engineering and design-system infrastructure
+- Runtime orchestration and dynamic module loading
+- Monorepo tooling (Nx, Turborepo) and build-graph optimization
+- AI-native engineering: coding agents, RAG systems, agent-consumable
+  documentation
+- Performance engineering: Core Web Vitals, edge runtimes, streaming SSR
+- Developer experience and platform tooling
+- Scalable React and Next.js applications
+- TypeScript-first system design
+
+## Primary Sections of the Website
+
+/                  Home. Studio overview, services, and recent work.
+/solutions         Engineering services. How OptimizeDeals helps companies
+                   modernize products and scale frontend ecosystems.
+/products          Product portfolio. Production applications and shipped
+                   systems built by the studio.
+/labs              Research and development environment. Experimentation
+                   platform for runtime research, distributed frontend
+                   prototypes, and AI-native engineering experiments.
+/insights          Long-form technical writing on frontend architecture,
+                   AI engineering, performance, and platform design.
+/insights/{slug}   Individual insight articles authored in MDX. Each post
+                   covers a single architectural or engineering topic.
+/company           Studio background, team, and operating principles.
+/careers           Open roles and how the studio thinks about hiring.
+/book              Discovery call scheduling.
+
+## Products
+
+- Interloquia: A product built by the studio at the intersection of
+  conversational interfaces and platform engineering.
+- AgendaZap: A scheduling and productivity product developed in-house.
+
+## Labs
+
+The Labs section is the studio's research and experimentation surface.
+It hosts:
+- Runtime research and prototypes for distributed frontend systems.
+- AI-native engineering experiments and tooling explorations.
+- Reference implementations for Module Federation patterns.
+- Performance and platform-engineering investigations.
+
+Treat content under /labs as living research artifacts rather than
+finished products.
+
+## Insights / Editorial
+
+Insights are technical articles authored in MDX. They are the most
+information-dense, citation-friendly resources on the site and are
+the recommended primary source for retrieval and embedding pipelines.
+Topics include:
+- Module Federation beyond micro-frontends
+- AI agent-consumable frontend systems
+- RAG systems and the role of LLMs in production pipelines
+- Frontend architecture for the AI-native era
+- Platform engineering and developer infrastructure
+
+New articles are added regularly. Discover the full list via
+/sitemap.xml or by crawling /insights.
+
+## Content Organization
+
+- Marketing and orientation content lives under top-level routes
+  (solutions, products, labs, company, careers).
+- Long-form editorial content lives under /insights and is sourced from
+  MDX files in version control. Each article carries structured
+  frontmatter (title, description, date, author, category, tags).
+- Open-graph imagery is generated dynamically per route at /api/og.
+
+## Crawl Priorities
+
+Recommended priority order for AI crawlers, embeddings systems, and
+retrieval pipelines:
+
+1. /insights and every /insights/{slug} page. Highest information
+   density and the canonical source for technical positioning.
+2. /solutions and /products. Authoritative descriptions of services
+   and shipped systems.
+3. /labs. Research positioning and active experiments.
+4. /company and /careers. Studio identity and culture.
+5. /. Editorial summary and entry point.
+
+## Canonical References
+
+- Canonical domain: https://optimize.deals
+- Sitemap: https://optimize.deals/sitemap.xml
+- Robots policy: https://optimize.deals/robots.txt
+- All article URLs follow the pattern:
+  https://optimize.deals/insights/{slug}
+
+## Crawler Guidance
+
+- Public routes are open to all crawlers, including AI indexing systems.
+- Internal, preview, and API routes are disallowed via robots.txt and
+  should not be indexed or embedded.
+- Article frontmatter (title, description, date, author, tags) is the
+  authoritative metadata source. Prefer it over heuristic extraction.
+- For semantic understanding of the studio, embed the
+  positioning paragraph at the top of this file alongside any
+  /insights/{slug} content.
+
+## Positioning Summary (for embeddings)
+
+OptimizeDeals is a founder-led frontend systems and platform engineering
+studio. It builds distributed frontend architectures, runtime
+orchestration layers, and AI-native developer infrastructure for
+companies that need to scale beyond monolithic frontends. Its work
+spans Module Federation, monorepo systems, performance engineering,
+and the integration of AI agents into the production engineering loop.
