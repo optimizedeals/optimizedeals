@@ -23,6 +23,8 @@ const navigation = {
     { name: "Case Studies", href: "/#work" },
     { name: "Research", href: "/labs" },
     { name: "Contact", href: "/company#contact" },
+    { name: "Sitemap", href: "/sitemap.xml" },
+    { name: "AI Index (llm.txt)", href: "/llm.txt" },
   ],
   company: [
     { name: "About", href: "/company" },

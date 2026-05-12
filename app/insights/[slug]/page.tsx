@@ -39,12 +39,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: article.title,
     description: article.description,
     authors: [{ name: article.author }],
+    keywords: article.tags,
+    alternates: {
+      canonical: `${baseUrl}/insights/${slug}`,
+    },
     openGraph: {
       title: article.title,
       description: article.description,
       type: "article",
+      url: `${baseUrl}/insights/${slug}`,
       publishedTime: article.date,
       authors: [article.author],
+      tags: article.tags,
+      section: article.category,
       images: [
         {
           url: ogImageUrl,
@@ -79,20 +86,61 @@ export default async function ArticlePage({ params }: PageProps) {
   )
   const latestArticles = await getLatestArticles(4)
 
+  const articleUrl = `${baseUrl}/insights/${article.slug}`
+  const ogImageUrl = `${baseUrl}/api/og?${new URLSearchParams({
+    title: article.title,
+    description: article.description || '',
+    category: article.category || '',
+  }).toString()}`
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    image: [ogImageUrl],
+    datePublished: article.date,
+    dateModified: article.date,
+    author: {
+      '@type': 'Person',
+      name: article.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'OptimizeDeals',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo-white.svg`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': articleUrl,
+    },
+    articleSection: article.category,
+    keywords: article.tags?.join(', '),
+  }
+
   return (
-    <ArticleLayout
-      title={article.title}
-      description={article.description}
-      date={formatDate(article.date)}
-      author={article.author}
-      category={article.category}
-      tags={article.tags}
-      readingTime={article.readingTime}
-      image={article.image}
-      relatedArticles={relatedArticles}
-      latestArticles={latestArticles}
-    >
-      <MDXContent content={article.content} />
-    </ArticleLayout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ArticleLayout
+        title={article.title}
+        description={article.description}
+        date={formatDate(article.date)}
+        author={article.author}
+        category={article.category}
+        tags={article.tags}
+        readingTime={article.readingTime}
+        image={article.image}
+        relatedArticles={relatedArticles}
+        latestArticles={latestArticles}
+      >
+        <MDXContent content={article.content} />
+      </ArticleLayout>
+    </>
   )
 }
