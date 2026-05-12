@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 const techStack = {
   Frontend: [
@@ -40,9 +40,17 @@ const techStack = {
     { name: "Ethers.js", color: "#2535A0" },
     { name: "Solidity", color: "#363636" },
   ],
-}
+};
 
-function TechItem({ name, color, index }: { name: string; color: string; index: number }) {
+function TechItem({
+  name,
+  color,
+  index,
+}: {
+  name: string;
+  color: string;
+  index: number;
+}) {
   return (
     <motion.div
       className="group relative px-4 py-3 bg-card/40 border border-border/50 rounded-lg hover:border-border transition-all duration-300 cursor-default"
@@ -53,7 +61,7 @@ function TechItem({ name, color, index }: { name: string; color: string; index: 
       whileHover={{ y: -2 }}
     >
       <div className="flex items-center gap-3">
-        <div 
+        <div
           className="w-2 h-2 rounded-full"
           style={{ backgroundColor: color }}
         />
@@ -62,13 +70,17 @@ function TechItem({ name, color, index }: { name: string; color: string; index: 
         </span>
       </div>
     </motion.div>
-  )
+  );
 }
 
-function CategorySection({ category, items, categoryIndex }: { 
-  category: string
-  items: typeof techStack.Frontend
-  categoryIndex: number 
+function CategorySection({
+  category,
+  items,
+  categoryIndex,
+}: {
+  category: string;
+  items: typeof techStack.Frontend;
+  categoryIndex: number;
 }) {
   return (
     <motion.div
@@ -82,29 +94,29 @@ function CategorySection({ category, items, categoryIndex }: {
       </h3>
       <div className="flex flex-wrap gap-3">
         {items.map((item, index) => (
-          <TechItem 
-            key={item.name} 
-            name={item.name} 
-            color={item.color} 
-            index={index} 
+          <TechItem
+            key={item.name}
+            name={item.name}
+            color={item.color}
+            index={index}
           />
         ))}
       </div>
     </motion.div>
-  )
+  );
 }
 
 export function TechStackSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="stack" ref={ref} className="relative py-24 md:py-32">
       {/* Background elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-100 bg-primary/5 rounded-full blur-[150px]" />
       </div>
-      
+
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header */}
         <motion.div
@@ -121,32 +133,32 @@ export function TechStackSection() {
           >
             Technology
           </motion.span>
-          
+
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Modern stack for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
               modern products
             </span>
           </h2>
-          
+
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            We leverage cutting-edge technologies to build performant, 
-            scalable, and maintainable solutions.
+            We leverage cutting-edge technologies to build performant, scalable,
+            and maintainable solutions.
           </p>
         </motion.div>
 
         {/* Tech grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {Object.entries(techStack).map(([category, items], index) => (
-            <CategorySection 
-              key={category} 
-              category={category} 
-              items={items} 
+            <CategorySection
+              key={category}
+              category={category}
+              items={items}
               categoryIndex={index}
             />
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

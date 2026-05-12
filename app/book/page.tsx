@@ -35,8 +35,8 @@ export default function BookPage() {
       <main className="min-h-screen bg-background">
         {/* Background elements */}
         <div className="fixed inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px]" />
+          <div className="absolute top-1/4 left-1/4 w-150 h-150 bg-primary/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-100 h-100 bg-accent/5 rounded-full blur-[120px]" />
         </div>
 
         {/* Grid pattern */}

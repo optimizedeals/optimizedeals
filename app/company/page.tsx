@@ -1,78 +1,112 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ArrowRight, CheckCircle, Target, Shield, Zap, Clock, Users, GitBranch, Layers, Brain, Lightbulb, Award, Mail, Calendar, Linkedin, Github } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/page-hero"
-import Link from "next/link"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  CheckCircle,
+  Target,
+  Shield,
+  Zap,
+  Clock,
+  Users,
+  GitBranch,
+  Layers,
+  Brain,
+  Lightbulb,
+  Award,
+  Mail,
+  Calendar,
+  Linkedin,
+  Github,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/page-hero";
+import Link from "next/link";
+import Image from "next/image";
 
 const principles = [
   {
     icon: Layers,
     title: "Architecture-First",
-    description: "Every project starts with careful architecture design. We believe that well-designed systems are easier to maintain, scale, and evolve over time.",
+    description:
+      "Every project starts with careful architecture design. We believe that well-designed systems are easier to maintain, scale, and evolve over time.",
   },
   {
     icon: Target,
     title: "Outcome-Oriented",
-    description: "We focus on business outcomes, not just technical deliverables. Our engineering decisions are always grounded in practical value creation.",
+    description:
+      "We focus on business outcomes, not just technical deliverables. Our engineering decisions are always grounded in practical value creation.",
   },
   {
     icon: Zap,
     title: "Performance Obsessed",
-    description: "Performance is not an afterthought. We optimize for speed from day one, understanding that user experience depends on it.",
+    description:
+      "Performance is not an afterthought. We optimize for speed from day one, understanding that user experience depends on it.",
   },
   {
     icon: Shield,
     title: "Technical Sustainability",
-    description: "We build systems designed for long-term success. No shortcuts that create technical debt or maintenance nightmares.",
+    description:
+      "We build systems designed for long-term success. No shortcuts that create technical debt or maintenance nightmares.",
   },
   {
     icon: Brain,
     title: "Continuous Learning",
-    description: "The frontend ecosystem evolves rapidly. We stay at the cutting edge through research, experimentation, and knowledge sharing.",
+    description:
+      "The frontend ecosystem evolves rapidly. We stay at the cutting edge through research, experimentation, and knowledge sharing.",
   },
   {
     icon: Users,
     title: "Collaborative Engineering",
-    description: "We work as partners, not vendors. Close collaboration with your team ensures knowledge transfer and sustainable outcomes.",
+    description:
+      "We work as partners, not vendors. Close collaboration with your team ensures knowledge transfer and sustainable outcomes.",
   },
-]
+];
 
 const timeline = [
   {
     year: "2014",
     title: "Engineering Foundation",
-    description: "Started professional frontend development journey, building enterprise applications.",
+    description:
+      "Started professional frontend development journey, building enterprise applications.",
   },
   {
     year: "2018",
     title: "Architecture Focus",
-    description: "Transitioned to architecture-focused roles, designing scalable frontend systems.",
+    description:
+      "Transitioned to architecture-focused roles, designing scalable frontend systems.",
   },
   {
     year: "2021",
     title: "AI Integration",
-    description: "Began specializing in AI-native product development and RAG systems.",
+    description:
+      "Began specializing in AI-native product development and RAG systems.",
   },
   {
     year: "2023",
     title: "OptimizeDeals Launch",
     description: "Founded OptimizeDeals as a specialized engineering studio.",
   },
-]
+];
 
 const companies = [
-  "IBM", "Adobe", "Lululemon", "Rocketseat", "Sony", "Itaú", "ByteDance", "John Deere", "Valor Software"
-]
+  "IBM",
+  "Adobe",
+  "Lululemon",
+  "Rocketseat",
+  "Sony",
+  "Itaú",
+  "ByteDance",
+  "John Deere",
+  "Valor Software",
+];
 
 const stats = [
   { icon: Clock, value: "10+", label: "Years Experience" },
   { icon: GitBranch, value: "50+", label: "Projects Delivered" },
   { icon: Users, value: "100%", label: "Senior Engineers" },
   { icon: Award, value: "Global", label: "Client Base" },
-]
+];
 
 export default function CompanyPage() {
   return (
@@ -100,13 +134,23 @@ export default function CompanyPage() {
               </h2>
               <div className="space-y-6 text-muted-foreground leading-relaxed">
                 <p>
-                  We believe that exceptional engineering is the foundation of exceptional products. In a world where frontend complexity continues to grow, having a partner who understands both the technical depth and business context is invaluable.
+                  We believe that exceptional engineering is the foundation of
+                  exceptional products. In a world where frontend complexity
+                  continues to grow, having a partner who understands both the
+                  technical depth and business context is invaluable.
                 </p>
                 <p>
-                  OptimizeDeals was founded on the principle that modern products deserve modern engineering. We bring expertise in React ecosystems, micro-frontend architectures, AI integration, and platform engineering to help companies build systems that scale.
+                  OptimizeDeals was founded on the principle that modern
+                  products deserve modern engineering. We bring expertise in
+                  React ecosystems, micro-frontend architectures, AI
+                  integration, and platform engineering to help companies build
+                  systems that scale.
                 </p>
                 <p>
-                  Our approach is deliberately founder-led. This means direct access to senior engineering expertise, no account managers or junior developers learning on your project. Every engagement gets our full attention and technical depth.
+                  Our approach is deliberately founder-led. This means direct
+                  access to senior engineering expertise, no account managers or
+                  junior developers learning on your project. Every engagement
+                  gets our full attention and technical depth.
                 </p>
               </div>
             </motion.div>
@@ -120,7 +164,7 @@ export default function CompanyPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               {stats.map((stat, index) => {
-                const Icon = stat.icon
+                const Icon = stat.icon;
                 return (
                   <div
                     key={stat.label}
@@ -130,9 +174,11 @@ export default function CompanyPage() {
                     <div className="text-3xl font-medium text-foreground mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {stat.label}
+                    </div>
                   </div>
-                )
+                );
               })}
             </motion.div>
           </div>
@@ -161,7 +207,7 @@ export default function CompanyPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {principles.map((principle, index) => {
-              const Icon = principle.icon
+              const Icon = principle.icon;
               return (
                 <motion.div
                   key={principle.title}
@@ -179,7 +225,7 @@ export default function CompanyPage() {
                     {principle.description}
                   </p>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
@@ -204,7 +250,7 @@ export default function CompanyPage() {
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-border to-transparent" />
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-primary via-border to-transparent" />
 
             <div className="space-y-12">
               {timeline.map((item, index) => (
@@ -222,7 +268,9 @@ export default function CompanyPage() {
                   <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary border-4 border-background" />
 
                   {/* Content */}
-                  <div className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? "md:pr-16 md:text-right" : "md:pl-16"}`}>
+                  <div
+                    className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? "md:pr-16 md:text-right" : "md:pl-16"}`}
+                  >
                     <span className="text-sm font-mono text-primary mb-1 block">
                       {item.year}
                     </span>
@@ -289,13 +337,17 @@ export default function CompanyPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            Logos represent previous professional experience and ecosystem participation.
+            Logos represent previous professional experience and ecosystem
+            participation.
           </motion.p>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 border-t border-border/30 scroll-mt-24">
+      <section
+        id="contact"
+        className="py-20 border-t border-border/30 scroll-mt-24"
+      >
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             className="text-center"
@@ -310,7 +362,8 @@ export default function CompanyPage() {
               Ready to discuss your project?
             </h2>
             <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Book a discovery call to discuss your engineering challenges and explore how we can help.
+              Book a discovery call to discuss your engineering challenges and
+              explore how we can help.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -362,5 +415,5 @@ export default function CompanyPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

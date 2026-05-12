@@ -39,8 +39,8 @@ function GridBackground() {
       </div>
 
       {/* Radial gradient overlays */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px]" />
+      <div className="absolute top-0 left-1/4 w-150 h-150 bg-primary/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-accent/10 rounded-full blur-[100px]" />
 
       {/* Animated orbit lines */}
       <svg
@@ -177,7 +177,7 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             Engineering scalable frontend{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
               systems
             </span>{" "}
             for modern products.

@@ -1,10 +1,27 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Layers, Box, Workflow, Brain, Wrench, ArrowRight, CheckCircle, Zap, Shield, Clock, Users, GitBranch, Cpu, Database, Globe, Server } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/page-hero"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import {
+  Layers,
+  Box,
+  Workflow,
+  Brain,
+  Wrench,
+  ArrowRight,
+  CheckCircle,
+  Zap,
+  Shield,
+  Clock,
+  Users,
+  GitBranch,
+  Cpu,
+  Database,
+  Globe,
+  Server,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/page-hero";
+import Link from "next/link";
 
 const solutions = [
   {
@@ -12,8 +29,10 @@ const solutions = [
     icon: Layers,
     title: "Frontend Architecture",
     tagline: "Scalable React ecosystems for enterprise",
-    description: "We design and implement frontend systems that scale with your organization. From component libraries to state management patterns, we build foundations that last.",
-    problem: "Many companies struggle with fragmented frontend codebases, inconsistent patterns, and architecture that doesn&apos;t scale with team growth.",
+    description:
+      "We design and implement frontend systems that scale with your organization. From component libraries to state management patterns, we build foundations that last.",
+    problem:
+      "Many companies struggle with fragmented frontend codebases, inconsistent patterns, and architecture that doesn&apos;t scale with team growth.",
     approach: [
       "Comprehensive architecture audits and system design",
       "Component library development with design system integration",
@@ -26,15 +45,23 @@ const solutions = [
       "Improved developer experience",
       "Consistent UI across products",
     ],
-    technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Storybook"],
+    technologies: [
+      "React",
+      "TypeScript",
+      "Next.js",
+      "Tailwind CSS",
+      "Storybook",
+    ],
   },
   {
     id: "micro-frontends",
     icon: Box,
     title: "Micro-frontends & Module Federation",
     tagline: "Runtime composition for distributed teams",
-    description: "Break monolithic frontends into independently deployable applications. Enable teams to ship faster without coordination overhead.",
-    problem: "Large frontend applications become bottlenecks when multiple teams need to deploy features independently. Coordination costs slow everyone down.",
+    description:
+      "Break monolithic frontends into independently deployable applications. Enable teams to ship faster without coordination overhead.",
+    problem:
+      "Large frontend applications become bottlenecks when multiple teams need to deploy features independently. Coordination costs slow everyone down.",
     approach: [
       "Module federation architecture design",
       "Runtime composition strategies",
@@ -54,8 +81,10 @@ const solutions = [
     icon: Workflow,
     title: "Platform Engineering",
     tagline: "Monorepos and build system optimization",
-    description: "Build internal platforms that accelerate development. From monorepo setup to CI optimization, we create infrastructure that multiplies team productivity.",
-    problem: "Engineering teams lose hours to slow builds, manual processes, and tooling that doesn&apos;t scale. Developer experience directly impacts velocity.",
+    description:
+      "Build internal platforms that accelerate development. From monorepo setup to CI optimization, we create infrastructure that multiplies team productivity.",
+    problem:
+      "Engineering teams lose hours to slow builds, manual processes, and tooling that doesn&apos;t scale. Developer experience directly impacts velocity.",
     approach: [
       "Monorepo architecture with Nx or Turborepo",
       "Build caching and optimization strategies",
@@ -75,8 +104,10 @@ const solutions = [
     icon: Brain,
     title: "AI Product Integration",
     tagline: "RAG systems and AI-native experiences",
-    description: "Integrate AI capabilities into your products with production-ready architecture. From RAG systems to streaming interfaces, we build AI experiences that feel native.",
-    problem: "Teams struggle to move AI prototypes to production. Integration challenges, latency issues, and UX patterns are common blockers.",
+    description:
+      "Integrate AI capabilities into your products with production-ready architecture. From RAG systems to streaming interfaces, we build AI experiences that feel native.",
+    problem:
+      "Teams struggle to move AI prototypes to production. Integration challenges, latency issues, and UX patterns are common blockers.",
     approach: [
       "RAG architecture design and implementation",
       "Streaming UI patterns for AI responses",
@@ -89,15 +120,23 @@ const solutions = [
       "Seamless user experiences",
       "Scalable AI infrastructure",
     ],
-    technologies: ["OpenAI", "LangChain", "Vercel AI SDK", "Pinecone", "PostgreSQL"],
+    technologies: [
+      "OpenAI",
+      "LangChain",
+      "Vercel AI SDK",
+      "Pinecone",
+      "PostgreSQL",
+    ],
   },
   {
     id: "modernization",
     icon: Wrench,
     title: "Product Modernization",
     tagline: "Legacy migrations and technical debt reduction",
-    description: "Transform legacy applications into modern, maintainable systems. We plan and execute migrations that minimize risk while maximizing value.",
-    problem: "Legacy codebases accumulate technical debt that slows development and increases maintenance costs. Complete rewrites are risky and expensive.",
+    description:
+      "Transform legacy applications into modern, maintainable systems. We plan and execute migrations that minimize risk while maximizing value.",
+    problem:
+      "Legacy codebases accumulate technical debt that slows development and increases maintenance costs. Complete rewrites are risky and expensive.",
     approach: [
       "Incremental modernization strategies",
       "Strangler fig pattern implementation",
@@ -112,17 +151,23 @@ const solutions = [
     ],
     technologies: ["React", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
   },
-]
+];
 
 const stats = [
   { icon: Clock, value: "10+", label: "Years Experience" },
   { icon: Users, value: "50+", label: "Projects Delivered" },
   { icon: GitBranch, value: "100%", label: "Senior Engineers" },
   { icon: Zap, value: "40%", label: "Avg. Performance Gain" },
-]
+];
 
-function SolutionCard({ solution, index }: { solution: typeof solutions[0]; index: number }) {
-  const Icon = solution.icon
+function SolutionCard({
+  solution,
+  index,
+}: {
+  solution: (typeof solutions)[0];
+  index: number;
+}) {
+  const Icon = solution.icon;
 
   return (
     <motion.section
@@ -149,14 +194,18 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
             {solution.title}
           </h2>
           <p className="text-lg text-accent mb-6">{solution.tagline}</p>
-          <p className="text-muted-foreground leading-relaxed mb-8">{solution.description}</p>
+          <p className="text-muted-foreground leading-relaxed mb-8">
+            {solution.description}
+          </p>
 
           {/* Problem statement */}
           <div className="p-6 bg-card/50 border border-border/50 rounded-xl mb-6">
             <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-3">
               The Problem
             </h4>
-            <p className="text-sm text-muted-foreground leading-relaxed">{solution.problem}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {solution.problem}
+            </p>
           </div>
 
           {/* Technologies */}
@@ -183,7 +232,7 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
             <ul className="space-y-3">
               {solution.approach.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-xs text-accent">{i + 1}</span>
                   </div>
                   <span className="text-sm text-muted-foreground">{item}</span>
@@ -193,7 +242,7 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
           </div>
 
           {/* Outcomes */}
-          <div className="p-6 bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl">
+          <div className="p-6 bg-linear-to-br from-primary/10 to-transparent border border-primary/20 rounded-xl">
             <h4 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-primary" />
               Expected Outcomes
@@ -210,13 +259,13 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
         </div>
       </div>
     </motion.section>
-  )
+  );
 }
 
 function ArchitectureDiagram() {
   return (
     <motion.div
-      className="relative w-full aspect-[16/9] bg-card/30 border border-border/30 rounded-2xl overflow-hidden"
+      className="relative w-full aspect-video bg-card/30 border border-border/30 rounded-2xl overflow-hidden"
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
@@ -226,8 +275,18 @@ function ArchitectureDiagram() {
       <div className="absolute inset-0 opacity-20">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="archGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
+            <pattern
+              id="archGrid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="var(--accent)"
+                strokeWidth="0.5"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#archGrid)" />
@@ -250,7 +309,7 @@ function ArchitectureDiagram() {
 
           {/* Connection line */}
           <motion.div
-            className="w-16 h-0.5 bg-gradient-to-r from-primary to-accent"
+            className="w-16 h-0.5 bg-linear-to-r from-primary to-accent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -262,7 +321,12 @@ function ArchitectureDiagram() {
             <motion.div
               className="w-20 h-20 rounded-xl bg-accent/20 border border-accent/40 flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
             >
               <Server className="w-8 h-8 text-accent" />
             </motion.div>
@@ -271,7 +335,7 @@ function ArchitectureDiagram() {
 
           {/* Connection line */}
           <motion.div
-            className="w-16 h-0.5 bg-gradient-to-r from-accent to-primary"
+            className="w-16 h-0.5 bg-linear-to-r from-accent to-primary"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -283,7 +347,12 @@ function ArchitectureDiagram() {
             <motion.div
               className="w-20 h-20 rounded-xl bg-border/50 border border-border flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
             >
               <Cpu className="w-8 h-8 text-muted-foreground" />
             </motion.div>
@@ -292,7 +361,7 @@ function ArchitectureDiagram() {
 
           {/* Connection line */}
           <motion.div
-            className="w-16 h-0.5 bg-gradient-to-r from-border to-primary"
+            className="w-16 h-0.5 bg-linear-to-r from-border to-primary"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -304,7 +373,12 @@ function ArchitectureDiagram() {
             <motion.div
               className="w-20 h-20 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center"
               animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5,
+              }}
             >
               <Database className="w-8 h-8 text-primary" />
             </motion.div>
@@ -322,7 +396,7 @@ function ArchitectureDiagram() {
         Architecture Overview
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 export default function SolutionsPage() {
@@ -361,7 +435,7 @@ export default function SolutionsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
-              const Icon = stat.icon
+              const Icon = stat.icon;
               return (
                 <motion.div
                   key={stat.label}
@@ -375,9 +449,11 @@ export default function SolutionsPage() {
                   <div className="text-3xl md:text-4xl font-medium text-foreground mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.label}
+                  </div>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
@@ -396,7 +472,8 @@ export default function SolutionsPage() {
               Modern Architecture Patterns
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We design systems optimized for performance, scalability, and developer experience.
+              We design systems optimized for performance, scalability, and
+              developer experience.
             </p>
           </motion.div>
           <ArchitectureDiagram />
@@ -408,7 +485,11 @@ export default function SolutionsPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="space-y-32">
             {solutions.map((solution, index) => (
-              <SolutionCard key={solution.id} solution={solution} index={index} />
+              <SolutionCard
+                key={solution.id}
+                solution={solution}
+                index={index}
+              />
             ))}
           </div>
         </div>
@@ -427,7 +508,8 @@ export default function SolutionsPage() {
               Ready to scale your engineering?
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Let&apos;s discuss how we can help modernize your frontend architecture and accelerate your product development.
+              Let&apos;s discuss how we can help modernize your frontend
+              architecture and accelerate your product development.
             </p>
             <Button
               size="lg"
@@ -440,5 +522,5 @@ export default function SolutionsPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

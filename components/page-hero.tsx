@@ -1,17 +1,23 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ReactNode } from "react"
+import { motion } from "framer-motion";
+import { ReactNode } from "react";
 
 interface PageHeroProps {
-  badge?: string
-  title: string
-  titleHighlight?: string
-  description: string
-  children?: ReactNode
+  badge?: string;
+  title: string;
+  titleHighlight?: string;
+  description: string;
+  children?: ReactNode;
 }
 
-export function PageHero({ badge, title, titleHighlight, description, children }: PageHeroProps) {
+export function PageHero({
+  badge,
+  title,
+  titleHighlight,
+  description,
+  children,
+}: PageHeroProps) {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden">
       {/* Background elements */}
@@ -20,17 +26,27 @@ export function PageHero({ badge, title, titleHighlight, description, children }
         <div className="absolute inset-0 opacity-10">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="heroGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
+              <pattern
+                id="heroGrid"
+                width="60"
+                height="60"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 60 0 L 0 0 0 60"
+                  fill="none"
+                  stroke="var(--accent)"
+                  strokeWidth="0.5"
+                />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#heroGrid)" />
           </svg>
         </div>
-        
+
         {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/4 w-125 h-125 bg-primary/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-accent/10 rounded-full blur-[100px]" />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
@@ -61,7 +77,7 @@ export function PageHero({ badge, title, titleHighlight, description, children }
             {titleHighlight && (
               <>
                 {" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
                   {titleHighlight}
                 </span>
               </>
@@ -89,5 +105,5 @@ export function PageHero({ badge, title, titleHighlight, description, children }
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

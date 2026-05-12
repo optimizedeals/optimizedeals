@@ -91,7 +91,7 @@ export function Video({
           onPause={() => setIsPlaying(false)}
         />
         {controls && (
-          <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 p-3 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 p-3 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={togglePlay}
               aria-label={isPlaying ? "Pause" : "Play"}

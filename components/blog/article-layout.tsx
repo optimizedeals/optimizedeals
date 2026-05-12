@@ -117,7 +117,7 @@ export function ArticleLayout({
         <header className="relative py-16 md:py-24">
           {/* Background */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
+            <div className="absolute top-0 left-1/4 w-150 h-150 bg-primary/5 rounded-full blur-[150px]" />
             <div className="absolute inset-0 opacity-5">
               <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -220,7 +220,7 @@ export function ArticleLayout({
         </header>
 
         {/* Article Content */}
-        <div className="relative mx-auto px-4 sm:px-6 pb-20 max-w-[1800px]">
+        <div className="relative mx-auto px-4 sm:px-6 pb-20 max-w-450">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             {/* Table of Contents - Desktop */}
             <aside className="hidden lg:block lg:w-72 lg:shrink-0">

@@ -1,16 +1,9 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
-import { 
-  User, 
-  Award, 
-  Building2, 
-  Fingerprint, 
-  Zap, 
-  Code2
-} from "lucide-react"
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { User, Award, Building2, Fingerprint, Zap, Code2 } from "lucide-react";
 
 const highlights = [
   {
@@ -31,7 +24,8 @@ const highlights = [
   {
     icon: Fingerprint,
     title: "Rare specialization",
-    description: "Deep focus on frontend infrastructure and platform engineering.",
+    description:
+      "Deep focus on frontend infrastructure and platform engineering.",
   },
   {
     icon: Zap,
@@ -43,11 +37,17 @@ const highlights = [
     title: "Deep technical involvement",
     description: "We write code, not just documentation.",
   },
-]
+];
 
-function HighlightCard({ highlight, index }: { highlight: typeof highlights[0]; index: number }) {
-  const Icon = highlight.icon
-  
+function HighlightCard({
+  highlight,
+  index,
+}: {
+  highlight: (typeof highlights)[0];
+  index: number;
+}) {
+  const Icon = highlight.icon;
+
   return (
     <motion.div
       className="flex items-start gap-4 p-5 rounded-xl bg-card/30 border border-border/30 hover:bg-card/50 hover:border-border/60 transition-all duration-300"
@@ -56,7 +56,7 @@ function HighlightCard({ highlight, index }: { highlight: typeof highlights[0]; 
       transition={{ delay: index * 0.1, duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-border/40 border border-border">
+      <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-border/40 border border-border">
         <Icon className="w-5 h-5 text-accent" />
       </div>
       <div>
@@ -68,18 +68,18 @@ function HighlightCard({ highlight, index }: { highlight: typeof highlights[0]; 
         </p>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export function WhySection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-card/20 via-transparent to-card/20" />
-      
+      <div className="absolute inset-0 bg-linear-to-b from-card/20 via-transparent to-card/20" />
+
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left column - Text content */}
@@ -96,34 +96,40 @@ export function WhySection() {
             >
               Why Optimize
             </motion.span>
-            
+
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
               Not another{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
                 software agency
               </span>
             </h2>
-            
+
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed text-pretty">
-              We operate as a specialized engineering studio focused on architecture, 
-              scalability and long-term technical sustainability. Our approach combines 
-              deep frontend expertise with systems thinking to deliver solutions that 
-              scale with your business.
+              We operate as a specialized engineering studio focused on
+              architecture, scalability and long-term technical sustainability.
+              Our approach combines deep frontend expertise with systems
+              thinking to deliver solutions that scale with your business.
             </p>
-            
+
             {/* Stats */}
             <div className="flex gap-12">
               <div>
                 <div className="text-4xl font-bold text-primary mb-1">10+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
+                <div className="text-sm text-muted-foreground">
+                  Years Experience
+                </div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-primary mb-1">50+</div>
-                <div className="text-sm text-muted-foreground">Projects Delivered</div>
+                <div className="text-sm text-muted-foreground">
+                  Projects Delivered
+                </div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-primary mb-1">100%</div>
-                <div className="text-sm text-muted-foreground">Senior Engineers</div>
+                <div className="text-sm text-muted-foreground">
+                  Senior Engineers
+                </div>
               </div>
             </div>
           </motion.div>
@@ -131,11 +137,15 @@ export function WhySection() {
           {/* Right column - Highlights grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {highlights.map((highlight, index) => (
-              <HighlightCard key={highlight.title} highlight={highlight} index={index} />
+              <HighlightCard
+                key={highlight.title}
+                highlight={highlight}
+                index={index}
+              />
             ))}
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

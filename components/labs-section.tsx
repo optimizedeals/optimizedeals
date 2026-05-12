@@ -101,7 +101,7 @@ export function LabsSection() {
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/20 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-card/20 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header */}
@@ -122,7 +122,7 @@ export function LabsSection() {
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Engineering Research &{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
               Experimental Systems
             </span>
           </h2>

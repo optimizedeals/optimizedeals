@@ -40,7 +40,7 @@ export function TrustSection() {
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/30 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Section header */}
@@ -61,7 +61,7 @@ export function TrustSection() {
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
             Built through real-world{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
               engineering ecosystems
             </span>
           </h2>
@@ -74,8 +74,8 @@ export function TrustSection() {
 
         {/* Logo cloud with infinite scroll effect */}
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-background to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-background to-transparent z-10" />
 
           {/* Logo container */}
           <div className="overflow-hidden">

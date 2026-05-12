@@ -77,7 +77,7 @@ export function Footer() {
       </div>
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-t from-card/50 to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 py-16">
@@ -202,7 +202,7 @@ export function Footer() {
         </div>
 
         {/* Separator */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border/50 to-transparent mb-8" />
+        <div className="h-px bg-linear-to-r from-transparent via-border/50 to-transparent mb-8" />
 
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">

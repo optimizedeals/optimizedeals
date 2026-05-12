@@ -244,7 +244,7 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
       transition={{ duration: 0.6 }}
     >
       <Link href={`/insights/${article.slug}`} className="block">
-        <div className="relative p-8 md:p-10 bg-gradient-to-br from-card/60 to-card/30 border border-border/50 rounded-2xl overflow-hidden hover:border-border transition-all duration-300">
+        <div className="relative p-8 md:p-10 bg-linear-to-br from-card/60 to-card/30 border border-border/50 rounded-2xl overflow-hidden hover:border-border transition-all duration-300">
           {/* Background decoration */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px]" />
 
