@@ -1,5 +1,6 @@
 "use client"
 
+import { useId } from "react"
 import { motion } from "framer-motion"
 
 interface DiagramNode {
@@ -85,6 +86,7 @@ export function ArchitectureDiagram({
   preset,
 }: ArchitectureDiagramProps) {
   const data = preset ? presets[preset] : { nodes: nodes || [], connections: connections || [] }
+  const gridId = useId()
 
   const getNodeStyle = (type?: string) => {
     switch (type) {
@@ -113,11 +115,11 @@ export function ArchitectureDiagram({
         <div className="absolute inset-0 opacity-20">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="diagramGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <pattern id={gridId} width="30" height="30" patternUnits="userSpaceOnUse">
                 <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#3B80EC" strokeWidth="0.5" />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#diagramGrid)" />
+            <rect width="100%" height="100%" fill={`url(#${gridId})`} />
           </svg>
         </div>
 

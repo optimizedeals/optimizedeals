@@ -5,6 +5,8 @@ import readingTime from "reading-time"
 
 const CONTENT_DIR = path.join(process.cwd(), "content/insights")
 
+const IS_PRODUCTION = process.env.NODE_ENV === "production"
+
 export interface ArticleMeta {
   slug: string
   title: string
@@ -16,6 +18,8 @@ export interface ArticleMeta {
   image?: string
   readingTime: string
   featured?: boolean
+  /** When true, the article is hidden from production builds. */
+  dev?: boolean
 }
 
 export interface Article extends ArticleMeta {
@@ -30,26 +34,29 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
 
   const files = fs.readdirSync(CONTENT_DIR).filter((file) => file.endsWith(".mdx"))
 
-  const articles = files.map((file) => {
-    const filePath = path.join(CONTENT_DIR, file)
-    const fileContent = fs.readFileSync(filePath, "utf-8")
-    const { data, content } = matter(fileContent)
-    const slug = file.replace(".mdx", "")
-    const stats = readingTime(content)
+  const articles = files
+    .map((file) => {
+      const filePath = path.join(CONTENT_DIR, file)
+      const fileContent = fs.readFileSync(filePath, "utf-8")
+      const { data, content } = matter(fileContent)
+      const slug = file.replace(".mdx", "")
+      const stats = readingTime(content)
 
-    return {
-      slug,
-      title: data.title || "Untitled",
-      description: data.description || "",
-      date: data.date || new Date().toISOString(),
-      author: data.author || "OptimizeDeals Engineering",
-      category: data.category || "Engineering",
-      tags: data.tags || [],
-      image: data.image,
-      readingTime: stats.text,
-      featured: data.featured || false,
-    }
-  })
+      return {
+        slug,
+        title: data.title || "Untitled",
+        description: data.description || "",
+        date: data.date || new Date().toISOString(),
+        author: data.author || "OptimizeDeals Engineering",
+        category: data.category || "Engineering",
+        tags: data.tags || [],
+        image: data.image,
+        readingTime: stats.text,
+        featured: data.featured || false,
+        dev: data.dev === true,
+      }
+    })
+    .filter((article) => !(IS_PRODUCTION && article.dev))
 
   // Sort by date (newest first)
   return articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -66,6 +73,10 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const { data, content } = matter(fileContent)
   const stats = readingTime(content)
 
+  if (IS_PRODUCTION && data.dev === true) {
+    return null
+  }
+
   return {
     slug,
     title: data.title || "Untitled",
@@ -77,6 +88,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     image: data.image,
     readingTime: stats.text,
     featured: data.featured || false,
+    dev: data.dev === true,
     content,
   }
 }

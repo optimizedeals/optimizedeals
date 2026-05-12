@@ -9,11 +9,11 @@ interface QuoteBlockProps {
 export function QuoteBlock({ children, author, source }: QuoteBlockProps) {
   return (
     <blockquote className="my-8 relative">
-      <Quote className="absolute -top-2 -left-2 w-8 h-8 text-[#0054D6]/20" />
-      <div className="pl-8 pr-4 py-4 border-l-4 border-[#0054D6] bg-[#001535]/30 rounded-r-xl">
-        <p className="text-lg md:text-xl text-[#F0F5FB] italic leading-relaxed">
+      <div className="relative pl-14 pr-6 py-6 border-l-4 border-[#0054D6] bg-[#001535]/30 rounded-r-xl">
+        <Quote className="absolute top-4 left-4 w-7 h-7 text-[#0054D6]/40" />
+        <div className="text-lg md:text-xl text-[#F0F5FB] italic leading-relaxed [&>p]:m-0">
           {children}
-        </p>
+        </div>
         {(author || source) && (
           <footer className="mt-4 text-sm text-[#7A8BA7]">
             {author && <span className="font-medium">{author}</span>}

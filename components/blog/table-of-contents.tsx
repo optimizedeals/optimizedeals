@@ -34,21 +34,31 @@ export function TableOfContents() {
   }, [activeId]);
 
   useEffect(() => {
-    // Get all headings from the article
-    const article = document.querySelector("article");
-    if (!article) return;
+    // Get headings only from the MDX content scope, not sidebar/accordion children
+    const scope =
+      document.querySelector<HTMLElement>("article .mdx-content") ??
+      document.querySelector("article");
+    if (!scope) return;
 
-    const elements = article.querySelectorAll("h2, h3");
-    const items: TOCItem[] = Array.from(elements).map((element) => {
+    const elements = Array.from(
+      scope.querySelectorAll<HTMLElement>(
+        "h2[id], h3[id], [data-toc-anchor][id]",
+      ),
+    ).filter((el) => el.id && el.closest(".mdx-content") === scope);
+
+    const items: TOCItem[] = elements.map((element) => {
+      const tocText = element.dataset.tocText;
       const label =
+        tocText ??
         element.querySelector<HTMLElement>("a > span:not([aria-hidden='true'])")
           ?.textContent ??
         element.textContent ??
         "";
+      const level = element.tagName === "H2" ? 2 : 3;
       return {
         id: element.id,
         text: label,
-        level: element.tagName === "H2" ? 2 : 3,
+        level,
       };
     });
 
@@ -106,13 +116,25 @@ export function TableOfContents() {
               onClick={(e) => {
                 e.preventDefault();
                 const element = document.getElementById(heading.id);
-                if (element) {
-                  const top =
-                    element.getBoundingClientRect().top +
-                    window.scrollY -
-                    96;
-                  window.scrollTo({ top, behavior: "smooth" });
+                if (!element) return;
+                // If target is a closed accordion item, open it first.
+                const trigger = element.querySelector<HTMLElement>(
+                  '[data-slot="accordion-trigger"]',
+                );
+                const wasClosed =
+                  trigger?.getAttribute("data-state") === "closed";
+                if (wasClosed) trigger?.click();
+                const scroll = () => {
+                  // scroll-mt-24 on the target supplies the 96px top offset.
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
                   window.history.replaceState(null, "", `#${heading.id}`);
+                };
+                if (wasClosed) {
+                  // Wait for Radix expand animation (~200ms) before scrolling
+                  // so the final position accounts for the expanded content.
+                  window.setTimeout(scroll, 320);
+                } else {
+                  scroll();
                 }
               }}
             >

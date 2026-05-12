@@ -72,7 +72,7 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
               {title}
             </h4>
           )}
-          <div className="text-sm text-[#7A8BA7] leading-relaxed">
+          <div className="text-sm text-[#7A8BA7] leading-relaxed [&>*]:m-0 [&>*+*]:mt-3">
             {children}
           </div>
         </div>

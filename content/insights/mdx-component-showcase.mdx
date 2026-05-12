@@ -1,0 +1,432 @@
+---
+title: "MDX Component Showcase"
+description: "Reference article demonstrating every component, layout primitive, and syntax pattern available in OptimizeDeals MDX articles."
+date: "2026-05-12"
+author: "OptimizeDeals Engineering"
+category: "Engineering"
+tags:
+  - "mdx"
+  - "documentation"
+  - "components"
+  - "reference"
+featured: false
+dev: true
+---
+
+This article is a living reference for every block-level and inline element available when authoring MDX articles in this codebase. Use it as a copy-paste source when writing complex pieces.
+
+## Headings & Inline Formatting
+
+Standard markdown is fully supported. Inline elements: **bold**, *italic*, `inline code`, [external links](https://optimize.deals), [internal anchors](#headings--inline-formatting), and combinations like ***bold italic***. You can also chain inline code with bold like `useEffect` **must** include a dependency array.
+
+Use the <Kbd>Cmd+K</Kbd> shortcut to open command palette, or <Kbd>Ctrl+Shift+P</Kbd> on Windows. <Badge>new</Badge> <Badge variant="success">stable</Badge> <Badge variant="warning">beta</Badge> <Badge variant="error">deprecated</Badge> are inline badges.
+
+### Subheading level 3
+
+Each heading gets an automatic id and a hover anchor link.
+
+#### Subheading level 4
+
+Useful for nested sections.
+
+## Lists
+
+Unordered:
+
+- First item with **bold** text
+- Second item with `inline code`
+- Nested items work too
+- Mix freely
+
+Ordered:
+
+1. Step one — describe what happens
+2. Step two — call out edge cases
+3. Step three — verify the outcome
+
+## Blockquote
+
+> The best architectures, requirements, and designs emerge from self-organizing teams.
+
+## Callout Variants
+
+<Callout type="info" title="Information">
+  Use info callouts for general context that helps the reader follow along but is not strictly required.
+</Callout>
+
+<Callout type="tip" title="Pro tip">
+  Tip callouts highlight a non-obvious shortcut or best practice. Keep them short.
+</Callout>
+
+<Callout type="success" title="Success">
+  Use this when describing the desired state after applying a change.
+</Callout>
+
+<Callout type="warning" title="Watch out">
+  Warnings flag a footgun: an easy-to-miss constraint, a breaking change, or a gotcha.
+</Callout>
+
+<Callout type="error" title="Critical">
+  Error callouts mark behavior that will break production. Reserve for the most severe items.
+</Callout>
+
+<Callout type="performance" title="Performance">
+  Use the performance variant when discussing optimization tradeoffs, bundle size, or runtime cost.
+</Callout>
+
+## Code Blocks
+
+Fenced code blocks are syntax-highlighted server-side via Shiki. Languages supported include `ts`, `tsx`, `js`, `jsx`, `bash`, `json`, `css`, `html`, `python`, and many more.
+
+```ts
+import { compileMDX } from "next-mdx-remote/rsc";
+
+export async function render(source: string) {
+  const { content } = await compileMDX({ source });
+  return content;
+}
+```
+
+You can also add a title via meta:
+
+```tsx title="components/example.tsx"
+export function Example({ name }: { name: string }) {
+  return <div className="text-[#3B80EC]">Hello, {name}</div>;
+}
+```
+
+Bash commands:
+
+```bash
+pnpm install
+pnpm dev
+git commit -m "feat: ship new feature"
+```
+
+For richer code presentation with custom filename and metadata, use the `<CodeBlock>` component directly:
+
+<CodeBlock language="ts" filename="lib/example.ts">
+{`export const config = {
+  cache: 60,
+  revalidate: false,
+};`}
+</CodeBlock>
+
+## Tables
+
+Standard markdown tables:
+
+| Pattern | Use case | Tradeoff |
+|---------|----------|----------|
+| SSR | Dynamic per-request data | Slower TTFB |
+| SSG | Static content | Stale data |
+| ISR | Mixed | Cache invalidation complexity |
+| RSC | Server-only deps in tree | Streaming model required |
+
+For feature comparisons with checkmarks, use `<ComparisonTable>`:
+
+<ComparisonTable
+  title="Frontend rendering strategies"
+  headers={["SSR", "SSG", "ISR", "RSC"]}
+  rows={[
+    { feature: "Per-request data", values: [true, false, true, true] },
+    { feature: "CDN cacheable", values: [false, true, true, "partial"] },
+    { feature: "Build-time generation", values: [false, true, true, false] },
+    { feature: "Streaming", values: [true, false, false, true] },
+    { feature: "Server-only modules", values: [true, true, true, true] },
+  ]}
+/>
+
+## Quote Block
+
+<QuoteBlock author="Edsger W. Dijkstra" source="The Humble Programmer">
+  Simplicity is prerequisite for reliability.
+</QuoteBlock>
+
+## Steps
+
+<Steps
+  steps={[
+    {
+      title: "Install dependencies",
+      description: "Run `pnpm install` to fetch all required packages from the lockfile.",
+    },
+    {
+      title: "Configure environment",
+      description: "Copy `.env.example` to `.env.local` and fill in the required keys.",
+    },
+    {
+      title: "Run the dev server",
+      description: "Start Next.js with `pnpm dev` and open http://localhost:3000 to verify.",
+    },
+    {
+      title: "Run tests",
+      description: "There are no tests in this project — manually verify in the browser.",
+    },
+  ]}
+/>
+
+## Metrics Card
+
+<MetricsCard
+  title="Performance after optimization"
+  metrics={[
+    { label: "LCP", value: "1.2s", change: "-58%", trend: "up" },
+    { label: "Bundle size", value: "184kb", change: "-32%", trend: "up" },
+    { label: "TTI", value: "2.1s", change: "-44%", trend: "up" },
+    { label: "CLS", value: "0.02", change: "stable", trend: "neutral" },
+  ]}
+  columns={4}
+/>
+
+## Architecture Diagram
+
+Use built-in presets:
+
+<ArchitectureDiagram
+  title="Module Federation topology"
+  description="Host application consuming federated remotes with shared dependencies."
+  preset="module-federation"
+/>
+
+Or pass custom nodes and connections:
+
+<ArchitectureDiagram
+  title="Custom layered diagram"
+  nodes={[
+    { id: "client", label: "Client", x: 50, y: 15, type: "primary" },
+    { id: "edge", label: "Edge", x: 50, y: 40, type: "secondary" },
+    { id: "api", label: "API", x: 25, y: 70, type: "secondary" },
+    { id: "db", label: "Database", x: 75, y: 70, type: "tertiary" },
+  ]}
+  connections={[
+    { from: "client", to: "edge" },
+    { from: "edge", to: "api" },
+    { from: "api", to: "db" },
+  ]}
+/>
+
+## Tabs
+
+<Tabs
+  items={[
+    {
+      label: "npm",
+      content: <CodeBlock language="bash">npm install next-mdx-remote</CodeBlock>,
+    },
+    {
+      label: "pnpm",
+      content: <CodeBlock language="bash">pnpm add next-mdx-remote</CodeBlock>,
+    },
+    {
+      label: "yarn",
+      content: <CodeBlock language="bash">yarn add next-mdx-remote</CodeBlock>,
+    },
+  ]}
+/>
+
+## Accordion (FAQ)
+
+<Accordion
+  items={[
+    {
+      title: "Can I use real MDX features inside this article?",
+      content: "Yes. Real MDX is now compiled via next-mdx-remote/rsc with rehype-pretty-code and rehype-slug.",
+    },
+    {
+      title: "Can components contain JSX expressions?",
+      content: "Yes. Pass JSX via props using curly braces, just like in regular React.",
+    },
+    {
+      title: "What happens to existing articles?",
+      content: "They render through the same pipeline. Markdown syntax is unchanged; previously-supported components still work.",
+    },
+  ]}
+/>
+
+## File Tree
+
+<FileTree
+  title="content/insights/"
+  data={[
+    {
+      name: "content/insights",
+      type: "folder",
+      children: [
+        { name: "mdx-component-showcase.mdx", highlight: true, comment: "← this article" },
+        { name: "rag-systems-are-not-about-ll-ms.mdx" },
+        { name: "module-federation-beyond-micro-frontends.mdx" },
+        { name: "architecting-frontend-systems-for-the-ai-native-era.mdx" },
+      ],
+    },
+    {
+      name: "components/blog",
+      type: "folder",
+      children: [
+        { name: "mdx-content.tsx", comment: "MDX renderer" },
+        {
+          name: "mdx-components",
+          type: "folder",
+          children: [
+            { name: "callout.tsx" },
+            { name: "video.tsx" },
+            { name: "tabs.tsx" },
+            { name: "..." },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+## Feature Grid
+
+<FeatureGrid
+  columns={3}
+  features={[
+    { icon: "Zap", title: "Edge runtime", description: "Cold-start free. Sub-50ms TTFB at the closest PoP." },
+    { icon: "Shield", title: "Type-safe", description: "End-to-end TypeScript with strict-mode flags enabled." },
+    { icon: "Layers", title: "Composable", description: "Each MDX component is a normal React component you can reuse." },
+    { icon: "Cpu", title: "RSC-native", description: "Compiled server-side; client JS only ships when components need it." },
+    { icon: "GitBranch", title: "Versioned", description: "Article content is plain text in git — diffs review like code." },
+    { icon: "Sparkles", title: "Extensible", description: "Drop a new component into the map and use it from any article." },
+  ]}
+/>
+
+## Images
+
+Plain Next/Image (renders edge-to-edge inside content column):
+
+<Image
+  src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif"
+  alt="Animated diagram"
+  width="600"
+  height="450"
+  className="max-w-md mx-auto"
+/>
+
+For figures with captions and click-to-zoom lightbox, use `<ArticleImage>`:
+
+<ArticleImage
+  src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif"
+  alt="Architecture overview"
+  caption="Click to expand. Lightbox supports keyboard navigation."
+  width={800}
+  height={500}
+/>
+
+## Image Gallery
+
+<ImageGallery
+  columns={3}
+  images={[
+    {
+      src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif",
+      alt: "Diagram one",
+      caption: "First diagram",
+    },
+    {
+      src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif",
+      alt: "Diagram two",
+      caption: "Second diagram",
+    },
+    {
+      src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif",
+      alt: "Diagram three",
+      caption: "Third diagram",
+    },
+  ]}
+/>
+
+## Video
+
+Self-hosted MP4 with custom controls:
+
+<Video
+  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+  poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg"
+  caption="Sample MP4 with hover-revealed controls."
+  aspectRatio="16/9"
+/>
+
+Auto-play loop (muted) when scrolled into view — useful for short demo loops:
+
+<Video
+  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+  autoPlay
+  loop
+  muted
+  controls={false}
+  caption="Auto-plays when 40% visible. Pauses when scrolled away."
+/>
+
+## YouTube
+
+<YouTube
+  id="dQw4w9WgXcQ"
+  title="Embedded YouTube video"
+  caption="Privacy-respecting youtube-nocookie embed."
+/>
+
+## Audio
+
+<AudioPlayer
+  src="https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
+  title="Sample audio track"
+  caption="Custom-styled audio player with seek bar."
+/>
+
+## Generic Embed
+
+For arbitrary iframe embeds (CodePen, Figma, dashboards):
+
+<Embed
+  src="https://codesandbox.io/embed/new?codemirror=1"
+  title="CodeSandbox"
+  caption="Any iframe-embeddable URL works here."
+  aspectRatio="16/9"
+/>
+
+## Putting It Together
+
+Here is a realistic mixed section combining several primitives. It models a typical "performance optimization" walkthrough:
+
+<Callout type="performance" title="Goal">
+  Reduce LCP by deferring non-critical JavaScript and inlining the hero image.
+</Callout>
+
+<Steps
+  steps={[
+    {
+      title: "Audit current performance",
+      description: "Run Lighthouse against production. Capture LCP, FID, and CLS as baseline numbers.",
+    },
+    {
+      title: "Identify the LCP element",
+      description: "In Chrome DevTools → Performance → LCP marker. Usually the hero image or above-the-fold text.",
+    },
+    {
+      title: "Apply targeted fixes",
+      description: "Preload the LCP image, defer below-fold JS, and convert to AVIF if the browser supports it.",
+    },
+  ]}
+/>
+
+The optimization above produced these results:
+
+<MetricsCard
+  metrics={[
+    { label: "LCP", value: "0.9s", change: "-65%", trend: "up" },
+    { label: "JS shipped", value: "112kb", change: "-48%", trend: "up" },
+    { label: "Lighthouse", value: "98", change: "+22", trend: "up" },
+  ]}
+  columns={3}
+/>
+
+<Callout type="tip" title="Next step">
+  Wire the LCP improvement into a CI budget so regressions fail the build.
+</Callout>
+
+---
+
+That covers every component currently available. To extend the system, drop a new component into `components/blog/mdx-components/`, export it from the index, and register it in the components map at `components/blog/mdx-content.tsx`.
