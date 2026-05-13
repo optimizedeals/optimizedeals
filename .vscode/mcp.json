@@ -1,0 +1,20 @@
+{
+  "servers": {
+    "next-devtools": {
+      "command": "~/.nvm/versions/node/v22.13.1/bin/npx",
+      "args": ["-y", "next-devtools-mcp@latest"],
+      "type": "stdio"
+    },
+    "shadcn": {
+      "command": "~/.nvm/versions/node/v22.13.1/bin/npx",
+      "args": ["shadcn@latest", "mcp"],
+      "type": "stdio"
+    },
+    "chrome-devtools": {
+      "command": "~/.nvm/versions/node/v22.13.1/bin/npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "type": "stdio"
+    }
+  },
+  "inputs": []
+}

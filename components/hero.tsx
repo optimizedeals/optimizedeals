@@ -134,6 +134,8 @@ function FloatingLabel({
   return (
     <div
       className="absolute hidden lg:block od-anim-fade-up"
+      data-llm-decoration="true"
+      aria-hidden="true"
       style={{
         left: x,
         top: y,

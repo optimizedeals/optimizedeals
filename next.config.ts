@@ -32,6 +32,12 @@ const nextConfig: NextConfig = {
   experimental: {
     mdxRs: true,
   },
+  headers: async () => [
+    {
+      source: "/:path*",
+      headers: [{ key: "Vary", value: "Accept" }],
+    },
+  ],
 };
 
 export default nextConfig;
