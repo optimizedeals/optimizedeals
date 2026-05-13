@@ -35,6 +35,8 @@ export const STATIC_ROUTES: StaticRoute[] = [
   { path: "company", changeFrequency: "monthly", priority: 0.7 },
   { path: "careers", changeFrequency: "monthly", priority: 0.6 },
   { path: "book", changeFrequency: "monthly", priority: 0.6 },
+  { path: "privacy-policy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "terms-and-conditions", changeFrequency: "yearly", priority: 0.3 },
 ];
 
 /**

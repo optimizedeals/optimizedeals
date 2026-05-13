@@ -212,16 +212,16 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <Link
-              href="/company"
+              href="/privacy-policy"
               className="text-xs text-brand-gray hover:text-muted-foreground transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="/company"
+              href="/terms-and-conditions"
               className="text-xs text-brand-gray hover:text-muted-foreground transition-colors"
             >
-              Terms of Service
+              Terms and Conditions
             </Link>
           </div>
         </div>

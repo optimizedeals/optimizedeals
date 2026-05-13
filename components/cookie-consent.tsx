@@ -134,8 +134,9 @@ export interface CookieConsentMessages {
   learnMoreLabel?: string;
 }
 
-export interface CookieConsentProps
-  extends VariantProps<typeof cookieConsentVariants> {
+export interface CookieConsentProps extends VariantProps<
+  typeof cookieConsentVariants
+> {
   /** Controlled visibility. If omitted, internal localStorage state is used. */
   open?: boolean;
   onAccept?: () => void;
@@ -166,8 +167,8 @@ export function CookieConsent({
   open,
   onAccept,
   onDecline,
-  privacyPolicyHref = "/company",
-  termsHref = "/company",
+  privacyPolicyHref = "/privacy-policy",
+  termsHref = "/terms-and-conditions",
   LinkComponent,
   messages,
   className,
@@ -194,15 +195,12 @@ export function CookieConsent({
     <>
       We use cookies to ensure you get the best experience on our site. For more
       information, see our{" "}
-      <Anchor
-        href={privacyPolicyHref}
-        className="text-primary hover:underline"
-      >
+      <Anchor href={privacyPolicyHref} className="text-accent hover:underline">
         privacy policy
       </Anchor>{" "}
       and{" "}
-      <Anchor href={termsHref} className="text-primary hover:underline">
-        terms of service
+      <Anchor href={termsHref} className="text-accent hover:underline">
+        terms and conditions
       </Anchor>
       .
     </>
@@ -223,7 +221,7 @@ export function CookieConsent({
       aria-label={m.title}
     >
       {variant === "popup" ? (
-        <div className="m-3 rounded-md border border-border bg-background shadow-lg dark:bg-card">
+        <div className="m-3 rounded-md border border-border bg-card shadow-lg">
           <div className="grid gap-2">
             <div className="flex h-14 items-center justify-between border-b border-border p-4">
               <h2 className="text-lg font-medium">{m.title}</h2>
@@ -255,7 +253,7 @@ export function CookieConsent({
       ) : (
         <div
           className={cn(
-            "border-border bg-background shadow-lg",
+            "border-border bg-card shadow-lg",
             wide ? "border-x" : "rounded-lg border",
             position?.startsWith("top") ? "border-t-0" : "border-b-0",
           )}

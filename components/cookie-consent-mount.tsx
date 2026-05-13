@@ -19,8 +19,6 @@ export function CookieConsentMount() {
       variant="popup"
       position="bottom-left"
       LinkComponent={LinkComponent}
-      privacyPolicyHref="/company"
-      termsHref="/company"
     />
   );
 }

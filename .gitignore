@@ -18,3 +18,6 @@ next-env.d.ts
 node_modules
 .next/
 .DS_Store
+
+# TypeScript build info files
+tsconfig.tsbuildinfo
