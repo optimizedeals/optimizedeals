@@ -237,14 +237,17 @@ function ExperimentCard({
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center gap-4">
               <motion.div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
+                className="size-12 shrink-0 rounded-xl flex items-center justify-center"
                 style={{
                   background: `${experiment.color}15`,
                   border: `1px solid ${experiment.color}30`,
                 }}
                 whileHover={{ scale: 1.05 }}
               >
-                <Icon className="w-6 h-6" style={{ color: experiment.color }} />
+                <Icon
+                  className="size-6 shrink-0"
+                  style={{ color: experiment.color }}
+                />
               </motion.div>
               <div>
                 <div className="flex items-center gap-3 mb-1">
