@@ -1,0 +1,82 @@
+{
+  "hero": {
+    "badge": "Junte-se ao Time",
+    "title": "Construa sistemas que",
+    "titleHighlight": "escalam.",
+    "description": "Estamos construindo uma cultura focada em qualidade de engenharia, pensamento de sistemas e excelência técnica de longo prazo."
+  },
+  "culture": {
+    "kicker": "Nossa Cultura",
+    "title": "Cultura de Engenharia",
+    "subtitle": "Os princípios e valores que definem como trabalhamos e construímos juntos.",
+    "values": {
+      "quality": {
+        "title": "Qualidade de Engenharia",
+        "description": "Priorizamos código limpo e sustentável em vez de soluções rápidas. Cada linha de código é escrita pensando nos desenvolvedores que virão depois."
+      },
+      "systems": {
+        "title": "Pensamento de Sistemas",
+        "description": "Encaramos problemas de forma holística, entendendo como os componentes interagem e influenciam uns aos outros no sistema."
+      },
+      "remote": {
+        "title": "Remoto em primeiro lugar",
+        "description": "Trabalhe de qualquer lugar. Acreditamos que a melhor engenharia acontece quando as pessoas têm liberdade para organizar seu próprio ambiente."
+      },
+      "product": {
+        "title": "Mentalidade de Produto",
+        "description": "Engenharia existe para servir produtos e usuários. Tomamos decisões técnicas que geram valor real de negócio."
+      },
+      "longTerm": {
+        "title": "Arquitetura de longo prazo",
+        "description": "Construímos sistemas pensados para os próximos 5 anos, não apenas para o próximo sprint. Sustentabilidade não é opcional."
+      },
+      "learning": {
+        "title": "Aprendizado Contínuo",
+        "description": "O ecossistema de frontend evolui rapidamente. Dedicamos tempo a pesquisa, experimentação e desenvolvimento de habilidades."
+      }
+    }
+  },
+  "standards": {
+    "kicker": "Padrões",
+    "title": "Padrões Técnicos",
+    "subtitle": "Nossos padrões de engenharia garantem consistência, qualidade e manutenibilidade em todos os projetos.",
+    "items": {
+      "typescript": "Desenvolvimento TypeScript em primeiro lugar",
+      "testing": "Estratégias completas de testes",
+      "performance": "Budgets e monitoramento de performance",
+      "accessibility": "Acessibilidade como requisito",
+      "documentation": "Documentação como código",
+      "review": "Cultura de code review",
+      "cicd": "Pipelines automatizados de CI/CD",
+      "security": "Desenvolvimento com foco em segurança"
+    }
+  },
+  "mindset": {
+    "kicker": "Mentalidade",
+    "title": "Como pensamos",
+    "items": {
+      "architecture": {
+        "title": "Arquitetura antes da implementação",
+        "description": "Dedicamos tempo a entender o problema e desenhar soluções antes de escrever código. Esse investimento inicial gera retorno em manutenibilidade de longo prazo."
+      },
+      "outcomes": {
+        "title": "Resultados acima de entregáveis",
+        "description": "Medimos sucesso por impacto, não por linhas de código. A melhor solução costuma ser a mais simples que entrega o resultado desejado."
+      },
+      "ownership": {
+        "title": "Ownership e responsabilidade",
+        "description": "Engenheiros são donos do seu trabalho do início ao fim. Do design ao deploy e ao monitoramento, assumimos responsabilidade pelos sistemas que construímos."
+      },
+      "knowledge": {
+        "title": "Compartilhamento de conhecimento",
+        "description": "Documentamos decisões, compartilhamos aprendizados e investimos em deixar os colegas melhores. Nada de silos de conhecimento."
+      }
+    }
+  },
+  "openings": {
+    "kicker": "Vagas Abertas",
+    "title": "Junte-se ao Time",
+    "empty": "Sem vagas abertas no momento.",
+    "emptySub": "Estamos sempre interessados em conhecer engenheiros talentosos."
+  }
+}

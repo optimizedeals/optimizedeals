@@ -1,0 +1,122 @@
+{
+  "hero": {
+    "badge": "Engineering Services",
+    "title": "Engineering systems built for",
+    "titleHighlight": "scale.",
+    "description": "We help companies modernize products, scale frontend ecosystems and build AI-native experiences through architecture-first engineering."
+  },
+  "stats": {
+    "experience": "Years Experience",
+    "projects": "Projects Delivered",
+    "senior": "Senior Engineers",
+    "performance": "Avg. Performance Gain"
+  },
+  "diagram": {
+    "title": "Modern Architecture Patterns",
+    "subtitle": "We design systems optimized for performance, scalability, and developer experience.",
+    "client": "Client",
+    "edge": "Edge",
+    "origin": "Origin",
+    "data": "Data",
+    "label": "Architecture Overview"
+  },
+  "problemLabel": "The Problem",
+  "approachLabel": "Engineering Approach",
+  "outcomesLabel": "Expected Outcomes",
+  "items": {
+    "frontendArchitecture": {
+      "title": "Frontend Architecture",
+      "tagline": "Scalable React ecosystems for enterprise",
+      "description": "We design and implement frontend systems that scale with your organization. From component libraries to state management patterns, we build foundations that last.",
+      "problem": "Many companies struggle with fragmented frontend codebases, inconsistent patterns, and architecture that doesn't scale with team growth.",
+      "approach": {
+        "a1": "Comprehensive architecture audits and system design",
+        "a2": "Component library development with design system integration",
+        "a3": "State management patterns optimized for your use case",
+        "a4": "Performance-first rendering strategies"
+      },
+      "outcomes": {
+        "o1": "50% reduction in code duplication",
+        "o2": "Faster feature delivery cycles",
+        "o3": "Improved developer experience",
+        "o4": "Consistent UI across products"
+      }
+    },
+    "microfrontends": {
+      "title": "Micro-frontends & Module Federation",
+      "tagline": "Runtime composition for distributed teams",
+      "description": "Break monolithic frontends into independently deployable applications. Enable teams to ship faster without coordination overhead.",
+      "problem": "Large frontend applications become bottlenecks when multiple teams need to deploy features independently. Coordination costs slow everyone down.",
+      "approach": {
+        "a1": "Module federation architecture design",
+        "a2": "Runtime composition strategies",
+        "a3": "Shared dependency management",
+        "a4": "Independent deployment pipelines"
+      },
+      "outcomes": {
+        "o1": "Independent team deployments",
+        "o2": "Reduced time to production",
+        "o3": "Technology flexibility per module",
+        "o4": "Improved fault isolation"
+      }
+    },
+    "platformEngineering": {
+      "title": "Platform Engineering",
+      "tagline": "Monorepos and build system optimization",
+      "description": "Build internal platforms that accelerate development. From monorepo setup to CI optimization, we create infrastructure that multiplies team productivity.",
+      "problem": "Engineering teams lose hours to slow builds, manual processes, and tooling that doesn't scale. Developer experience directly impacts velocity.",
+      "approach": {
+        "a1": "Monorepo architecture with Nx or Turborepo",
+        "a2": "Build caching and optimization strategies",
+        "a3": "CI/CD pipeline acceleration",
+        "a4": "Developer tooling and automation"
+      },
+      "outcomes": {
+        "o1": "10x faster build times",
+        "o2": "Simplified dependency management",
+        "o3": "Improved code sharing",
+        "o4": "Enhanced developer productivity"
+      }
+    },
+    "aiIntegration": {
+      "title": "AI Product Integration",
+      "tagline": "RAG systems and AI-native experiences",
+      "description": "Integrate AI capabilities into your products with production-ready architecture. From RAG systems to streaming interfaces, we build AI experiences that feel native.",
+      "problem": "Teams struggle to move AI prototypes to production. Integration challenges, latency issues, and UX patterns are common blockers.",
+      "approach": {
+        "a1": "RAG architecture design and implementation",
+        "a2": "Streaming UI patterns for AI responses",
+        "a3": "Context window optimization strategies",
+        "a4": "AI workflow automation systems"
+      },
+      "outcomes": {
+        "o1": "Production-ready AI features",
+        "o2": "Sub-second response latency",
+        "o3": "Seamless user experiences",
+        "o4": "Scalable AI infrastructure"
+      }
+    },
+    "modernization": {
+      "title": "Product Modernization",
+      "tagline": "Legacy migrations and technical debt reduction",
+      "description": "Transform legacy applications into modern, maintainable systems. We plan and execute migrations that minimize risk while maximizing value.",
+      "problem": "Legacy codebases accumulate technical debt that slows development and increases maintenance costs. Complete rewrites are risky and expensive.",
+      "approach": {
+        "a1": "Incremental modernization strategies",
+        "a2": "Strangler fig pattern implementation",
+        "a3": "Technology stack upgrades",
+        "a4": "Performance and security improvements"
+      },
+      "outcomes": {
+        "o1": "Reduced maintenance burden",
+        "o2": "Improved system performance",
+        "o3": "Modern developer experience",
+        "o4": "Lower operational costs"
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to scale your engineering?",
+    "subtitle": "Let's discuss how we can help modernize your frontend architecture and accelerate your product development."
+  }
+}

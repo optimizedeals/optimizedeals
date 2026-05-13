@@ -1,0 +1,44 @@
+{
+  "actions": {
+    "bookCall": "Agendar uma conversa",
+    "scheduleCall": "Agendar uma chamada",
+    "bookDiscoveryCall": "Agendar uma conversa inicial",
+    "getInTouch": "Fale conosco",
+    "discussProject": "Conversar sobre seu projeto",
+    "startProject": "Iniciar um projeto",
+    "startConversation": "Iniciar uma conversa",
+    "reachOut": "Entre em contato",
+    "exploreLabs": "Explorar o Labs",
+    "exploreSystems": "Explorar sistemas",
+    "readInsights": "Ler os artigos",
+    "collaborate": "Colaborar",
+    "viewAll": "Ver todos",
+    "viewAllInsights": "Ver todos os artigos",
+    "learnMore": "Saiba mais",
+    "readArticle": "Ler artigo",
+    "read": "Ler",
+    "readMore": "Ler mais",
+    "backToHome": "Voltar para a página inicial",
+    "backToInsights": "Voltar para os artigos",
+    "openCalendar": "Abrir calendário",
+    "visit": "Visitar",
+    "share": "Compartilhar",
+    "clearFilter": "Limpar filtro",
+    "clearAllFilters": "Limpar todos os filtros",
+    "aboutUs": "Sobre nós",
+    "skipToMain": "Pular para o conteúdo principal"
+  },
+  "labels": {
+    "tags": "Tags",
+    "share": "Compartilhar",
+    "postsBy": "Publicações de",
+    "tagged": "Marcado como",
+    "featured": "Destaque",
+    "category": "Categoria"
+  },
+  "brand": {
+    "name": "OptimizeDeals",
+    "tagline": "Estúdio de Arquitetura e Engenharia de Plataforma",
+    "shortDescription": "Engenharia de sistemas escaláveis para produtos modernos."
+  }
+}

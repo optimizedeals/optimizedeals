@@ -1,0 +1,12 @@
+{
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "A página que você está procurando não existe.",
+    "cta": "Voltar para a página inicial"
+  },
+  "generic": {
+    "title": "Algo deu errado",
+    "description": "Ocorreu um erro inesperado. Tente novamente.",
+    "retry": "Tentar novamente"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "badge": "Conteúdo Técnico",
+    "title": "Conteúdo técnico e",
+    "titleHighlight": "reflexões de engenharia.",
+    "description": "Artigos aprofundados sobre arquitetura moderna de frontend, engenharia de IA e otimização de performance, escritos pelo nosso time de engenharia."
+  },
+  "filters": {
+    "all": "Todos",
+    "postsBy": "Publicações de",
+    "tagged": "Marcado como",
+    "clearFilter": "Limpar filtro",
+    "clearAllFilters": "Limpar todos os filtros"
+  },
+  "featured": {
+    "title": "Artigos em Destaque",
+    "badge": "Destaque"
+  },
+  "allArticles": {
+    "title": "Todos os Artigos",
+    "count": "{count, plural, =0 {Nenhum artigo} one {# artigo} other {# artigos}}"
+  },
+  "empty": {
+    "noArticles": "Nenhum artigo publicado ainda.",
+    "checkBack": "Volte em breve para conferir novos artigos de engenharia.",
+    "noMatches": "Nenhum artigo corresponde a estes filtros."
+  },
+  "cta": {
+    "title": "Receba novos artigos de engenharia",
+    "subtitle": "Saiba quando publicamos novos artigos técnicos sobre arquitetura de frontend, engenharia de IA e práticas modernas de desenvolvimento."
+  },
+  "article": {
+    "breadcrumbInsights": "Artigos",
+    "relatedTitle": "Artigos Relacionados",
+    "latestTitle": "Últimas Publicações",
+    "shareTitle": "Compartilhar",
+    "tagsTitle": "Tags",
+    "seeMoreByAuthor": "Ver mais publicações de {author}",
+    "notFound": "Artigo não encontrado",
+    "fallbackBanner": "Este artigo está disponível apenas em {language}. Exibindo a versão original."
+  }
+}

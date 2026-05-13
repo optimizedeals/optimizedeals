@@ -1,0 +1,100 @@
+{
+  "hero": {
+    "badge": "Research & Development",
+    "title": "Engineering research and",
+    "titleHighlight": "experimental systems.",
+    "description": "Exploring the frontiers of frontend architecture, AI integration, and performance optimization through hands-on research and experimentation."
+  },
+  "visualization": {
+    "active": "Labs Active",
+    "realtime": "Real-time",
+    "activeCount": "{count} Active"
+  },
+  "status": {
+    "Active": "Active",
+    "Beta": "Beta",
+    "Research": "Research"
+  },
+  "section": {
+    "title": "Active Experiments",
+    "subtitle": "Deep dives into emerging technologies and architectural patterns that shape the future of frontend development."
+  },
+  "items": {
+    "runtimeFederation": {
+      "title": "Runtime Federation Lab",
+      "description": "Exploring advanced module federation patterns for runtime composition of independently deployed frontend applications.",
+      "metricLabel": "Module Load Time",
+      "metricValue": "<50ms",
+      "areas": {
+        "a1": "Dynamic remote loading",
+        "a2": "Version negotiation",
+        "a3": "Shared dependency optimization",
+        "a4": "Failover strategies"
+      }
+    },
+    "aiStreaming": {
+      "title": "AI Streaming Interfaces",
+      "description": "Research into optimal UX patterns for AI-generated content, including streaming responses, loading states, and contextual interactions.",
+      "metricLabel": "Time to First Token",
+      "metricValue": "~200ms",
+      "areas": {
+        "a1": "Streaming UI components",
+        "a2": "Optimistic UI patterns",
+        "a3": "Context preservation",
+        "a4": "Multi-modal responses"
+      }
+    },
+    "performance": {
+      "title": "Frontend Performance Experiments",
+      "description": "Testing advanced optimization techniques for Core Web Vitals, bundle size reduction, and runtime performance.",
+      "metricLabel": "LCP Improvement",
+      "metricValue": "40%",
+      "areas": {
+        "a1": "Partial hydration strategies",
+        "a2": "Bundle splitting algorithms",
+        "a3": "Prefetch optimization",
+        "a4": "Memory management"
+      }
+    },
+    "ragUx": {
+      "title": "RAG UX Systems",
+      "description": "Developing UX patterns for retrieval-augmented generation interfaces, including citation displays and context visualization.",
+      "metricLabel": "Retrieval Accuracy",
+      "metricValue": "94%",
+      "areas": {
+        "a1": "Citation UI patterns",
+        "a2": "Context window visualization",
+        "a3": "Source attribution",
+        "a4": "Confidence indicators"
+      }
+    },
+    "motion": {
+      "title": "Motion Systems Research",
+      "description": "Creating a systematic approach to animation and motion design in modern frontend applications.",
+      "metricLabel": "60fps Compliance",
+      "metricValue": "99.2%",
+      "areas": {
+        "a1": "Physics-based animations",
+        "a2": "Gesture-driven interfaces",
+        "a3": "Scroll-linked effects",
+        "a4": "Performance budgets"
+      }
+    },
+    "distributed": {
+      "title": "Distributed Frontend Architectures",
+      "description": "Investigating patterns for globally distributed frontend deployments with edge computing and regional optimization.",
+      "metricLabel": "Edge Latency",
+      "metricValue": "<10ms",
+      "areas": {
+        "a1": "Edge computing strategies",
+        "a2": "Regional data sync",
+        "a3": "Consistency models",
+        "a4": "Failover patterns"
+      }
+    }
+  },
+  "cta": {
+    "title": "Interested in our research?",
+    "subtitle": "We share our findings through technical articles and open-source contributions. Follow our insights or get in touch to collaborate."
+  }
+}

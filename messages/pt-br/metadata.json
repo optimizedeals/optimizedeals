@@ -1,0 +1,40 @@
+{
+  "home": {
+    "title": "OptimizeDeals | Estúdio de Arquitetura de Frontend e Engenharia de Plataforma",
+    "description": "Construímos sistemas de alta performance e plataformas com IA focadas em escalabilidade, arquitetura e velocidade de execução. Especializados em micro-frontends, Module Federation, monorepos Nx e integrações de IA.",
+    "ogTitle": "OptimizeDeals | Estúdio de Arquitetura e Engenharia de Plataforma",
+    "ogDescription": "Engenharia de sistemas escaláveis para produtos modernos.",
+    "keywords": "Node.js, React, Next.js, micro-frontends, Module Federation, JavaScript, engenharia de plataforma, integração de IA, TypeScript"
+  },
+  "company": {
+    "title": "Empresa",
+    "description": "Um estúdio de engenharia founder-led especializado em arquitetura de frontend, sistemas escaláveis, produtos AI-native e infraestrutura moderna de engenharia."
+  },
+  "careers": {
+    "title": "Carreiras",
+    "description": "Faça parte de uma cultura de engenharia focada em qualidade, pensamento de sistemas e excelência técnica de longo prazo."
+  },
+  "solutions": {
+    "title": "Soluções",
+    "description": "Serviços de engenharia em arquitetura de frontend, micro-frontends, engenharia de plataforma, integração de IA e modernização de produto."
+  },
+  "labs": {
+    "title": "Labs",
+    "description": "Pesquisa de engenharia e sistemas experimentais explorando arquitetura de frontend, integração de IA e otimização de performance."
+  },
+  "products": {
+    "title": "Produtos",
+    "description": "Um portfólio de aplicações em produção e sistemas experimentais construídos com princípios modernos de arquitetura."
+  },
+  "book": {
+    "title": "Agendar uma conversa",
+    "description": "Agende uma conversa inicial de 30 minutos para discutir seus desafios de engenharia, decisões de arquitetura e estratégia de integração de IA."
+  },
+  "insights": {
+    "title": "Artigos",
+    "description": "Conteúdo técnico e reflexões de engenharia sobre arquitetura de frontend, engenharia de IA e otimização de performance."
+  },
+  "ogPreview": {
+    "title": "OG Preview"
+  }
+}

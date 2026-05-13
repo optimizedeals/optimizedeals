@@ -1,0 +1,40 @@
+{
+  "home": {
+    "title": "OptimizeDeals | Frontend Architecture & Platform Engineering Studio",
+    "description": "We build high-performance systems and AI-powered platforms focused on scalability, architecture and execution speed. Specializing in micro-frontends, Module Federation, Nx monorepos, and AI integrations.",
+    "ogTitle": "OptimizeDeals | Architecture & Platform Engineering Studio",
+    "ogDescription": "Engineering scalable systems for modern products.",
+    "keywords": "Node.js, React, Next.js, micro-frontends, Module Federation, JavaScript, platform engineering, AI integration, TypeScript"
+  },
+  "company": {
+    "title": "Company",
+    "description": "A founder-led engineering studio specializing in frontend architecture, scalable systems, AI-native products, and modern engineering infrastructure."
+  },
+  "careers": {
+    "title": "Careers",
+    "description": "Join an engineering culture focused on quality, systems thinking, and long-term technical excellence."
+  },
+  "solutions": {
+    "title": "Solutions",
+    "description": "Engineering services covering frontend architecture, micro-frontends, platform engineering, AI integration, and product modernization."
+  },
+  "labs": {
+    "title": "Labs",
+    "description": "Engineering research and experimental systems exploring frontend architecture, AI integration, and performance optimization."
+  },
+  "products": {
+    "title": "Products",
+    "description": "A portfolio of production applications and experimental systems built with modern architecture principles."
+  },
+  "book": {
+    "title": "Book a Call",
+    "description": "Schedule a 30-minute discovery call to discuss your engineering challenges, architecture decisions, and AI integration roadmap."
+  },
+  "insights": {
+    "title": "Insights",
+    "description": "Technical writing and engineering insights on frontend architecture, AI engineering, and performance optimization."
+  },
+  "ogPreview": {
+    "title": "OG Preview"
+  }
+}

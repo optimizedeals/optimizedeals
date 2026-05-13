@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "badge": "Sobre a OptimizeDeals",
+    "title": "Um estúdio construído para",
+    "titleHighlight": "excelência em engenharia.",
+    "description": "A OptimizeDeals não é uma agência tradicional. É um estúdio de engenharia founder-led focado em arquitetura de frontend, sistemas escaláveis, produtos AI-native e infraestrutura moderna de engenharia."
+  },
+  "philosophy": {
+    "title": "Filosofia",
+    "paragraphs": {
+      "p1": "Acreditamos que engenharia excepcional é a base de produtos excepcionais. Em um mundo onde a complexidade do frontend cresce continuamente, ter um parceiro que entende tanto a profundidade técnica quanto o contexto de negócio é inestimável.",
+      "p2": "A OptimizeDeals foi fundada no princípio de que produtos modernos merecem engenharia moderna. Trazemos expertise em ecossistemas React, arquiteturas de micro-frontend, integração de IA e engenharia de plataforma para ajudar empresas a construir sistemas que escalam.",
+      "p3": "Nossa abordagem é deliberadamente founder-led. Isso significa acesso direto a expertise sênior de engenharia, sem account managers ou desenvolvedores juniores aprendendo no seu projeto. Cada engajamento recebe toda a nossa atenção e profundidade técnica."
+    }
+  },
+  "stats": {
+    "yearsLabel": "Anos de experiência",
+    "projectsLabel": "Projetos entregues",
+    "seniorLabel": "Engenheiros Sêniores",
+    "clientsLabel": "Base de Clientes",
+    "clientsValue": "Global"
+  },
+  "principles": {
+    "kicker": "Como Trabalhamos",
+    "title": "Princípios de Engenharia",
+    "subtitle": "Os valores e padrões que guiam cada projeto que assumimos.",
+    "items": {
+      "architectureFirst": {
+        "title": "Arquitetura em primeiro lugar",
+        "description": "Todo projeto começa com um desenho cuidadoso de arquitetura. Sistemas bem desenhados são mais fáceis de manter, escalar e evoluir."
+      },
+      "outcome": {
+        "title": "Orientado a resultado",
+        "description": "Focamos em resultados de negócio, não apenas entregáveis técnicos. Nossas decisões de engenharia são sempre ancoradas em geração prática de valor."
+      },
+      "performance": {
+        "title": "Obcecados por performance",
+        "description": "Performance não é algo deixado para depois. Otimizamos por velocidade desde o dia um, entendendo que a experiência do usuário depende disso."
+      },
+      "sustainability": {
+        "title": "Sustentabilidade técnica",
+        "description": "Construímos sistemas projetados para o sucesso de longo prazo. Sem atalhos que criem dívida técnica ou pesadelos de manutenção."
+      },
+      "learning": {
+        "title": "Aprendizado contínuo",
+        "description": "O ecossistema de frontend evolui rapidamente. Nos mantemos na fronteira por meio de pesquisa, experimentação e compartilhamento de conhecimento."
+      },
+      "collaborative": {
+        "title": "Engenharia colaborativa",
+        "description": "Trabalhamos como parceiros, não fornecedores. Colaboração próxima com seu time garante transferência de conhecimento e resultados sustentáveis."
+      }
+    }
+  },
+  "journey": {
+    "kicker": "Jornada",
+    "title": "Jornada de Engenharia",
+    "items": {
+      "y2014": {
+        "title": "Fundação em Engenharia",
+        "description": "Início da jornada profissional em desenvolvimento de frontend, construindo aplicações corporativas."
+      },
+      "y2018": {
+        "title": "Foco em Arquitetura",
+        "description": "Transição para papéis focados em arquitetura, desenhando sistemas escaláveis de frontend."
+      },
+      "y2021": {
+        "title": "Integração de IA",
+        "description": "Início da especialização em desenvolvimento AI-native e sistemas RAG."
+      },
+      "y2023": {
+        "title": "Lançamento da OptimizeDeals",
+        "description": "Fundação da OptimizeDeals como estúdio de engenharia especializado."
+      }
+    }
+  },
+  "experience": {
+    "kicker": "Experiência",
+    "title": "Experiência profissional em diversos ecossistemas de engenharia",
+    "disclaimer": "Os logotipos representam experiência profissional anterior e participação em ecossistemas."
+  },
+  "contact": {
+    "kicker": "Entre em Contato",
+    "title": "Pronto para conversar sobre seu projeto?",
+    "subtitle": "Agende uma conversa inicial para discutir seus desafios de engenharia e explorar como podemos ajudar."
+  }
+}

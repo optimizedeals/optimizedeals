@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "badge": "Technical Content",
+    "title": "Technical writing and",
+    "titleHighlight": "engineering insights.",
+    "description": "In-depth articles on modern frontend architecture, AI engineering, and performance optimization from our engineering team."
+  },
+  "filters": {
+    "all": "All",
+    "postsBy": "Posts by",
+    "tagged": "Tagged",
+    "clearFilter": "Clear filter",
+    "clearAllFilters": "Clear all filters"
+  },
+  "featured": {
+    "title": "Featured Articles",
+    "badge": "Featured"
+  },
+  "allArticles": {
+    "title": "All Articles",
+    "count": "{count, plural, =0 {No articles} one {# article} other {# articles}}"
+  },
+  "empty": {
+    "noArticles": "No articles published yet.",
+    "checkBack": "Check back soon for engineering insights.",
+    "noMatches": "No articles match these filters."
+  },
+  "cta": {
+    "title": "Stay updated on engineering insights",
+    "subtitle": "Get notified when we publish new technical articles on frontend architecture, AI engineering, and modern development practices."
+  },
+  "article": {
+    "breadcrumbInsights": "Insights",
+    "relatedTitle": "Related Articles",
+    "latestTitle": "Latest Posts",
+    "shareTitle": "Share",
+    "tagsTitle": "Tags",
+    "seeMoreByAuthor": "See more posts by {author}",
+    "notFound": "Article Not Found",
+    "fallbackBanner": "This article is only available in {language}. Showing the original version."
+  }
+}

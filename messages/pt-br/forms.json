@@ -1,0 +1,18 @@
+{
+  "validation": {
+    "required": "Este campo é obrigatório.",
+    "email": "Informe um e-mail válido.",
+    "min": "Deve ter no mínimo {n} caracteres.",
+    "max": "Deve ter no máximo {n} caracteres."
+  },
+  "placeholders": {
+    "name": "Seu nome",
+    "email": "voce@empresa.com",
+    "message": "Conte sobre o seu projeto"
+  },
+  "actions": {
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "sending": "Enviando..."
+  }
+}

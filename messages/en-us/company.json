@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "badge": "About OptimizeDeals",
+    "title": "A studio built for",
+    "titleHighlight": "engineering excellence.",
+    "description": "OptimizeDeals is not a traditional agency. It is a founder-led engineering studio focused on frontend architecture, scalable systems, AI-native products, and modern engineering infrastructure."
+  },
+  "philosophy": {
+    "title": "Philosophy",
+    "paragraphs": {
+      "p1": "We believe that exceptional engineering is the foundation of exceptional products. In a world where frontend complexity continues to grow, having a partner who understands both the technical depth and business context is invaluable.",
+      "p2": "OptimizeDeals was founded on the principle that modern products deserve modern engineering. We bring expertise in React ecosystems, micro-frontend architectures, AI integration, and platform engineering to help companies build systems that scale.",
+      "p3": "Our approach is deliberately founder-led. This means direct access to senior engineering expertise, no account managers or junior developers learning on your project. Every engagement gets our full attention and technical depth."
+    }
+  },
+  "stats": {
+    "yearsLabel": "Years Experience",
+    "projectsLabel": "Projects Delivered",
+    "seniorLabel": "Senior Engineers",
+    "clientsLabel": "Client Base",
+    "clientsValue": "Global"
+  },
+  "principles": {
+    "kicker": "How We Work",
+    "title": "Engineering Principles",
+    "subtitle": "The values and standards that guide every project we undertake.",
+    "items": {
+      "architectureFirst": {
+        "title": "Architecture-First",
+        "description": "Every project starts with careful architecture design. We believe that well-designed systems are easier to maintain, scale, and evolve over time."
+      },
+      "outcome": {
+        "title": "Outcome-Oriented",
+        "description": "We focus on business outcomes, not just technical deliverables. Our engineering decisions are always grounded in practical value creation."
+      },
+      "performance": {
+        "title": "Performance Obsessed",
+        "description": "Performance is not an afterthought. We optimize for speed from day one, understanding that user experience depends on it."
+      },
+      "sustainability": {
+        "title": "Technical Sustainability",
+        "description": "We build systems designed for long-term success. No shortcuts that create technical debt or maintenance nightmares."
+      },
+      "learning": {
+        "title": "Continuous Learning",
+        "description": "The frontend ecosystem evolves rapidly. We stay at the cutting edge through research, experimentation, and knowledge sharing."
+      },
+      "collaborative": {
+        "title": "Collaborative Engineering",
+        "description": "We work as partners, not vendors. Close collaboration with your team ensures knowledge transfer and sustainable outcomes."
+      }
+    }
+  },
+  "journey": {
+    "kicker": "Journey",
+    "title": "Engineering Journey",
+    "items": {
+      "y2014": {
+        "title": "Engineering Foundation",
+        "description": "Started professional frontend development journey, building enterprise applications."
+      },
+      "y2018": {
+        "title": "Architecture Focus",
+        "description": "Transitioned to architecture-focused roles, designing scalable frontend systems."
+      },
+      "y2021": {
+        "title": "AI Integration",
+        "description": "Began specializing in AI-native product development and RAG systems."
+      },
+      "y2023": {
+        "title": "OptimizeDeals Launch",
+        "description": "Founded OptimizeDeals as a specialized engineering studio."
+      }
+    }
+  },
+  "experience": {
+    "kicker": "Experience",
+    "title": "Professional Experience Across Engineering Ecosystems",
+    "disclaimer": "Logos represent previous professional experience and ecosystem participation."
+  },
+  "contact": {
+    "kicker": "Get in Touch",
+    "title": "Ready to discuss your project?",
+    "subtitle": "Book a discovery call to discuss your engineering challenges and explore how we can help."
+  }
+}

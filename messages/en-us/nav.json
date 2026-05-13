@@ -1,0 +1,115 @@
+{
+  "ariaToggleMenu": "Toggle menu",
+  "items": {
+    "solutions": "Solutions",
+    "products": "Products",
+    "labs": "Labs",
+    "insights": "Insights",
+    "company": "Company"
+  },
+  "solutions": {
+    "sectionEngineering": "Engineering Services",
+    "sectionModernSystems": "Modern Systems",
+    "frontendArchitecture": {
+      "label": "Frontend Architecture",
+      "description": "Scalable React ecosystems and enterprise systems"
+    },
+    "microfrontends": {
+      "label": "Micro-frontends",
+      "description": "Runtime composition and federated systems"
+    },
+    "platformEngineering": {
+      "label": "Platform Engineering",
+      "description": "Monorepos, Nx, and build system optimization"
+    },
+    "aiIntegration": {
+      "label": "AI Integration",
+      "description": "RAG systems and AI-native experiences"
+    },
+    "modernization": {
+      "label": "Product Modernization",
+      "description": "Legacy migrations and technical debt reduction"
+    },
+    "featured": {
+      "title": "Engineering systems built for scale",
+      "description": "Discover how we help companies modernize products and scale frontend ecosystems."
+    }
+  },
+  "products": {
+    "sectionLive": "Live Products",
+    "sectionExperimental": "Experimental",
+    "agendaZap": {
+      "label": "AgendaZap",
+      "description": "Scheduling automation with WhatsApp workflows"
+    },
+    "interloquia": {
+      "label": "Interloquia",
+      "description": "AI-native communication and workflow platform"
+    },
+    "labsProjects": {
+      "label": "Labs Projects",
+      "description": "Research and experimental systems"
+    },
+    "featured": {
+      "title": "Products built through engineering-first thinking",
+      "description": "Explore our portfolio of production applications and experimental systems."
+    }
+  },
+  "labs": {
+    "sectionResearch": "Research Areas",
+    "runtimeFederation": {
+      "label": "Runtime Federation Lab",
+      "description": "Module federation and dynamic systems"
+    },
+    "aiStreaming": {
+      "label": "AI Streaming Interfaces",
+      "description": "Real-time AI interaction patterns"
+    },
+    "performance": {
+      "label": "Performance Experiments",
+      "description": "Frontend optimization research"
+    },
+    "featured": {
+      "title": "Engineering research and experimental systems",
+      "description": "Explore our cutting-edge research in frontend architecture and AI systems."
+    }
+  },
+  "insights": {
+    "sectionCategories": "Categories",
+    "frontendArchitecture": {
+      "label": "Frontend Architecture",
+      "description": "Deep dives into scalable systems"
+    },
+    "aiEngineering": {
+      "label": "AI Engineering",
+      "description": "AI integration and RAG systems"
+    },
+    "performance": {
+      "label": "Performance Engineering",
+      "description": "Optimization techniques and patterns"
+    },
+    "featured": {
+      "title": "Technical writing and engineering insights",
+      "description": "In-depth articles on modern frontend architecture and AI engineering."
+    }
+  },
+  "company": {
+    "sectionAbout": "About Us",
+    "about": {
+      "label": "About",
+      "description": "Our philosophy and engineering principles"
+    },
+    "careers": {
+      "label": "Careers",
+      "description": "Join our engineering team"
+    },
+    "culture": {
+      "label": "Culture",
+      "description": "How we think and build"
+    },
+    "featured": {
+      "title": "A studio built for engineering excellence",
+      "description": "Learn about our founder-led approach to technical consulting."
+    }
+  }
+}

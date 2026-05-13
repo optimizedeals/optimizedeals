@@ -1,0 +1,21 @@
+{
+  "badge": "Conversa Inicial",
+  "titleLead": "Vamos conversar sobre seus",
+  "titleHighlight": "desafios de engenharia.",
+  "subtitle": "Arquitetura, modernização, sistemas de IA e engenharia de frontend escalável.",
+  "duration": "Consultoria de 30 minutos",
+  "video": "Chamada de vídeo no Google Meet",
+  "whatWeCover": "O que vamos abordar",
+  "benefits": {
+    "discuss": "Conversar sobre seus desafios técnicos",
+    "explore": "Explorar soluções de arquitetura",
+    "scope": "Revisar escopo e prazos do projeto",
+    "noObligation": "Consultoria sem compromisso"
+  },
+  "emailPrompt": "Prefere e-mail? Fale diretamente:",
+  "noscript": {
+    "title": "Agendar uma conversa inicial",
+    "subtitle": "JavaScript é necessário para carregar o calendário."
+  },
+  "poweredBy": "Powered by Cal.com"
+}

@@ -1,0 +1,21 @@
+{
+  "badge": "Discovery Call",
+  "titleLead": "Let's discuss your",
+  "titleHighlight": "engineering challenges.",
+  "subtitle": "Architecture, modernization, AI systems and scalable frontend engineering.",
+  "duration": "30 minute consultation",
+  "video": "Google Meet video call",
+  "whatWeCover": "What we'll cover",
+  "benefits": {
+    "discuss": "Discuss your technical challenges",
+    "explore": "Explore architecture solutions",
+    "scope": "Review project scope and timeline",
+    "noObligation": "No obligation consultation"
+  },
+  "emailPrompt": "Prefer email? Reach out directly:",
+  "noscript": {
+    "title": "Schedule a Discovery Call",
+    "subtitle": "JavaScript is required to load the calendar."
+  },
+  "poweredBy": "Powered by Cal.com"
+}

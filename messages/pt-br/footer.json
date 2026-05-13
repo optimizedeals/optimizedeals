@@ -1,0 +1,33 @@
+{
+  "tagline": "Engenharia de sistemas escaláveis e soluções AI-native para produtos modernos.",
+  "columns": {
+    "solutions": "Soluções",
+    "products": "Produtos",
+    "resources": "Recursos",
+    "company": "Empresa"
+  },
+  "links": {
+    "frontendArchitecture": "Arquitetura de Frontend",
+    "microfrontends": "Micro-frontends",
+    "platformEngineering": "Engenharia de Plataforma",
+    "aiIntegration": "Integração de IA",
+    "modernization": "Modernização de Produto",
+    "agendaZap": "AgendaZap",
+    "interloquia": "Interloquia",
+    "labs": "Labs",
+    "insights": "Artigos",
+    "caseStudies": "Estudos de Caso",
+    "research": "Pesquisa",
+    "contact": "Contato",
+    "sitemap": "Mapa do site",
+    "llmIndex": "Índice para IA (llm.txt)",
+    "about": "Sobre",
+    "careers": "Carreiras",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "email": "E-mail",
+    "privacyPolicy": "Política de Privacidade",
+    "terms": "Termos e Condições"
+  },
+  "copyright": "© {year} OptimizeDeals. Todos os direitos reservados."
+}

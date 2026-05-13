@@ -1,0 +1,82 @@
+{
+  "hero": {
+    "badge": "Join Our Team",
+    "title": "Build systems that",
+    "titleHighlight": "scale.",
+    "description": "We're building a culture focused on engineering quality, systems thinking and long-term technical excellence."
+  },
+  "culture": {
+    "kicker": "Our Culture",
+    "title": "Engineering Culture",
+    "subtitle": "The principles and values that define how we work and build together.",
+    "values": {
+      "quality": {
+        "title": "Engineering Quality",
+        "description": "We prioritize clean, maintainable code over quick fixes. Every line of code is written with future developers in mind."
+      },
+      "systems": {
+        "title": "Systems Thinking",
+        "description": "We approach problems holistically, understanding how components interact and influence each other across the system."
+      },
+      "remote": {
+        "title": "Remote-First",
+        "description": "Work from anywhere. We believe great engineering happens when people have the freedom to structure their own environment."
+      },
+      "product": {
+        "title": "Product Mindset",
+        "description": "Engineering exists to serve products and users. We make technical decisions that create real business value."
+      },
+      "longTerm": {
+        "title": "Long-term Architecture",
+        "description": "We build systems designed for the next 5 years, not just the next sprint. Sustainability is not optional."
+      },
+      "learning": {
+        "title": "Continuous Learning",
+        "description": "The frontend ecosystem evolves rapidly. We dedicate time to research, experimentation, and skill development."
+      }
+    }
+  },
+  "standards": {
+    "kicker": "Standards",
+    "title": "Technical Standards",
+    "subtitle": "Our engineering standards ensure consistency, quality, and maintainability across all projects.",
+    "items": {
+      "typescript": "TypeScript-first development",
+      "testing": "Comprehensive testing strategies",
+      "performance": "Performance budgets and monitoring",
+      "accessibility": "Accessibility as a requirement",
+      "documentation": "Documentation as code",
+      "review": "Code review culture",
+      "cicd": "Automated CI/CD pipelines",
+      "security": "Security-conscious development"
+    }
+  },
+  "mindset": {
+    "kicker": "Mindset",
+    "title": "How We Think",
+    "items": {
+      "architecture": {
+        "title": "Architecture Before Implementation",
+        "description": "We spend time understanding the problem space and designing solutions before writing code. This upfront investment pays dividends in long-term maintainability."
+      },
+      "outcomes": {
+        "title": "Outcomes Over Output",
+        "description": "We measure success by impact, not lines of code. The best solution is often the simplest one that achieves the desired outcome."
+      },
+      "ownership": {
+        "title": "Ownership and Accountability",
+        "description": "Engineers own their work end-to-end. From design to deployment to monitoring, we take responsibility for the systems we build."
+      },
+      "knowledge": {
+        "title": "Knowledge Sharing",
+        "description": "We document decisions, share learnings, and invest in making our teammates better. No knowledge silos allowed."
+      }
+    }
+  },
+  "openings": {
+    "kicker": "Open Positions",
+    "title": "Join Our Team",
+    "empty": "No open positions currently.",
+    "emptySub": "We're always interested in connecting with talented engineers."
+  }
+}

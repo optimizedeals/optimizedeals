@@ -1,0 +1,13 @@
+{
+  "label": "Idioma",
+  "select": "Selecionar idioma",
+  "current": "Idioma atual: {locale}",
+  "locales": {
+    "en-us": "Inglês (EUA)",
+    "pt-br": "Português (Brasil)"
+  },
+  "shortLocales": {
+    "en-us": "EN",
+    "pt-br": "PT"
+  }
+}

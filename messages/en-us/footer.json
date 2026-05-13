@@ -1,0 +1,33 @@
+{
+  "tagline": "Engineering scalable systems and AI-native solutions for modern products.",
+  "columns": {
+    "solutions": "Solutions",
+    "products": "Products",
+    "resources": "Resources",
+    "company": "Company"
+  },
+  "links": {
+    "frontendArchitecture": "Frontend Architecture",
+    "microfrontends": "Micro-frontends",
+    "platformEngineering": "Platform Engineering",
+    "aiIntegration": "AI Integration",
+    "modernization": "Product Modernization",
+    "agendaZap": "AgendaZap",
+    "interloquia": "Interloquia",
+    "labs": "Labs",
+    "insights": "Insights",
+    "caseStudies": "Case Studies",
+    "research": "Research",
+    "contact": "Contact",
+    "sitemap": "Sitemap",
+    "llmIndex": "AI Index (llm.txt)",
+    "about": "About",
+    "careers": "Careers",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "email": "Email",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms and Conditions"
+  },
+  "copyright": "© {year} OptimizeDeals. All rights reserved."
+}

@@ -1,0 +1,77 @@
+{
+  "hero": {
+    "badge": "Portfólio de Produtos",
+    "title": "Produtos construídos com",
+    "titleHighlight": "pensamento de engenharia em primeiro lugar.",
+    "description": "Explore nosso portfólio de aplicações em produção e sistemas experimentais construídos com princípios modernos de arquitetura."
+  },
+  "live": {
+    "kicker": "Produtos em Produção",
+    "title": "Aplicações em Produção",
+    "items": {
+      "agendaZap": {
+        "name": "AgendaZap",
+        "tagline": "Plataforma de automação de agendamentos",
+        "description": "Plataforma de automação de agendamentos focada em simplicidade operacional, workflows no WhatsApp e experiências modernas de booking.",
+        "highlights": {
+          "whatsapp": "Integrações com WhatsApp",
+          "scheduling": "Fluxos de agendamento",
+          "automation": "Automação",
+          "efficiency": "Eficiência operacional"
+        }
+      },
+      "interloquia": {
+        "name": "Interloquia",
+        "tagline": "Plataforma AI-native de comunicação",
+        "description": "Plataforma AI-native de comunicação e workflows pensada para interações contextuais, sistemas inteligentes e experiências modernas de IA.",
+        "highlights": {
+          "workflows": "Workflows de IA",
+          "contextual": "Interfaces contextuais",
+          "rag": "Sistemas prontos para RAG",
+          "streaming": "Interações em streaming"
+        }
+      }
+    }
+  },
+  "experimental": {
+    "kicker": "Experimental",
+    "title": "Produtos Experimentais e Sistemas Internos",
+    "subtitle": "Projetos de pesquisa, ferramentas internas e sistemas experimentais que desenvolvemos para empurrar os limites da arquitetura de frontend.",
+    "status": {
+      "Active": "Ativo",
+      "Beta": "Beta",
+      "Research": "Pesquisa",
+      "Internal": "Interno"
+    },
+    "items": {
+      "federationRuntime": {
+        "name": "Federation Runtime",
+        "description": "Camada experimental de orquestração de module federation para deploys complexos de micro-frontend."
+      },
+      "streamUi": {
+        "name": "StreamUI Kit",
+        "description": "Biblioteca de componentes otimizada para interfaces de IA em streaming e geração de conteúdo em tempo real."
+      },
+      "nxConnect": {
+        "name": "Nx Cloud Connect",
+        "description": "Ferramenta interna para otimização de cache distribuído em builds de monorepo."
+      },
+      "ragPlayground": {
+        "name": "RAG Playground",
+        "description": "Ambiente de testes para sistemas RAG e estratégias de contexto."
+      },
+      "deployGraph": {
+        "name": "Deploy Graph",
+        "description": "Visualização de dependências e orquestração de deploys para arquiteturas multi-serviço."
+      },
+      "perfMonitor": {
+        "name": "Perf Monitor",
+        "description": "Dashboard em tempo real de monitoramento de performance de frontend e Core Web Vitals."
+      }
+    }
+  },
+  "cta": {
+    "title": "Tem uma ideia de produto?",
+    "subtitle": "Ajudamos empresas a transformar ideias em aplicações prontas para produção com arquitetura moderna e excelência em engenharia."
+  }
+}

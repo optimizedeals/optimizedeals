@@ -1,0 +1,44 @@
+{
+  "actions": {
+    "bookCall": "Book a Call",
+    "scheduleCall": "Schedule a Call",
+    "bookDiscoveryCall": "Book a Discovery Call",
+    "getInTouch": "Get in Touch",
+    "discussProject": "Discuss Your Project",
+    "startProject": "Start a Project",
+    "startConversation": "Start a Conversation",
+    "reachOut": "Reach Out",
+    "exploreLabs": "Explore Labs",
+    "exploreSystems": "Explore Systems",
+    "readInsights": "Read Insights",
+    "collaborate": "Collaborate",
+    "viewAll": "View all",
+    "viewAllInsights": "View all insights",
+    "learnMore": "Learn more",
+    "readArticle": "Read article",
+    "read": "Read",
+    "readMore": "Read more",
+    "backToHome": "Back to Home",
+    "backToInsights": "Back to Insights",
+    "openCalendar": "Open Calendar",
+    "visit": "Visit",
+    "share": "Share",
+    "clearFilter": "Clear filter",
+    "clearAllFilters": "Clear all filters",
+    "aboutUs": "About Us",
+    "skipToMain": "Skip to main content"
+  },
+  "labels": {
+    "tags": "Tags",
+    "share": "Share",
+    "postsBy": "Posts by",
+    "tagged": "Tagged",
+    "featured": "Featured",
+    "category": "Category"
+  },
+  "brand": {
+    "name": "OptimizeDeals",
+    "tagline": "Architecture & Platform Engineering Studio",
+    "shortDescription": "Engineering scalable systems for modern products."
+  }
+}

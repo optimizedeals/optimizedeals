@@ -1,0 +1,222 @@
+{
+  "hero": {
+    "badge": "Estúdio de Arquitetura de Frontend",
+    "titleLead": "Engenharia de sistemas",
+    "titleHighlight1": "escaláveis",
+    "titleMiddle": "para produtos",
+    "titleHighlight2": "modernos",
+    "titleTrail": ".",
+    "subtitle": "Construímos sistemas de alta performance e plataformas com IA focadas em escalabilidade, arquitetura e velocidade de execução.",
+    "floatingLabels": {
+      "runtimeFederation": "Runtime Federation",
+      "nxMonorepos": "Nx Monorepos",
+      "aiWorkflows": "Workflows de IA",
+      "edgeComputing": "Edge Computing",
+      "platformEngineering": "Engenharia de Plataforma",
+      "modularSystems": "Sistemas Modulares"
+    }
+  },
+  "trust": {
+    "badge": "Experiência",
+    "titleLead": "Construído em ecossistemas reais de",
+    "titleHighlight": "engenharia",
+    "subtitle": "Experiência profissional contribuindo com produtos, plataformas e iniciativas de engenharia ligadas a empresas reconhecidas globalmente.",
+    "disclaimer": "Os logotipos representam experiência profissional anterior e participação em ecossistemas."
+  },
+  "services": {
+    "badge": "Serviços",
+    "titleLead": "Engenharia de alto impacto para",
+    "titleHighlight": "produtos digitais escaláveis",
+    "subtitle": "Serviços especializados em arquitetura de frontend, engenharia de plataforma e desenvolvimento moderno de produto.",
+    "items": {
+      "frontendArchitecture": {
+        "title": "Arquitetura de Frontend",
+        "description": "Ecossistemas React escaláveis, sistemas corporativos, arquitetura modular e engenharia de performance."
+      },
+      "microfrontends": {
+        "title": "Micro-frontends e Module Federation",
+        "description": "Composição em runtime, sistemas federados, deploys independentes e escalabilidade entre múltiplos times."
+      },
+      "monorepo": {
+        "title": "Monorepo e Engenharia de Plataforma",
+        "description": "Nx, Turborepo, ferramentas compartilhadas, aceleração de CI e otimização da experiência de desenvolvimento."
+      },
+      "ai": {
+        "title": "Integração de IA em Produtos",
+        "description": "Experiências AI-native, sistemas RAG, integrações com OpenAI, workflows inteligentes e sistemas contextuais."
+      },
+      "modernization": {
+        "title": "Modernização de Produto",
+        "description": "Migração de legado, recuperação de arquitetura, reestruturação de frontend e planejamento de escalabilidade."
+      }
+    }
+  },
+  "why": {
+    "badge": "Por que a Optimize",
+    "titleLead": "Não somos mais uma",
+    "titleHighlight": "agência de software",
+    "body": "Operamos como um estúdio de engenharia especializado em arquitetura, escalabilidade e sustentabilidade técnica de longo prazo. Nossa abordagem combina expertise profunda em frontend com pensamento de sistemas para entregar soluções que crescem com o seu negócio.",
+    "stats": {
+      "yearsExperienceValue": "10+",
+      "yearsExperienceLabel": "Anos de experiência",
+      "projectsValue": "50+",
+      "projectsLabel": "Projetos entregues",
+      "seniorValue": "100%",
+      "seniorLabel": "Engenheiros Sêniores"
+    },
+    "highlights": {
+      "founderLed": {
+        "title": "Engenharia liderada pelos fundadores",
+        "description": "Envolvimento direto de arquitetos sêniores em todos os projetos."
+      },
+      "senior": {
+        "title": "Arquitetura sênior",
+        "description": "Sem times juniores. Execução em nível de especialista desde o dia 1."
+      },
+      "enterprise": {
+        "title": "Expertise em frontend corporativo",
+        "description": "Experiência comprovada com sistemas de frontend em larga escala."
+      },
+      "specialization": {
+        "title": "Especialização rara",
+        "description": "Foco profundo em infraestrutura de frontend e engenharia de plataforma."
+      },
+      "execution": {
+        "title": "Ciclos rápidos de execução",
+        "description": "Iteração rápida com qualidade pronta para produção."
+      },
+      "involvement": {
+        "title": "Envolvimento técnico profundo",
+        "description": "Escrevemos código, não apenas documentação."
+      }
+    }
+  },
+  "stack": {
+    "badge": "Tecnologia",
+    "titleLead": "Stack moderno para",
+    "titleHighlight": "produtos modernos",
+    "subtitle": "Utilizamos tecnologias de ponta para construir soluções performáticas, escaláveis e manuteníveis.",
+    "categories": {
+      "Frontend": "Frontend",
+      "Architecture": "Arquitetura",
+      "Backend": "Backend",
+      "AI": "IA",
+      "Infrastructure": "Infraestrutura",
+      "Web3": "Web3"
+    }
+  },
+  "caseStudies": {
+    "badge": "Estudos de Caso",
+    "titleLead": "Resolvendo",
+    "titleHighlight": "desafios complexos de engenharia",
+    "subtitle": "Exemplos reais de como ajudamos times a superar obstáculos técnicos e entregar soluções escaláveis.",
+    "challengeLabel": "Desafio",
+    "solutionLabel": "Solução",
+    "items": {
+      "scaling": {
+        "title": "Escalando a entrega de frontend em times grandes",
+        "category": "Engenharia de Plataforma",
+        "problem": "Monolito de frontend causando deploys lentos, sistemas duplicados e gargalos de escalabilidade entre múltiplos times de desenvolvimento.",
+        "solution": "Implementamos um monorepo com Nx e Module Federation para composição em runtime, padrões de arquitetura compartilhados e pipelines de CI otimizados.",
+        "results": {
+          "releases": "Releases mais rápidos",
+          "independence": "Independência dos times",
+          "buildTime": "Redução no tempo de build"
+        }
+      },
+      "aiPowered": {
+        "title": "Experiências de produto com IA",
+        "category": "Integração de IA",
+        "problem": "Produto legado sem features inteligentes, workflows manuais e nenhuma assistência contextual ao usuário.",
+        "solution": "Integramos funcionalidades com OpenAI, incluindo interfaces em streaming, UX habilitada por RAG, assistência contextual com IA e automação de workflows.",
+        "results": {
+          "responseTime": "Tempo de resposta",
+          "engagement": "Engajamento de usuários",
+          "completion": "Conclusão de tarefas"
+        }
+      },
+      "highPerformance": {
+        "title": "Infraestrutura de marketing de alta performance",
+        "category": "Engenharia de Performance",
+        "problem": "Landing pages lentas impactando taxas de conversão, pontuações fracas de SEO e capacidades limitadas de analytics.",
+        "solution": "Construímos uma infraestrutura de marketing renderizada na edge, com cargas ultrarrápidas, analytics completos e otimização focada em conversão.",
+        "results": {
+          "vitals": "Core Web Vitals",
+          "conversion": "Taxa de conversão",
+          "loadTime": "Tempo de carregamento"
+        }
+      }
+    }
+  },
+  "labs": {
+    "badge": "Labs",
+    "titleLead": "Pesquisa de Engenharia &",
+    "titleHighlight": "Sistemas Experimentais",
+    "subtitle": "Explorando os limites da arquitetura de frontend por meio de pesquisa, experimentação e contribuições open-source.",
+    "status": {
+      "Active": "Ativo",
+      "Beta": "Beta",
+      "Research": "Pesquisa"
+    },
+    "experiments": {
+      "runtime": {
+        "title": "Runtime Federation Labs",
+        "description": "Padrões experimentais para carregamento dinâmico de módulos e composição em runtime."
+      },
+      "aiEngine": {
+        "title": "AI Workflow Engine",
+        "description": "Prototipando sistemas inteligentes de automação com orquestração de LLMs."
+      },
+      "mfToolkit": {
+        "title": "Micro-frontend Toolkit",
+        "description": "Ferramentas para construir e depurar aplicações federadas."
+      },
+      "architectureViz": {
+        "title": "Visualizador de Arquitetura",
+        "description": "Ferramentas para mapear e analisar dependências de arquitetura de frontend."
+      },
+      "dx": {
+        "title": "DX Accelerators",
+        "description": "Ferramentas CLI e configurações para otimizar workflows de desenvolvimento."
+      },
+      "edge": {
+        "title": "Padrões de Edge Computing",
+        "description": "Explorando renderização de frontend distribuída na edge."
+      }
+    }
+  },
+  "insights": {
+    "badge": "Artigos",
+    "titleLead": "Conteúdo técnico e",
+    "titleHighlight": "reflexões de engenharia",
+    "subtitle": "Reflexões sobre arquitetura de frontend, integração de IA e engenharia moderna de produto."
+  },
+  "about": {
+    "badge": "Sobre",
+    "titleLead": "Um estúdio construído para",
+    "titleHighlight": "excelência em engenharia",
+    "founded": "fundado em 2020",
+    "location": "Brasil / Remoto",
+    "paragraphs": {
+      "p1": "A OptimizeDeals foi criada para ajudar empresas a resolver desafios complexos de engenharia de frontend e produto por meio de arquitetura moderna, sistemas escaláveis e execução técnica profunda.",
+      "p2": "Acreditamos que software de qualidade nasce de arquitetura intencional, não apenas de código. Nossa abordagem combina pensamento de sistemas com engenharia hands-on para entregar soluções que crescem com o seu negócio.",
+      "p3": "Fundada por engenheiros sêniores com experiência em produtos corporativos, startups e ecossistemas open-source, trazemos uma perspectiva única para cada projeto que assumimos."
+    },
+    "values": {
+      "focusLabel": "Foco",
+      "focusValue": "Arquitetura em primeiro lugar",
+      "approachLabel": "Abordagem",
+      "approachValue": "Pensamento de sistemas",
+      "deliveryLabel": "Entrega",
+      "deliveryValue": "Pronto para produção",
+      "teamLabel": "Time",
+      "teamValue": "Engenheiros Sêniores"
+    }
+  },
+  "cta": {
+    "badge": "Disponível para novos projetos",
+    "titleLead": "Construindo algo",
+    "titleHighlight": "complexo?",
+    "subtitle": "Ajudamos times a entregar mais rápido, escalar melhor e modernizar sua arquitetura de frontend."
+  }
+}

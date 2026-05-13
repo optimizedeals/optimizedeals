@@ -1,0 +1,222 @@
+{
+  "hero": {
+    "badge": "Frontend Architecture Studio",
+    "titleLead": "Engineering",
+    "titleHighlight1": "scalable",
+    "titleMiddle": "systems for",
+    "titleHighlight2": "modern",
+    "titleTrail": "products.",
+    "subtitle": "We build high-performance systems and AI-powered platforms focused on scalability, architecture and execution speed.",
+    "floatingLabels": {
+      "runtimeFederation": "Runtime Federation",
+      "nxMonorepos": "Nx Monorepos",
+      "aiWorkflows": "AI Workflows",
+      "edgeComputing": "Edge Computing",
+      "platformEngineering": "Platform Engineering",
+      "modularSystems": "Modular Systems"
+    }
+  },
+  "trust": {
+    "badge": "Experience",
+    "titleLead": "Built through real-world",
+    "titleHighlight": "engineering ecosystems",
+    "subtitle": "Professional experience contributing to products, platforms and engineering initiatives connected to globally recognized companies.",
+    "disclaimer": "Logos represent previous professional experience and ecosystem participation."
+  },
+  "services": {
+    "badge": "Services",
+    "titleLead": "High-impact engineering for",
+    "titleHighlight": "scalable digital products",
+    "subtitle": "Specialized services focused on frontend architecture, platform engineering, and modern product development.",
+    "items": {
+      "frontendArchitecture": {
+        "title": "Frontend Architecture",
+        "description": "Scalable React ecosystems, enterprise frontend systems, modular architecture, and performance engineering."
+      },
+      "microfrontends": {
+        "title": "Micro-frontends & Module Federation",
+        "description": "Runtime composition, federated systems, independent deployments, and multi-team scalability."
+      },
+      "monorepo": {
+        "title": "Monorepo & Platform Engineering",
+        "description": "Nx, Turborepo, shared tooling, CI acceleration, and developer experience optimization."
+      },
+      "ai": {
+        "title": "AI Product Integration",
+        "description": "AI-native experiences, RAG systems, OpenAI integrations, intelligent workflows, and contextual systems."
+      },
+      "modernization": {
+        "title": "Product Modernization",
+        "description": "Legacy migration, architecture recovery, frontend restructuring, and scalability planning."
+      }
+    }
+  },
+  "why": {
+    "badge": "Why Optimize",
+    "titleLead": "Not another",
+    "titleHighlight": "software agency",
+    "body": "We operate as a specialized engineering studio focused on architecture, scalability and long-term technical sustainability. Our approach combines deep frontend expertise with systems thinking to deliver solutions that scale with your business.",
+    "stats": {
+      "yearsExperienceValue": "10+",
+      "yearsExperienceLabel": "Years Experience",
+      "projectsValue": "50+",
+      "projectsLabel": "Projects Delivered",
+      "seniorValue": "100%",
+      "seniorLabel": "Senior Engineers"
+    },
+    "highlights": {
+      "founderLed": {
+        "title": "Founder-led engineering",
+        "description": "Direct involvement from senior architects on every project."
+      },
+      "senior": {
+        "title": "Senior-level architecture",
+        "description": "No junior teams. Expert-level execution from day one."
+      },
+      "enterprise": {
+        "title": "Enterprise frontend expertise",
+        "description": "Proven experience with large-scale frontend systems."
+      },
+      "specialization": {
+        "title": "Rare specialization",
+        "description": "Deep focus on frontend infrastructure and platform engineering."
+      },
+      "execution": {
+        "title": "Fast execution cycles",
+        "description": "Rapid iteration with production-ready quality."
+      },
+      "involvement": {
+        "title": "Deep technical involvement",
+        "description": "We write code, not just documentation."
+      }
+    }
+  },
+  "stack": {
+    "badge": "Technology",
+    "titleLead": "Modern stack for",
+    "titleHighlight": "modern products",
+    "subtitle": "We leverage cutting-edge technologies to build performant, scalable, and maintainable solutions.",
+    "categories": {
+      "Frontend": "Frontend",
+      "Architecture": "Architecture",
+      "Backend": "Backend",
+      "AI": "AI",
+      "Infrastructure": "Infrastructure",
+      "Web3": "Web3"
+    }
+  },
+  "caseStudies": {
+    "badge": "Case Studies",
+    "titleLead": "Solving complex",
+    "titleHighlight": "engineering challenges",
+    "subtitle": "Real-world examples of how we help teams overcome technical obstacles and deliver scalable solutions.",
+    "challengeLabel": "Challenge",
+    "solutionLabel": "Solution",
+    "items": {
+      "scaling": {
+        "title": "Scaling Frontend Delivery Across Large Teams",
+        "category": "Platform Engineering",
+        "problem": "Frontend monolith causing slow deployments, duplicated systems, and scaling bottlenecks across multiple development teams.",
+        "solution": "Implemented Nx monorepo with Module Federation for runtime composition, shared architecture patterns, and optimized CI pipelines.",
+        "results": {
+          "releases": "Faster Releases",
+          "independence": "Team Independence",
+          "buildTime": "Build Time Reduction"
+        }
+      },
+      "aiPowered": {
+        "title": "AI-powered Product Experiences",
+        "category": "AI Integration",
+        "problem": "Legacy product lacking intelligent features, manual workflows, and no contextual user assistance.",
+        "solution": "Integrated OpenAI-powered features including streaming interfaces, RAG-enabled UX, contextual AI assistance, and workflow automation.",
+        "results": {
+          "responseTime": "Response Time",
+          "engagement": "User Engagement",
+          "completion": "Task Completion"
+        }
+      },
+      "highPerformance": {
+        "title": "High-performance Marketing Infrastructure",
+        "category": "Performance Engineering",
+        "problem": "Slow landing pages affecting conversion rates, poor SEO scores, and limited analytics capabilities.",
+        "solution": "Built edge-rendered marketing infrastructure with ultra-fast page loads, comprehensive analytics, and conversion-focused optimization.",
+        "results": {
+          "vitals": "Core Web Vitals",
+          "conversion": "Conversion Rate",
+          "loadTime": "Load Time"
+        }
+      }
+    }
+  },
+  "labs": {
+    "badge": "Labs",
+    "titleLead": "Engineering Research &",
+    "titleHighlight": "Experimental Systems",
+    "subtitle": "Exploring the boundaries of frontend architecture through research, experimentation, and open-source contributions.",
+    "status": {
+      "Active": "Active",
+      "Beta": "Beta",
+      "Research": "Research"
+    },
+    "experiments": {
+      "runtime": {
+        "title": "Runtime Federation Labs",
+        "description": "Experimental patterns for dynamic module loading and runtime composition."
+      },
+      "aiEngine": {
+        "title": "AI Workflow Engine",
+        "description": "Prototyping intelligent automation systems with LLM orchestration."
+      },
+      "mfToolkit": {
+        "title": "Micro-frontend Toolkit",
+        "description": "Developer tools for building and debugging federated applications."
+      },
+      "architectureViz": {
+        "title": "Architecture Visualizer",
+        "description": "Tools for mapping and analyzing frontend architecture dependencies."
+      },
+      "dx": {
+        "title": "DX Accelerators",
+        "description": "CLI tools and configurations for optimizing developer workflows."
+      },
+      "edge": {
+        "title": "Edge Computing Patterns",
+        "description": "Exploring distributed frontend rendering at the edge."
+      }
+    }
+  },
+  "insights": {
+    "badge": "Insights",
+    "titleLead": "Technical writing &",
+    "titleHighlight": "engineering insights",
+    "subtitle": "Thoughts on frontend architecture, AI integration, and modern product engineering."
+  },
+  "about": {
+    "badge": "About",
+    "titleLead": "A studio built for",
+    "titleHighlight": "engineering excellence",
+    "founded": "est. 2020",
+    "location": "Brazil / Remote",
+    "paragraphs": {
+      "p1": "OptimizeDeals was created to help companies solve complex frontend and product engineering challenges through modern architecture, scalable systems and deep technical execution.",
+      "p2": "We believe that great software is built through intentional architecture, not just code. Our approach combines systems thinking with hands-on engineering to deliver solutions that scale with your business.",
+      "p3": "Founded by senior engineers with experience across enterprise products, startups, and open-source ecosystems, we bring a unique perspective to every project we take on."
+    },
+    "values": {
+      "focusLabel": "Focus",
+      "focusValue": "Architecture First",
+      "approachLabel": "Approach",
+      "approachValue": "Systems Thinking",
+      "deliveryLabel": "Delivery",
+      "deliveryValue": "Production Ready",
+      "teamLabel": "Team",
+      "teamValue": "Senior Engineers"
+    }
+  },
+  "cta": {
+    "badge": "Available for new projects",
+    "titleLead": "Building something",
+    "titleHighlight": "complex?",
+    "subtitle": "We help teams move faster, scale better and modernize their frontend architecture."
+  }
+}

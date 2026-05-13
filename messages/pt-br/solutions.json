@@ -1,0 +1,122 @@
+{
+  "hero": {
+    "badge": "Serviços de Engenharia",
+    "title": "Sistemas de engenharia projetados para",
+    "titleHighlight": "escalar.",
+    "description": "Ajudamos empresas a modernizar produtos, escalar ecossistemas de frontend e construir experiências AI-native com engenharia que começa pela arquitetura."
+  },
+  "stats": {
+    "experience": "Anos de experiência",
+    "projects": "Projetos entregues",
+    "senior": "Engenheiros Sêniores",
+    "performance": "Ganho médio de performance"
+  },
+  "diagram": {
+    "title": "Padrões de Arquitetura Moderna",
+    "subtitle": "Projetamos sistemas otimizados para performance, escalabilidade e experiência de desenvolvimento.",
+    "client": "Cliente",
+    "edge": "Edge",
+    "origin": "Origem",
+    "data": "Dados",
+    "label": "Visão geral da arquitetura"
+  },
+  "problemLabel": "O Problema",
+  "approachLabel": "Abordagem de Engenharia",
+  "outcomesLabel": "Resultados Esperados",
+  "items": {
+    "frontendArchitecture": {
+      "title": "Arquitetura de Frontend",
+      "tagline": "Ecossistemas React escaláveis para o enterprise",
+      "description": "Desenhamos e implementamos sistemas de frontend que escalam com a sua organização. De bibliotecas de componentes a padrões de gerenciamento de estado, construímos fundações que duram.",
+      "problem": "Muitas empresas enfrentam codebases de frontend fragmentadas, padrões inconsistentes e arquitetura que não escala com o crescimento do time.",
+      "approach": {
+        "a1": "Auditorias completas de arquitetura e desenho de sistema",
+        "a2": "Desenvolvimento de bibliotecas de componentes integradas ao design system",
+        "a3": "Padrões de gerenciamento de estado otimizados para o seu caso",
+        "a4": "Estratégias de renderização com performance em primeiro lugar"
+      },
+      "outcomes": {
+        "o1": "Redução de 50% em duplicação de código",
+        "o2": "Ciclos mais rápidos de entrega de features",
+        "o3": "Experiência de desenvolvimento aprimorada",
+        "o4": "UI consistente entre produtos"
+      }
+    },
+    "microfrontends": {
+      "title": "Micro-frontends e Module Federation",
+      "tagline": "Composição em runtime para times distribuídos",
+      "description": "Quebramos frontends monolíticos em aplicações com deploy independente. Permitimos que times entreguem mais rápido sem custo de coordenação.",
+      "problem": "Aplicações de frontend grandes viram gargalo quando múltiplos times precisam fazer deploy de forma independente. O custo de coordenação freia todo mundo.",
+      "approach": {
+        "a1": "Desenho de arquitetura com module federation",
+        "a2": "Estratégias de composição em runtime",
+        "a3": "Gestão de dependências compartilhadas",
+        "a4": "Pipelines de deploy independentes"
+      },
+      "outcomes": {
+        "o1": "Deploys independentes por time",
+        "o2": "Menor tempo até produção",
+        "o3": "Flexibilidade tecnológica por módulo",
+        "o4": "Isolamento de falhas aprimorado"
+      }
+    },
+    "platformEngineering": {
+      "title": "Engenharia de Plataforma",
+      "tagline": "Monorepos e otimização de sistemas de build",
+      "description": "Construímos plataformas internas que aceleram o desenvolvimento. Do setup de monorepo à otimização de CI, criamos infraestrutura que multiplica a produtividade do time.",
+      "problem": "Times de engenharia perdem horas com builds lentos, processos manuais e ferramentas que não escalam. A experiência de desenvolvimento impacta diretamente a velocidade.",
+      "approach": {
+        "a1": "Arquitetura de monorepo com Nx ou Turborepo",
+        "a2": "Estratégias de cache e otimização de build",
+        "a3": "Aceleração de pipelines de CI/CD",
+        "a4": "Ferramentas e automação para desenvolvedores"
+      },
+      "outcomes": {
+        "o1": "Builds 10x mais rápidos",
+        "o2": "Gestão simplificada de dependências",
+        "o3": "Melhor compartilhamento de código",
+        "o4": "Produtividade aprimorada dos times"
+      }
+    },
+    "aiIntegration": {
+      "title": "Integração de IA em Produtos",
+      "tagline": "Sistemas RAG e experiências AI-native",
+      "description": "Integramos capacidades de IA em produtos com arquitetura pronta para produção. De sistemas RAG a interfaces em streaming, construímos experiências de IA que parecem nativas.",
+      "problem": "Times têm dificuldade em levar protótipos de IA para produção. Desafios de integração, problemas de latência e padrões de UX são bloqueios comuns.",
+      "approach": {
+        "a1": "Desenho e implementação de arquitetura RAG",
+        "a2": "Padrões de UI em streaming para respostas de IA",
+        "a3": "Estratégias de otimização de janela de contexto",
+        "a4": "Sistemas de automação de workflows de IA"
+      },
+      "outcomes": {
+        "o1": "Funcionalidades de IA prontas para produção",
+        "o2": "Latência de resposta abaixo de 1 segundo",
+        "o3": "Experiências de usuário fluidas",
+        "o4": "Infraestrutura de IA escalável"
+      }
+    },
+    "modernization": {
+      "title": "Modernização de Produto",
+      "tagline": "Migrações de legado e redução de dívida técnica",
+      "description": "Transformamos aplicações legadas em sistemas modernos e manuteníveis. Planejamos e executamos migrações que minimizam riscos e maximizam valor.",
+      "problem": "Bases de código legadas acumulam dívida técnica que desacelera o desenvolvimento e aumenta o custo de manutenção. Reescritas completas são arriscadas e caras.",
+      "approach": {
+        "a1": "Estratégias de modernização incremental",
+        "a2": "Implementação do padrão Strangler Fig",
+        "a3": "Atualização de stack tecnológica",
+        "a4": "Melhorias de performance e segurança"
+      },
+      "outcomes": {
+        "o1": "Redução do esforço de manutenção",
+        "o2": "Melhoria de performance do sistema",
+        "o3": "Experiência moderna de desenvolvimento",
+        "o4": "Menor custo operacional"
+      }
+    }
+  },
+  "cta": {
+    "title": "Pronto para escalar sua engenharia?",
+    "subtitle": "Vamos conversar sobre como podemos ajudar a modernizar sua arquitetura de frontend e acelerar o desenvolvimento do seu produto."
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "ariaToggleMenu": "Abrir menu",
+  "items": {
+    "solutions": "Soluções",
+    "products": "Produtos",
+    "labs": "Labs",
+    "insights": "Artigos",
+    "company": "Empresa"
+  },
+  "solutions": {
+    "sectionEngineering": "Serviços de Engenharia",
+    "sectionModernSystems": "Sistemas Modernos",
+    "frontendArchitecture": {
+      "label": "Arquitetura de Frontend",
+      "description": "Ecossistemas React escaláveis e sistemas corporativos"
+    },
+    "microfrontends": {
+      "label": "Micro-frontends",
+      "description": "Composição em tempo de execução e sistemas federados"
+    },
+    "platformEngineering": {
+      "label": "Engenharia de Plataforma",
+      "description": "Monorepos, Nx e otimização de sistemas de build"
+    },
+    "aiIntegration": {
+      "label": "Integração de IA",
+      "description": "Sistemas RAG e experiências AI-native"
+    },
+    "modernization": {
+      "label": "Modernização de Produto",
+      "description": "Migrações de legado e redução de dívida técnica"
+    },
+    "featured": {
+      "title": "Sistemas de engenharia projetados para escalar",
+      "description": "Descubra como ajudamos empresas a modernizar produtos e escalar ecossistemas de frontend."
+    }
+  },
+  "products": {
+    "sectionLive": "Produtos em Produção",
+    "sectionExperimental": "Experimental",
+    "agendaZap": {
+      "label": "AgendaZap",
+      "description": "Automação de agendamentos com workflows no WhatsApp"
+    },
+    "interloquia": {
+      "label": "Interloquia",
+      "description": "Plataforma AI-native de comunicação e workflows"
+    },
+    "labsProjects": {
+      "label": "Projetos do Labs",
+      "description": "Sistemas experimentais e de pesquisa"
+    },
+    "featured": {
+      "title": "Produtos construídos com pensamento de engenharia primeiro",
+      "description": "Conheça nosso portfólio de aplicações em produção e sistemas experimentais."
+    }
+  },
+  "labs": {
+    "sectionResearch": "Áreas de Pesquisa",
+    "runtimeFederation": {
+      "label": "Runtime Federation Lab",
+      "description": "Module federation e sistemas dinâmicos"
+    },
+    "aiStreaming": {
+      "label": "Interfaces de IA em streaming",
+      "description": "Padrões de interação com IA em tempo real"
+    },
+    "performance": {
+      "label": "Experimentos de Performance",
+      "description": "Pesquisa em otimização de frontend"
+    },
+    "featured": {
+      "title": "Pesquisa em engenharia e sistemas experimentais",
+      "description": "Explore nossa pesquisa em arquitetura de frontend e sistemas de IA."
+    }
+  },
+  "insights": {
+    "sectionCategories": "Categorias",
+    "frontendArchitecture": {
+      "label": "Arquitetura de Frontend",
+      "description": "Análises profundas sobre sistemas escaláveis"
+    },
+    "aiEngineering": {
+      "label": "Engenharia de IA",
+      "description": "Integração de IA e sistemas RAG"
+    },
+    "performance": {
+      "label": "Engenharia de Performance",
+      "description": "Técnicas e padrões de otimização"
+    },
+    "featured": {
+      "title": "Conteúdo técnico e reflexões de engenharia",
+      "description": "Artigos aprofundados sobre arquitetura de frontend e engenharia de IA."
+    }
+  },
+  "company": {
+    "sectionAbout": "Sobre Nós",
+    "about": {
+      "label": "Sobre",
+      "description": "Nossa filosofia e princípios de engenharia"
+    },
+    "careers": {
+      "label": "Carreiras",
+      "description": "Junte-se ao nosso time de engenharia"
+    },
+    "culture": {
+      "label": "Cultura",
+      "description": "Como pensamos e construímos"
+    },
+    "featured": {
+      "title": "Um estúdio construído para excelência em engenharia",
+      "description": "Conheça nossa abordagem founder-led em consultoria técnica."
+    }
+  }
+}

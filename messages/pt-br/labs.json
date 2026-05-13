@@ -1,0 +1,100 @@
+{
+  "hero": {
+    "badge": "Pesquisa e Desenvolvimento",
+    "title": "Pesquisa de engenharia e",
+    "titleHighlight": "sistemas experimentais.",
+    "description": "Explorando as fronteiras da arquitetura de frontend, integração de IA e otimização de performance por meio de pesquisa hands-on e experimentação."
+  },
+  "visualization": {
+    "active": "Labs Ativo",
+    "realtime": "Tempo real",
+    "activeCount": "{count} Ativos"
+  },
+  "status": {
+    "Active": "Ativo",
+    "Beta": "Beta",
+    "Research": "Pesquisa"
+  },
+  "section": {
+    "title": "Experimentos Ativos",
+    "subtitle": "Mergulhos profundos em tecnologias emergentes e padrões de arquitetura que moldam o futuro do desenvolvimento de frontend."
+  },
+  "items": {
+    "runtimeFederation": {
+      "title": "Runtime Federation Lab",
+      "description": "Explorando padrões avançados de module federation para composição em runtime de aplicações de frontend com deploy independente.",
+      "metricLabel": "Tempo de carregamento de módulo",
+      "metricValue": "<50ms",
+      "areas": {
+        "a1": "Carregamento dinâmico de remotes",
+        "a2": "Negociação de versões",
+        "a3": "Otimização de dependências compartilhadas",
+        "a4": "Estratégias de failover"
+      }
+    },
+    "aiStreaming": {
+      "title": "Interfaces de IA em streaming",
+      "description": "Pesquisa sobre padrões ideais de UX para conteúdo gerado por IA, incluindo respostas em streaming, estados de loading e interações contextuais.",
+      "metricLabel": "Tempo até o primeiro token",
+      "metricValue": "~200ms",
+      "areas": {
+        "a1": "Componentes de UI em streaming",
+        "a2": "Padrões de UI otimista",
+        "a3": "Preservação de contexto",
+        "a4": "Respostas multimodais"
+      }
+    },
+    "performance": {
+      "title": "Experimentos de Performance no Frontend",
+      "description": "Testando técnicas avançadas de otimização para Core Web Vitals, redução de bundle e performance em runtime.",
+      "metricLabel": "Melhoria de LCP",
+      "metricValue": "40%",
+      "areas": {
+        "a1": "Estratégias de hidratação parcial",
+        "a2": "Algoritmos de bundle splitting",
+        "a3": "Otimização de prefetch",
+        "a4": "Gerenciamento de memória"
+      }
+    },
+    "ragUx": {
+      "title": "Sistemas de UX para RAG",
+      "description": "Desenvolvendo padrões de UX para interfaces de retrieval-augmented generation, incluindo exibição de citações e visualização de contexto.",
+      "metricLabel": "Precisão de retrieval",
+      "metricValue": "94%",
+      "areas": {
+        "a1": "Padrões de UI para citações",
+        "a2": "Visualização da janela de contexto",
+        "a3": "Atribuição de fontes",
+        "a4": "Indicadores de confiança"
+      }
+    },
+    "motion": {
+      "title": "Pesquisa em Sistemas de Motion",
+      "description": "Criando uma abordagem sistemática para animação e motion design em aplicações de frontend modernas.",
+      "metricLabel": "Conformidade a 60fps",
+      "metricValue": "99,2%",
+      "areas": {
+        "a1": "Animações baseadas em física",
+        "a2": "Interfaces guiadas por gestos",
+        "a3": "Efeitos vinculados ao scroll",
+        "a4": "Budgets de performance"
+      }
+    },
+    "distributed": {
+      "title": "Arquiteturas de Frontend Distribuídas",
+      "description": "Investigando padrões para deploys globais distribuídos de frontend com edge computing e otimização regional.",
+      "metricLabel": "Latência na edge",
+      "metricValue": "<10ms",
+      "areas": {
+        "a1": "Estratégias de edge computing",
+        "a2": "Sincronização de dados regionais",
+        "a3": "Modelos de consistência",
+        "a4": "Padrões de failover"
+      }
+    }
+  },
+  "cta": {
+    "title": "Interessado na nossa pesquisa?",
+    "subtitle": "Compartilhamos nossas descobertas em artigos técnicos e contribuições open-source. Acompanhe nossos artigos ou entre em contato para colaborar."
+  }
+}
