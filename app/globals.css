@@ -132,7 +132,9 @@
 
 @theme inline {
   --font-sans: "Geist", "Geist Fallback", system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
+  --font-mono:
+    Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
 
   /* Semantic tokens (preferred for components) */
   --color-background: var(--background);
