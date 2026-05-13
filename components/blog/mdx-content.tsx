@@ -27,6 +27,7 @@ import {
 } from "./mdx-components";
 import { HeadingAnchor } from "./heading-anchor";
 import { cn } from "@/lib/utils";
+import { MDXProvider } from "@mdx-js/react";
 
 interface MDXContentProps {
   content: string;
@@ -53,7 +54,9 @@ const mdxComponents = {
   Embed,
   FeatureGrid,
 
-  Image: (props: React.ComponentProps<typeof Image> & { className?: string }) => {
+  Image: (
+    props: React.ComponentProps<typeof Image> & { className?: string },
+  ) => {
     const { src, alt, width, height, className, ...rest } = props;
     const w = typeof width === "string" ? parseInt(width, 10) : width || 800;
     const h = typeof height === "string" ? parseInt(height, 10) : height || 450;
@@ -135,10 +138,7 @@ const mdxComponents = {
       {children}
     </a>
   ),
-  strong: ({
-    children,
-    ...props
-  }: React.HTMLAttributes<HTMLElement>) => (
+  strong: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <strong className="text-foreground font-medium" {...props}>
       {children}
     </strong>
@@ -200,7 +200,13 @@ const mdxComponents = {
       !!className?.includes("language-");
     if (isFenced) {
       return (
-        <code className={className} {...props}>
+        <code
+          className={cn(
+            "inline-flex items-center p-0.5 rounded-xs border border-border/70 text-sm font-mono align-middle",
+            className,
+          )}
+          {...props}
+        >
           {children}
         </code>
       );
@@ -218,16 +224,14 @@ const mdxComponents = {
     return <CodePre {...props} />;
   },
   figure: (props: React.HTMLAttributes<HTMLElement>) => {
-    const isCodeFigure =
-      "data-rehype-pretty-code-figure" in (props as object);
+    const isCodeFigure = "data-rehype-pretty-code-figure" in (props as object);
     if (isCodeFigure) {
       return <div className="not-prose">{props.children}</div>;
     }
     return <figure {...props} />;
   },
   figcaption: (props: React.HTMLAttributes<HTMLElement>) => {
-    const isCodeTitle =
-      "data-rehype-pretty-code-title" in (props as object);
+    const isCodeTitle = "data-rehype-pretty-code-title" in (props as object);
     if (isCodeTitle) {
       // CodePre header already shows language. Skip the title strip to avoid duplication.
       return null;
@@ -237,7 +241,7 @@ const mdxComponents = {
   span: (props: React.HTMLAttributes<HTMLSpanElement>) => {
     return <span {...props} />;
   },
-};
+} satisfies React.ComponentProps<typeof MDXProvider>["components"];
 
 export async function MDXContent({ content }: MDXContentProps) {
   const { content: rendered } = await compileMDX({
