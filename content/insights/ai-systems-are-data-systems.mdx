@@ -208,54 +208,13 @@ The retrieval pipeline is a composition, not a primitive. Treating "embeddings +
 
 A modest, production-shaped retrieval and inference pipeline tends to look something like this, independent of which model or vector store sits inside the boxes:
 
-<ArchitectureDiagram
-  title="Retrieval-centered AI system"
-  description="Most of the engineering lives upstream of the model. The LLM is the terminal stage, not the centerpiece."
-  nodes={[
-    {
-      id: "sources",
-      label: "Sources of truth",
-      x: 10,
-      y: 12,
-      type: "tertiary",
-    },
-    {
-      id: "ingest",
-      label: "Ingest & normalize",
-      x: 35,
-      y: 12,
-      type: "secondary",
-    },
-    { id: "chunk", label: "Chunk & enrich", x: 60, y: 12, type: "secondary" },
-    { id: "index", label: "Hybrid index", x: 85, y: 12, type: "primary" },
-    { id: "client", label: "Client / agent", x: 10, y: 55, type: "primary" },
-    { id: "orch", label: "Orchestrator", x: 35, y: 55, type: "primary" },
-    { id: "retr", label: "Retrieval & rerank", x: 60, y: 55, type: "primary" },
-    { id: "ctx", label: "Context assembler", x: 85, y: 55, type: "secondary" },
-    {
-      id: "tools",
-      label: "Tools & side effects",
-      x: 35,
-      y: 90,
-      type: "secondary",
-    },
-    { id: "memory", label: "Memory store", x: 60, y: 90, type: "secondary" },
-    { id: "model", label: "Model (inference)", x: 85, y: 90, type: "primary" },
-  ]}
-  connections={[
-    { from: "sources", to: "ingest" },
-    { from: "ingest", to: "chunk" },
-    { from: "chunk", to: "index" },
-    { from: "client", to: "orch" },
-    { from: "orch", to: "retr" },
-    { from: "retr", to: "ctx" },
-    { from: "index", to: "retr" },
-    { from: "orch", to: "tools" },
-    { from: "orch", to: "memory" },
-    { from: "ctx", to: "model" },
-    { from: "memory", to: "ctx" },
-    { from: "tools", to: "orch" },
-  ]}
+<ArticleImage
+  src="/posts/assets/ai-systems-are-data-systems/diagram.png"
+  alt="Retrieval-centered AI system Diagram"
+  caption="Retrieval-centered AI system Diagram"
+  width={800}
+  height={500}
+  className="max-w-md mx-auto"
 />
 
 Notice how much sits before, around, and beside the model. The model is one box among ten. The interesting failure modes (staleness, leakage, latency, cost, hallucination) all originate in the boxes that do not say "model."
