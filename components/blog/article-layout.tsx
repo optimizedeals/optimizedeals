@@ -11,7 +11,8 @@ import { ReadingProgress } from "./reading-progress";
 import { ShareRow } from "./share-row";
 import { ArticleMeta } from "@/lib/mdx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { authorAvatarSrc, authorInitials, authorSlug } from "@/lib/authors";
+import { authorInitials, authorSlug } from "@/lib/authors";
+import { categorySlug, tagSlug } from "@/lib/slugify";
 
 interface ArticleLayoutProps {
   slug: string;
@@ -19,6 +20,7 @@ interface ArticleLayoutProps {
   description: string;
   date: string;
   author: string;
+  authorAvatar?: string;
   category: string;
   tags: string[];
   readingTime: string;
@@ -38,6 +40,7 @@ export function ArticleLayout({
   description,
   date,
   author,
+  authorAvatar,
   category,
   tags,
   readingTime,
@@ -59,7 +62,7 @@ export function ArticleLayout({
             {tags.map((tag) => (
               <Link
                 key={tag}
-                href={`/insights?tag=${tag.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`/insights?tag=${tagSlug(tag)}`}
                 className="inline-flex items-center gap-1 px-3 py-1 text-xs font-mono bg-border/30 border border-border/50 rounded-full text-muted-foreground hover:text-foreground hover:border-border transition-all"
               >
                 <Tag className="w-3 h-3" />
@@ -128,7 +131,7 @@ export function ArticleLayout({
               </Link>
               <ChevronRight className="w-4 h-4" />
               <Link
-                href={`/insights?category=${category.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`/insights?category=${categorySlug(category)}`}
                 className="hover:text-foreground transition-colors"
               >
                 {category}
@@ -142,7 +145,7 @@ export function ArticleLayout({
               transition={{ delay: 0.1 }}
             >
               <Link
-                href={`/insights?category=${category.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`/insights?category=${categorySlug(category)}`}
                 className="inline-flex items-center gap-2 px-3 py-1 mb-6 bg-primary/10 border border-primary/20 rounded-full text-xs font-mono text-accent hover:bg-primary/20 transition-colors"
               >
                 {category}
@@ -182,7 +185,9 @@ export function ArticleLayout({
                 aria-label={`See more posts by ${author}`}
               >
                 <Avatar className="size-9 ring-1 ring-border/60 group-hover:ring-border transition-all">
-                  <AvatarImage src={authorAvatarSrc(author)} alt={author} />
+                  {authorAvatar && (
+                    <AvatarImage src={authorAvatar} alt={author} />
+                  )}
                   <AvatarFallback className="text-xs font-mono">
                     {authorInitials(author)}
                   </AvatarFallback>

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 import { getAllArticles, getAllCategories, formatDate } from "@/lib/mdx";
+import { authorSlug } from "@/lib/authors";
+import { categorySlug, tagSlug } from "@/lib/slugify";
 import { InsightsClient } from "./insights-client";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://optimize.deals";
@@ -31,25 +32,57 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function InsightsPage() {
-  const [articles, categories] = await Promise.all([
+interface InsightsPageProps {
+  searchParams: Promise<{
+    category?: string;
+    tag?: string;
+    author?: string;
+  }>;
+}
+
+export default async function InsightsPage({
+  searchParams,
+}: InsightsPageProps) {
+  const params = await searchParams;
+  const activeCategory = params.category;
+  const activeTag = params.tag;
+  const activeAuthor = params.author;
+
+  const [allArticles, categories] = await Promise.all([
     getAllArticles(),
     getAllCategories(),
   ]);
 
-  // Transform articles for client component
-  const articlesData = articles.map((article) => ({
+  const filtered = allArticles.filter((a) => {
+    if (activeCategory && categorySlug(a.category) !== activeCategory)
+      return false;
+    if (activeTag && !a.tags.some((t) => tagSlug(t) === activeTag)) return false;
+    if (activeAuthor && authorSlug(a.author) !== activeAuthor) return false;
+    return true;
+  });
+
+  const hasFilters = Boolean(activeCategory || activeTag || activeAuthor);
+
+  const articlesData = filtered.map((article) => ({
     ...article,
     formattedDate: formatDate(article.date),
   }));
 
+  const featuredArticles = hasFilters
+    ? []
+    : allArticles
+        .filter((a) => a.featured)
+        .map((a) => ({ ...a, formattedDate: formatDate(a.date) }));
+
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-background" aria-hidden="true" />
-      }
-    >
-      <InsightsClient articles={articlesData} categories={categories} />
-    </Suspense>
+    <InsightsClient
+      articles={articlesData}
+      featuredArticles={featuredArticles}
+      categories={categories}
+      activeCategory={activeCategory ?? null}
+      activeTag={activeTag ?? null}
+      activeAuthor={activeAuthor ?? null}
+      totalArticles={allArticles.length}
+    />
   );
 }

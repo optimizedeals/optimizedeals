@@ -13,6 +13,7 @@ export interface ArticleMeta {
   description: string
   date: string
   author: string
+  authorAvatar?: string
   category: string
   tags: string[]
   image?: string
@@ -48,6 +49,7 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
         description: data.description || "",
         date: data.date || new Date().toISOString(),
         author: data.author || "OptimizeDeals Engineering",
+        authorAvatar: data.authorAvatar,
         category: data.category || "Engineering",
         tags: data.tags || [],
         image: data.image,
@@ -83,6 +85,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     description: data.description || "",
     date: data.date || new Date().toISOString(),
     author: data.author || "OptimizeDeals Engineering",
+    authorAvatar: data.authorAvatar,
     category: data.category || "Engineering",
     tags: data.tags || [],
     image: data.image,

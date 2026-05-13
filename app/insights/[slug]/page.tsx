@@ -133,6 +133,7 @@ export default async function ArticlePage({ params }: PageProps) {
         description={article.description}
         date={formatDate(article.date)}
         author={article.author}
+        authorAvatar={article.authorAvatar}
         category={article.category}
         tags={article.tags}
         readingTime={article.readingTime}

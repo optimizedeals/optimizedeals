@@ -18,17 +18,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/page-hero";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
 import { MegaMenu } from "@/components/mega-menu";
 import { Footer } from "@/components/footer";
 import { ArticleMeta } from "@/lib/mdx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  authorAvatarSrc,
-  authorInitials,
-  authorSlug,
-} from "@/lib/authors";
+import { authorInitials } from "@/lib/authors";
+import { categorySlug, tagSlug } from "@/lib/slugify";
 
 const categoryIcons: { [key: string]: React.ElementType } = {
   "Frontend Architecture": Layers,
@@ -45,52 +40,60 @@ interface ArticleWithDate extends ArticleMeta {
 
 interface InsightsClientProps {
   articles: ArticleWithDate[];
+  featuredArticles: ArticleWithDate[];
   categories: string[];
+  activeCategory: string | null;
+  activeTag: string | null;
+  activeAuthor: string | null;
+  totalArticles: number;
 }
 
-export function InsightsClient({ articles, categories }: InsightsClientProps) {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const authorFilter = searchParams.get("author");
+function buildHref(
+  current: { category: string | null; tag: string | null; author: string | null },
+  patch: Partial<Record<"category" | "tag" | "author", string | null>>,
+): string {
+  const next = { ...current, ...patch };
+  const params = new URLSearchParams();
+  if (next.category) params.set("category", next.category);
+  if (next.tag) params.set("tag", next.tag);
+  if (next.author) params.set("author", next.author);
+  const qs = params.toString();
+  return qs ? `/insights?${qs}` : "/insights";
+}
 
-  const authorMatches = useMemo(() => {
-    if (!authorFilter) return null;
-    const matches = articles.filter(
-      (a) => authorSlug(a.author) === authorFilter,
-    );
-    return matches;
-  }, [articles, authorFilter]);
-
-  const authorName = authorMatches?.[0]?.author ?? authorFilter ?? "";
-
-  const baseList = authorMatches ?? articles;
-  const featuredArticles = authorMatches
-    ? []
-    : articles.filter((a) => a.featured);
-  const filteredArticles =
-    activeCategory === "all"
-      ? baseList
-      : baseList.filter(
-          (a) =>
-            a.category.toLowerCase().replace(/\s+/g, "-") === activeCategory,
-        );
-
-  const clearAuthor = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("author");
-    const qs = params.toString();
-    router.push(qs ? `/insights?${qs}` : "/insights");
+export function InsightsClient({
+  articles,
+  featuredArticles,
+  categories,
+  activeCategory,
+  activeTag,
+  activeAuthor,
+  totalArticles,
+}: InsightsClientProps) {
+  const current = {
+    category: activeCategory,
+    tag: activeTag,
+    author: activeAuthor,
   };
 
   const allCategories = [
-    { id: "all", label: "All", icon: Filter },
+    { id: null as string | null, label: "All", icon: Filter },
     ...categories.map((cat) => ({
-      id: cat.toLowerCase().replace(/\s+/g, "-"),
+      id: categorySlug(cat),
       label: cat,
       icon: categoryIcons[cat] || Layers,
     })),
   ];
+
+  const activeCategoryLabel =
+    categories.find((c) => categorySlug(c) === activeCategory) ?? null;
+
+  const authorName = articles[0]?.author ?? activeAuthor ?? "";
+  const activeAuthorAvatar = articles[0]?.authorAvatar;
+
+  const tagLabel = activeTag
+    ? articles[0]?.tags.find((t) => tagSlug(t) === activeTag) ?? activeTag
+    : null;
 
   return (
     <>
@@ -104,15 +107,14 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
         />
 
         {/* Author Filter Banner */}
-        {authorFilter && (
+        {activeAuthor && (
           <section className="py-6 border-b border-border/30 bg-card/20">
             <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <Avatar className="size-10 ring-1 ring-border/60">
-                  <AvatarImage
-                    src={authorAvatarSrc(authorName)}
-                    alt={authorName}
-                  />
+                  {activeAuthorAvatar && (
+                    <AvatarImage src={activeAuthorAvatar} alt={authorName} />
+                  )}
                   <AvatarFallback className="text-xs font-mono">
                     {authorInitials(authorName)}
                   </AvatarFallback>
@@ -126,13 +128,41 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={clearAuthor}
+              <Link
+                href={buildHref(current, { author: null })}
                 className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-foreground hover:border-border transition-all"
               >
                 <X className="w-3 h-3" />
                 Clear filter
-              </button>
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* Tag Filter Banner */}
+        {activeTag && (
+          <section className="py-6 border-b border-border/30 bg-card/20">
+            <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center size-10 rounded-full bg-primary/10 border border-primary/20">
+                  <Tag className="w-4 h-4 text-accent" />
+                </span>
+                <div>
+                  <p className="text-xs font-mono text-brand-gray uppercase tracking-wider">
+                    Tagged
+                  </p>
+                  <p className="text-base font-medium text-foreground">
+                    {tagLabel}
+                  </p>
+                </div>
+              </div>
+              <Link
+                href={buildHref(current, { tag: null })}
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-foreground hover:border-border transition-all"
+              >
+                <X className="w-3 h-3" />
+                Clear filter
+              </Link>
             </div>
           </section>
         )}
@@ -144,10 +174,12 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
               {allCategories.map((category) => {
                 const Icon = category.icon;
                 const isActive = activeCategory === category.id;
+                const key = category.id ?? "all";
                 return (
-                  <button
-                    key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
+                  <Link
+                    key={key}
+                    href={buildHref(current, { category: category.id })}
+                    scroll={false}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-200 ${
                       isActive
                         ? "bg-primary text-white"
@@ -156,7 +188,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                   >
                     <Icon className="w-4 h-4" />
                     {category.label}
-                  </button>
+                  </Link>
                 );
               })}
             </div>
@@ -164,7 +196,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
         </section>
 
         {/* Featured Articles */}
-        {activeCategory === "all" && featuredArticles.length > 0 && (
+        {featuredArticles.length > 0 && (
           <section className="py-16">
             <div className="max-w-6xl mx-auto px-6">
               <motion.div
@@ -190,7 +222,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
         {/* All Articles */}
         <section
           className={
-            activeCategory === "all" && featuredArticles.length > 0
+            featuredArticles.length > 0
               ? "py-16 border-t border-border/30"
               : "py-16"
           }
@@ -203,19 +235,17 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
               viewport={{ once: true }}
             >
               <h2 className="text-2xl font-medium text-foreground">
-                {activeCategory === "all"
-                  ? "All Articles"
-                  : allCategories.find((c) => c.id === activeCategory)?.label}
+                {activeCategoryLabel ?? "All Articles"}
               </h2>
               <span className="text-sm text-brand-gray font-mono">
-                {filteredArticles.length} article
-                {filteredArticles.length !== 1 ? "s" : ""}
+                {articles.length} article
+                {articles.length !== 1 ? "s" : ""}
               </span>
             </motion.div>
 
-            {filteredArticles.length > 0 ? (
+            {articles.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredArticles.map((article, index) => (
+                {articles.map((article, index) => (
                   <ArticleCard
                     key={article.slug}
                     article={article}
@@ -223,7 +253,7 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
                   />
                 ))}
               </div>
-            ) : articles.length === 0 ? (
+            ) : totalArticles === 0 ? (
               <motion.div
                 className="text-center py-16"
                 initial={{ opacity: 0 }}
@@ -245,8 +275,15 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
               >
                 <Search className="w-12 h-12 text-border mx-auto mb-4" />
                 <p className="text-muted-foreground">
-                  No articles found in this category yet.
+                  No articles match these filters.
                 </p>
+                <Link
+                  href="/insights"
+                  className="inline-flex items-center gap-2 mt-4 text-sm text-accent hover:text-foreground transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                  Clear all filters
+                </Link>
               </motion.div>
             )}
           </div>
@@ -336,10 +373,12 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
               <div className="flex items-center gap-4 text-sm text-brand-gray">
                 <span className="flex items-center gap-2">
                   <Avatar className="size-6">
-                    <AvatarImage
-                      src={authorAvatarSrc(article.author)}
-                      alt={article.author}
-                    />
+                    {article.authorAvatar && (
+                      <AvatarImage
+                        src={article.authorAvatar}
+                        alt={article.author}
+                      />
+                    )}
                     <AvatarFallback className="text-[10px] font-mono">
                       {authorInitials(article.author)}
                     </AvatarFallback>
@@ -387,10 +426,12 @@ function ArticleCard({
           <div className="flex items-center justify-between gap-2 mb-4">
             <div className="flex items-center gap-2 min-w-0">
               <Avatar className="size-6 shrink-0">
-                <AvatarImage
-                  src={authorAvatarSrc(article.author)}
-                  alt={article.author}
-                />
+                {article.authorAvatar && (
+                  <AvatarImage
+                    src={article.authorAvatar}
+                    alt={article.author}
+                  />
+                )}
                 <AvatarFallback className="text-[10px] font-mono">
                   {authorInitials(article.author)}
                 </AvatarFallback>

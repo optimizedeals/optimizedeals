@@ -1,16 +1,7 @@
-const COMBINING_MARKS = new RegExp("[\\u0300-\\u036f]", "g");
+import { toSlug } from "@/lib/slugify";
 
 export function authorSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(COMBINING_MARKS, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
-
-export function authorAvatarSrc(name: string): string {
-  return `/posts/authors/${authorSlug(name)}.png`;
+  return toSlug(name);
 }
 
 export function authorInitials(name: string): string {

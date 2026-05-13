@@ -18,15 +18,15 @@ const PAGE_META: Record<
   { title: string; description: string; badge?: string; pageType: PageType }
 > = {
   "": {
-    title: "Frontend Architecture & Platform Engineering Studio",
+    title: "Software Architecture & Platform Engineering Studio",
     description:
-      "We build high-performance React and AI-powered platforms focused on scalability, architecture and execution speed.",
+      "We build high-performance software and AI-powered platforms focused on scalability, architecture and execution speed.",
     pageType: "homepage",
   },
   solutions: {
     title: "Engineering systems built for scale.",
     description:
-      "We help companies modernize products, scale frontend ecosystems and build AI-native experiences.",
+      "We help companies modernize products, scale software ecosystems and build AI-native experiences.",
     badge: "Engineering Services",
     pageType: "solutions",
   },
@@ -40,21 +40,21 @@ const PAGE_META: Record<
   labs: {
     title: "Engineering research and experimental systems.",
     description:
-      "Exploring the frontiers of frontend architecture, AI integration, and performance optimization.",
+      "Exploring the frontiers of software architecture, AI integration, and performance optimization.",
     badge: "Research & Development",
     pageType: "labs",
   },
   insights: {
     title: "Technical Insights",
     description:
-      "Technical writing on frontend architecture, AI engineering, and performance optimization.",
+      "In-depth articles on modern software architecture, AI engineering, and performance optimization from our engineering team.",
     badge: "Technical Insights",
     pageType: "insights",
   },
   company: {
     title: "A studio built for engineering excellence.",
     description:
-      "OptimizeDeals is a founder-led engineering studio focused on frontend architecture and AI-native products.",
+      "OptimizeDeals is a founder-led engineering studio focused on software architecture and AI-native products.",
     badge: "About Us",
     pageType: "company",
   },
