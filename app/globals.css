@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -41,8 +41,8 @@
   --brand-navy-medium: oklch(0.187 0.058 264);
   --brand-navy-dark: oklch(0.302 0.123 264);
   --brand-gray: oklch(0.454 0.041 271);
-  --brand-gray-light: oklch(0.622 0.041 252);
-  --brand-gold: oklch(0.575 0.111 71);
+  --brand-gray-light: oklch(81.53% 0.0268 253.663);
+  --brand-gold: oklch(68.258% 0.12346 71.593);
 
   /* ---------- Semantic tokens (single theme — dark) ---------- */
   --background: var(--brand-navy);
@@ -131,8 +131,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --font-sans: "Geist", "Geist Fallback", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
 
   /* Semantic tokens (preferred for components) */
   --color-background: var(--background);
