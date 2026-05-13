@@ -18,7 +18,7 @@ tags:
 featured: true
 ---
 
-# AI Systems Are Data Systems
+# Prologue
 
 Most public conversation about AI still orbits the model.
 
@@ -26,10 +26,13 @@ Which checkpoint scores higher on MMLU. Which release has the longer context win
 
 That framing collapses the moment you ship something real.
 
-After enough quarters spent in production environments (answering tickets, settling claims, drafting code, routing financial transactions, summarizing patient histories), a different picture emerges. The model is not where the system lives. The model is a stateless inference function plugged into a much larger apparatus that decides *what it sees*, *when it sees it*, and *what to trust about what comes back*. That apparatus is a data system, and it is the actual product.
+After enough quarters spent in production environments (answering tickets, settling claims, drafting code, routing financial transactions, summarizing patient histories), a different picture emerges. The model is not where the system lives. The model is a stateless inference function plugged into a much larger apparatus that decides _what it sees_, _when it sees it_, and _what to trust about what comes back_. That apparatus is a data system, and it is the actual product.
 
 <Callout type="info" title="Core observation">
-  In real-world AI products, the model is rarely the primary source of intelligence. The system around it is. Treating the model as the product is the most expensive mistake teams make in the first six months of an AI initiative.
+  In real-world AI products, the model is rarely the primary source of
+  intelligence. The system around it is. Treating the model as the product is
+  the most expensive mistake teams make in the first six months of an AI
+  initiative.
 </Callout>
 
 The quality of a deployed AI system tracks far more tightly with:
@@ -56,7 +59,8 @@ The honest answer, almost always: it matters far less than you think. A weak ret
 The reason is structural. An LLM has no privileged access to your business. It does not know your schema, your policies, your customers, your inventory, your incidents, or what changed yesterday. It only knows what you place inside its context window at inference time. Every meaningful product decision compounds upstream of that.
 
 <QuoteBlock author="A familiar refrain from production reviews">
-  We thought we had a model problem. We had a data problem with a model on top of it.
+  We thought we had a model problem. We had a data problem with a model on top
+  of it.
 </QuoteBlock>
 
 The skill ceiling has quietly shifted. Five years ago, the discriminating capability was training. Three years ago, it was prompting. Today it is retrieval, context engineering, and the runtime that orchestrates them.
@@ -79,7 +83,10 @@ A production-grade AI system is continuously deciding, on every request:
 These are not prompt-engineering decisions. They are runtime data decisions, and they determine almost everything downstream. The model becomes a consumer of the system's judgment, not a substitute for it.
 
 <Callout type="performance" title="Where hallucinations actually come from">
-  In the vast majority of enterprise AI failures we have audited, hallucinations were not caused by the model. They were caused by the retrieval and ranking layers feeding it incomplete, contradictory, or stale context. The model was answering faithfully, but to the wrong inputs.
+  In the vast majority of enterprise AI failures we have audited, hallucinations
+  were not caused by the model. They were caused by the retrieval and ranking
+  layers feeding it incomplete, contradictory, or stale context. The model was
+  answering faithfully, but to the wrong inputs.
 </Callout>
 
 If a model is confidently wrong, ask first what it was shown. The answer is almost always more interesting than the inference.
@@ -92,22 +99,25 @@ Most of what makes a RAG system good (or bad) happens long before a query is eve
 
 A robust retrieval system is best understood as a layered architecture, each layer making decisions that constrain the next:
 
-| Layer              | Responsibility                                                  | Failure mode when neglected                    |
-| ------------------ | --------------------------------------------------------------- | ---------------------------------------------- |
-| Ingestion          | Normalize sources, extract structure, attach provenance         | Garbage downstream that no model can salvage   |
-| Chunking           | Preserve semantic continuity and reference integrity            | Logically incomplete retrieval units           |
-| Embeddings         | Project content into a searchable semantic space                | Topically similar but operationally wrong hits |
-| Indexing           | Make retrieval fast, filtered, and multi-tenant safe            | Latency spikes, cross-tenant leakage           |
-| Retrieval          | Compose hybrid queries under constraints                        | Recall gaps and false positives                |
-| Ranking            | Resolve relevance under ambiguity and conflict                  | The model picks the loudest, not the truest    |
-| Memory             | Preserve and retrieve cross-turn and cross-session state        | Amnesiac agents, repeated work, lost intent   |
-| Tool orchestration | Mediate side effects and external state                         | Unsafe actions, partial failures, replay bugs  |
-| Observability      | Make every decision in the pipeline inspectable and replayable  | Silent degradation that nobody can debug       |
+| Layer              | Responsibility                                                 | Failure mode when neglected                    |
+| ------------------ | -------------------------------------------------------------- | ---------------------------------------------- |
+| Ingestion          | Normalize sources, extract structure, attach provenance        | Garbage downstream that no model can salvage   |
+| Chunking           | Preserve semantic continuity and reference integrity           | Logically incomplete retrieval units           |
+| Embeddings         | Project content into a searchable semantic space               | Topically similar but operationally wrong hits |
+| Indexing           | Make retrieval fast, filtered, and multi-tenant safe           | Latency spikes, cross-tenant leakage           |
+| Retrieval          | Compose hybrid queries under constraints                       | Recall gaps and false positives                |
+| Ranking            | Resolve relevance under ambiguity and conflict                 | The model picks the loudest, not the truest    |
+| Memory             | Preserve and retrieve cross-turn and cross-session state       | Amnesiac agents, repeated work, lost intent    |
+| Tool orchestration | Mediate side effects and external state                        | Unsafe actions, partial failures, replay bugs  |
+| Observability      | Make every decision in the pipeline inspectable and replayable | Silent degradation that nobody can debug       |
 
 Each row is its own subsystem with its own SLOs. Each row determines what the next can do. The model, the layer most teams obsess over, sits at the very end and inherits the quality of everything above it.
 
 <Callout type="tip" title="A useful heuristic">
-  If a regression appears at inference time, suspect retrieval first. If retrieval looks correct, suspect chunking. If chunking looks correct, suspect ingestion. The model is the last place a bug is *introduced*, and almost the last place worth looking.
+  If a regression appears at inference time, suspect retrieval first. If
+  retrieval looks correct, suspect chunking. If chunking looks correct, suspect
+  ingestion. The model is the last place a bug is *introduced*, and almost the
+  last place worth looking.
 </Callout>
 
 ---
@@ -125,10 +135,15 @@ Long context introduces a different and arguably worse class of problems:
 - **Latency.** Prefill time grows with context length. Interactive applications cannot afford to pay it on every turn.
 - **Noise injection.** Indiscriminately included context introduces contradictions, distractors, and outdated material the model has to actively ignore, and often does not.
 - **Cache inefficiency.** Long, unstructured contexts evict each other, defeating the prompt-caching strategies that make production economics viable.
-- **Eval brittleness.** Outputs become harder to attribute to specific evidence. You lose the ability to say "the answer came from *this* chunk," which destroys auditability.
+- **Eval brittleness.** Outputs become harder to attribute to specific evidence. You lose the ability to say "the answer came from _this_ chunk," which destroys auditability.
 
-<Callout type="warning" title="The dominant failure mode of naive long-context designs">
-  Systems that indiscriminately push large amounts of content into a long context window almost always *reduce* precision instead of improving it. They look impressive in demos. They degrade quietly in production.
+<Callout
+  type="warning"
+  title="The dominant failure mode of naive long-context designs"
+>
+  Systems that indiscriminately push large amounts of content into a long
+  context window almost always *reduce* precision instead of improving it. They
+  look impressive in demos. They degrade quietly in production.
 </Callout>
 
 The problem was never how much context the model can hold. The problem is constructing the right context: small, dense, current, attributed, and free of contradictions. A 200k-token window is not an excuse to skip the retrieval system. It is, at best, a more forgiving target for one.
@@ -137,7 +152,7 @@ The problem was never how much context the model can hold. The problem is constr
 
 ## Chunking Is a Hidden Intelligence Layer
 
-Chunking gets discussed less than it deserves, partly because it looks mechanical. It is not. Chunking is where you decide what a *retrievable unit of meaning* is in your domain, and that decision propagates through every query the system ever serves.
+Chunking gets discussed less than it deserves, partly because it looks mechanical. It is not. Chunking is where you decide what a _retrievable unit of meaning_ is in your domain, and that decision propagates through every query the system ever serves.
 
 Naive systems split on:
 
@@ -147,7 +162,7 @@ Naive systems split on:
 
 These work tolerably for homogeneous prose. They fail badly for almost everything else. A legal clause cuts mid-reference. A code function gets separated from its imports. A medical note loses the dosage from the condition it belongs to. A policy document is split across the exception that makes the rule applicable.
 
-When the retrieved unit is logically incomplete, the model is forced to *infer* the missing pieces. Inference under missing premises is exactly the regime where hallucinations are generated.
+When the retrieved unit is logically incomplete, the model is forced to _infer_ the missing pieces. Inference under missing premises is exactly the regime where hallucinations are generated.
 
 Better chunking strategies in production tend to share a few properties:
 
@@ -166,23 +181,23 @@ Vector search is foundational, but semantic similarity is not semantic correctne
 
 A few of the failure modes show up repeatedly:
 
-| Query                          | Semantically similar, but wrong                   |
-| ------------------------------ | ------------------------------------------------- |
-| Current API version            | Deprecated API documentation from two years ago   |
-| Production deployment runbook  | Staging-only experimental procedure               |
-| Pricing as of this quarter     | Historical pricing notes from an archived plan    |
-| Security policy for customers  | Internal-only red-team configuration              |
-| Refund rules for region A      | Refund rules for region B with similar phrasing   |
-| Latest incident postmortem     | An older, superficially similar incident          |
+| Query                         | Semantically similar, but wrong                 |
+| ----------------------------- | ----------------------------------------------- |
+| Current API version           | Deprecated API documentation from two years ago |
+| Production deployment runbook | Staging-only experimental procedure             |
+| Pricing as of this quarter    | Historical pricing notes from an archived plan  |
+| Security policy for customers | Internal-only red-team configuration            |
+| Refund rules for region A     | Refund rules for region B with similar phrasing |
+| Latest incident postmortem    | An older, superficially similar incident        |
 
-Cosine distance has no opinion about which one is current, authoritative, in-scope, or permitted. That opinion has to be supplied by the retrieval system itself, through *composition*:
+Cosine distance has no opinion about which one is current, authoritative, in-scope, or permitted. That opinion has to be supplied by the retrieval system itself, through _composition_:
 
 - **Vector similarity** for semantic recall
 - **Lexical / BM25 search** for terms the embeddings flatten (identifiers, version strings, error codes)
 - **Metadata filtering** for tenancy, time, region, document status, access tier
 - **Recency scoring** for inherently time-sensitive corpora
 - **Graph relationships** for entities, references, and dependencies between documents
-- **Authorization filters** applied *before* retrieval, never after
+- **Authorization filters** applied _before_ retrieval, never after
 - **Cross-encoder reranking** to apply heavier judgment to the top-k
 
 The retrieval pipeline is a composition, not a primitive. Treating "embeddings + vector DB" as a complete answer is the single most common architectural error in early-stage AI systems. It works in the demo. It collapses on the first day a user asks something the embedding alone cannot disambiguate.
@@ -197,15 +212,33 @@ A modest, production-shaped retrieval and inference pipeline tends to look somet
   title="Retrieval-centered AI system"
   description="Most of the engineering lives upstream of the model. The LLM is the terminal stage, not the centerpiece."
   nodes={[
-    { id: "sources", label: "Sources of truth", x: 10, y: 12, type: "tertiary" },
-    { id: "ingest", label: "Ingest & normalize", x: 35, y: 12, type: "secondary" },
+    {
+      id: "sources",
+      label: "Sources of truth",
+      x: 10,
+      y: 12,
+      type: "tertiary",
+    },
+    {
+      id: "ingest",
+      label: "Ingest & normalize",
+      x: 35,
+      y: 12,
+      type: "secondary",
+    },
     { id: "chunk", label: "Chunk & enrich", x: 60, y: 12, type: "secondary" },
     { id: "index", label: "Hybrid index", x: 85, y: 12, type: "primary" },
     { id: "client", label: "Client / agent", x: 10, y: 55, type: "primary" },
     { id: "orch", label: "Orchestrator", x: 35, y: 55, type: "primary" },
     { id: "retr", label: "Retrieval & rerank", x: 60, y: 55, type: "primary" },
     { id: "ctx", label: "Context assembler", x: 85, y: 55, type: "secondary" },
-    { id: "tools", label: "Tools & side effects", x: 35, y: 90, type: "secondary" },
+    {
+      id: "tools",
+      label: "Tools & side effects",
+      x: 35,
+      y: 90,
+      type: "secondary",
+    },
     { id: "memory", label: "Memory store", x: 60, y: 90, type: "secondary" },
     { id: "model", label: "Model (inference)", x: 85, y: 90, type: "primary" },
   ]}
@@ -233,19 +266,49 @@ Notice how much sits before, around, and beside the model. The model is one box 
 
 The shift from monolithic chat completion to tool-using agents is not a UX update. It is an architectural inversion.
 
-In a tool-using design, the model is no longer expected to *contain* knowledge. It is expected to *act on* knowledge: query systems, validate state, perform writes, coordinate workflows. The product is no longer "a chatbot wrapped around a model." It is a distributed execution environment in which the model plays the role of a planner and interpreter.
+In a tool-using design, the model is no longer expected to _contain_ knowledge. It is expected to _act on_ knowledge: query systems, validate state, perform writes, coordinate workflows. The product is no longer "a chatbot wrapped around a model." It is a distributed execution environment in which the model plays the role of a planner and interpreter.
 
 That changes what the model is responsible for, and what the system around it must guarantee:
 
 <FeatureGrid
   columns={2}
   features={[
-    { icon: "Database", title: "Authoritative state lives elsewhere", description: "The model defers to databases, search indexes, and APIs for ground truth. It does not memorize what can be queried." },
-    { icon: "GitBranch", title: "Workflows become first-class", description: "Multi-step tasks are orchestrated as graphs of tool calls, with retries, compensations, and idempotency keys, not as one long prompt." },
-    { icon: "Shield", title: "Authorization moves into tools", description: "Permissions are enforced by the tool layer, not the prompt. The model cannot leak what it cannot reach." },
-    { icon: "Cpu", title: "Latency budgeting is per-call", description: "Each tool call has its own latency profile. Orchestration must parallelize, cache, and time-box at the call graph level." },
-    { icon: "Layers", title: "Schemas are the new prompts", description: "Tool definitions (names, descriptions, JSON schemas) become the highest-leverage surface in the system. They are the contract the model reasons against." },
-    { icon: "Zap", title: "Failure is structured", description: "Tools return typed errors. The orchestrator decides whether to retry, fall back, ask the user, or abort, instead of letting the model improvise." },
+    {
+      icon: "Database",
+      title: "Authoritative state lives elsewhere",
+      description:
+        "The model defers to databases, search indexes, and APIs for ground truth. It does not memorize what can be queried.",
+    },
+    {
+      icon: "GitBranch",
+      title: "Workflows become first-class",
+      description:
+        "Multi-step tasks are orchestrated as graphs of tool calls, with retries, compensations, and idempotency keys, not as one long prompt.",
+    },
+    {
+      icon: "Shield",
+      title: "Authorization moves into tools",
+      description:
+        "Permissions are enforced by the tool layer, not the prompt. The model cannot leak what it cannot reach.",
+    },
+    {
+      icon: "Cpu",
+      title: "Latency budgeting is per-call",
+      description:
+        "Each tool call has its own latency profile. Orchestration must parallelize, cache, and time-box at the call graph level.",
+    },
+    {
+      icon: "Layers",
+      title: "Schemas are the new prompts",
+      description:
+        "Tool definitions (names, descriptions, JSON schemas) become the highest-leverage surface in the system. They are the contract the model reasons against.",
+    },
+    {
+      icon: "Zap",
+      title: "Failure is structured",
+      description:
+        "Tools return typed errors. The orchestrator decides whether to retry, fall back, ask the user, or abort, instead of letting the model improvise.",
+    },
   ]}
 />
 
@@ -257,7 +320,7 @@ This is the territory that platform engineering teams already know. The good new
 
 ## The Real Problem Is Ranking
 
-Most retrieval systems fail not because they retrieve *nothing relevant*, but because they retrieve *too much that is plausibly relevant*. The model is then handed ten chunks where only two contain the actual answer, and asked, implicitly, to identify which is authoritative.
+Most retrieval systems fail not because they retrieve _nothing relevant_, but because they retrieve _too much that is plausibly relevant_. The model is then handed ten chunks where only two contain the actual answer, and asked, implicitly, to identify which is authoritative.
 
 That implicit decision is where systems become unstable. The same query, hours apart, can land on different chunks and produce different answers. Users experience this as the model being "moody." It is not moody. It is unranked.
 
@@ -267,29 +330,36 @@ Ranking is its own discipline:
   steps={[
     {
       title: "First-stage recall",
-      description: "Cast a wide net with a hybrid query (vector + lexical + filters) to assemble a candidate set. Optimize for recall, not precision. You can throw things away later; you cannot recover what you never retrieved.",
+      description:
+        "Cast a wide net with a hybrid query (vector + lexical + filters) to assemble a candidate set. Optimize for recall, not precision. You can throw things away later; you cannot recover what you never retrieved.",
     },
     {
       title: "Feature-based scoring",
-      description: "Score each candidate against signals the embedding cannot see: freshness, authority, document status, prior user feedback, click-through, source reliability, regional applicability.",
+      description:
+        "Score each candidate against signals the embedding cannot see: freshness, authority, document status, prior user feedback, click-through, source reliability, regional applicability.",
     },
     {
       title: "Cross-encoder reranking",
-      description: "Apply a heavier model (typically a cross-encoder) to the top-k candidates. Cross-encoders read the query and the candidate jointly, which is dramatically more accurate than the bi-encoder used for initial retrieval.",
+      description:
+        "Apply a heavier model (typically a cross-encoder) to the top-k candidates. Cross-encoders read the query and the candidate jointly, which is dramatically more accurate than the bi-encoder used for initial retrieval.",
     },
     {
       title: "Diversity and de-duplication",
-      description: "Collapse near-duplicates and enforce coverage across sub-topics so the context window is not consumed by ten near-identical chunks of the same passage.",
+      description:
+        "Collapse near-duplicates and enforce coverage across sub-topics so the context window is not consumed by ten near-identical chunks of the same passage.",
     },
     {
       title: "Budgeted assembly",
-      description: "Fit the final set into a token budget that reserves room for system instructions, tool definitions, prior turns, and the response itself. Truncation is a design decision, not an afterthought.",
+      description:
+        "Fit the final set into a token budget that reserves room for system instructions, tool definitions, prior turns, and the response itself. Truncation is a design decision, not an afterthought.",
     },
   ]}
 />
 
 <Callout type="tip" title="A principle worth internalizing">
-  Retrieval determines what the model can see. Ranking determines what the model will trust. Treating them as the same problem is why so many RAG systems plateau at "usually right."
+  Retrieval determines what the model can see. Ranking determines what the model
+  will trust. Treating them as the same problem is why so many RAG systems
+  plateau at "usually right."
 </Callout>
 
 The teams that ship reliable AI systems treat ranking as an evolving model in its own right: versioned, evaluated, monitored, and improved on its own cadence. The retrieval stack has its own MLOps.
@@ -311,7 +381,12 @@ A useful taxonomy:
 Each tier has different freshness, consistency, retention, and access requirements. Each has its own write path, retrieval path, and eviction policy. The choices you make here interact directly with retrieval: memory is just retrieval with a different lifecycle.
 
 <Callout type="warning" title="The quiet failure mode">
-  Many AI products treat memory as "append everything to a vector store." This works for a week. Then memories contradict each other, stale preferences override current ones, irrelevant exchanges crowd the context window, and the system starts behaving like an unreliable narrator. Memory needs schema, conflict resolution, and TTLs, the same disciplines you would apply to any other state store.
+  Many AI products treat memory as "append everything to a vector store." This
+  works for a week. Then memories contradict each other, stale preferences
+  override current ones, irrelevant exchanges crowd the context window, and the
+  system starts behaving like an unreliable narrator. Memory needs schema,
+  conflict resolution, and TTLs, the same disciplines you would apply to any
+  other state store.
 </Callout>
 
 The interesting design question is not "what should we remember?" It is "what should we forget, when, and on what authority?"
@@ -322,23 +397,53 @@ The interesting design question is not "what should we remember?" It is "what sh
 
 The moment an AI system is grounded in real data, freshness becomes a first-class concern, and most teams discover this the wrong way, by serving confidently outdated answers.
 
-The underlying problem is that the model's working knowledge is now a *materialized view* over upstream systems of record. Like any materialized view, it can lag. Unlike most materialized views, the staleness is invisible to the user, who has no way to know whether they are reading from a snapshot taken five seconds or five months ago.
+The underlying problem is that the model's working knowledge is now a _materialized view_ over upstream systems of record. Like any materialized view, it can lag. Unlike most materialized views, the staleness is invisible to the user, who has no way to know whether they are reading from a snapshot taken five seconds or five months ago.
 
 Practical patterns that consistently hold up:
 
 <ComparisonTable
   title="Freshness strategies for retrieval indexes"
-  headers={["Batch reindex", "Streaming CDC", "Pull-through cache", "Source-of-truth tool call"]}
+  headers={[
+    "Batch reindex",
+    "Streaming CDC",
+    "Pull-through cache",
+    "Source-of-truth tool call",
+  ]}
   rows={[
-    { feature: "Latency to reflect change", values: ["hours to days", "seconds", "first miss is slow", "real-time"] },
-    { feature: "Index storage cost", values: ["low", "moderate", "low", "none"] },
-    { feature: "Query latency", values: ["fast", "fast", "fast after warm-up", "slow"] },
-    { feature: "Best for", values: ["stable corpora", "rapidly changing data", "long-tail content", "transactional facts"] },
-    { feature: "Failure mode", values: ["stale answers", "consumer lag", "thundering herd on miss", "outage propagates"] },
+    {
+      feature: "Latency to reflect change",
+      values: ["hours to days", "seconds", "first miss is slow", "real-time"],
+    },
+    {
+      feature: "Index storage cost",
+      values: ["low", "moderate", "low", "none"],
+    },
+    {
+      feature: "Query latency",
+      values: ["fast", "fast", "fast after warm-up", "slow"],
+    },
+    {
+      feature: "Best for",
+      values: [
+        "stable corpora",
+        "rapidly changing data",
+        "long-tail content",
+        "transactional facts",
+      ],
+    },
+    {
+      feature: "Failure mode",
+      values: [
+        "stale answers",
+        "consumer lag",
+        "thundering herd on miss",
+        "outage propagates",
+      ],
+    },
   ]}
 />
 
-The right architecture almost always combines them. Slowly-changing reference material is batch-indexed. Operational data flows through CDC into the retrieval layer in near-real-time. Transactional truth (account balances, current inventory, today's price) is *never* indexed; it is fetched at request time through a tool call. Asking "balance for account X" of a vector index is a design failure dressed up as a feature.
+The right architecture almost always combines them. Slowly-changing reference material is batch-indexed. Operational data flows through CDC into the retrieval layer in near-real-time. Transactional truth (account balances, current inventory, today's price) is _never_ indexed; it is fetched at request time through a tool call. Asking "balance for account X" of a vector index is a design failure dressed up as a feature.
 
 This is where AI engineering meets data engineering in earnest. Kafka topics, change-data-capture pipelines, idempotent consumers, schema registries, dead-letter queues. The unglamorous machinery of distributed data turns out to be exactly the machinery that keeps an AI product honest.
 
@@ -351,17 +456,37 @@ A pattern recurs across deployments large enough to be worth measuring:
 <MetricsCard
   title="Illustrative: context quality vs. model size on a domain QA workload"
   metrics={[
-    { label: "Baseline answer accuracy", value: "61%", change: "small model, naive RAG", trend: "neutral" },
-    { label: "After ranking + reranking", value: "82%", change: "+21pp, same model", trend: "up" },
-    { label: "After hybrid retrieval", value: "88%", change: "+6pp, same model", trend: "up" },
-    { label: "Upgrading to a frontier model alone", value: "71%", change: "+10pp from baseline", trend: "neutral" },
+    {
+      label: "Baseline answer accuracy",
+      value: "61%",
+      change: "small model, naive RAG",
+      trend: "neutral",
+    },
+    {
+      label: "After ranking + reranking",
+      value: "82%",
+      change: "+21pp, same model",
+      trend: "up",
+    },
+    {
+      label: "After hybrid retrieval",
+      value: "88%",
+      change: "+6pp, same model",
+      trend: "up",
+    },
+    {
+      label: "Upgrading to a frontier model alone",
+      value: "71%",
+      change: "+10pp from baseline",
+      trend: "neutral",
+    },
   ]}
   columns={4}
 />
 
 The exact numbers vary by domain; the shape does not. A larger model applied to mediocre context yields a smaller improvement than a mid-tier model applied to high-quality context, and the latter is cheaper, faster, and easier to keep current.
 
-This is not a polemic against frontier models. They matter enormously for tasks that are genuinely reasoning-bound. It is a reminder that *most* enterprise tasks are not reasoning-bound. They are context-bound. They fail because the right information was not present, not because the model could not reason about it.
+This is not a polemic against frontier models. They matter enormously for tasks that are genuinely reasoning-bound. It is a reminder that _most_ enterprise tasks are not reasoning-bound. They are context-bound. They fail because the right information was not present, not because the model could not reason about it.
 
 The strategic implication is uncomfortable for many roadmaps: the highest-leverage AI investment for most teams is not a model upgrade. It is the retrieval and context stack feeding whichever model they already have.
 
@@ -380,7 +505,7 @@ A perfectly crafted prompt cannot compensate for:
 - tool definitions that misrepresent the underlying system
 - absent memory
 
-Prompts shape *how* the model reasons. Retrieval, tooling, and memory determine *what* it reasons over. The substrate beats the framing, every time. The most impressive prompts in the world cannot reconstruct facts that were never placed in front of the model.
+Prompts shape _how_ the model reasons. Retrieval, tooling, and memory determine _what_ it reasons over. The substrate beats the framing, every time. The most impressive prompts in the world cannot reconstruct facts that were never placed in front of the model.
 
 There is a useful inversion here: when a prompt becomes very long and very specific, that is usually a signal that the surrounding system is underbuilt. The prompt is being asked to compensate for missing infrastructure. The fix is rarely a better prompt. The fix is the infrastructure the prompt is standing in for.
 
@@ -404,7 +529,10 @@ The standard production stack now includes:
           type: "folder",
           children: [
             { name: "planner.ts", comment: "Plans tool-call graphs" },
-            { name: "executor.ts", comment: "Runs them, with retries and timeouts" },
+            {
+              name: "executor.ts",
+              comment: "Runs them, with retries and timeouts",
+            },
             { name: "router.ts", comment: "Model selection per step" },
           ],
         },
@@ -447,7 +575,10 @@ The standard production stack now includes:
           name: "observability",
           type: "folder",
           children: [
-            { name: "tracing.ts", comment: "Spans per retrieval, tool, inference" },
+            {
+              name: "tracing.ts",
+              comment: "Spans per retrieval, tool, inference",
+            },
             { name: "evals.ts", comment: "Offline + online evaluation" },
             { name: "replay.ts", comment: "Deterministic re-execution" },
           ],
@@ -495,7 +626,7 @@ It will be defined by:
 - **Context engineering as a discipline.** The deliberate design of what enters the model's window, in what order, with what compression, under what constraints.
 - **Runtime data systems.** Orchestrators that treat each turn as a query plan over a heterogeneous, distributed knowledge graph.
 - **Domain-specific evaluation harnesses.** Measurement systems that capture what "correct" means in this business, not just generic benchmark scores.
-- **Governance and provenance.** The ability to answer, for any given output, *which sources contributed*, *under what authority*, *at what version*, and *who is permitted to see it*.
+- **Governance and provenance.** The ability to answer, for any given output, _which sources contributed_, _under what authority_, _at what version_, and _who is permitted to see it_.
 
 These are infrastructure problems. They look much more like the work that has historically gone into search engines, data warehouses, and platform engineering than like anything specific to language models.
 
