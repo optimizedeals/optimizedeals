@@ -158,12 +158,13 @@ Next.js 16 exposes a built-in MCP endpoint at `/_next/mcp`. Pair it with the `ne
 
 <CodeBlock language="json" filename=".mcp.json">
   {`{
-  "mcpServers": {
-    "next-devtools": {
-      "command": "npx",
-      "args": ["-y", "next-devtools-mcp@latest"]
+    "mcpServers": {
+      "next-devtools": {
+        "command": "npx",
+        "args": ["-y", "next-devtools-mcp@latest"]
+      }
     }
-  }
+}
 `}
 </CodeBlock>
 
