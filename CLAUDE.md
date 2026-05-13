@@ -67,3 +67,13 @@ App Router with route segments: `book`, `careers`, `company`, `insights/[slug]`,
 - Remote image hosts are restricted in `next.config.ts` `images.remotePatterns` (`optimize.deals`, `*.vercel-storage.com`, `*.giphy.com`). Add a new pattern before using a new external image host.
 - `NEXT_PUBLIC_BASE_URL` overrides the default `https://optimize.deals` used for metadata and OG image URLs.
 - v0 sandbox files (`__v0_*`, `.v0-trash/`, `.snowflake/`) are gitignored — don't commit them.
+
+## Writing articles (`content/insights/*.mdx`)
+
+- **Never use em dashes (`—`) in article prose.** They make the text read as AI-generated. Use natural punctuation instead: commas, colons, parentheses, or periods, depending on the relationship being expressed.
+  - Aside or parenthetical → parentheses `(...)` or commas
+  - Setup followed by elaboration → colon `:`
+  - Two independent thoughts → period and new sentence
+  - Loose continuation → comma
+- This rule applies to article body, callout text, JSX component descriptions (e.g. `Steps`, `FeatureGrid`, `MetricsCard`), and table cells. It does not apply to code blocks, frontmatter, or CLAUDE.md itself.
+- En dashes (`–`) for numeric ranges are also discouraged in prose; write "hours to days" instead of "hours–days".
