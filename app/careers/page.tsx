@@ -301,9 +301,12 @@ export default function CareersPage() {
               <Button
                 size="lg"
                 className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
+                asChild
               >
-                <Mail className="mr-2 h-4 w-4" />
-                Reach Out
+                <a href="mailto:career@optimize.deals">
+                  <Mail className="mr-2 h-4 w-4" />
+                  Reach Out
+                </a>
               </Button>
               <Button
                 variant="outline"

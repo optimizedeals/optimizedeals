@@ -1,89 +1,90 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Clock } from "lucide-react";
+import Link from "next/link";
+import type { ArticleMeta } from "@/lib/mdx";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { authorInitials } from "@/lib/authors";
 
-const articles = [
-  {
-    title: "Scaling React Applications with Module Federation",
-    category: "Architecture",
-    readTime: "8 min read",
-    excerpt:
-      "A deep dive into runtime composition patterns and how to build truly independent micro-frontends.",
-  },
-  {
-    title: "Building AI-Native Interfaces with Streaming",
-    category: "AI Engineering",
-    readTime: "6 min read",
-    excerpt:
-      "Patterns for creating responsive AI-powered experiences with real-time streaming responses.",
-  },
-  {
-    title: "Monorepo Strategies for Enterprise Teams",
-    category: "Platform Engineering",
-    readTime: "10 min read",
-    excerpt:
-      "Comparing Nx and Turborepo for large-scale frontend development and CI optimization.",
-  },
-  {
-    title: "Performance Optimization at the Edge",
-    category: "Performance",
-    readTime: "5 min read",
-    excerpt:
-      "Leveraging edge computing for sub-100ms page loads and improved Core Web Vitals.",
-  },
-];
+interface InsightsSectionProps {
+  articles: ArticleMeta[];
+}
 
 function ArticleCard({
   article,
   index,
 }: {
-  article: (typeof articles)[0];
+  article: ArticleMeta;
   index: number;
 }) {
   return (
     <motion.article
-      className="group relative p-6 bg-card/30 border border-border/40 rounded-xl hover:bg-card/50 hover:border-border/60 transition-all duration-300 cursor-pointer"
+      className="group h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
       viewport={{ once: true }}
     >
-      {/* Category & Read time */}
-      <div className="flex items-center justify-between mb-4">
-        <span className="px-3 py-1 text-xs font-mono text-accent bg-border/30 rounded-full border border-border">
-          {article.category}
-        </span>
-        <div className="flex items-center gap-1 text-xs text-brand-gray">
-          <Clock className="w-3 h-3" />
-          {article.readTime}
+      <Link
+        href={`/insights/${article.slug}`}
+        className="relative h-full flex flex-col p-6 bg-card/30 border border-border/40 rounded-xl hover:bg-card/50 hover:border-border/60 transition-all duration-300"
+      >
+        {/* Category & Read time */}
+        <div className="flex items-center justify-between mb-4">
+          <span className="px-3 py-1 text-xs font-mono text-accent bg-border/30 rounded-full border border-border">
+            {article.category}
+          </span>
+          <div className="flex items-center gap-1 text-xs text-brand-gray">
+            <Clock className="w-3 h-3" />
+            {article.readingTime}
+          </div>
         </div>
-      </div>
 
-      {/* Title */}
-      <h3 className="text-lg font-medium text-foreground mb-3 group-hover:text-white transition-colors leading-snug">
-        {article.title}
-      </h3>
+        {/* Title */}
+        <h3 className="text-lg font-medium text-foreground mb-3 group-hover:text-white transition-colors leading-snug line-clamp-2">
+          {article.title}
+        </h3>
 
-      {/* Excerpt */}
-      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-        {article.excerpt}
-      </p>
+        {/* Excerpt */}
+        <p className="text-sm text-muted-foreground mb-6 leading-relaxed line-clamp-3">
+          {article.description}
+        </p>
 
-      {/* Read more link */}
-      <div className="flex items-center text-sm text-accent font-medium group-hover:text-primary transition-colors">
-        Read article
-        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-      </div>
+        {/* Footer */}
+        <div className="mt-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Avatar className="size-6 shrink-0">
+              {article.authorAvatar && (
+                <AvatarImage
+                  src={article.authorAvatar}
+                  alt={article.author}
+                />
+              )}
+              <AvatarFallback className="text-[10px] font-mono">
+                {authorInitials(article.author)}
+              </AvatarFallback>
+            </Avatar>
+            <span className="text-xs font-mono text-brand-gray truncate">
+              {article.author}
+            </span>
+          </div>
+          <span className="flex items-center text-sm text-accent font-medium group-hover:text-primary transition-colors shrink-0">
+            Read
+            <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+          </span>
+        </div>
+      </Link>
     </motion.article>
   );
 }
 
-export function InsightsSection() {
+export function InsightsSection({ articles }: InsightsSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  if (articles.length === 0) return null;
 
   return (
     <section id="insights" ref={ref} className="relative py-24 md:py-32">
@@ -120,8 +121,19 @@ export function InsightsSection() {
         {/* Articles grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {articles.map((article, index) => (
-            <ArticleCard key={article.title} article={article} index={index} />
+            <ArticleCard key={article.slug} article={article} index={index} />
           ))}
+        </div>
+
+        {/* View all */}
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/insights"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            View all insights
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>
