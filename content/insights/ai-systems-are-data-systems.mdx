@@ -1,7 +1,7 @@
 ---
 title: "AI Systems Are Data Systems"
 description: "Why modern AI products are shaped far more by retrieval architecture, context engineering, and data organization than by the language model itself."
-publishedAt: "2026-05-12"
+publishedAt: "2026-05-13"
 author: "Bruno Silva"
 authorAvatar: "/posts/authors/bruno-silva.png"
 category: "AI Engineering"
@@ -29,7 +29,8 @@ Which model has a larger context window.
 But after building production-grade AI systems, one thing becomes very clear:
 
 <Callout type="info" title="Core observation">
-  In real-world AI products, the model is rarely the primary source of intelligence.
+  In real-world AI products, the model is rarely the primary source of
+  intelligence.
 </Callout>
 
 The quality of the system is usually determined by:
@@ -90,7 +91,8 @@ A production-grade AI system must continuously decide:
 This means the architecture itself becomes part of the intelligence layer.
 
 <Callout type="performance" title="Important">
-  Poor context construction creates hallucinations even when the model itself is highly capable.
+  Poor context construction creates hallucinations even when the model itself is
+  highly capable.
 </Callout>
 
 Most hallucinations in enterprise AI systems are not caused by the model.
@@ -107,16 +109,16 @@ The real work usually happens earlier in the pipeline.
 
 A robust RAG system depends on:
 
-| Layer | Responsibility |
-|---|---|
-| Ingestion | Normalize and structure incoming data |
-| Chunking | Preserve semantic continuity |
-| Embeddings | Create searchable representations |
-| Ranking | Decide relevance under ambiguity |
-| Retrieval | Build constrained context windows |
-| Memory | Preserve historical interactions |
-| Tool orchestration | Connect external capabilities |
-| Observability | Detect failure patterns |
+| Layer              | Responsibility                        |
+| ------------------ | ------------------------------------- |
+| Ingestion          | Normalize and structure incoming data |
+| Chunking           | Preserve semantic continuity          |
+| Embeddings         | Create searchable representations     |
+| Ranking            | Decide relevance under ambiguity      |
+| Retrieval          | Build constrained context windows     |
+| Memory             | Preserve historical interactions      |
+| Tool orchestration | Connect external capabilities         |
+| Observability      | Detect failure patterns               |
 
 The quality of the final response is downstream from these decisions.
 
@@ -143,12 +145,13 @@ More context does not necessarily create better reasoning.
 In many cases, it creates worse reasoning.
 
 <Callout type="warning" title="A common failure mode">
-  Systems that indiscriminately inject large amounts of context often reduce answer precision instead of improving it.
+  Systems that indiscriminately inject large amounts of context often reduce
+  answer precision instead of improving it.
 </Callout>
 
 The challenge is not maximizing context.
 
-The challenge is constructing the *right* context.
+The challenge is constructing the _right_ context.
 
 ---
 
@@ -197,12 +200,12 @@ Two chunks can be semantically similar while being operationally incompatible.
 
 For example:
 
-| Query | Incorrect but semantically similar result |
-|---|---|
-| Current API version | Deprecated API documentation |
-| Pricing policy | Historical pricing notes |
-| Security rules | Development-only configuration |
-| Production workflow | Internal experimental procedure |
+| Query               | Incorrect but semantically similar result |
+| ------------------- | ----------------------------------------- |
+| Current API version | Deprecated API documentation              |
+| Pricing policy      | Historical pricing notes                  |
+| Security rules      | Development-only configuration            |
+| Production workflow | Internal experimental procedure           |
 
 This is why production systems often require hybrid retrieval.
 
@@ -251,7 +254,7 @@ The model becomes only one component inside that system.
 
 ## The Real Problem Is Ranking
 
-Most AI systems fail because they retrieve *something* relevant, but not the *most relevant* thing.
+Most AI systems fail because they retrieve _something_ relevant, but not the _most relevant_ thing.
 
 This distinction matters enormously.
 
@@ -266,7 +269,8 @@ High-quality AI systems aggressively optimize ranking.
 Not just retrieval.
 
 <Callout type="tip" title="A practical engineering principle">
-  Retrieval determines what the model can see. Ranking determines what the model will trust.
+  Retrieval determines what the model can see. Ranking determines what the model
+  will trust.
 </Callout>
 
 These are different problems.
@@ -322,7 +326,7 @@ A perfectly written prompt cannot compensate for:
 
 Prompting helps shape reasoning.
 
-Retrieval determines the raw material the model reasons *from*.
+Retrieval determines the raw material the model reasons _from_.
 
 ---
 
