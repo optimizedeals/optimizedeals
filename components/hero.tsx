@@ -176,11 +176,15 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            Engineering scalable frontend{" "}
+            Engineering{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
-              systems
+              scalable
             </span>{" "}
-            for modern products.
+            systems for{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
+              modern
+            </span>{" "}
+            products.
           </motion.h1>
 
           {/* Subheadline */}
@@ -190,8 +194,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            We build high-performance React and AI-powered platforms focused on
-            scalability, architecture and execution speed.
+            We build high-performance systems and AI-powered platforms focused
+            on scalability, architecture and execution speed.
           </motion.p>
 
           {/* CTA Buttons */}

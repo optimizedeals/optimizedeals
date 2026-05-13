@@ -96,7 +96,7 @@ export function Footer() {
               />
             </LogoLink>
             <p className="text-sm text-muted-foreground max-w-sm mb-6 leading-relaxed">
-              Engineering scalable frontend and AI-native systems for modern
+              Engineering scalable systems and AI-native solutions for modern
               products.
             </p>
 

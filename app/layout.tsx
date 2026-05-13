@@ -27,14 +27,14 @@ export const metadata: Metadata = {
     template: "%s | OptimizeDeals",
   },
   description:
-    "We build high-performance React and AI-powered platforms focused on scalability, architecture and execution speed. Specializing in micro-frontends, Module Federation, Nx monorepos, and AI integrations.",
+    "We build high-performance systems and AI-powered platforms focused on scalability, architecture and execution speed. Specializing in micro-frontends, Module Federation, Nx monorepos, and AI integrations.",
   keywords: [
-    "frontend architecture",
+    "Node.js",
     "React",
     "Next.js",
     "micro-frontends",
     "Module Federation",
-    "Nx",
+    "JavaScript",
     "platform engineering",
     "AI integration",
     "TypeScript",
@@ -58,22 +58,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: baseUrl,
     siteName: "OptimizeDeals",
-    title:
-      "OptimizeDeals | Frontend Architecture & Platform Engineering Studio",
-    description: "Engineering scalable frontend systems for modern products.",
+    title: "OptimizeDeals | Architecture & Platform Engineering Studio",
+    description: "Engineering scalable systems for modern products.",
     images: [
       {
         url: `${baseUrl}/api/og?path=`,
         width: 1200,
         height: 630,
-        alt: "OptimizeDeals - Frontend Architecture Studio",
+        alt: "OptimizeDeals - Architecture & Platform Engineering Studio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "OptimizeDeals | Frontend Architecture Studio",
-    description: "Engineering scalable frontend systems for modern products.",
+    title: "OptimizeDeals | Architecture & Platform Engineering Studio",
+    description: "Engineering scalable systems for modern products.",
     images: [`${baseUrl}/api/og?path=`],
   },
   icons: {
@@ -147,7 +146,7 @@ export default function RootLayout({
                   url: baseUrl,
                   logo: `${baseUrl}/logo-white.svg`,
                   description:
-                    "Frontend systems and platform engineering studio specializing in Module Federation, distributed frontend architecture, runtime systems, and AI-native developer infrastructure.",
+                    "Architecture & Platform Engineering studio specializing in Module Federation, distributed frontend architecture, runtime systems, and AI-native developer infrastructure.",
                   sameAs: [
                     "https://linkedin.com/company/optimizedeals",
                     "https://github.com/optimizedeals",
