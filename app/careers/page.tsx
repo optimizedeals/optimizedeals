@@ -1,43 +1,61 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Code, Brain, Globe, Heart, Rocket, Target, Users, Lightbulb, ArrowRight, Mail, CheckCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { PageHero } from "@/components/page-hero"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import {
+  Code,
+  Brain,
+  Globe,
+  Heart,
+  Rocket,
+  Target,
+  Users,
+  Lightbulb,
+  ArrowRight,
+  Mail,
+  CheckCircle,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/page-hero";
+import Link from "next/link";
 
 const cultureValues = [
   {
     icon: Code,
     title: "Engineering Quality",
-    description: "We prioritize clean, maintainable code over quick fixes. Every line of code is written with future developers in mind.",
+    description:
+      "We prioritize clean, maintainable code over quick fixes. Every line of code is written with future developers in mind.",
   },
   {
     icon: Brain,
     title: "Systems Thinking",
-    description: "We approach problems holistically, understanding how components interact and influence each other across the system.",
+    description:
+      "We approach problems holistically, understanding how components interact and influence each other across the system.",
   },
   {
     icon: Globe,
     title: "Remote-First",
-    description: "Work from anywhere. We believe great engineering happens when people have the freedom to structure their own environment.",
+    description:
+      "Work from anywhere. We believe great engineering happens when people have the freedom to structure their own environment.",
   },
   {
     icon: Rocket,
     title: "Product Mindset",
-    description: "Engineering exists to serve products and users. We make technical decisions that create real business value.",
+    description:
+      "Engineering exists to serve products and users. We make technical decisions that create real business value.",
   },
   {
     icon: Target,
     title: "Long-term Architecture",
-    description: "We build systems designed for the next 5 years, not just the next sprint. Sustainability is not optional.",
+    description:
+      "We build systems designed for the next 5 years, not just the next sprint. Sustainability is not optional.",
   },
   {
     icon: Lightbulb,
     title: "Continuous Learning",
-    description: "The frontend ecosystem evolves rapidly. We dedicate time to research, experimentation, and skill development.",
+    description:
+      "The frontend ecosystem evolves rapidly. We dedicate time to research, experimentation, and skill development.",
   },
-]
+];
 
 const technicalStandards = [
   "TypeScript-first development",
@@ -48,26 +66,30 @@ const technicalStandards = [
   "Code review culture",
   "Automated CI/CD pipelines",
   "Security-conscious development",
-]
+];
 
 const howWeThink = [
   {
     title: "Architecture Before Implementation",
-    description: "We spend time understanding the problem space and designing solutions before writing code. This upfront investment pays dividends in long-term maintainability.",
+    description:
+      "We spend time understanding the problem space and designing solutions before writing code. This upfront investment pays dividends in long-term maintainability.",
   },
   {
     title: "Outcomes Over Output",
-    description: "We measure success by impact, not lines of code. The best solution is often the simplest one that achieves the desired outcome.",
+    description:
+      "We measure success by impact, not lines of code. The best solution is often the simplest one that achieves the desired outcome.",
   },
   {
     title: "Ownership and Accountability",
-    description: "Engineers own their work end-to-end. From design to deployment to monitoring, we take responsibility for the systems we build.",
+    description:
+      "Engineers own their work end-to-end. From design to deployment to monitoring, we take responsibility for the systems we build.",
   },
   {
     title: "Knowledge Sharing",
-    description: "We document decisions, share learnings, and invest in making our teammates better. No knowledge silos allowed.",
+    description:
+      "We document decisions, share learnings, and invest in making our teammates better. No knowledge silos allowed.",
   },
-]
+];
 
 export default function CareersPage() {
   return (
@@ -95,13 +117,14 @@ export default function CareersPage() {
               Engineering Culture
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The principles and values that define how we work and build together.
+              The principles and values that define how we work and build
+              together.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {cultureValues.map((value, index) => {
-              const Icon = value.icon
+              const Icon = value.icon;
               return (
                 <motion.div
                   key={value.title}
@@ -121,7 +144,7 @@ export default function CareersPage() {
                     {value.description}
                   </p>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
@@ -143,7 +166,8 @@ export default function CareersPage() {
                 Technical Standards
               </h2>
               <p className="text-muted-foreground mb-8">
-                Our engineering standards ensure consistency, quality, and maintainability across all projects.
+                Our engineering standards ensure consistency, quality, and
+                maintainability across all projects.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -156,8 +180,10 @@ export default function CareersPage() {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-sm text-muted-foreground">{standard}</span>
+                    <CheckCircle className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-sm text-muted-foreground">
+                      {standard}
+                    </span>
                   </motion.div>
                 ))}
               </div>
@@ -173,13 +199,30 @@ export default function CareersPage() {
               <div className="relative aspect-square bg-card/30 border border-border/30 rounded-2xl overflow-hidden">
                 {/* Grid background */}
                 <div className="absolute inset-0 opacity-20">
-                  <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    className="w-full h-full"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <defs>
-                      <pattern id="standardsGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-                        <path d="M 30 0 L 0 0 0 30" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
+                      <pattern
+                        id="standardsGrid"
+                        width="30"
+                        height="30"
+                        patternUnits="userSpaceOnUse"
+                      >
+                        <path
+                          d="M 30 0 L 0 0 0 30"
+                          fill="none"
+                          stroke="var(--accent)"
+                          strokeWidth="0.5"
+                        />
                       </pattern>
                     </defs>
-                    <rect width="100%" height="100%" fill="url(#standardsGrid)" />
+                    <rect
+                      width="100%"
+                      height="100%"
+                      fill="url(#standardsGrid)"
+                    />
                   </svg>
                 </div>
 
@@ -199,10 +242,10 @@ export default function CareersPage() {
 
                 {/* Orbiting elements */}
                 {[0, 1, 2, 3].map((i) => {
-                  const angle = (i / 4) * Math.PI * 2 - Math.PI / 2
-                  const radius = 100
-                  const x = Math.cos(angle) * radius
-                  const y = Math.sin(angle) * radius
+                  const angle = (i / 4) * Math.PI * 2 - Math.PI / 2;
+                  const radius = 100;
+                  const x = Math.cos(angle) * radius;
+                  const y = Math.sin(angle) * radius;
 
                   return (
                     <motion.div
@@ -214,11 +257,15 @@ export default function CareersPage() {
                       animate={{
                         opacity: [0.5, 1, 0.5],
                       }}
-                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                      }}
                     >
                       <div className="w-full h-full rounded-lg bg-border/50 border border-border" />
                     </motion.div>
-                  )
+                  );
                 })}
               </div>
             </motion.div>
@@ -254,7 +301,7 @@ export default function CareersPage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-sm font-mono text-accent">
+                  <span className="shrink-0 w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center text-sm font-mono text-accent">
                     {index + 1}
                   </span>
                   <div>
@@ -291,9 +338,12 @@ export default function CareersPage() {
             {/* No positions message */}
             <div className="p-8 bg-card/30 border border-border/30 rounded-2xl mb-8">
               <Users className="w-12 h-12 text-border mx-auto mb-4" />
-              <p className="text-muted-foreground mb-2">No open positions currently.</p>
+              <p className="text-muted-foreground mb-2">
+                No open positions currently.
+              </p>
               <p className="text-sm text-brand-gray">
-                We&apos;re always interested in connecting with talented engineers.
+                We&apos;re always interested in connecting with talented
+                engineers.
               </p>
             </div>
 
@@ -324,5 +374,5 @@ export default function CareersPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

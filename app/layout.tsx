@@ -1,90 +1,103 @@
-import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
-import { CookieConsentMount } from '@/components/cookie-consent-mount'
-import { GoogleAnalytics } from '@/components/analytics/google-analytics'
-import { GoogleTagManager } from '@/components/analytics/google-tag-manager'
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import { CookieConsentMount } from "@/components/cookie-consent-mount";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
 
 const geistSans = Geist({
-  subsets: ['latin'],
-  variable: '--font-geist-sans',
-})
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+});
 
 const geistMono = Geist_Mono({
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
-})
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
 
 // Base URL for OG images
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://optimize.deals'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://optimize.deals";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
-    template: '%s | OptimizeDeals',
+    default:
+      "OptimizeDeals | Frontend Architecture & Platform Engineering Studio",
+    template: "%s | OptimizeDeals",
   },
-  description: 'We build high-performance React and AI-powered platforms focused on scalability, architecture and execution speed. Specializing in micro-frontends, Module Federation, Nx monorepos, and AI integrations.',
-  keywords: ['frontend architecture', 'React', 'Next.js', 'micro-frontends', 'Module Federation', 'Nx', 'platform engineering', 'AI integration', 'TypeScript'],
-  authors: [{ name: 'OptimizeDeals' }],
-  creator: 'OptimizeDeals',
-  publisher: 'OptimizeDeals',
+  description:
+    "We build high-performance React and AI-powered platforms focused on scalability, architecture and execution speed. Specializing in micro-frontends, Module Federation, Nx monorepos, and AI integrations.",
+  keywords: [
+    "frontend architecture",
+    "React",
+    "Next.js",
+    "micro-frontends",
+    "Module Federation",
+    "Nx",
+    "platform engineering",
+    "AI integration",
+    "TypeScript",
+  ],
+  authors: [{ name: "OptimizeDeals" }],
+  creator: "OptimizeDeals",
+  publisher: "OptimizeDeals",
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
+    type: "website",
+    locale: "en_US",
     url: baseUrl,
-    siteName: 'OptimizeDeals',
-    title: 'OptimizeDeals | Frontend Architecture & Platform Engineering Studio',
-    description: 'Engineering scalable frontend systems for modern products.',
+    siteName: "OptimizeDeals",
+    title:
+      "OptimizeDeals | Frontend Architecture & Platform Engineering Studio",
+    description: "Engineering scalable frontend systems for modern products.",
     images: [
       {
         url: `${baseUrl}/api/og?path=`,
         width: 1200,
         height: 630,
-        alt: 'OptimizeDeals - Frontend Architecture Studio',
+        alt: "OptimizeDeals - Frontend Architecture Studio",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'OptimizeDeals | Frontend Architecture Studio',
-    description: 'Engineering scalable frontend systems for modern products.',
+    card: "summary_large_image",
+    title: "OptimizeDeals | Frontend Architecture Studio",
+    description: "Engineering scalable frontend systems for modern products.",
     images: [`${baseUrl}/api/og?path=`],
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: "/favicon.ico" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: "/apple-touch-icon.png",
   },
   alternates: {
     canonical: baseUrl,
   },
-}
+};
 
 export const viewport: Viewport = {
-  themeColor: '#000216',
-  width: 'device-width',
+  themeColor: "#000216",
+  width: "device-width",
   initialScale: 1,
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className="bg-background">
@@ -110,11 +123,13 @@ export default function RootLayout({
           `}</style>
         </noscript>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
+      >
         {/* Keyboard-first skip link. Visually hidden until focused. */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-primary focus:text-white focus:outline-none focus:ring-2 focus:ring-accent"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:rounded-md focus:bg-primary focus:text-white focus:outline-none focus:ring-2 focus:ring-accent"
         >
           Skip to main content
         </a>
@@ -154,8 +169,8 @@ export default function RootLayout({
         <CookieConsentMount />
         <GoogleAnalytics />
         <GoogleTagManager />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
-  )
+  );
 }
