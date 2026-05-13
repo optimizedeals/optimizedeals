@@ -1,0 +1,371 @@
+---
+title: "node_modules as Intelligence: The Quiet Shift to AI-Native Frameworks"
+description: "Next.js 16 ships its own documentation inside the package, exposes a built-in MCP endpoint, and writes AGENTS.md by default. A teardown of what Vercel is actually building, and why frameworks now have to be machine-readable."
+date: "2026-05-13"
+author: "Bruno Silva"
+authorAvatar: "/posts/authors/bruno-silva.png"
+category: "AI Engineering"
+tags:
+  - "ai-native-engineering"
+  - "next.js"
+  - "vercel"
+  - "agents-md"
+  - "mcp"
+  - "framework-design"
+  - "developer-tooling"
+  - "repository-intelligence"
+  - "typescript"
+featured: true
+---
+
+## Prologue
+
+Most of the AI conversation in 2026 still circles around models. Which one is smarter. Which one writes cleaner React. Which benchmark just moved by two points.
+
+That conversation is increasingly the wrong one.
+
+The interesting work this year is happening one layer below the model: in the **shape of the codebases the model reads**. While everyone watches Anthropic, OpenAI and Google ship larger context windows, framework authors are quietly redesigning their packages so that those windows have something useful to read.
+
+Next.js 16 is the clearest example I have seen so far. After spending an evening picking apart `node_modules/next` in this repository, the picture is hard to miss: **Vercel is not optimizing Next.js for humans alone anymore. It is optimizing Next.js to be inferred over by agents.**
+
+This article is a teardown of what they actually shipped, what it implies for framework design, and why I think `node_modules/` is about to become an intelligence layer of its own.
+
+<Callout type="tip" title="Core thesis">
+  Modern AI-assisted development is shifting from static pretrained framework
+  knowledge toward **runtime repository intelligence**. The framework you have
+  installed locally is becoming more authoritative than anything baked into the
+  model.
+</Callout>
+
+## The problem with pretrained framework knowledge
+
+Every coding assistant in production today carries a knowledge cutoff. Even with retrieval augmentation, the priors a model brings to a task are formed long before the project exists.
+
+For most domains that is fine. For frameworks like Next.js it is a structural problem.
+
+Three things go wrong at once:
+
+1. **APIs deprecate faster than retraining cycles.** A new App Router convention can land in a single minor version, and pretraining runs are not weekly events.
+2. **Models hallucinate plausible-but-wrong APIs.** Anyone who has watched an LLM confidently `import { getServerSideProps } from "next/app"` in an App Router project knows the failure mode.
+3. **Migration noise becomes training noise.** Years of blog posts, Stack Overflow answers, and YouTube tutorials describing older Next.js versions sit in the training corpus as undifferentiated text. The model has no reliable way to weight `13.4` against `16.2`.
+
+The traditional response has been "retrieval over the public docs site." That helps but it has its own failure modes: the docs the agent finds online may not match the version the agent is editing, the lookup costs latency and tokens, and the resolution between the running framework and the indexed snapshot drifts over time.
+
+Vercel's response in Next.js 16 is more aggressive. They moved the source of truth.
+
+<QuoteBlock
+  author="Next.js docs"
+  source="node_modules/next/dist/docs/01-app/02-guides/ai-agents.md"
+>
+  Next.js ships version-matched documentation inside the `next` package,
+  allowing AI coding agents to reference accurate, up-to-date APIs and patterns.
+  An `AGENTS.md` file at the root of your project directs agents to these
+  bundled docs instead of their training data.
+</QuoteBlock>
+
+## What Next.js 16 actually ships
+
+I went looking. Here is what is sitting on disk in this exact repository after `pnpm install next@16.2.4`.
+
+<FileTree
+  title="node_modules/next/dist/docs/"
+  data={[
+    {
+      name: "node_modules/next/dist/docs",
+      type: "folder",
+      highlight: true,
+      children: [
+        { name: "index.md", type: "file" },
+        {
+          name: "01-app",
+          type: "folder",
+          children: [
+            { name: "01-getting-started", type: "folder" },
+            { name: "02-guides", type: "folder", highlight: true },
+            { name: "03-api-reference", type: "folder" },
+          ],
+        },
+        { name: "02-pages", type: "folder" },
+        { name: "03-architecture", type: "folder" },
+      ],
+    },
+  ]}
+/>
+
+A `find` across that subtree returns **421 files**. Every guide and API reference page from the public documentation is mirrored on disk, version-pinned to the installed package. The directory layout deliberately mirrors `nextjs.org/docs` so an agent that has crawled the public site does not have to learn a new mental model.
+
+The framing in the index file makes the intent explicit. This is the literal first paragraph of `node_modules/next/dist/docs/index.md` after the frontmatter:
+
+<CodeBlock language="mdx" filename="node_modules/next/dist/docs/index.md">
+{`---
+title: Next.js Docs
+description: Welcome to the Next.js Documentation.
+---
+
+{/_ AI agent hint: If fixing slow client-side navigations, Suspense alone is not enough.
+You must also export \`unstable_instant\` from the route.
+Read docs/01-app/02-guides/instant-navigation.mdx before making changes. _/}`}
+
+</CodeBlock>
+
+That MDX comment is not for humans. Humans do not see it; MDX renderers strip it. It exists to bias an agent that reads the file before touching the routing layer. Vercel is writing **inline hints aimed at LLM readers**, embedded in the documentation that ships inside the package.
+
+This is the part I keep coming back to. It is not a side effect of an internal tool. It is a design choice.
+
+### AGENTS.md: a load-bearing convention
+
+`create-next-app@canary` now writes two files into every new project by default: `AGENTS.md` and `CLAUDE.md`. The default contents of `AGENTS.md` are deliberately small.
+
+<CodeBlock language="markdown" filename="AGENTS.md">
+{`<!-- BEGIN:nextjs-agent-rules -->
+
+# Next.js: ALWAYS read docs before coding
+
+Before any Next.js work, find and read the relevant doc in
+\`node_modules/next/dist/docs/\`. Your training data is outdated.
+The docs are the source of truth.
+
+<!-- END:nextjs-agent-rules -->`}
+
+</CodeBlock>
+
+`CLAUDE.md` is a one-liner that re-imports the same content using Claude Code's `@` syntax:
+
+<CodeBlock language="markdown" filename="CLAUDE.md">
+  {`@AGENTS.md`}
+</CodeBlock>
+
+Three small details deserve attention because they reveal more than the snippet suggests:
+
+- **The `BEGIN`/`END` comment markers** are a versioning protocol. They tell future codemods which lines they own. Vercel can ship a new `AGENTS.md` block without overwriting your project-specific instructions, because they only replace what is between the markers. This is the same pattern Husky and `git-attributes` adopted: a quiet, additive contract.
+- **The instruction itself is anti-confidence.** It does not say "use Next.js 16 patterns." It says: your training data is outdated, go read the disk. The framework is asking the model to distrust its own priors.
+- **The default opt-out is `--no-agents-md`.** The on-by-default direction matters. Convention beats configuration; the convention is now agent-aware.
+
+For projects that predate Next.js 16.2, there is a codemod (`npx @next/codemod@latest agents-md`) that materialises the docs into `.next-docs/` instead of `node_modules/`, and points the generated `AGENTS.md` at that location. The exact path is negotiable. The principle that the docs ship with the code is not.
+
+<Callout type="info" title="What this is, structurally">
+  `AGENTS.md` is a manifest file for a separate consumer of your repository. It
+  is to AI agents what `package.json` is to package managers, or what
+  `robots.txt` is to crawlers. The framework recognises that there are now
+  multiple reader populations, and ships configuration aimed at a non-human one.
+</Callout>
+
+### The MCP endpoint: live state, not just static docs
+
+Static, version-matched docs are half of what Vercel shipped. The other half lives behind the dev server.
+
+Next.js 16 exposes a built-in MCP endpoint at `/_next/mcp`. Pair it with the `next-devtools-mcp` npm package, drop a `.mcp.json` at the repo root, and any MCP-aware agent (Claude Code, Cursor, Copilot) gets a tool surface into the running application.
+
+<CodeBlock language="json" filename=".mcp.json">
+  {`{
+  "mcpServers": {
+    "next-devtools": {
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"]
+    }
+  }
+`}
+</CodeBlock>
+
+The tools the agent gets are not generic shell access; they are domain-specific introspection of the Next.js runtime:
+
+| Tool                      | What the agent can ask                                                                                |
+| ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `get_errors`              | Live build errors, runtime errors, and type errors from the dev server.                               |
+| `get_logs`                | Path to the dev log file, including browser console output and server logs.                           |
+| `get_routes`              | Filesystem-derived route list, grouped by `appRouter` / `pagesRouter`, with dynamic segment patterns. |
+| `get_page_metadata`       | Per-route metadata: which components render, which segment configs apply.                             |
+| `get_project_metadata`    | Project structure, configuration, and dev server URL.                                                 |
+| `get_server_action_by_id` | Reverse lookup: turn a Server Action ID back into a source file and function.                         |
+
+This is the second half of the shift. Static docs answer "what is the current API?" The MCP endpoint answers "what does the running application currently look like?"
+
+Together they replace the two failure modes I described earlier: stale priors get replaced by version-pinned docs, and inferred application structure gets replaced by introspection. Hallucinated routes become impossible, because the agent can list the actual ones.
+
+<Callout type="performance" title="Why this matters for token cost">
+  Without an MCP introspection endpoint, the agent has to walk your filesystem,
+  parse your route tree, and re-derive metadata every session, paying for it in
+  input tokens. With `get_routes` and friends, the same information arrives as a
+  structured response, often a few hundred tokens at most. Token efficiency is
+  starting to be a framework concern.
+</Callout>
+
+## node_modules as an intelligence layer
+
+If you zoom out, `node_modules/next` in 16.2 is not just a runtime dependency. It is a **distribution channel for machine-readable context**, of which the JavaScript bundles are just one payload.
+
+Look at what is now bundled inside a single installed package:
+
+<MetricsCard
+  title="Inside node_modules/next@16.2.4"
+  columns={3}
+  metrics={[
+    { label: "Documentation files shipped on disk", value: "421" },
+    { label: "Subpath entrypoints declared in `files[]`", value: "60+" },
+    { label: "Type declaration files for those entrypoints", value: "1:1" },
+    { label: "Built-in MCP endpoint in dev", value: "/_next/mcp" },
+    { label: "Inline AI-agent hints in docs", value: "yes" },
+    { label: "Default agent manifest in new projects", value: "AGENTS.md" },
+  ]}
+/>
+
+Each of those line items is independently mundane. Together they describe a package whose surface area is intentionally legible to a non-human reader.
+
+A few patterns worth naming:
+
+- **One-to-one type declarations.** Every public subpath in `package.json#files` ships its own `.d.ts`. An agent does not have to guess the shape of `next/cache`, `next/headers`, `next/og`, `next/navigation`, `next/form`, `next/script`, `next/dynamic`, `next/image`, `next/server`, `next/jest`, `next/web-vitals`. Each entrypoint advertises a typed contract before any documentation is consulted.
+- **Explicit subpath enumeration.** The `files[]` array in `next/package.json` lists every supported entrypoint by name. That array is itself a discoverability surface, so an agent that wants to know what `next` exports can read it directly without speculative imports.
+- **Convention-encoded structure.** The numeric folder prefixes (`01-app`, `02-guides`, `03-api-reference`) give agents a sortable, semantically ordered traversal path that matches the public site's information hierarchy.
+- **Codemods as first-class artifacts.** `@next/codemod` is published as a separate package. Migrations are not blog posts; they are executable transformations the agent can suggest and run. Agents reasoning about upgrades have something concrete to call.
+
+<QuoteBlock>The package is becoming the manual.</QuoteBlock>
+
+This is a real architectural change in how a framework is shipped, and it has implications well beyond Next.js.
+
+## Pretrained memory vs. runtime inference
+
+The old contract between LLMs and frameworks looked roughly like this:
+
+<ComparisonTable
+  title="How agents reason about a framework"
+  headers={["Property", "Pretrained-memory model", "Runtime-inference model"]}
+  rows={[
+    {
+      feature: "Source of truth for API shapes",
+      values: [
+        "Training corpus snapshot",
+        "Local `.d.ts` and `node_modules` docs",
+      ],
+    },
+    {
+      feature: "Source of truth for project layout",
+      values: [
+        "Inferred from filename patterns",
+        "MCP `get_routes` / `get_project_metadata`",
+      ],
+    },
+    {
+      feature: "Reaction to a new minor version",
+      values: ["Hallucinate or refuse", "Re-read bundled docs"],
+    },
+    {
+      feature: "Reaction to a deprecated API",
+      values: [
+        "Suggests anyway, often with confidence",
+        "Surfaces deprecation from typed signature or doc",
+      ],
+    },
+    {
+      feature: "Cost model",
+      values: [
+        "Cheap if right, expensive if wrong (rework)",
+        "A few hundred extra tokens to load context",
+      ],
+    },
+    {
+      feature: "Trust direction",
+      values: [
+        "Trust the model, verify the code",
+        "Trust the disk, use the model to reason",
+      ],
+    },
+    {
+      feature: "Primary failure mode",
+      values: ["Confident hallucinations", "Stale or missing local context"],
+    },
+  ]}
+/>
+
+The runtime-inference model is not better in every dimension. It costs more tokens per session, it depends on the agent actually reading the files it has been told to read, and it offloads correctness onto the framework's willingness to maintain machine-readable artifacts.
+
+But it composes far better with how teams actually work.
+
+A model that reasons over the local repository can:
+
+- Match the version your application is currently running, not the version it was trained on.
+- See your custom configuration, including the parts that were never going to be in the public docs.
+- Inspect the live error state and reason from observed evidence, not assumptions.
+- Be wrong and self-correct, because the next response is informed by a re-read of the same files.
+
+This is the pattern you see emerging in every well-designed agent loop in 2026: **the model is the reasoning engine, the repository is the knowledge base, and the framework decides how legible that knowledge base is.**
+
+## What this means for framework authors
+
+If you build a framework, a library, or even a non-trivial internal SDK, the Next.js 16 release reads as a preview of the table stakes that are coming.
+
+<FeatureGrid
+  columns={2}
+  features={[
+    {
+      icon: "FileText",
+      title: "Ship docs inside the package",
+      description:
+        "Bundle a version-matched docs tree on disk. Mirror your public site's structure so agents that already crawled it stay oriented.",
+    },
+    {
+      icon: "Code",
+      title: "Type every public subpath",
+      description:
+        "An agent should never have to guess. One `.d.ts` per exported entrypoint, declared in `package.json#files` and `exports`.",
+    },
+    {
+      icon: "Layers",
+      title: "Adopt AGENTS.md as a manifest",
+      description:
+        "Use `BEGIN`/`END` markers so codemods can update your block without trampling user instructions. Treat it as configuration, not content.",
+    },
+    {
+      icon: "Activity",
+      title: "Expose a runtime introspection surface",
+      description:
+        "Build an MCP endpoint or equivalent. Make routes, errors, and configuration queryable. Stop forcing agents to re-derive structure.",
+    },
+    {
+      icon: "GitBranch",
+      title: "Publish codemods, not migration guides",
+      description:
+        "Executable transformations are agent-friendly; long-form migration prose is not. Make `npx <your-cli> codemod` a first-class API.",
+    },
+    {
+      icon: "MessageSquare",
+      title: "Write inline hints for non-human readers",
+      description:
+        "MDX comments, JSDoc tags, and structured deprecation warnings are now part of your developer experience surface, not just your docs.",
+    },
+  ]}
+/>
+
+The unifying principle: stop assuming the only consumer of your repository is a human reading on GitHub.
+
+## Where this is going
+
+A few things follow from where we are now.
+
+**`node_modules/` becomes a context corpus.** Once one major framework ships docs in the package, the path becomes load-bearing. Other libraries will follow with `node_modules/<name>/dist/docs/`, and tooling, including agent harnesses, will start treating it as a standard lookup location. The `AGENTS.md` convention only works once it is a convention.
+
+**Type definitions become more important than docs.** A `.d.ts` is a structured, machine-readable, version-pinned contract. When agents are choosing between scraping prose and reading a typed declaration, they will read the declaration. Frameworks that under-invest in their public types will find their AI-assisted DX falling behind.
+
+**Compiler hints become a documentation surface.** Inline MDX comments, JSX `{/* AI agent hint */}` annotations, and structured JSDoc are all signals targeted at non-human readers. Expect IDE plugins, linters, and codemods to start emitting and validating them.
+
+**MCP becomes the framework introspection protocol.** It is already happening with `next-devtools-mcp`. Other frameworks have an obvious template to follow: ship an endpoint, ship a thin npm package that bridges it to the user's editor, document the tools, evolve the surface. The model providers do not need to standardise this; the framework authors do.
+
+**Benchmarks shift from generic code to framework tasks.** Vercel publishes `nextjs.org/evals` specifically to measure how well agents handle real Next.js work. As more frameworks invest in agent-readable surfaces, expect framework-specific benchmarks to multiply, and expect framework adoption to be partially driven by them.
+
+<Callout type="warning" title="The trap to avoid">
+  None of this means dumping everything into `AGENTS.md`. Long, prescriptive
+  agent manifests are noise; they get cached, re-read, re-tokenised on every
+  turn. The Next.js default is a single instruction precisely because it has to
+  be: redirect the agent to a richer source, do not try to be the source.
+</Callout>
+
+## Closing thought
+
+Two years ago we were arguing about whether LLMs could write production frontend code. The argument quietly resolved itself: they can, when the framework lets them.
+
+What Next.js 16 is doing (bundling docs inside the package, defaulting `AGENTS.md` into every new project, exposing a built-in MCP endpoint, embedding inline hints in MDX comments) is not an AI feature. It is a **framework architecture change**, made because the population of developers reading the framework now includes agents, and agents read differently than humans.
+
+The frameworks that win the next decade will not be the ones with the most clever runtime tricks. They will be the ones that are most legible to whatever combination of human and machine is reasoning about the codebase at any given moment.
+
+`node_modules/` was never just dependencies. From here forward, it is also context.
+
+Read the disk. Trust the disk. Ship a disk worth reading.
