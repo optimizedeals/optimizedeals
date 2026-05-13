@@ -1,23 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  Clock,
-  Calendar,
-  Tag,
-  User,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Tag, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
 import { MegaMenu } from "@/components/mega-menu";
 import { Footer } from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
 import { ReadingProgress } from "./reading-progress";
 import { ShareRow } from "./share-row";
 import { ArticleMeta } from "@/lib/mdx";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { authorAvatarSrc, authorInitials, authorSlug } from "@/lib/authors";
 
 interface ArticleLayoutProps {
   slug: string;
@@ -157,7 +151,7 @@ export function ArticleLayout({
 
             {/* Title */}
             <motion.h1
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance leading-tight break-words"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance leading-tight wrap-break-word"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -167,13 +161,37 @@ export function ArticleLayout({
 
             {/* Description */}
             <motion.p
-              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 text-pretty max-w-3xl break-words"
+              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 text-pretty max-w-3xl wrap-break-word"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
               {description}
             </motion.p>
+
+            {/* Author */}
+            <motion.div
+              className="mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+            >
+              <Link
+                href={`/insights?author=${authorSlug(author)}`}
+                className="group inline-flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={`See more posts by ${author}`}
+              >
+                <Avatar className="size-9 ring-1 ring-border/60 group-hover:ring-border transition-all">
+                  <AvatarImage src={authorAvatarSrc(author)} alt={author} />
+                  <AvatarFallback className="text-xs font-mono">
+                    {authorInitials(author)}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-xl font-medium text-foreground group-hover:text-accent transition-colors">
+                  {author}
+                </span>
+              </Link>
+            </motion.div>
 
             {/* Meta info */}
             <motion.div
@@ -182,10 +200,6 @@ export function ArticleLayout({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span>{author}</span>
-              </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 <span>{date}</span>
@@ -209,7 +223,7 @@ export function ArticleLayout({
             </aside>
 
             {/* Main Content */}
-            <article className="flex-1 min-w-0 w-full mx-auto prose prose-invert prose-lg !max-w-7xl break-words overflow-x-hidden">
+            <article className="flex-1 min-w-0 w-full mx-auto prose prose-invert prose-lg max-w-7xl! wrap-break-word overflow-x-hidden">
               {children}
               <div className="xl:hidden mt-12 not-prose">{tagsAndShare}</div>
             </article>

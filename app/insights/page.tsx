@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { getAllArticles, getAllCategories, formatDate } from "@/lib/mdx";
 import { InsightsClient } from "./insights-client";
 
@@ -42,5 +43,13 @@ export default async function InsightsPage() {
     formattedDate: formatDate(article.date),
   }));
 
-  return <InsightsClient articles={articlesData} categories={categories} />;
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background" aria-hidden="true" />
+      }
+    >
+      <InsightsClient articles={articlesData} categories={categories} />
+    </Suspense>
+  );
 }

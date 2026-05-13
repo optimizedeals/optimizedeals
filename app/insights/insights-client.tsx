@@ -9,19 +9,26 @@ import {
   Box,
   Wrench,
   Clock,
-  User,
   ArrowRight,
   Search,
   Filter,
   Tag,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/page-hero";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { MegaMenu } from "@/components/mega-menu";
 import { Footer } from "@/components/footer";
 import { ArticleMeta } from "@/lib/mdx";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  authorAvatarSrc,
+  authorInitials,
+  authorSlug,
+} from "@/lib/authors";
 
 const categoryIcons: { [key: string]: React.ElementType } = {
   "Frontend Architecture": Layers,
@@ -43,15 +50,38 @@ interface InsightsClientProps {
 
 export function InsightsClient({ articles, categories }: InsightsClientProps) {
   const [activeCategory, setActiveCategory] = useState("all");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const authorFilter = searchParams.get("author");
 
-  const featuredArticles = articles.filter((a) => a.featured);
+  const authorMatches = useMemo(() => {
+    if (!authorFilter) return null;
+    const matches = articles.filter(
+      (a) => authorSlug(a.author) === authorFilter,
+    );
+    return matches;
+  }, [articles, authorFilter]);
+
+  const authorName = authorMatches?.[0]?.author ?? authorFilter ?? "";
+
+  const baseList = authorMatches ?? articles;
+  const featuredArticles = authorMatches
+    ? []
+    : articles.filter((a) => a.featured);
   const filteredArticles =
     activeCategory === "all"
-      ? articles
-      : articles.filter(
+      ? baseList
+      : baseList.filter(
           (a) =>
             a.category.toLowerCase().replace(/\s+/g, "-") === activeCategory,
         );
+
+  const clearAuthor = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("author");
+    const qs = params.toString();
+    router.push(qs ? `/insights?${qs}` : "/insights");
+  };
 
   const allCategories = [
     { id: "all", label: "All", icon: Filter },
@@ -72,6 +102,40 @@ export function InsightsClient({ articles, categories }: InsightsClientProps) {
           titleHighlight="engineering insights."
           description="In-depth articles on modern frontend architecture, AI engineering, and performance optimization from our engineering team."
         />
+
+        {/* Author Filter Banner */}
+        {authorFilter && (
+          <section className="py-6 border-b border-border/30 bg-card/20">
+            <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Avatar className="size-10 ring-1 ring-border/60">
+                  <AvatarImage
+                    src={authorAvatarSrc(authorName)}
+                    alt={authorName}
+                  />
+                  <AvatarFallback className="text-xs font-mono">
+                    {authorInitials(authorName)}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="text-xs font-mono text-brand-gray uppercase tracking-wider">
+                    Posts by
+                  </p>
+                  <p className="text-base font-medium text-foreground">
+                    {authorName}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={clearAuthor}
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-foreground hover:border-border transition-all"
+              >
+                <X className="w-3 h-3" />
+                Clear filter
+              </button>
+            </div>
+          </section>
+        )}
 
         {/* Category Filter */}
         <section className="py-8 border-b border-border/30">
@@ -271,7 +335,15 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 text-sm text-brand-gray">
                 <span className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
+                  <Avatar className="size-6">
+                    <AvatarImage
+                      src={authorAvatarSrc(article.author)}
+                      alt={article.author}
+                    />
+                    <AvatarFallback className="text-[10px] font-mono">
+                      {authorInitials(article.author)}
+                    </AvatarFallback>
+                  </Avatar>
                   {article.author}
                 </span>
                 <span className="flex items-center gap-2">
@@ -311,12 +383,28 @@ function ArticleCard({
     >
       <Link href={`/insights/${article.slug}`} className="block h-full">
         <div className="h-full flex flex-col p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 hover:bg-card/50 transition-all duration-300">
-          {/* Category */}
-          <div className="flex items-center gap-2 mb-4">
-            <CategoryIcon className="w-4 h-4 text-accent" />
-            <span className="text-xs font-mono text-brand-gray">
-              {article.category}
-            </span>
+          {/* Author + Category */}
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <div className="flex items-center gap-2 min-w-0">
+              <Avatar className="size-6 shrink-0">
+                <AvatarImage
+                  src={authorAvatarSrc(article.author)}
+                  alt={article.author}
+                />
+                <AvatarFallback className="text-[10px] font-mono">
+                  {authorInitials(article.author)}
+                </AvatarFallback>
+              </Avatar>
+              <span className="text-xs font-mono text-brand-gray truncate">
+                {article.author}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <CategoryIcon className="w-4 h-4 text-accent" />
+              <span className="text-xs font-mono text-brand-gray">
+                {article.category}
+              </span>
+            </div>
           </div>
 
           {/* Title */}
