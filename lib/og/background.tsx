@@ -18,7 +18,7 @@ export function OGBackground() {
         width,
         height,
         display: "flex",
-        background: `linear-gradient(135deg, ${colors.bgDark} 0%, ${colors.bgMedium} 50%, ${colors.bgLight} 100%)`,
+        background: colors.bgDark,
         overflow: "hidden",
       }}
     >
@@ -31,7 +31,7 @@ export function OGBackground() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <g clipPath="url(#clip0_403_2896)">
-          <rect y="-7" width={width} height={height} fill="#F5F5F5" />
+          <rect y="-7" width={width} height={height} fill="#000216" />
           <mask
             id="mask0_403_2896"
             style={{ maskType: "alpha" }}
@@ -46,7 +46,7 @@ export function OGBackground() {
               y="64.5571"
               width="1156.53"
               height="565.443"
-              fill="#F5F5F5"
+              fill="#000216"
             />
           </mask>
           <g mask="url(#mask0_403_2896)">
@@ -76,7 +76,7 @@ export function OGBackground() {
               width="1200"
               height="637"
               transform="translate(0 -7)"
-              fill="#0054D6"
+              fill="#000216"
             />
             <path
               d="M220.842 -295.536C-422.12 -295.536 -943.334 -108.468 -943.334 122.303C-943.334 353.075 -422.12 540.155 220.842 540.155C863.803 540.155 1385.02 353.088 1385.02 122.303C1385.02 -108.481 863.803 -295.536 220.842 -295.536ZM218.173 451.415C-253.951 517.345 -635.496 423.437 -634.042 241.674C-632.565 59.9101 -248.661 -140.867 223.463 -206.784C695.61 -272.713 1077.15 -178.806 1075.68 2.95803C1074.22 184.722 690.32 385.498 218.173 451.415Z"
@@ -147,7 +147,7 @@ export function OGBackground() {
             gradientUnits="userSpaceOnUse"
           >
             <stop stopColor="#C7E5DB" />
-            <stop offset="1" stopColor="#F2EEFF" />
+            <stop offset="1" stopColor="#000216" />
           </radialGradient>
           <linearGradient
             id="paint2_linear_403_2896"

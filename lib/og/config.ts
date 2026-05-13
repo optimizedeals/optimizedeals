@@ -26,17 +26,17 @@ export const OG_CONFIG = {
   // Font sizes
   typography: {
     title: {
-      large: 64,
-      medium: 56,
+      large: 72,
+      medium: 64,
       small: 48,
     },
     description: {
-      large: 32,
-      medium: 28,
-      small: 24,
+      large: 48,
+      medium: 36,
+      small: 28,
     },
     category: 16,
-    badge: 14,
+    badge: 22,
   },
 
   // Spacing
