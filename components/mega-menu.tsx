@@ -327,7 +327,7 @@ function DropdownContent({
                           onClick={onClose}
                           className="group flex items-start gap-3 p-3 rounded-xl hover:bg-border/30 transition-all duration-200"
                         >
-                          <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-border/50 border border-border flex items-center justify-center text-accent group-hover:text-foreground group-hover:border-accent/50 transition-colors">
+                          <div className="shrink-0 w-9 h-9 rounded-lg bg-border/50 border border-border flex items-center justify-center text-accent group-hover:text-foreground group-hover:border-accent/50 transition-colors">
                             <Icon className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -553,15 +553,12 @@ export function MegaMenu() {
 
   return (
     <>
-      <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 od-anim-header-in ${
           isScrolled || activeDropdown
             ? "bg-background/90 backdrop-blur-xl border-b border-border/50"
             : "bg-transparent"
         }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
@@ -658,7 +655,7 @@ export function MegaMenu() {
             </div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </header>
 
       {/* Mobile Menu */}
       <MobileMenu

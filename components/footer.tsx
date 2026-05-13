@@ -123,9 +123,9 @@ export function Footer() {
 
           {/* Solutions column */}
           <div>
-            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Solutions
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {navigation.solutions.map((item) => (
                 <li key={item.name}>
@@ -142,9 +142,9 @@ export function Footer() {
 
           {/* Products column */}
           <div>
-            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Products
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {navigation.products.map((item) => (
                 <li key={item.name}>
@@ -163,9 +163,9 @@ export function Footer() {
 
           {/* Resources column */}
           <div>
-            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Resources
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {navigation.resources.map((item) => (
                 <li key={item.name}>
@@ -182,9 +182,9 @@ export function Footer() {
 
           {/* Company column */}
           <div>
-            <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
               Company
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {navigation.company.map((item) => (
                 <li key={item.name}>

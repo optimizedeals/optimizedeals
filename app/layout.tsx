@@ -119,6 +119,15 @@ export default function RootLayout({
             [style*="visibility: hidden"] { visibility: visible !important; }
             [style*="filter:blur"],
             [style*="filter: blur"] { filter: none !important; }
+            .od-anim-fade-up,
+            .od-anim-fade-up-lg,
+            .od-anim-fade-scale,
+            .od-anim-fade-in,
+            .od-anim-header-in {
+              opacity: 1 !important;
+              transform: none !important;
+              animation: none !important;
+            }
           `}</style>
         </noscript>
       </head>

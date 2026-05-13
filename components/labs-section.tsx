@@ -83,9 +83,9 @@ function ExperimentCard({
         </span>
       </div>
 
-      <h4 className="text-base font-medium text-foreground mb-2 group-hover:text-white transition-colors flex items-center gap-2">
+      <h3 className="text-base font-medium text-foreground mb-2 group-hover:text-white transition-colors flex items-center gap-2">
         {experiment.title}
-      </h4>
+      </h3>
 
       <p className="text-sm text-muted-foreground leading-relaxed">
         {experiment.description}

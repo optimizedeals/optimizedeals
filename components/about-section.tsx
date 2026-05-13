@@ -138,29 +138,29 @@ export function AboutSection() {
             {/* Values */}
             <div className="mt-10 grid grid-cols-2 gap-6">
               <div>
-                <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
                   Focus
-                </h4>
+                </h3>
                 <p className="text-foreground font-medium">
                   Architecture First
                 </p>
               </div>
               <div>
-                <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
                   Approach
-                </h4>
+                </h3>
                 <p className="text-foreground font-medium">Systems Thinking</p>
               </div>
               <div>
-                <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
                   Delivery
-                </h4>
+                </h3>
                 <p className="text-foreground font-medium">Production Ready</p>
               </div>
               <div>
-                <h4 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-2">
                   Team
-                </h4>
+                </h3>
                 <p className="text-foreground font-medium">Senior Engineers</p>
               </div>
             </div>

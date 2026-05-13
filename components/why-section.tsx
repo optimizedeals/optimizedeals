@@ -60,9 +60,9 @@ function HighlightCard({
         <Icon className="w-5 h-5 text-accent" />
       </div>
       <div>
-        <h4 className="text-base font-medium text-foreground mb-1">
+        <h3 className="text-base font-medium text-foreground mb-1">
           {highlight.title}
-        </h4>
+        </h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
           {highlight.description}
         </p>
