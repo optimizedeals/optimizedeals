@@ -1,10 +1,10 @@
 {
   "hero": {
     "badge": "Estúdio de Arquitetura de Frontend",
-    "titleLead": "Engenharia de sistemas",
-    "titleHighlight1": "escaláveis",
-    "titleMiddle": "para produtos",
-    "titleHighlight2": "modernos",
+    "titleLead": "Engenharia de",
+    "titleHighlight1": "sistemas escaláveis",
+    "titleMiddle": "para",
+    "titleHighlight2": "produtos modernos",
     "titleTrail": ".",
     "subtitle": "Construímos sistemas de alta performance e plataformas com IA focadas em escalabilidade, arquitetura e velocidade de execução.",
     "floatingLabels": {

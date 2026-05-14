@@ -10,11 +10,7 @@ import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
 import { routing } from "@/lib/i18n/routing";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/i18n/config";
-import {
-  buildLocaleMetadata,
-  SITE_URL,
-  localizedUrl,
-} from "@/lib/seo";
+import { buildLocaleMetadata, SITE_URL, localizedUrl } from "@/lib/seo";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -95,7 +91,11 @@ export default async function LocaleLayout({
   const tCommon = await getTranslations({ locale, namespace: "common" });
 
   return (
-    <html lang={meta.htmlLang} className="bg-background">
+    <html
+      lang={meta.htmlLang}
+      data-scroll-behavior="smooth"
+      className="bg-background"
+    >
       <head>
         {/* Framer Motion's SSR output sets `opacity:0` inline styles that
             hide above-the-fold content when JavaScript is disabled. The
