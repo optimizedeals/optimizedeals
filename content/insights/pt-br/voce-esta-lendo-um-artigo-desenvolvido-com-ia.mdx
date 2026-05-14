@@ -20,7 +20,9 @@ dev: false
 ---
 
 <Callout type="info" title="Contexto de leitura">
-  Este artigo foi escrito com assistência de IA. A plataforma que ele descreve também foi construída com assistência de IA. Nenhuma das duas afirmações invalida o esforço de engenharia por trás delas.
+  Este artigo foi escrito com assistência de IA. A plataforma que ele descreve
+  também foi construída com assistência de IA. Nenhuma das duas afirmações
+  invalida o esforço de engenharia por trás delas.
 </Callout>
 
 ## Introdução
@@ -64,7 +66,11 @@ O projeto deixou de ser um site e começou a se tornar uma plataforma de sistema
 Essa transição aconteceu organicamente. Cada implementação revelava uma infraestrutura adjacente que precisava existir. Uma landing page precisava de SEO. SEO precisava de metadados. Metadados precisavam de localização. Localização precisava de arquitetura de rotas. Arquitetura de rotas precisava de consistência canônica. Consistência canônica precisava de geração de hreflang. Cada camada não era opcional. Cada camada era infraestrutura.
 
 <Callout type="performance" title="Observação de velocidade">
-  Os sistemas de IA comprimiram o que seria uma sprint de engenharia de duas semanas em 72 horas. Mas a compressão não foi uniforme. O trabalho de UI acelerou drasticamente. O trabalho de infraestrutura acelerou moderadamente. O raciocínio arquitetural não acelerou nada. Isso permaneceu liderado por humanos.
+  Os sistemas de IA comprimiram o que seria uma sprint de engenharia de duas
+  semanas em 72 horas. Mas a compressão não foi uniforme. O trabalho de UI
+  acelerou drasticamente. O trabalho de infraestrutura acelerou moderadamente. O
+  raciocínio arquitetural não acelerou nada. Isso permaneceu liderado por
+  humanos.
 </Callout>
 
 A velocidade de engenharia era real. A sobrecarga cognitiva também era real. Os logs de sessão revelam padrões repetidos de exaustão de contexto, deriva arquitetural, introdução de regressões e a necessidade constante de revalidação. Toda aceleração veio com um custo correspondente.
@@ -104,7 +110,11 @@ Os logs de sessão revelam problemas recorrentes que exigiram intervenção huma
 Cada um desses problemas exigiu julgamento de engenharia para ser detectado e corrigido. Os sistemas de IA nunca autocorrigiram esses padrões. Eles não detectaram nada incomum. A camada humana forneceu a estabilidade que impediu o projeto de colapsar sob sua própria complexidade gerada.
 
 <Callout type="tip" title="Insight principal">
-  O desenvolvimento assistido por IA amplifica tanto boas quanto más decisões de engenharia. Arquitetura ruim escala mais rápido com IA. Dívida técnica se acumula mais rápido. Inconsistência se propaga mais rápido. A camada humana não é opcional. Ela é a função de estabilidade que impede a complexidade descontrolada.
+  O desenvolvimento assistido por IA amplifica tanto boas quanto más decisões de
+  engenharia. Arquitetura ruim escala mais rápido com IA. Dívida técnica se
+  acumula mais rápido. Inconsistência se propaga mais rápido. A camada humana
+  não é opcional. Ela é a função de estabilidade que impede a complexidade
+  descontrolada.
 </Callout>
 
 As melhorias de qualidade visíveis nos logs de sessão raramente vieram de um único prompt perfeito. A qualidade emergiu de refinamento iterativo, correção arquitetural, loops de debugging, rejeição de gerações defeituosas, reestruturação de repositórios, aplicação de consistência, validação repetida e discussões de engenharia em contexto longo.
@@ -212,7 +222,9 @@ Os logs de sessão também documentam modos de falha repetidos:
 - **Suposições instáveis**: A IA fazia suposições sobre a arquitetura que estavam incorretas, e essas suposições se propagavam pela base de código gerada até serem detectadas pela revisão humana.
 
 <Callout type="error" title="Observação importante">
-  Todo modo de falha listado acima foi detectado e corrigido por revisão humana. Nenhum foi autodetecado pelo sistema de IA. A camada de supervisão não era suplementar. Era essencial.
+  Todo modo de falha listado acima foi detectado e corrigido por revisão humana.
+  Nenhum foi autodetecado pelo sistema de IA. A camada de supervisão não era
+  suplementar. Era essencial.
 </Callout>
 
 ### O Padrão
@@ -256,11 +268,11 @@ Isso criou uma dinâmica interessante. O histórico da conversa se tornou um doc
 
 Os sistemas de IA formaram uma hierarquia natural:
 
-| Sistema            | Papel                                                              | Strenght                                                     |
-| ------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------ |
-| v0.dev             | Exploração de UI                                                   | Velocidade de iteração visual                                |
-| Claude Code        | Engenharia de repositório                                          | Capacidade de execução                                       |
-| ChatGPT            | Raciocínio de sistemas                                             | Pensamento arquitetural                                      |
+| Sistema             | Papel                                                               | Strenght                                                          |
+| ------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| v0.dev              | Exploração de UI                                                    | Velocidade de iteração visual                                     |
+| Claude Code         | Engenharia de repositório                                           | Capacidade de execução                                            |
+| ChatGPT             | Raciocínio de sistemas                                              | Pensamento arquitetural                                           |
 | Big Pickle/OpenCode | Escrita de artigos, storytelling técnico, comunicação de engenharia | Colaboração recursiva, meta-análise, infraestrutura de publicação |
 
 Nenhum desses sistemas operava de forma independente. Cada um exigia orquestração humana. O valor não estava no output de nenhuma IA individual. O valor estava na interação coordenada entre supervisão humana, capacidade de execução da IA e suporte ao raciocínio da IA. Em uma reviravolta recursiva adequada, este próprio artigo foi escrito pelo modelo chamado Big Pickle rodando no OpenCode, uma interface de engenharia assistida por IA que espelha o mesmo fluxo de trabalho supervisionado por humanos que o artigo descreve.
@@ -290,7 +302,9 @@ A implementação de SEO cobriu:
 A filosofia de implementação era simples: SEO era tratado como parte do runtime da aplicação. Cada rota gerava seus próprios metadados. Cada artigo produzia seus próprios dados estruturados. Cada variante localizada produzia sua própria entrada hreflang e referência canônica.
 
 <Callout type="success" title="Decisão arquitetural">
-  O SEO deixou de ser uma camada de marketing e se tornou parte do runtime da aplicação. Esta é a única maneira de manter a corretude em escala, especialmente em uma plata multilíngue e orientada a conteúdo.
+  O SEO deixou de ser uma camada de marketing e se tornou parte do runtime da
+  aplicação. Esta é a única maneira de manter a corretude em escala,
+  especialmente em uma plata multilíngue e orientada a conteúdo.
 </Callout>
 
 ### Arquitetura de URL Canônica
@@ -311,12 +325,6 @@ Os logs de sessão mostram múltiplos ciclos de correção em torno da geração
 Uma das decisões de infraestrutura mais incomuns foi o arquivo LLM.txt. Sites tradicionais geram robots.txt para crawlers. Este projeto também gera um arquivo LLM.txt especificamente projetado para agentes de IA que consomem o repositório.
 
 O arquivo contém contexto estruturado do repositório que ajuda sistemas de IA a entender a arquitetura do projeto, as convenções e o conteúdo disponível antes de tentar executar tarefas. É uma especificação de engenharia legível por máquina que existe ao lado da documentação voltada para humanos.
-
-<ArchitectureDiagram
-  title="Camadas de infraestrutura de SEO"
-  description="Cada rota de conteúdo gera seus próprios metadados, dados estruturados e referências de localização em runtime."
-  preset="module-federation"
-/>
 
 Esta é uma decisão arquitetural voltada para o futuro. A plataforma foi projetada não apenas para consumo humano, mas também para sistemas de IA que possam ser solicitados a manter, estender ou analisar o repositório no futuro. O arquivo LLM.txt, as diretrizes AGENTS.md e as convenções estruturadas do repositório servem todos a este design de duplo propósito.
 
@@ -359,7 +367,11 @@ Os logs de sessão revelam problemas recorrentes de consistência:
 Cada problema individualmente era menor. Coletivamente, representavam uma dívida de consistência que se acumulava mais rápido que a correção manual conseguia endereçar.
 
 <Callout type="warning" title="Lição arquitetural de i18n">
-  A internacionalização introduz complexidade arquitetural muito além da tradução de texto. Todo campo de metadados, toda URL, toda tag de SEO, toda entrada de dado estruturado se torna um problema de consistência em N locales. A automação ajuda a executar a migração. A validação humana garante que a consistência não seja perdida.
+  A internacionalização introduz complexidade arquitetural muito além da
+  tradução de texto. Todo campo de metadados, toda URL, toda tag de SEO, toda
+  entrada de dado estruturado se torna um problema de consistência em N locales.
+  A automação ajuda a executar a migração. A validação humana garante que a
+  consistência não seja perdida.
 </Callout>
 
 O padrão que emergiu foi tratar cada locale como um sistema de conteúdo de primeira classe com seus próprios metadados completos, em vez de tratar a tradução como uma sobreposição em um locale primário. Essa abordagem dobrou a superfície de conteúdo, mas eliminou o acoplamento implícito que causa deriva de consistência.
@@ -408,7 +420,11 @@ Cada artigo gera:
 - Links de compartilhamento para múltiplas plataformas
 
 <Callout type="tip" title="Filosofia arquitetural">
-  Tratar conteúdo como infraestrutura em vez de arquivos muda como você projeta cada camada da plataforma. Metadados se tornam automáticos. SEO se torna determinístico. Internacionalização se torna sistemática. O esforço de engenharia muda de gerenciamento manual de conteúdo para design de sistemas de conteúdo.
+  Tratar conteúdo como infraestrutura em vez de arquivos muda como você projeta
+  cada camada da plataforma. Metadados se tornam automáticos. SEO se torna
+  determinístico. Internacionalização se torna sistemática. O esforço de
+  engenharia muda de gerenciamento manual de conteúdo para design de sistemas de
+  conteúdo.
 </Callout>
 
 O padrão é consistente com a filosofia mais ampla da plataforma: todo componente, toda página, todo artigo deve participar dos sistemas de metadados, SEO e descoberta da plataforma automaticamente, sem configuração manual.
@@ -474,7 +490,11 @@ O significado arquitetural de repositórios consumíveis por IA vai além da con
 Isso não é uma preocupação futurística. Os logs de sessão demonstram que a perda de contexto entre sessões foi uma das fontes mais significativas de atrito de engenharia. Sistemas de IA não conseguiam lembrar o que construíram em uma sessão anterior. Metadados estruturados de repositório reduzem esse problema ao fornecer uma camada de contexto persistente que sobrevive a limites de sessão.
 
 <Callout type="performance" title="Arquitetura voltada para o futuro">
-  A plataforma foi projetada não apenas para humanos. Foi projetada para sistemas de IA que consomem repositórios e conteúdo. Este design de duplo propósito é uma aposta arquitetural deliberada de que fluxos de trabalho de engenharia assistidos por IA se tornarão o modo dominante de desenvolvimento de software.
+  A plataforma foi projetada não apenas para humanos. Foi projetada para
+  sistemas de IA que consomem repositórios e conteúdo. Este design de duplo
+  propósito é uma aposta arquitetural deliberada de que fluxos de trabalho de
+  engenharia assistidos por IA se tornarão o modo dominante de desenvolvimento
+  de software.
 </Callout>
 
 ---
@@ -603,7 +623,10 @@ Esse padrão resulta em:
 Os logs de sessão demonstram uma correlação clara: projetos que mantêm propriedade humana das decisões arquiteturais têm sucesso com assistência de IA. Projetos que delegam arquitetura a sistemas de IA acumulam dívida mais rápido que conseguem corrigi-la.
 
 <Callout type="warning" title="Alerta de dívida cognitiva">
-  Arquitetura ruim escala mais rápido com assistência de IA. Dívida técnica se acumula mais rápido. Alucinações se propagam mais rápido. Inconsistência se acumula mais rápido. A IA amplifica a trajetória de um projeto. Ela não determina a direção. A camada humana determina a direção.
+  Arquitetura ruim escala mais rápido com assistência de IA. Dívida técnica se
+  acumula mais rápido. Alucinações se propagam mais rápido. Inconsistência se
+  acumula mais rápido. A IA amplifica a trajetória de um projeto. Ela não
+  determina a direção. A camada humana determina a direção.
 </Callout>
 
 A distinção entre amplificação e dívida não é determinada pelo sistema de IA. É determinada pelas práticas de engenharia que cercam seu uso. Supervisão ativa, validação completa e propriedade arquitetural não são opcionais. São as práticas definidoras que separam a engenharia assistida por IA bem-sucedida do caos gerado.
@@ -669,7 +692,12 @@ O autor deste artigo, o construtor desta plataforma e o orquestrador destes sist
 Este artigo foi escrito com a assistência do Big Pickle, o modelo que roda o OpenCode, uma interface de engenharia assistida por IA. Os mesmos sistemas que construíram a plataforma ajudaram a escrever sobre sua construção. Essa colaboração recursiva entre Claude Code, ChatGPT, v0.dev e OpenCode é em si um reflexo da filosofia de engenharia que este artigo descreve.
 
 <Callout type="info" title="Pensamento final">
-  Este artigo foi escrito com assistência de IA. Não foi escrito por IA. A distinção é crítica. A IA aumentou o processo de escrita. Não o substituiu. O julgamento de engenharia, as decisões arquiteturais e a supervisão que tornaram este projeto possível foram humanos. Eles permanecem humanos. E a habilidade mais importante na engenharia assistida por IA não é fazer prompts. É saber o que construir e por quê.
+  Este artigo foi escrito com assistência de IA. Não foi escrito por IA. A
+  distinção é crítica. A IA aumentou o processo de escrita. Não o substituiu. O
+  julgamento de engenharia, as decisões arquiteturais e a supervisão que
+  tornaram este projeto possível foram humanos. Eles permanecem humanos. E a
+  habilidade mais importante na engenharia assistida por IA não é fazer prompts.
+  É saber o que construir e por quê.
 </Callout>
 
 ---
