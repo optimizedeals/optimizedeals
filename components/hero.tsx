@@ -196,7 +196,7 @@ export function Hero() {
           {t("titleMiddle")}{" "}
           <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
             {t("titleHighlight2")}
-          </span>{" "}
+          </span>
           {t("titleTrail")}
         </h1>
 
@@ -242,7 +242,9 @@ export function Hero() {
       >
         <div
           className="w-6 h-10 border-2 border-border rounded-full flex justify-center"
-          style={{ animation: "od-fade-in 2s ease-in-out 1.4s infinite alternate" }}
+          style={{
+            animation: "od-fade-in 2s ease-in-out 1.4s infinite alternate",
+          }}
         >
           <span
             className="w-1.5 h-3 bg-primary rounded-full mt-2"
