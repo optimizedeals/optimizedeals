@@ -431,4 +431,25 @@ A otimização acima gerou estes resultados:
 
 ---
 
+## Referências
+
+Links no estilo referência permitem que autores citem fontes externas usando identificadores compactos. As definições de referência são colocadas sob um cabeçalho `## Referências` e são automaticamente renderizadas como uma lista numerada pelo plugin `remarkRenderReferences`.
+
+### Básico
+
+Uma citação de fonte única: a documentação oficial do React ([React][react]) cobre hooks, componentes de servidor e padrões de renderização.
+
+### Avançado
+
+Múltiplas fontes podem ser citadas no mesmo parágrafo, e a mesma fonte pode ser referenciada mais de uma vez. O plugin coleta todas as definições independentemente da frequência com que uma fonte é citada:
+
+- Componentes cliente são interativos ([React][react])
+- Componentes de servidor reduzem o tamanho do bundle ([Next.js][next])
+- Ambos os padrões são válidos dentro da mesma aplicação ([React][react], [Next.js][next])
+
+[react]: https://react.dev/ "React — uma biblioteca JavaScript para construir interfaces de usuário"
+[next]: https://nextjs.org/ "Next.js — o framework React para produção"
+
+---
+
 Isso cobre cada componente atualmente disponível. Para estender o sistema, solte um novo componente em `components/blog/mdx-components/`, exporte pelo index e registre no mapa de componentes em `components/blog/mdx-content.tsx`.

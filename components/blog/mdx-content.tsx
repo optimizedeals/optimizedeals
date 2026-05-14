@@ -3,6 +3,7 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
+import { remarkRenderReferences } from "@/lib/remark-plugins/remark-render-references";
 import {
   CodeBlock,
   CodePre,
@@ -255,7 +256,7 @@ export async function MDXContent({ content }: MDXContentProps) {
     options: {
       blockJS: false,
       mdxOptions: {
-        remarkPlugins: [remarkGfm],
+        remarkPlugins: [remarkGfm, remarkRenderReferences],
         rehypePlugins: [
           rehypeSlug,
           [
