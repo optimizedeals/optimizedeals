@@ -68,6 +68,10 @@ App Router with route segments: `book`, `careers`, `company`, `insights/[slug]`,
 - `NEXT_PUBLIC_SITE_URL` overrides the default `https://optimize.deals` used for metadata and OG image URLs.
 - v0 sandbox files (`__v0_*`, `.v0-trash/`, `.snowflake/`) are gitignored — don't commit them.
 
+## Working with MDX content (`content/insights/**/*.mdx`)
+
+Articles are long: many exceed several hundred lines and a single file can saturate a request's context. **Never read or transform an `.mdx` file in a single unbounded pass.** Size with `wc -l`, then walk it with `Read offset`/`limit` in 150–200 line chunks (prefer heading-aware splits when transforming). Applies to translations, localization, SEO/metadata work, frontmatter audits, bulk refactors, and any analysis pass. See the `large-mdx-rules` block in `AGENTS.md` for the full protocol, the rationale (context overflow, token explosion, request failures, attention dilution, dropped sections), and the merge/validation checklist.
+
 ## Writing articles (`content/insights/*.mdx`)
 
 - **Never use em dashes (`—`) in article prose.** They make the text read as AI-generated. Use natural punctuation instead: commas, colons, parentheses, or periods, depending on the relationship being expressed.
