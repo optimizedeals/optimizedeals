@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import { getAllArticlesAcrossLocales } from "@/lib/mdx";
 
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
 export const metadata: Metadata = {
   title: "OG Preview",
   robots: { index: false, follow: false },
@@ -17,19 +21,19 @@ const PAGES: { path: string; label: string }[] = [
   { path: "book", label: "Book" },
 ];
 
-function buildPageOgUrl(path: string) {
+function buildPageOgUrl(path: string, locale: string) {
   const params = new URLSearchParams();
+  params.set("locale", locale);
   if (path) params.set("path", path);
-  const qs = params.toString();
-  return `/api/og${qs ? `?${qs}` : ""}`;
+  return `/api/og?${params.toString()}`;
 }
 
-function buildArticleOgUrl(article: {
-  title: string;
-  description?: string;
-  category?: string;
-}) {
+function buildArticleOgUrl(
+  article: { title: string; description?: string; category?: string },
+  locale: string,
+) {
   const params = new URLSearchParams({
+    locale,
     title: article.title,
     description: article.description || "",
     category: article.category || "",
@@ -37,7 +41,8 @@ function buildArticleOgUrl(article: {
   return `/api/og?${params.toString()}`;
 }
 
-export default async function OgPreviewPage() {
+export default async function OgPreviewPage({ params }: PageProps) {
+  const { locale } = await params;
   const articles = await getAllArticlesAcrossLocales();
 
   return (
@@ -56,7 +61,7 @@ export default async function OgPreviewPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {PAGES.map(({ path, label }) => {
-              const url = buildPageOgUrl(path);
+              const url = buildPageOgUrl(path, locale);
               return (
                 <figure
                   key={path || "home"}
@@ -92,7 +97,7 @@ export default async function OgPreviewPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {articles.map((article) => {
-              const url = buildArticleOgUrl(article);
+              const url = buildArticleOgUrl(article, locale);
               return (
                 <figure
                   key={article.slug}
