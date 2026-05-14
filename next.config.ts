@@ -40,6 +40,13 @@ const nextConfig: NextConfig = {
       source: "/:path*",
       headers: [{ key: "Vary", value: "Accept" }],
     },
+    {
+      // Override the global Vary for OG images — the image response is
+      // always image/png regardless of Accept, so varying on Accept just
+      // fragments the CDN cache across different browser Accept headers.
+      source: "/api/og",
+      headers: [{ key: "Vary", value: "Accept-Encoding" }],
+    },
   ],
   // `app/sitemap.ts` (the metadata-route convention) cannot emit a
   // <?xml-stylesheet?> processing instruction, which Chrome 120+ needs

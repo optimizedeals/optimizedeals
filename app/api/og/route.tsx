@@ -120,10 +120,17 @@ export async function GET(request: NextRequest) {
       ? renderHomepageOG(title, description)
       : renderPageOG(title, description, badge);
 
-  return new ImageResponse(imageContent, {
+  const response = new ImageResponse(imageContent, {
     width: OG_CONFIG.width,
     height: OG_CONFIG.height,
   });
+
+  response.headers.set(
+    "Cache-Control",
+    "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800, must-revalidate",
+  );
+
+  return response;
 }
 
 function renderHomepageOG(title: string, description?: string) {
