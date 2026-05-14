@@ -41,6 +41,17 @@ const nextConfig: NextConfig = {
       headers: [{ key: "Vary", value: "Accept" }],
     },
   ],
+  // `app/sitemap.ts` (the metadata-route convention) cannot emit a
+  // <?xml-stylesheet?> processing instruction, which Chrome 120+ needs
+  // to render XML as a tree. Serve it from a normal route handler
+  // instead and rewrite the public URL to it.
+  rewrites: async () => ({
+    beforeFiles: [],
+    afterFiles: [
+      { source: "/sitemap.xml", destination: "/api/sitemap" },
+    ],
+    fallback: [],
+  }),
 };
 
 export default withNextIntl(nextConfig);

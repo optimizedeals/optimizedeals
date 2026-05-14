@@ -17,7 +17,7 @@ import { LOCALES, LOCALE_META, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
  */
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://optimize.deals";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://optimize.deals";
 
 export type LocalePathBuilder = (locale: Locale) => string;
 
@@ -57,9 +57,7 @@ export function buildAlternates(
   pathOrBuilder: string | LocalePathBuilder,
 ): NonNullable<Metadata["alternates"]> {
   const resolve = (locale: Locale) =>
-    typeof pathOrBuilder === "function"
-      ? pathOrBuilder(locale)
-      : pathOrBuilder;
+    typeof pathOrBuilder === "function" ? pathOrBuilder(locale) : pathOrBuilder;
 
   const languages: Record<string, string> = {};
   for (const locale of LOCALES) {
@@ -89,7 +87,8 @@ export function buildOgImageUrl(
   const url = new URL(`${SITE_URL}/api/og`);
   url.searchParams.set("locale", locale);
   if (params.title) url.searchParams.set("title", params.title);
-  if (params.description) url.searchParams.set("description", params.description);
+  if (params.description)
+    url.searchParams.set("description", params.description);
   if (params.category) url.searchParams.set("category", params.category);
   return url.toString();
 }
@@ -139,7 +138,7 @@ export function buildLocaleMetadata(input: LocaleMetadataInput): Metadata {
   const canonical =
     typeof alternates.canonical === "string"
       ? alternates.canonical
-      : alternates.canonical?.toString() ?? localizedUrl(locale);
+      : (alternates.canonical?.toString() ?? localizedUrl(locale));
 
   const meta: Metadata = {
     title,

@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  CheckCircle,
   Target,
   Shield,
   Zap,
@@ -12,81 +11,31 @@ import {
   GitBranch,
   Layers,
   Brain,
-  Lightbulb,
   Award,
   Mail,
   Calendar,
   Linkedin,
   Github,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/page-hero";
-import Link from "next/link";
-import Image from "next/image";
 
 const principles = [
-  {
-    icon: Layers,
-    title: "Architecture-First",
-    description:
-      "Every project starts with careful architecture design. We believe that well-designed systems are easier to maintain, scale, and evolve over time.",
-  },
-  {
-    icon: Target,
-    title: "Outcome-Oriented",
-    description:
-      "We focus on business outcomes, not just technical deliverables. Our engineering decisions are always grounded in practical value creation.",
-  },
-  {
-    icon: Zap,
-    title: "Performance Obsessed",
-    description:
-      "Performance is not an afterthought. We optimize for speed from day one, understanding that user experience depends on it.",
-  },
-  {
-    icon: Shield,
-    title: "Technical Sustainability",
-    description:
-      "We build systems designed for long-term success. No shortcuts that create technical debt or maintenance nightmares.",
-  },
-  {
-    icon: Brain,
-    title: "Continuous Learning",
-    description:
-      "The frontend ecosystem evolves rapidly. We stay at the cutting edge through research, experimentation, and knowledge sharing.",
-  },
-  {
-    icon: Users,
-    title: "Collaborative Engineering",
-    description:
-      "We work as partners, not vendors. Close collaboration with your team ensures knowledge transfer and sustainable outcomes.",
-  },
+  { key: "architectureFirst", icon: Layers },
+  { key: "outcome", icon: Target },
+  { key: "performance", icon: Zap },
+  { key: "sustainability", icon: Shield },
+  { key: "learning", icon: Brain },
+  { key: "collaborative", icon: Users },
 ];
 
-const timeline = [
-  {
-    year: "2014",
-    title: "Engineering Foundation",
-    description:
-      "Started professional frontend development journey, building enterprise applications.",
-  },
-  {
-    year: "2018",
-    title: "Architecture Focus",
-    description:
-      "Transitioned to architecture-focused roles, designing scalable frontend systems.",
-  },
-  {
-    year: "2021",
-    title: "AI Integration",
-    description:
-      "Began specializing in AI-native product development and RAG systems.",
-  },
-  {
-    year: "2023",
-    title: "OptimizeDeals Launch",
-    description: "Founded OptimizeDeals as a specialized engineering studio.",
-  },
+const TIMELINE_ITEMS = [
+  { year: "2014", key: "y2014" },
+  { year: "2018", key: "y2018" },
+  { year: "2021", key: "y2021" },
+  { year: "2023", key: "y2023" },
 ];
 
 const companies = [
@@ -102,27 +51,28 @@ const companies = [
 ];
 
 const stats = [
-  { icon: Clock, value: "10+", label: "Years Experience" },
-  { icon: GitBranch, value: "50+", label: "Projects Delivered" },
-  { icon: Users, value: "100%", label: "Senior Engineers" },
-  { icon: Award, value: "Global", label: "Client Base" },
+  { icon: Clock, value: "10+", labelKey: "yearsLabel" },
+  { icon: GitBranch, value: "50+", labelKey: "projectsLabel" },
+  { icon: Users, value: "100%", labelKey: "seniorLabel" },
+  { icon: Award, value: "Global", labelKey: "clientsLabel" },
 ];
 
 export default function CompanyPage() {
+  const t = useTranslations("company");
+  const tCommon = useTranslations("common");
+
   return (
     <main className="min-h-screen bg-background">
       <PageHero
-        badge="About OptimizeDeals"
-        title="A studio built for"
-        titleHighlight="engineering excellence."
-        description="OptimizeDeals is not a traditional agency. It is a founder-led engineering studio focused on frontend architecture, scalable systems, AI-native products, and modern engineering infrastructure."
+        badge={t("hero.badge")}
+        title={t("hero.title")}
+        titleHighlight={t("hero.titleHighlight")}
+        description={t("hero.description")}
       />
 
-      {/* Philosophy Section */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Left - Narrative */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -130,32 +80,15 @@ export default function CompanyPage() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-6">
-                Philosophy
+                {t("philosophy.title")}
               </h2>
               <div className="space-y-6 text-muted-foreground leading-relaxed">
-                <p>
-                  We believe that exceptional engineering is the foundation of
-                  exceptional products. In a world where frontend complexity
-                  continues to grow, having a partner who understands both the
-                  technical depth and business context is invaluable.
-                </p>
-                <p>
-                  OptimizeDeals was founded on the principle that modern
-                  products deserve modern engineering. We bring expertise in
-                  React ecosystems, micro-frontend architectures, AI
-                  integration, and platform engineering to help companies build
-                  systems that scale.
-                </p>
-                <p>
-                  Our approach is deliberately founder-led. This means direct
-                  access to senior engineering expertise, no account managers or
-                  junior developers learning on your project. Every engagement
-                  gets our full attention and technical depth.
-                </p>
+                <p>{t("philosophy.paragraphs.p1")}</p>
+                <p>{t("philosophy.paragraphs.p2")}</p>
+                <p>{t("philosophy.paragraphs.p3")}</p>
               </div>
             </motion.div>
 
-            {/* Right - Stats */}
             <motion.div
               className="grid grid-cols-2 gap-6"
               initial={{ opacity: 0, x: 30 }}
@@ -163,19 +96,23 @@ export default function CompanyPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {stats.map((stat, index) => {
+              {stats.map((stat) => {
                 const Icon = stat.icon;
+                const value =
+                  stat.labelKey === "clientsLabel"
+                    ? t("stats.clientsValue")
+                    : stat.value;
                 return (
                   <div
-                    key={stat.label}
+                    key={stat.labelKey}
                     className="p-6 bg-card/30 border border-border/30 rounded-xl text-center"
                   >
                     <Icon className="w-6 h-6 text-primary mx-auto mb-4" />
                     <div className="text-3xl font-medium text-foreground mb-1">
-                      {stat.value}
+                      {value}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {stat.label}
+                      {t(`stats.${stat.labelKey}`)}
                     </div>
                   </div>
                 );
@@ -185,7 +122,6 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      {/* Engineering Principles */}
       <section className="py-20 border-t border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
@@ -195,13 +131,13 @@ export default function CompanyPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              How We Work
+              {t("principles.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-              Engineering Principles
+              {t("principles.title")}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The values and standards that guide every project we undertake.
+              {t("principles.subtitle")}
             </p>
           </motion.div>
 
@@ -210,7 +146,7 @@ export default function CompanyPage() {
               const Icon = principle.icon;
               return (
                 <motion.div
-                  key={principle.title}
+                  key={principle.key}
                   className="p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 transition-colors duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -219,10 +155,10 @@ export default function CompanyPage() {
                 >
                   <Icon className="w-8 h-8 text-primary mb-4" />
                   <h3 className="text-lg font-medium text-foreground mb-2">
-                    {principle.title}
+                    {t(`principles.items.${principle.key}.title`)}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    {principle.description}
+                    {t(`principles.items.${principle.key}.description`)}
                   </p>
                 </motion.div>
               );
@@ -231,7 +167,6 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      {/* Timeline */}
       <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
@@ -241,19 +176,18 @@ export default function CompanyPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              Journey
+              {t("journey.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-              Engineering Journey
+              {t("journey.title")}
             </h2>
           </motion.div>
 
           <div className="relative">
-            {/* Timeline line */}
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-linear-to-b from-primary via-border to-transparent" />
 
             <div className="space-y-12">
-              {timeline.map((item, index) => (
+              {TIMELINE_ITEMS.map((item, index) => (
                 <motion.div
                   key={item.year}
                   className={`relative flex flex-col md:flex-row items-start gap-8 ${
@@ -264,10 +198,8 @@ export default function CompanyPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  {/* Timeline dot */}
                   <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary border-4 border-background" />
 
-                  {/* Content */}
                   <div
                     className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? "md:pr-16 md:text-right" : "md:pl-16"}`}
                   >
@@ -275,14 +207,13 @@ export default function CompanyPage() {
                       {item.year}
                     </span>
                     <h3 className="text-xl font-medium text-foreground mb-2">
-                      {item.title}
+                      {t(`journey.items.${item.key}.title`)}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {item.description}
+                      {t(`journey.items.${item.key}.description`)}
                     </p>
                   </div>
 
-                  {/* Empty space for alignment */}
                   <div className="hidden md:block flex-1" />
                 </motion.div>
               ))}
@@ -291,7 +222,6 @@ export default function CompanyPage() {
         </div>
       </section>
 
-      {/* Professional Experience */}
       <section className="py-20 border-t border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
@@ -301,14 +231,13 @@ export default function CompanyPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              Experience
+              {t("experience.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-              Professional Experience Across Engineering Ecosystems
+              {t("experience.title")}
             </h2>
           </motion.div>
 
-          {/* Company logos */}
           <motion.div
             className="flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-8"
             initial={{ opacity: 0 }}
@@ -330,20 +259,17 @@ export default function CompanyPage() {
             ))}
           </motion.div>
 
-          {/* Disclaimer */}
           <motion.p
             className="text-center text-xs text-brand-gray font-mono max-w-2xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            Logos represent previous professional experience and ecosystem
-            participation.
+            {t("experience.disclaimer")}
           </motion.p>
         </div>
       </section>
 
-      {/* Contact Section */}
       <section
         id="contact"
         className="py-20 border-t border-border/30 scroll-mt-24"
@@ -356,14 +282,13 @@ export default function CompanyPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              Get in Touch
+              {t("contact.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-              Ready to discuss your project?
+              {t("contact.title")}
             </h2>
             <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Book a discovery call to discuss your engineering challenges and
-              explore how we can help.
+              {t("contact.subtitle")}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -374,7 +299,7 @@ export default function CompanyPage() {
               >
                 <Link href="/book">
                   <Calendar className="mr-2 h-4 w-4" />
-                  Book a Discovery Call
+                  {tCommon("actions.bookDiscoveryCall")}
                 </Link>
               </Button>
               <Button
@@ -390,7 +315,6 @@ export default function CompanyPage() {
               </Button>
             </div>
 
-            {/* Social links */}
             <div className="flex items-center justify-center gap-4">
               <a
                 href="https://linkedin.com/company/optimizedeals"

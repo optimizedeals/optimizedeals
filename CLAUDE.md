@@ -65,7 +65,7 @@ App Router with route segments: `book`, `careers`, `company`, `insights/[slug]`,
 
 - `next.config.ts` sets `typescript.ignoreBuildErrors: true` — `pnpm build` will not catch type errors. Run `pnpm exec tsc --noEmit` if you need real type checking.
 - Remote image hosts are restricted in `next.config.ts` `images.remotePatterns` (`optimize.deals`, `*.vercel-storage.com`, `*.giphy.com`). Add a new pattern before using a new external image host.
-- `NEXT_PUBLIC_BASE_URL` overrides the default `https://optimize.deals` used for metadata and OG image URLs.
+- `NEXT_PUBLIC_SITE_URL` overrides the default `https://optimize.deals` used for metadata and OG image URLs.
 - v0 sandbox files (`__v0_*`, `.v0-trash/`, `.snowflake/`) are gitignored — don't commit them.
 
 ## Writing articles (`content/insights/*.mdx`)

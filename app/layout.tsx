@@ -8,7 +8,7 @@ import type { Metadata, Viewport } from "next";
  * `[locale]` tree using `lib/seo`.
  */
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://optimize.deals";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

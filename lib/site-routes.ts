@@ -2,11 +2,11 @@ import type { MetadataRoute } from "next";
 
 /**
  * Single source of truth for the production base URL.
- * Falls back to the canonical domain when NEXT_PUBLIC_BASE_URL is unset
+ * Falls back to the canonical domain when NEXT_PUBLIC_SITE_URL is unset
  * (e.g. local dev or preview environments without env config).
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_BASE_URL || "https://optimize.deals"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals"
 ).replace(/\/$/, "");
 
 type ChangeFrequency = NonNullable<

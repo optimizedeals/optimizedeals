@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getAllArticles } from "@/lib/mdx";
+import { getAllArticlesAcrossLocales } from "@/lib/mdx";
 
 export const metadata: Metadata = {
   title: "OG Preview",
@@ -38,7 +38,7 @@ function buildArticleOgUrl(article: {
 }
 
 export default async function OgPreviewPage() {
-  const articles = await getAllArticles();
+  const articles = await getAllArticlesAcrossLocales();
 
   return (
     <main className="min-h-screen bg-background text-foreground py-16 px-6">

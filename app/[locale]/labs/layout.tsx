@@ -1,15 +1,17 @@
-import { Metadata } from "next"
-import { MegaMenu } from "@/components/mega-menu"
-import { Footer } from "@/components/footer"
+import { Metadata } from "next";
+import { MegaMenu } from "@/components/mega-menu";
+import { Footer } from "@/components/footer";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://optimize.deals'
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
 
 export const metadata: Metadata = {
   title: "Labs",
-  description: "Exploring the frontiers of frontend architecture, AI integration, and performance optimization through hands-on research and experimentation.",
+  description:
+    "Exploring the frontiers of frontend architecture, AI integration, and performance optimization through hands-on research and experimentation.",
   openGraph: {
     title: "Engineering research and experimental systems.",
-    description: "Exploring the frontiers of frontend architecture, AI integration, and performance optimization.",
+    description:
+      "Exploring the frontiers of frontend architecture, AI integration, and performance optimization.",
     images: [
       {
         url: `${baseUrl}/api/og?path=labs`,
@@ -22,15 +24,16 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Engineering research and experimental systems.",
-    description: "Exploring the frontiers of frontend architecture, AI integration, and performance optimization.",
+    description:
+      "Exploring the frontiers of frontend architecture, AI integration, and performance optimization.",
     images: [`${baseUrl}/api/og?path=labs`],
   },
-}
+};
 
 export default function LabsLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -38,5 +41,5 @@ export default function LabsLayout({
       {children}
       <Footer />
     </>
-  )
+  );
 }

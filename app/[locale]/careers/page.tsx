@@ -5,7 +5,6 @@ import {
   Code,
   Brain,
   Globe,
-  Heart,
   Rocket,
   Target,
   Users,
@@ -14,94 +13,51 @@ import {
   Mail,
   CheckCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/page-hero";
-import Link from "next/link";
 
 const cultureValues = [
-  {
-    icon: Code,
-    title: "Engineering Quality",
-    description:
-      "We prioritize clean, maintainable code over quick fixes. Every line of code is written with future developers in mind.",
-  },
-  {
-    icon: Brain,
-    title: "Systems Thinking",
-    description:
-      "We approach problems holistically, understanding how components interact and influence each other across the system.",
-  },
-  {
-    icon: Globe,
-    title: "Remote-First",
-    description:
-      "Work from anywhere. We believe great engineering happens when people have the freedom to structure their own environment.",
-  },
-  {
-    icon: Rocket,
-    title: "Product Mindset",
-    description:
-      "Engineering exists to serve products and users. We make technical decisions that create real business value.",
-  },
-  {
-    icon: Target,
-    title: "Long-term Architecture",
-    description:
-      "We build systems designed for the next 5 years, not just the next sprint. Sustainability is not optional.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Continuous Learning",
-    description:
-      "The frontend ecosystem evolves rapidly. We dedicate time to research, experimentation, and skill development.",
-  },
+  { key: "quality", icon: Code },
+  { key: "systems", icon: Brain },
+  { key: "remote", icon: Globe },
+  { key: "product", icon: Rocket },
+  { key: "longTerm", icon: Target },
+  { key: "learning", icon: Lightbulb },
 ];
 
-const technicalStandards = [
-  "TypeScript-first development",
-  "Comprehensive testing strategies",
-  "Performance budgets and monitoring",
-  "Accessibility as a requirement",
-  "Documentation as code",
-  "Code review culture",
-  "Automated CI/CD pipelines",
-  "Security-conscious development",
-];
+const STANDARD_KEYS = [
+  "typescript",
+  "testing",
+  "performance",
+  "accessibility",
+  "documentation",
+  "review",
+  "cicd",
+  "security",
+] as const;
 
-const howWeThink = [
-  {
-    title: "Architecture Before Implementation",
-    description:
-      "We spend time understanding the problem space and designing solutions before writing code. This upfront investment pays dividends in long-term maintainability.",
-  },
-  {
-    title: "Outcomes Over Output",
-    description:
-      "We measure success by impact, not lines of code. The best solution is often the simplest one that achieves the desired outcome.",
-  },
-  {
-    title: "Ownership and Accountability",
-    description:
-      "Engineers own their work end-to-end. From design to deployment to monitoring, we take responsibility for the systems we build.",
-  },
-  {
-    title: "Knowledge Sharing",
-    description:
-      "We document decisions, share learnings, and invest in making our teammates better. No knowledge silos allowed.",
-  },
-];
+const MINDSET_KEYS = [
+  "architecture",
+  "outcomes",
+  "ownership",
+  "knowledge",
+] as const;
 
 export default function CareersPage() {
+  const t = useTranslations("careers");
+  const tCommon = useTranslations("common");
+
   return (
     <main className="min-h-screen bg-background">
       <PageHero
-        badge="Join Our Team"
-        title="Build systems that"
-        titleHighlight="scale."
-        description="We're building a culture focused on engineering quality, systems thinking and long-term technical excellence."
+        badge={t("hero.badge")}
+        title={t("hero.title")}
+        titleHighlight={t("hero.titleHighlight")}
+        description={t("hero.description")}
       />
 
-      {/* Engineering Culture */}
       <section id="culture" className="py-20 scroll-mt-24">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
@@ -111,14 +67,13 @@ export default function CareersPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              Our Culture
+              {t("culture.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-              Engineering Culture
+              {t("culture.title")}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The principles and values that define how we work and build
-              together.
+              {t("culture.subtitle")}
             </p>
           </motion.div>
 
@@ -127,7 +82,7 @@ export default function CareersPage() {
               const Icon = value.icon;
               return (
                 <motion.div
-                  key={value.title}
+                  key={value.key}
                   className="group p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -138,10 +93,10 @@ export default function CareersPage() {
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="text-lg font-medium text-foreground mb-2">
-                    {value.title}
+                    {t(`culture.values.${value.key}.title`)}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    {value.description}
+                    {t(`culture.values.${value.key}.description`)}
                   </p>
                 </motion.div>
               );
@@ -150,7 +105,6 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* Technical Standards */}
       <section className="py-20 border-t border-border/30">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -160,20 +114,19 @@ export default function CareersPage() {
               viewport={{ once: true }}
             >
               <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-                Standards
+                {t("standards.kicker")}
               </span>
               <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-                Technical Standards
+                {t("standards.title")}
               </h2>
               <p className="text-muted-foreground mb-8">
-                Our engineering standards ensure consistency, quality, and
-                maintainability across all projects.
+                {t("standards.subtitle")}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {technicalStandards.map((standard, index) => (
+                {STANDARD_KEYS.map((key, index) => (
                   <motion.div
-                    key={standard}
+                    key={key}
                     className="flex items-center gap-3"
                     initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -182,14 +135,13 @@ export default function CareersPage() {
                   >
                     <CheckCircle className="w-5 h-5 text-primary shrink-0" />
                     <span className="text-sm text-muted-foreground">
-                      {standard}
+                      {t(`standards.items.${key}`)}
                     </span>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Visual element */}
             <motion.div
               className="relative"
               initial={{ opacity: 0, x: 30 }}
@@ -197,7 +149,6 @@ export default function CareersPage() {
               viewport={{ once: true }}
             >
               <div className="relative aspect-square bg-card/30 border border-border/30 rounded-2xl overflow-hidden">
-                {/* Grid background */}
                 <div className="absolute inset-0 opacity-20">
                   <svg
                     className="w-full h-full"
@@ -226,37 +177,27 @@ export default function CareersPage() {
                   </svg>
                 </div>
 
-                {/* Animated elements */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
                     className="w-24 h-24 rounded-2xl bg-primary/20 border border-primary/40 flex items-center justify-center"
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      rotate: [0, 5, 0],
-                    }}
+                    animate={{ scale: [1, 1.05, 1], rotate: [0, 5, 0] }}
                     transition={{ duration: 4, repeat: Infinity }}
                   >
                     <Code className="w-10 h-10 text-primary" />
                   </motion.div>
                 </div>
 
-                {/* Orbiting elements */}
                 {[0, 1, 2, 3].map((i) => {
                   const angle = (i / 4) * Math.PI * 2 - Math.PI / 2;
                   const radius = 100;
                   const x = Math.cos(angle) * radius;
                   const y = Math.sin(angle) * radius;
-
                   return (
                     <motion.div
                       key={i}
                       className="absolute top-1/2 left-1/2 w-8 h-8 -ml-4 -mt-4"
-                      style={{
-                        transform: `translate(${x}px, ${y}px)`,
-                      }}
-                      animate={{
-                        opacity: [0.5, 1, 0.5],
-                      }}
+                      style={{ transform: `translate(${x}px, ${y}px)` }}
+                      animate={{ opacity: [0.5, 1, 0.5] }}
                       transition={{
                         duration: 2,
                         repeat: Infinity,
@@ -273,7 +214,6 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* How We Think */}
       <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
@@ -283,17 +223,17 @@ export default function CareersPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              Mindset
+              {t("mindset.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-              How We Think
+              {t("mindset.title")}
             </h2>
           </motion.div>
 
           <div className="space-y-8">
-            {howWeThink.map((item, index) => (
+            {MINDSET_KEYS.map((key, index) => (
               <motion.div
-                key={item.title}
+                key={key}
                 className="p-6 bg-card/30 border border-border/30 rounded-xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -306,10 +246,10 @@ export default function CareersPage() {
                   </span>
                   <div>
                     <h3 className="text-lg font-medium text-foreground mb-2">
-                      {item.title}
+                      {t(`mindset.items.${key}.title`)}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {item.description}
+                      {t(`mindset.items.${key}.description`)}
                     </p>
                   </div>
                 </div>
@@ -319,7 +259,6 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* Open Positions */}
       <section className="py-20 border-t border-border/30">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
@@ -329,21 +268,17 @@ export default function CareersPage() {
             viewport={{ once: true }}
           >
             <span className="text-xs font-mono text-primary uppercase tracking-wider mb-2 block">
-              Open Positions
+              {t("openings.kicker")}
             </span>
             <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-8">
-              Join Our Team
+              {t("openings.title")}
             </h2>
 
-            {/* No positions message */}
             <div className="p-8 bg-card/30 border border-border/30 rounded-2xl mb-8">
               <Users className="w-12 h-12 text-border mx-auto mb-4" />
-              <p className="text-muted-foreground mb-2">
-                No open positions currently.
-              </p>
+              <p className="text-muted-foreground mb-2">{t("openings.empty")}</p>
               <p className="text-sm text-brand-gray">
-                We&apos;re always interested in connecting with talented
-                engineers.
+                {t("openings.emptySub")}
               </p>
             </div>
 
@@ -355,7 +290,7 @@ export default function CareersPage() {
               >
                 <a href="mailto:career@optimize.deals">
                   <Mail className="mr-2 h-4 w-4" />
-                  Reach Out
+                  {tCommon("actions.reachOut")}
                 </a>
               </Button>
               <Button
@@ -365,7 +300,7 @@ export default function CareersPage() {
                 asChild
               >
                 <Link href="/company">
-                  About Us
+                  {tCommon("actions.aboutUs")}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
