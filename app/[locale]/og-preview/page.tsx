@@ -56,7 +56,7 @@ export default async function OgPreviewPage({ params }: PageProps) {
         </header>
 
         <section className="mb-16">
-          <h2 className="text-xl font-medium mb-6 text-muted-foreground uppercase tracking-wider text-xs font-mono">
+          <h2 className="text-xl font-medium mb-6 text-muted-foreground uppercase tracking-wider font-mono">
             Pages
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -92,7 +92,7 @@ export default async function OgPreviewPage({ params }: PageProps) {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium mb-6 text-muted-foreground uppercase tracking-wider text-xs font-mono">
+          <h2 className="text-xl font-medium mb-6 text-muted-foreground uppercase tracking-wider font-mono">
             Articles ({articles.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
