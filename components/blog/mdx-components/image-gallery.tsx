@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ImageViewer } from "./image-viewer";
 
 interface GalleryImage {
   src: string;
@@ -54,68 +54,50 @@ export function ImageGallery({ images, columns = 3 }: ImageGalleryProps) {
         ))}
       </div>
 
-      <AnimatePresence>
-        {open !== null && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-lg p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setOpen(null)}
+      {open !== null && (
+        <ImageViewer
+          key={open}
+          src={images[open].src}
+          alt={images[open].alt}
+          open
+          onClose={() => setOpen(null)}
+          unoptimized={images[open].src.endsWith(".gif")}
+        >
+          <button
+            className="fixed left-4 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10
+              rounded-full bg-black/40 backdrop-blur-sm border border-white/10
+              text-white/70 hover:text-white hover:bg-black/60
+              transition-all shadow-lg"
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            aria-label="Previous image"
           >
-            <button
-              className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground"
-              onClick={() => setOpen(null)}
-              aria-label="Close"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-foreground"
-              onClick={(e) => {
-                e.stopPropagation();
-                prev();
-              }}
-              aria-label="Previous"
-            >
-              <ChevronLeft className="w-8 h-8" />
-            </button>
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-foreground"
-              onClick={(e) => {
-                e.stopPropagation();
-                next();
-              }}
-              aria-label="Next"
-            >
-              <ChevronRight className="w-8 h-8" />
-            </button>
-            <motion.div
-              key={open}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-[90vw] max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={images[open].src}
-                alt={images[open].alt}
-                width={1600}
-                height={1200}
-                className="w-auto h-auto max-w-[90vw] max-h-[80vh] rounded-xl"
-                unoptimized={images[open].src.endsWith(".gif")}
-                quality={100}
-              />
-              {images[open].caption && (
-                <p className="mt-4 text-center text-sm text-muted-foreground">
-                  {images[open].caption}
-                </p>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            className="fixed right-16 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10
+              rounded-full bg-black/40 backdrop-blur-sm border border-white/10
+              text-white/70 hover:text-white hover:bg-black/60
+              transition-all shadow-lg"
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {images[open].caption && (
+            <p className="fixed bottom-20 left-1/2 -translate-x-1/2 z-30 text-sm text-white/70 bg-black/40 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/10">
+              {images[open].caption}
+            </p>
+          )}
+        </ImageViewer>
+      )}
     </div>
   );
 }
