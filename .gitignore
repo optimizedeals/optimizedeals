@@ -20,4 +20,4 @@ node_modules
 .DS_Store
 
 # TypeScript build info files
-tsconfig.tsbuildinfo
+*.tsbuildinfo
