@@ -11,6 +11,11 @@ interface PageHeroProps {
   children?: ReactNode;
 }
 
+/**
+ * Localization-agnostic hero. Callers (each page) pass already-translated
+ * strings via props — no internal `useTranslations` so this stays a pure
+ * presentational component reusable by every locale-aware page.
+ */
 export function PageHero({
   badge,
   title,
@@ -20,9 +25,7 @@ export function PageHero({
 }: PageHeroProps) {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0">
-        {/* Grid */}
         <div className="absolute inset-0 opacity-10">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -44,7 +47,6 @@ export function PageHero({
           </svg>
         </div>
 
-        {/* Gradient orbs */}
         <div className="absolute top-0 left-1/4 w-125 h-125 bg-primary/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-accent/10 rounded-full blur-[100px]" />
       </div>

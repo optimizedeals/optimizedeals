@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import { MegaMenu } from "@/components/mega-menu";
 import { Hero } from "@/components/hero";
 import { TrustSection } from "@/components/trust-section";
@@ -11,9 +12,20 @@ import { AboutSection } from "@/components/about-section";
 import { CTASection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
 import { getLatestArticles } from "@/lib/mdx";
+import type { Locale } from "@/lib/i18n/config";
 
-export default async function Home() {
-  const latestArticles = await getLatestArticles(4);
+interface HomePageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function Home({ params }: HomePageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const latestArticles = await getLatestArticles({
+    locale: locale as Locale,
+    limit: 4,
+  });
 
   return (
     <main className="relative min-h-screen bg-background overflow-hidden">

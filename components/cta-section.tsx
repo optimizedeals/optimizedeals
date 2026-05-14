@@ -1,23 +1,24 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Calendar } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
 
 export function CTASection() {
+  const t = useTranslations("home.cta");
+  const tCommon = useTranslations("common");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-primary/10 rounded-full blur-[150px]" />
       </div>
 
-      {/* Grid pattern overlay */}
       <div className="absolute inset-0 opacity-10">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -45,7 +46,6 @@ export function CTASection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* Badge */}
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-card/60 border border-border rounded-full text-sm text-muted-foreground backdrop-blur-sm"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -53,24 +53,20 @@ export function CTASection() {
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Available for new projects
+            {t("badge")}
           </motion.div>
 
-          {/* Headline */}
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-foreground mb-6 text-balance">
-            Building something{" "}
+            {t("titleLead")}{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
-              complex?
+              {t("titleHighlight")}
             </span>
           </h2>
 
-          {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty">
-            We help teams move faster, scale better and modernize their frontend
-            architecture.
+            {t("subtitle")}
           </p>
 
-          {/* CTA Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
@@ -82,10 +78,10 @@ export function CTASection() {
               className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
               asChild
             >
-              <a href="/book">
+              <Link href="/book">
                 <Calendar className="mr-2 h-4 w-4" />
-                Schedule a Call
-              </a>
+                {tCommon("actions.scheduleCall")}
+              </Link>
             </Button>
             <Button
               variant="outline"
@@ -94,7 +90,7 @@ export function CTASection() {
               asChild
             >
               <a href="mailto:contact@optimize.deals">
-                Discuss Your Project
+                {tCommon("actions.discussProject")}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Button>

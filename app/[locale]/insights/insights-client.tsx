@@ -15,9 +15,10 @@ import {
   Tag,
   X,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/page-hero";
-import Link from "next/link";
 import { MegaMenu } from "@/components/mega-menu";
 import { Footer } from "@/components/footer";
 import { ArticleMeta } from "@/lib/mdx";
@@ -49,7 +50,11 @@ interface InsightsClientProps {
 }
 
 function buildHref(
-  current: { category: string | null; tag: string | null; author: string | null },
+  current: {
+    category: string | null;
+    tag: string | null;
+    author: string | null;
+  },
   patch: Partial<Record<"category" | "tag" | "author", string | null>>,
 ): string {
   const next = { ...current, ...patch };
@@ -70,6 +75,8 @@ export function InsightsClient({
   activeAuthor,
   totalArticles,
 }: InsightsClientProps) {
+  const t = useTranslations("insights");
+  const tCommon = useTranslations("common");
   const current = {
     category: activeCategory,
     tag: activeTag,
@@ -77,7 +84,7 @@ export function InsightsClient({
   };
 
   const allCategories = [
-    { id: null as string | null, label: "All", icon: Filter },
+    { id: null as string | null, label: t("filters.all"), icon: Filter },
     ...categories.map((cat) => ({
       id: categorySlug(cat),
       label: cat,
@@ -92,7 +99,7 @@ export function InsightsClient({
   const activeAuthorAvatar = articles[0]?.authorAvatar;
 
   const tagLabel = activeTag
-    ? articles[0]?.tags.find((t) => tagSlug(t) === activeTag) ?? activeTag
+    ? articles[0]?.tags.find((tg) => tagSlug(tg) === activeTag) ?? activeTag
     : null;
 
   return (
@@ -100,13 +107,12 @@ export function InsightsClient({
       <MegaMenu />
       <main className="min-h-screen bg-background">
         <PageHero
-          badge="Technical Content"
-          title="Technical writing and"
-          titleHighlight="engineering insights."
-          description="In-depth articles on modern frontend architecture, AI engineering, and performance optimization from our engineering team."
+          badge={t("hero.badge")}
+          title={t("hero.title")}
+          titleHighlight={t("hero.titleHighlight")}
+          description={t("hero.description")}
         />
 
-        {/* Author Filter Banner */}
         {activeAuthor && (
           <section className="py-6 border-b border-border/30 bg-card/20">
             <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
@@ -121,7 +127,7 @@ export function InsightsClient({
                 </Avatar>
                 <div>
                   <p className="text-xs font-mono text-brand-gray uppercase tracking-wider">
-                    Posts by
+                    {t("filters.postsBy")}
                   </p>
                   <p className="text-base font-medium text-foreground">
                     {authorName}
@@ -133,13 +139,12 @@ export function InsightsClient({
                 className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-foreground hover:border-border transition-all"
               >
                 <X className="w-3 h-3" />
-                Clear filter
+                {t("filters.clearFilter")}
               </Link>
             </div>
           </section>
         )}
 
-        {/* Tag Filter Banner */}
         {activeTag && (
           <section className="py-6 border-b border-border/30 bg-card/20">
             <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
@@ -149,7 +154,7 @@ export function InsightsClient({
                 </span>
                 <div>
                   <p className="text-xs font-mono text-brand-gray uppercase tracking-wider">
-                    Tagged
+                    {t("filters.tagged")}
                   </p>
                   <p className="text-base font-medium text-foreground">
                     {tagLabel}
@@ -161,13 +166,12 @@ export function InsightsClient({
                 className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:text-foreground hover:border-border transition-all"
               >
                 <X className="w-3 h-3" />
-                Clear filter
+                {t("filters.clearFilter")}
               </Link>
             </div>
           </section>
         )}
 
-        {/* Category Filter */}
         <section className="py-8 border-b border-border/30">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-wrap items-center gap-3">
@@ -195,7 +199,6 @@ export function InsightsClient({
           </div>
         </section>
 
-        {/* Featured Articles */}
         {featuredArticles.length > 0 && (
           <section className="py-16">
             <div className="max-w-6xl mx-auto px-6">
@@ -206,7 +209,7 @@ export function InsightsClient({
                 viewport={{ once: true }}
               >
                 <h2 className="text-2xl font-medium text-foreground">
-                  Featured Articles
+                  {t("featured.title")}
                 </h2>
               </motion.div>
 
@@ -219,7 +222,6 @@ export function InsightsClient({
           </section>
         )}
 
-        {/* All Articles */}
         <section
           className={
             featuredArticles.length > 0
@@ -235,11 +237,10 @@ export function InsightsClient({
               viewport={{ once: true }}
             >
               <h2 className="text-2xl font-medium text-foreground">
-                {activeCategoryLabel ?? "All Articles"}
+                {activeCategoryLabel ?? t("allArticles.title")}
               </h2>
               <span className="text-sm text-brand-gray font-mono">
-                {articles.length} article
-                {articles.length !== 1 ? "s" : ""}
+                {t("allArticles.count", { count: articles.length })}
               </span>
             </motion.div>
 
@@ -261,11 +262,9 @@ export function InsightsClient({
               >
                 <Search className="w-12 h-12 text-border mx-auto mb-4" />
                 <p className="text-muted-foreground mb-4">
-                  No articles published yet.
+                  {t("empty.noArticles")}
                 </p>
-                <p className="text-sm text-brand-gray">
-                  Check back soon for engineering insights.
-                </p>
+                <p className="text-sm text-brand-gray">{t("empty.checkBack")}</p>
               </motion.div>
             ) : (
               <motion.div
@@ -274,22 +273,19 @@ export function InsightsClient({
                 animate={{ opacity: 1 }}
               >
                 <Search className="w-12 h-12 text-border mx-auto mb-4" />
-                <p className="text-muted-foreground">
-                  No articles match these filters.
-                </p>
+                <p className="text-muted-foreground">{t("empty.noMatches")}</p>
                 <Link
                   href="/insights"
                   className="inline-flex items-center gap-2 mt-4 text-sm text-accent hover:text-foreground transition-colors"
                 >
                   <X className="w-3 h-3" />
-                  Clear all filters
+                  {t("filters.clearAllFilters")}
                 </Link>
               </motion.div>
             )}
           </div>
         </section>
 
-        {/* Newsletter CTA */}
         <section className="py-20 border-t border-border/30">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <motion.div
@@ -298,11 +294,10 @@ export function InsightsClient({
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
-                Stay updated on engineering insights
+                {t("cta.title")}
               </h2>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Get notified when we publish new technical articles on frontend
-                architecture, AI engineering, and modern development practices.
+                {t("cta.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button
@@ -310,7 +305,7 @@ export function InsightsClient({
                   className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg"
                   asChild
                 >
-                  <Link href="/book">Book a Call</Link>
+                  <Link href="/book">{tCommon("actions.bookCall")}</Link>
                 </Button>
                 <Button
                   variant="outline"
@@ -319,7 +314,7 @@ export function InsightsClient({
                   asChild
                 >
                   <Link href="/labs">
-                    Explore Labs
+                    {tCommon("actions.exploreLabs")}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
@@ -334,6 +329,8 @@ export function InsightsClient({
 }
 
 function FeaturedArticle({ article }: { article: ArticleWithDate }) {
+  const t = useTranslations("insights");
+  const tCommon = useTranslations("common");
   const CategoryIcon = categoryIcons[article.category] || Layers;
 
   return (
@@ -346,18 +343,16 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
     >
       <Link href={`/insights/${article.slug}`} className="block">
         <div className="relative p-8 md:p-10 bg-linear-to-br from-card/60 to-card/30 border border-border/50 rounded-2xl overflow-hidden hover:border-border transition-all duration-300">
-          {/* Background decoration */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px]" />
 
           <div className="relative">
-            {/* Category badge */}
             <div className="flex items-center gap-3 mb-4">
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-xs font-mono text-accent">
                 <CategoryIcon className="w-3 h-3" />
                 {article.category}
               </span>
               <span className="px-2 py-0.5 bg-brand-gold/10 border border-brand-gold/30 rounded-full text-xs font-mono text-brand-gold">
-                Featured
+                {t("featured.badge")}
               </span>
             </div>
 
@@ -392,7 +387,7 @@ function FeaturedArticle({ article }: { article: ArticleWithDate }) {
               </div>
 
               <span className="flex items-center gap-2 text-sm font-medium text-accent group-hover:text-foreground transition-colors">
-                Read article
+                {tCommon("actions.readArticle")}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </span>
             </div>
@@ -422,7 +417,6 @@ function ArticleCard({
     >
       <Link href={`/insights/${article.slug}`} className="block h-full">
         <div className="h-full flex flex-col p-6 bg-card/30 border border-border/30 rounded-xl hover:border-border/60 hover:bg-card/50 transition-all duration-300">
-          {/* Author + Category */}
           <div className="flex items-center justify-between gap-2 mb-4">
             <div className="flex items-center gap-2 min-w-0">
               <Avatar className="size-6 shrink-0">
@@ -448,17 +442,14 @@ function ArticleCard({
             </div>
           </div>
 
-          {/* Title */}
           <h3 className="text-lg font-medium text-foreground mb-3 group-hover:text-white transition-colors line-clamp-2">
             {article.title}
           </h3>
 
-          {/* Excerpt */}
           <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
             {article.description}
           </p>
 
-          {/* Tags — pushed to the bottom so cards align even with short descriptions */}
           {article.tags.length > 0 && (
             <div className="mt-auto flex flex-wrap gap-2 pt-2 mb-4">
               {article.tags.slice(0, 3).map((tag) => (
@@ -473,7 +464,6 @@ function ArticleCard({
             </div>
           )}
 
-          {/* Meta — always at the very bottom */}
           <div
             className={`flex items-center gap-3 text-xs text-brand-gray ${article.tags.length > 0 ? "" : "mt-auto pt-2"}`}
           >

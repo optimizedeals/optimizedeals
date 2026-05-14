@@ -1,20 +1,19 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
-// Company logos - using text representations for cleaner rendering
 const companies = [
-  { name: "IBM", width: 80 },
-  { name: "Adobe", width: 90 },
-  { name: "Lululemon", width: 100 },
-  { name: "Rocketseat", width: 110 },
-  { name: "Sony", width: 70 },
-  { name: "Itaú", width: 60 },
-  { name: "ByteDance", width: 100 },
-  { name: "John Deere", width: 100 },
-  { name: "Valor Software", width: 120 },
+  "IBM",
+  "Adobe",
+  "Lululemon",
+  "Rocketseat",
+  "Sony",
+  "Itaú",
+  "ByteDance",
+  "John Deere",
+  "Valor Software",
 ];
 
 function CompanyLogo({ name, index }: { name: string; index: number }) {
@@ -34,16 +33,15 @@ function CompanyLogo({ name, index }: { name: string; index: number }) {
 }
 
 export function TrustSection() {
+  const t = useTranslations("home.trust");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/30 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-6">
-        {/* Section header */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -56,28 +54,25 @@ export function TrustSection() {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Experience
+            {t("badge")}
           </motion.span>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
-            Built through real-world{" "}
+            {t("titleLead")}{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
-              engineering ecosystems
+              {t("titleHighlight")}
             </span>
           </h2>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Professional experience contributing to products, platforms and
-            engineering initiatives connected to globally recognized companies.
+            {t("subtitle")}
           </p>
         </motion.div>
 
-        {/* Logo cloud with infinite scroll effect */}
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-background to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-background to-transparent z-10" />
 
-          {/* Logo container */}
           <div className="overflow-hidden">
             <motion.div
               className="flex items-center"
@@ -91,12 +86,11 @@ export function TrustSection() {
                 },
               }}
             >
-              {/* Duplicate logos for seamless loop */}
               {[...companies, ...companies, ...companies].map(
                 (company, index) => (
                   <CompanyLogo
-                    key={`${company.name}-${index}`}
-                    name={company.name}
+                    key={`${company}-${index}`}
+                    name={company}
                     index={index % companies.length}
                   />
                 ),
@@ -105,15 +99,13 @@ export function TrustSection() {
           </div>
         </div>
 
-        {/* Disclaimer */}
         <motion.p
           className="text-center text-xs text-brand-gray mt-12 font-mono"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          Logos represent previous professional experience and ecosystem
-          participation.
+          {t("disclaimer")}
         </motion.p>
       </div>
     </section>

@@ -1,89 +1,57 @@
-import fs from "fs"
-import path from "path"
-import matter from "gray-matter"
-import readingTime from "reading-time"
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import readingTime from "reading-time";
+import { LOCALES, DEFAULT_LOCALE, type Locale } from "@/lib/i18n/config";
 
-const CONTENT_DIR = path.join(process.cwd(), "content/insights")
+const CONTENT_DIR = path.join(process.cwd(), "content/insights");
 
-const IS_PRODUCTION = process.env.NODE_ENV === "production"
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 export interface ArticleMeta {
-  slug: string
-  title: string
-  description: string
-  date: string
-  author: string
-  authorAvatar?: string
-  category: string
-  tags: string[]
-  image?: string
-  readingTime: string
-  featured?: boolean
+  slug: string;
+  /** ISO locale ("en-us" / "pt-br") the MDX body was authored in. */
+  language: Locale;
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+  authorAvatar?: string;
+  category: string;
+  tags: string[];
+  image?: string;
+  readingTime: string;
+  featured?: boolean;
   /** When true, the article is hidden from production builds. */
-  dev?: boolean
+  dev?: boolean;
 }
 
 export interface Article extends ArticleMeta {
-  content: string
+  content: string;
 }
 
-export async function getAllArticles(): Promise<ArticleMeta[]> {
-  // Ensure directory exists
-  if (!fs.existsSync(CONTENT_DIR)) {
-    return []
+function normalizeLanguage(raw: unknown): Locale {
+  if (typeof raw === "string") {
+    const lower = raw.toLowerCase();
+    if ((LOCALES as readonly string[]).includes(lower)) return lower as Locale;
   }
-
-  const files = fs.readdirSync(CONTENT_DIR).filter((file) => file.endsWith(".mdx"))
-
-  const articles = files
-    .map((file) => {
-      const filePath = path.join(CONTENT_DIR, file)
-      const fileContent = fs.readFileSync(filePath, "utf-8")
-      const { data, content } = matter(fileContent)
-      const slug = file.replace(".mdx", "")
-      const stats = readingTime(content)
-
-      return {
-        slug,
-        title: data.title || "Untitled",
-        description: data.description || "",
-        date: data.date || new Date().toISOString(),
-        author: data.author || "OptimizeDeals Engineering",
-        authorAvatar: data.authorAvatar,
-        category: data.category || "Engineering",
-        tags: data.tags || [],
-        image: data.image,
-        readingTime: stats.text,
-        featured: data.featured || false,
-        dev: data.dev === true,
-      }
-    })
-    .filter((article) => !(IS_PRODUCTION && article.dev))
-
-  // Sort by date (newest first)
-  return articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  return DEFAULT_LOCALE;
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const filePath = path.join(CONTENT_DIR, `${slug}.mdx`)
-
-  if (!fs.existsSync(filePath)) {
-    return null
-  }
-
-  const fileContent = fs.readFileSync(filePath, "utf-8")
-  const { data, content } = matter(fileContent)
-  const stats = readingTime(content)
-
-  if (IS_PRODUCTION && data.dev === true) {
-    return null
-  }
+function readArticle(file: string): Article | null {
+  const filePath = path.join(CONTENT_DIR, file);
+  if (!fs.existsSync(filePath)) return null;
+  const fileContent = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(fileContent);
+  const slug = file.replace(/\.mdx$/, "");
+  const stats = readingTime(content);
 
   return {
     slug,
+    language: normalizeLanguage(data.language),
     title: data.title || "Untitled",
     description: data.description || "",
-    date: data.date || new Date().toISOString(),
+    date: data.date || data.publishedAt || new Date().toISOString(),
     author: data.author || "OptimizeDeals Engineering",
     authorAvatar: data.authorAvatar,
     category: data.category || "Engineering",
@@ -93,73 +61,133 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     featured: data.featured || false,
     dev: data.dev === true,
     content,
-  }
+  };
 }
 
-export async function getArticlesByCategory(category: string): Promise<ArticleMeta[]> {
-  const articles = await getAllArticles()
-  return articles.filter((article) => article.category.toLowerCase() === category.toLowerCase())
+function readAllArticles(): Article[] {
+  if (!fs.existsSync(CONTENT_DIR)) return [];
+  return fs
+    .readdirSync(CONTENT_DIR)
+    .filter((file) => file.endsWith(".mdx"))
+    .map(readArticle)
+    .filter((a): a is Article => a !== null)
+    .filter((a) => !(IS_PRODUCTION && a.dev));
 }
 
-export async function getArticlesByTag(tag: string): Promise<ArticleMeta[]> {
-  const articles = await getAllArticles()
-  return articles.filter((article) => 
-    article.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
-  )
+function stripContent({ content: _content, ...rest }: Article): ArticleMeta {
+  void _content;
+  return rest;
+}
+
+function sortByDateDesc<T extends { date: string }>(items: T[]): T[] {
+  return [...items].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+}
+
+interface LocaleOptions {
+  locale: Locale;
+}
+
+/**
+ * Return every article whose authoring language matches `locale`. The list
+ * intentionally does *not* fall back across languages because the insights
+ * index per locale shows only what was written in that locale; cross-locale
+ * discovery happens through the article-level fallback below.
+ */
+export async function getAllArticles(
+  options: LocaleOptions,
+): Promise<ArticleMeta[]> {
+  const filtered = readAllArticles().filter(
+    (a) => a.language === options.locale,
+  );
+  return sortByDateDesc(filtered).map(stripContent);
+}
+
+/**
+ * Return every article authored in *any* locale, sorted newest first. Used
+ * for sitemap generation and cross-locale aware lookups.
+ */
+export async function getAllArticlesAcrossLocales(): Promise<ArticleMeta[]> {
+  return sortByDateDesc(readAllArticles()).map(stripContent);
+}
+
+/**
+ * Resolve a slug for a given interface locale.
+ *
+ * - If the article exists in `locale`, return it.
+ * - Otherwise, fall back to the same slug in any other locale (preserving
+ *   the interface locale on the rendered page). The returned `article.language`
+ *   tells the caller the body language so it can surface a banner and emit
+ *   `noindex` to avoid duplicate-content penalties.
+ * - Returns `null` only when the slug exists in no locale.
+ */
+export async function getArticleBySlug(
+  slug: string,
+  options: LocaleOptions,
+): Promise<Article | null> {
+  const all = readAllArticles();
+  const direct = all.find(
+    (a) => a.slug === slug && a.language === options.locale,
+  );
+  if (direct) return direct;
+  return all.find((a) => a.slug === slug) ?? null;
 }
 
 export async function getRelatedArticles(
   currentSlug: string,
   category: string,
   tags: string[],
-  limit: number = 3
+  options: LocaleOptions & { limit?: number },
 ): Promise<ArticleMeta[]> {
-  const articles = await getAllArticles()
-  
-  // Filter out current article and find related ones
-  const related = articles
-    .filter((article) => article.slug !== currentSlug)
+  const limit = options.limit ?? 3;
+  const candidates = readAllArticles()
+    .filter((a) => a.language === options.locale && a.slug !== currentSlug)
+    .map(stripContent);
+
+  const scored = candidates
     .map((article) => {
-      let score = 0
-      // Same category = high score
-      if (article.category.toLowerCase() === category.toLowerCase()) {
-        score += 10
-      }
-      // Matching tags
+      let score = 0;
+      if (article.category.toLowerCase() === category.toLowerCase()) score += 10;
       const matchingTags = article.tags.filter((tag) =>
-        tags.some((t) => t.toLowerCase() === tag.toLowerCase())
-      )
-      score += matchingTags.length * 5
-      return { ...article, score }
+        tags.some((t) => t.toLowerCase() === tag.toLowerCase()),
+      );
+      score += matchingTags.length * 5;
+      return { article, score };
     })
-    .filter((article) => article.score > 0)
+    .filter(({ score }) => score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
+    .map(({ article }) => article);
 
-  return related
+  return scored;
 }
 
-export async function getLatestArticles(limit: number = 4): Promise<ArticleMeta[]> {
-  const articles = await getAllArticles()
-  return articles.slice(0, limit)
+export async function getLatestArticles(
+  options: LocaleOptions & { limit?: number },
+): Promise<ArticleMeta[]> {
+  const limit = options.limit ?? 4;
+  const articles = await getAllArticles(options);
+  return articles.slice(0, limit);
 }
 
-export async function getAllCategories(): Promise<string[]> {
-  const articles = await getAllArticles()
-  const categories = new Set(articles.map((article) => article.category))
-  return Array.from(categories)
+export async function getAllCategories(
+  options: LocaleOptions,
+): Promise<string[]> {
+  const articles = await getAllArticles(options);
+  return Array.from(new Set(articles.map((a) => a.category)));
 }
 
-export async function getAllTags(): Promise<string[]> {
-  const articles = await getAllArticles()
-  const tags = new Set(articles.flatMap((article) => article.tags))
-  return Array.from(tags)
+export async function getAllTags(options: LocaleOptions): Promise<string[]> {
+  const articles = await getAllArticles(options);
+  return Array.from(new Set(articles.flatMap((a) => a.tags)));
 }
 
-export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString("en-US", {
+export function formatDate(date: string, locale: Locale = DEFAULT_LOCALE): string {
+  const intlLocale = locale === "pt-br" ? "pt-BR" : "en-US";
+  return new Date(date).toLocaleDateString(intlLocale, {
     year: "numeric",
     month: "long",
     day: "numeric",
-  })
+  });
 }

@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import type { SimpleIcon as SI } from "simple-icons";
 import {
@@ -23,13 +22,12 @@ import {
   siEthers,
   siSolidity,
 } from "simple-icons";
+import { useTranslations } from "next-intl";
 import { SimpleIcon } from "@/components/icons/simple-icon";
 
 interface TechEntry {
   name: string;
-  /** simple-icons brand glyph; undefined entries fall back to a colored dot. */
   icon?: SI;
-  /** Used for the dot fallback only. */
   color?: string;
 }
 
@@ -113,6 +111,7 @@ function CategorySection({
   items: TechEntry[];
   categoryIndex: number;
 }) {
+  const t = useTranslations("home.stack.categories");
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -121,7 +120,7 @@ function CategorySection({
       viewport={{ once: true }}
     >
       <h3 className="text-sm font-mono text-brand-gray uppercase tracking-wider mb-4">
-        {category}
+        {t(category)}
       </h3>
       <div className="flex flex-wrap gap-3">
         {items.map((item, index) => (
@@ -133,18 +132,17 @@ function CategorySection({
 }
 
 export function TechStackSection() {
+  const t = useTranslations("home.stack");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section id="stack" ref={ref} className="relative py-24 md:py-32">
-      {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-100 bg-primary/5 rounded-full blur-[150px]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6">
-        {/* Section header */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -157,23 +155,21 @@ export function TechStackSection() {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Technology
+            {t("badge")}
           </motion.span>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-6 text-balance">
-            Modern stack for{" "}
+            {t("titleLead")}{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
-              modern products
+              {t("titleHighlight")}
             </span>
           </h2>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            We leverage cutting-edge technologies to build performant, scalable,
-            and maintainable solutions.
+            {t("subtitle")}
           </p>
         </motion.div>
 
-        {/* Tech grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {Object.entries(techStack).map(([category, items], index) => (
             <CategorySection

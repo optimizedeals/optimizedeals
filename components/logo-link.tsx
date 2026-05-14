@@ -1,29 +1,23 @@
-import Link, { LinkProps } from "next/link";
 import type { ReactNode } from "react";
+import { Link } from "@/lib/i18n/navigation";
 
-interface LogoLinkProps extends Omit<LinkProps, "href"> {
+interface LogoLinkProps {
   className?: string;
   children: ReactNode;
-  href?: LinkProps["href"];
+  href?: string;
 }
 
 /**
- * Brand logo link.
- *
- * Behavior:
- * - On any page other than `/`, behaves as a normal Next.js link to home.
- *   Next's router scrolls to the top of the new page by default.
- * - When already on `/`, intercepts the click and smoothly scrolls back to
- *   the top of the document instead of being a no-op.
+ * Brand logo link. Wraps next-intl's locale-aware `Link` so the logo
+ * always points to the current-locale root.
  */
 export function LogoLink({
   href,
   className,
   children,
-  ...props
 }: LogoLinkProps) {
   return (
-    <Link href={href ?? "/#"} className={className} {...props}>
+    <Link href={href ?? "/"} className={className}>
       {children}
     </Link>
   );

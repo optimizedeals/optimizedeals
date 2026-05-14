@@ -25,6 +25,7 @@ import {
   Embed,
   FeatureGrid,
 } from "./mdx-components";
+import { CookieTable } from "../legal/cookie-table";
 import { HeadingAnchor } from "./heading-anchor";
 import { cn } from "@/lib/utils";
 import { MDXProvider } from "@mdx-js/react";
@@ -53,6 +54,9 @@ const mdxComponents = {
   Badge,
   Embed,
   FeatureGrid,
+
+  // Legal components
+  CookieTable,
 
   Image: (
     props: React.ComponentProps<typeof Image> & { className?: string },

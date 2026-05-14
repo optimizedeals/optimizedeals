@@ -8,10 +8,6 @@ import {
   ChevronDown,
   Layers,
   Box,
-  Beaker,
-  BookOpen,
-  Building2,
-  Users,
   ArrowRight,
   Cpu,
   Workflow,
@@ -25,242 +21,253 @@ import {
   Target,
   Heart,
   Calendar,
+  Building2,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
 import { LogoLink } from "@/components/logo-link";
 
 type NavItem = {
-  label: string;
+  key: string;
   href?: string;
   dropdown?: {
     sections: {
-      title?: string;
+      titleKey?: string;
       items: {
         icon: React.ComponentType<{ className?: string }>;
-        label: string;
-        description: string;
+        labelKey: string;
         href: string;
         external?: boolean;
       }[];
     }[];
     featured?: {
-      title: string;
-      description: string;
+      titleKey: string;
+      descriptionKey: string;
       href: string;
-      image?: string;
     };
   };
 };
 
 const navItems: NavItem[] = [
   {
-    label: "Solutions",
+    key: "solutions",
     dropdown: {
       sections: [
         {
-          title: "Engineering Services",
+          titleKey: "solutions.sectionEngineering",
           items: [
             {
               icon: Layers,
-              label: "Frontend Architecture",
-              description: "Scalable React ecosystems and enterprise systems",
+              labelKey: "solutions.frontendArchitecture",
               href: "/solutions#frontend-architecture",
             },
             {
               icon: Box,
-              label: "Micro-frontends",
-              description: "Runtime composition and federated systems",
+              labelKey: "solutions.microfrontends",
               href: "/solutions#micro-frontends",
             },
             {
               icon: Workflow,
-              label: "Platform Engineering",
-              description: "Monorepos, Nx, and build system optimization",
+              labelKey: "solutions.platformEngineering",
               href: "/solutions#platform-engineering",
             },
           ],
         },
         {
-          title: "Modern Systems",
+          titleKey: "solutions.sectionModernSystems",
           items: [
             {
               icon: Brain,
-              label: "AI Integration",
-              description: "RAG systems and AI-native experiences",
+              labelKey: "solutions.aiIntegration",
               href: "/solutions#ai-integration",
             },
             {
               icon: Wrench,
-              label: "Product Modernization",
-              description: "Legacy migrations and technical debt reduction",
+              labelKey: "solutions.modernization",
               href: "/solutions#modernization",
             },
           ],
         },
       ],
       featured: {
-        title: "Engineering systems built for scale",
-        description:
-          "Discover how we help companies modernize products and scale frontend ecosystems.",
+        titleKey: "solutions.featured.title",
+        descriptionKey: "solutions.featured.description",
         href: "/solutions",
       },
     },
   },
   {
-    label: "Products",
+    key: "products",
     dropdown: {
       sections: [
         {
-          title: "Live Products",
+          titleKey: "products.sectionLive",
           items: [
             {
               icon: Calendar,
-              label: "AgendaZap",
-              description: "Scheduling automation with WhatsApp workflows",
+              labelKey: "products.agendaZap",
               href: "https://agenda-zap.com",
               external: true,
             },
             {
               icon: Cpu,
-              label: "Interloquia",
-              description: "AI-native communication and workflow platform",
+              labelKey: "products.interloquia",
               href: "https://interloquia.com",
               external: true,
             },
           ],
         },
         {
-          title: "Experimental",
+          titleKey: "products.sectionExperimental",
           items: [
             {
               icon: FlaskConical,
-              label: "Labs Projects",
-              description: "Research and experimental systems",
+              labelKey: "products.labsProjects",
               href: "/labs",
             },
           ],
         },
       ],
       featured: {
-        title: "Products built through engineering-first thinking",
-        description:
-          "Explore our portfolio of production applications and experimental systems.",
+        titleKey: "products.featured.title",
+        descriptionKey: "products.featured.description",
         href: "/products",
       },
     },
   },
   {
-    label: "Labs",
+    key: "labs",
     dropdown: {
       sections: [
         {
-          title: "Research Areas",
+          titleKey: "labs.sectionResearch",
           items: [
             {
               icon: Zap,
-              label: "Runtime Federation Lab",
-              description: "Module federation and dynamic systems",
+              labelKey: "labs.runtimeFederation",
               href: "/labs#runtime-federation",
             },
             {
               icon: Brain,
-              label: "AI Streaming Interfaces",
-              description: "Real-time AI interaction patterns",
+              labelKey: "labs.aiStreaming",
               href: "/labs#ai-streaming",
             },
             {
               icon: Target,
-              label: "Performance Experiments",
-              description: "Frontend optimization research",
+              labelKey: "labs.performance",
               href: "/labs#performance",
             },
           ],
         },
       ],
       featured: {
-        title: "Engineering research and experimental systems",
-        description:
-          "Explore our cutting-edge research in frontend architecture and AI systems.",
+        titleKey: "labs.featured.title",
+        descriptionKey: "labs.featured.description",
         href: "/labs",
       },
     },
   },
   {
-    label: "Insights",
+    key: "insights",
     dropdown: {
       sections: [
         {
-          title: "Categories",
+          titleKey: "insights.sectionCategories",
           items: [
             {
               icon: FileText,
-              label: "Frontend Architecture",
-              description: "Deep dives into scalable systems",
+              labelKey: "insights.frontendArchitecture",
               href: "/insights?category=frontend-architecture",
             },
             {
               icon: Brain,
-              label: "AI Engineering",
-              description: "AI integration and RAG systems",
+              labelKey: "insights.aiEngineering",
               href: "/insights?category=ai-engineering",
             },
             {
               icon: Lightbulb,
-              label: "Performance Engineering",
-              description: "Optimization techniques and patterns",
+              labelKey: "insights.performance",
               href: "/insights?category=performance",
             },
           ],
         },
       ],
       featured: {
-        title: "Technical writing and engineering insights",
-        description:
-          "In-depth articles on modern frontend architecture and AI engineering.",
+        titleKey: "insights.featured.title",
+        descriptionKey: "insights.featured.description",
         href: "/insights",
       },
     },
   },
   {
-    label: "Company",
+    key: "company",
     dropdown: {
       sections: [
         {
-          title: "About Us",
+          titleKey: "company.sectionAbout",
           items: [
             {
               icon: Building2,
-              label: "About",
-              description: "Our philosophy and engineering principles",
+              labelKey: "company.about",
               href: "/company",
             },
             {
               icon: Users,
-              label: "Careers",
-              description: "Join our engineering team",
+              labelKey: "company.careers",
               href: "/careers",
             },
             {
               icon: Heart,
-              label: "Culture",
-              description: "How we think and build",
+              labelKey: "company.culture",
               href: "/careers#culture",
             },
           ],
         },
       ],
       featured: {
-        title: "A studio built for engineering excellence",
-        description:
-          "Learn about our founder-led approach to technical consulting.",
+        titleKey: "company.featured.title",
+        descriptionKey: "company.featured.description",
         href: "/company",
       },
     },
   },
 ];
+
+function NavLinkOrAnchor({
+  href,
+  external,
+  onClick,
+  className,
+  children,
+}: {
+  href: string;
+  external?: boolean;
+  onClick?: () => void;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (external || href.startsWith("http")) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} onClick={onClick} className={className}>
+      {children}
+    </Link>
+  );
+}
 
 function DropdownContent({
   item,
@@ -269,6 +276,8 @@ function DropdownContent({
   item: NavItem;
   onClose: () => void;
 }) {
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   if (!item.dropdown) return null;
 
   return (
@@ -281,7 +290,6 @@ function DropdownContent({
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-card/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
-          {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-5">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -304,26 +312,26 @@ function DropdownContent({
           </div>
 
           <div className="relative grid grid-cols-12 gap-0">
-            {/* Navigation sections */}
             <div className="col-span-8 p-6 grid grid-cols-2 gap-8">
               {item.dropdown.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
-                  {section.title && (
+                  {section.titleKey && (
                     <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-4 pl-2">
-                      {section.title}
+                      {t(section.titleKey)}
                     </h4>
                   )}
                   <div className="space-y-1">
                     {section.items.map((subItem, subIndex) => {
                       const Icon = subItem.icon;
+                      const label = t(`${subItem.labelKey}.label`);
+                      const description = t(
+                        `${subItem.labelKey}.description`,
+                      );
                       return (
-                        <Link
+                        <NavLinkOrAnchor
                           key={subIndex}
                           href={subItem.href}
-                          target={subItem.external ? "_blank" : undefined}
-                          rel={
-                            subItem.external ? "noopener noreferrer" : undefined
-                          }
+                          external={subItem.external}
                           onClick={onClose}
                           className="group flex items-start gap-3 p-3 rounded-xl hover:bg-border/30 transition-all duration-200"
                         >
@@ -333,17 +341,17 @@ function DropdownContent({
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <span className="text-sm font-medium text-foreground group-hover:text-white transition-colors">
-                                {subItem.label}
+                                {label}
                               </span>
                               {subItem.external && (
                                 <ExternalLink className="w-3 h-3 text-brand-gray" />
                               )}
                             </div>
                             <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                              {subItem.description}
+                              {description}
                             </p>
                           </div>
-                        </Link>
+                        </NavLinkOrAnchor>
                       );
                     })}
                   </div>
@@ -351,16 +359,15 @@ function DropdownContent({
               ))}
             </div>
 
-            {/* Featured section */}
             {item.dropdown.featured && (
               <div className="col-span-4 bg-border/20 border-l border-border/40 p-6">
                 <div className="h-full flex flex-col">
                   <div className="flex-1">
                     <h3 className="text-base font-medium text-foreground mb-2">
-                      {item.dropdown.featured.title}
+                      {t(item.dropdown.featured.titleKey)}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {item.dropdown.featured.description}
+                      {t(item.dropdown.featured.descriptionKey)}
                     </p>
                   </div>
                   <Link
@@ -368,7 +375,7 @@ function DropdownContent({
                     onClick={onClose}
                     className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-foreground transition-colors mt-4 group"
                   >
-                    Learn more
+                    {tCommon("actions.learnMore")}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -388,13 +395,15 @@ function MobileMenu({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
-  const toggleExpanded = (label: string) => {
+  const toggleExpanded = (key: string) => {
     setExpandedItems((prev) =>
-      prev.includes(label)
-        ? prev.filter((item) => item !== label)
-        : [...prev, label],
+      prev.includes(key)
+        ? prev.filter((item) => item !== key)
+        : [...prev, key],
     );
   };
 
@@ -419,87 +428,79 @@ function MobileMenu({
             transition={{ duration: 0.2 }}
           >
             <div className="space-y-2">
-              {navItems.map((item) => (
-                <div key={item.label} className="border-b border-border/50">
-                  {item.dropdown ? (
-                    <>
-                      <button
-                        onClick={() => toggleExpanded(item.label)}
-                        className="w-full flex items-center justify-between py-4 text-lg text-foreground"
-                      >
-                        {item.label}
-                        <ChevronDown
-                          className={`w-5 h-5 text-muted-foreground transition-transform ${
-                            expandedItems.includes(item.label)
-                              ? "rotate-180"
-                              : ""
-                          }`}
-                        />
-                      </button>
-                      <AnimatePresence>
-                        {expandedItems.includes(item.label) && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="pb-4 pl-4 space-y-4">
-                              {item.dropdown.sections.map(
-                                (section, sectionIndex) => (
-                                  <div key={sectionIndex}>
-                                    {section.title && (
-                                      <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-2">
-                                        {section.title}
-                                      </h4>
-                                    )}
-                                    <div className="space-y-2">
-                                      {section.items.map(
-                                        (subItem, subIndex) => (
-                                          <Link
+              {navItems.map((item) => {
+                const itemLabel = t(`items.${item.key}`);
+                return (
+                  <div key={item.key} className="border-b border-border/50">
+                    {item.dropdown ? (
+                      <>
+                        <button
+                          onClick={() => toggleExpanded(item.key)}
+                          className="w-full flex items-center justify-between py-4 text-lg text-foreground"
+                        >
+                          {itemLabel}
+                          <ChevronDown
+                            className={`w-5 h-5 text-muted-foreground transition-transform ${
+                              expandedItems.includes(item.key)
+                                ? "rotate-180"
+                                : ""
+                            }`}
+                          />
+                        </button>
+                        <AnimatePresence>
+                          {expandedItems.includes(item.key) && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pb-4 pl-4 space-y-4">
+                                {item.dropdown.sections.map(
+                                  (section, sectionIndex) => (
+                                    <div key={sectionIndex}>
+                                      {section.titleKey && (
+                                        <h4 className="text-xs font-mono text-brand-gray uppercase tracking-wider mb-2">
+                                          {t(section.titleKey)}
+                                        </h4>
+                                      )}
+                                      <div className="space-y-2">
+                                        {section.items.map((subItem, subIndex) => (
+                                          <NavLinkOrAnchor
                                             key={subIndex}
                                             href={subItem.href}
-                                            target={
-                                              subItem.external
-                                                ? "_blank"
-                                                : undefined
-                                            }
-                                            rel={
-                                              subItem.external
-                                                ? "noopener noreferrer"
-                                                : undefined
-                                            }
+                                            external={subItem.external}
                                             onClick={onClose}
                                             className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                                           >
-                                            {subItem.label}
+                                            {t(`${subItem.labelKey}.label`)}
                                             {subItem.external && (
                                               <ExternalLink className="w-3 h-3" />
                                             )}
-                                          </Link>
-                                        ),
-                                      )}
+                                          </NavLinkOrAnchor>
+                                        ))}
+                                      </div>
                                     </div>
-                                  </div>
-                                ),
-                              )}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href || "#"}
-                      onClick={onClose}
-                      className="block py-4 text-lg text-foreground"
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </div>
-              ))}
+                                  ),
+                                )}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href || "#"}
+                        onClick={onClose}
+                        className="block py-4 text-lg text-foreground"
+                      >
+                        {itemLabel}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="mt-8">
@@ -508,7 +509,7 @@ function MobileMenu({
                 onClick={onClose}
                 asChild
               >
-                <Link href="/book">Book a Call</Link>
+                <Link href="/book">{tCommon("actions.bookCall")}</Link>
               </Button>
             </div>
           </motion.nav>
@@ -519,6 +520,8 @@ function MobileMenu({
 }
 
 export function MegaMenu() {
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -538,17 +541,13 @@ export function MegaMenu() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  const handleMouseEnter = (label: string) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setActiveDropdown(label);
+  const handleMouseEnter = (key: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveDropdown(key);
   };
 
   const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 150);
+    timeoutRef.current = setTimeout(() => setActiveDropdown(null), 150);
   };
 
   return (
@@ -561,11 +560,10 @@ export function MegaMenu() {
         }`}
       >
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Logo */}
           <LogoLink className="flex items-center">
             <Image
               src="/logo-white.svg"
-              alt="OptimizeDeals"
+              alt={tCommon("brand.name")}
               width={160}
               height={36}
               className="h-9 w-auto"
@@ -573,14 +571,13 @@ export function MegaMenu() {
             />
           </LogoLink>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <div
-                key={item.label}
+                key={item.key}
                 className="relative"
                 onMouseEnter={() =>
-                  item.dropdown && handleMouseEnter(item.label)
+                  item.dropdown && handleMouseEnter(item.key)
                 }
                 onMouseLeave={handleMouseLeave}
               >
@@ -589,21 +586,21 @@ export function MegaMenu() {
                     href={item.href}
                     className="flex items-center gap-1 px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
-                    {item.label}
+                    {t(`items.${item.key}`)}
                   </Link>
                 ) : (
                   <button
                     className={`flex items-center gap-1 px-4 py-2 text-sm transition-colors duration-200 ${
-                      activeDropdown === item.label
+                      activeDropdown === item.key
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
-                    {item.label}
+                    {t(`items.${item.key}`)}
                     {item.dropdown && (
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-200 ${
-                          activeDropdown === item.label ? "rotate-180" : ""
+                          activeDropdown === item.key ? "rotate-180" : ""
                         }`}
                       />
                     )}
@@ -613,28 +610,25 @@ export function MegaMenu() {
             ))}
           </div>
 
-          {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
             <Button
               size="sm"
               className="bg-primary hover:bg-accent text-white px-5 py-2 text-sm font-medium rounded-lg transition-all duration-300"
               asChild
             >
-              <Link href="/book">Book a Call</Link>
+              <Link href="/book">{tCommon("actions.bookCall")}</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="lg:hidden text-foreground p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={t("ariaToggleMenu")}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </nav>
 
-        {/* Desktop Dropdown */}
         <AnimatePresence>
           {activeDropdown && (
             <div
@@ -643,10 +637,10 @@ export function MegaMenu() {
             >
               {navItems.map(
                 (item) =>
-                  item.label === activeDropdown &&
+                  item.key === activeDropdown &&
                   item.dropdown && (
                     <DropdownContent
-                      key={item.label}
+                      key={item.key}
                       item={item}
                       onClose={() => setActiveDropdown(null)}
                     />
@@ -657,7 +651,6 @@ export function MegaMenu() {
         </AnimatePresence>
       </header>
 
-      {/* Mobile Menu */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}

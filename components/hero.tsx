@@ -1,13 +1,17 @@
+"use client";
+
 import { ArrowRight, Calendar } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
 
-const floatingLabels = [
-  { text: "Runtime Federation", x: "10%", y: "20%", delay: 0 },
-  { text: "Nx Monorepos", x: "85%", y: "15%", delay: 0.2 },
-  { text: "AI Workflows", x: "75%", y: "75%", delay: 0.4 },
-  { text: "Edge Computing", x: "5%", y: "70%", delay: 0.6 },
-  { text: "Platform Engineering", x: "80%", y: "45%", delay: 0.8 },
-  { text: "Modular Systems", x: "15%", y: "45%", delay: 1 },
+const floatingLabelKeys = [
+  { key: "runtimeFederation", x: "10%", y: "20%", delay: 0 },
+  { key: "nxMonorepos", x: "85%", y: "15%", delay: 0.2 },
+  { key: "aiWorkflows", x: "75%", y: "75%", delay: 0.4 },
+  { key: "edgeComputing", x: "5%", y: "70%", delay: 0.6 },
+  { key: "platformEngineering", x: "80%", y: "45%", delay: 0.8 },
+  { key: "modularSystems", x: "15%", y: "45%", delay: 1 },
 ];
 
 /* Deterministic dot positions — must be stable between SSR and client. */
@@ -37,7 +41,6 @@ const decorDots = [
 function GridBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Static grid */}
       <div className="absolute inset-0 opacity-20">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -59,11 +62,9 @@ function GridBackground() {
         </svg>
       </div>
 
-      {/* Radial gradient overlays */}
       <div className="absolute top-0 left-1/4 w-150 h-150 bg-primary/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-accent/10 rounded-full blur-[100px]" />
 
-      {/* Orbital ellipses — CSS-rotated so they animate without JS */}
       <svg
         className="absolute inset-0 w-full h-full opacity-30"
         viewBox="0 0 1000 600"
@@ -104,7 +105,6 @@ function GridBackground() {
         />
       </svg>
 
-      {/* Pulsing connection dots */}
       {decorDots.map((dot, i) => (
         <span
           key={i}
@@ -156,24 +156,30 @@ function FloatingLabel({
 }
 
 export function Hero() {
+  const t = useTranslations("home.hero");
+  const tCommon = useTranslations("common");
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <GridBackground />
 
-      {/* Floating technical labels */}
-      {floatingLabels.map((label) => (
-        <FloatingLabel key={label.text} {...label} />
+      {floatingLabelKeys.map((label) => (
+        <FloatingLabel
+          key={label.key}
+          text={t(`floatingLabels.${label.key}`)}
+          x={label.x}
+          y={label.y}
+          delay={label.delay}
+        />
       ))}
 
-      {/* Main content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Badge */}
         <div
           className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-card/60 border border-border rounded-full text-sm text-muted-foreground backdrop-blur-sm od-anim-fade-scale"
           style={{ animationDelay: "0.2s" }}
         >
           <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-          Frontend Architecture Studio
+          {t("badge")}
         </div>
 
         {/*
@@ -183,23 +189,22 @@ export function Hero() {
           causes Lighthouse to report NO_LCP. Keep this element opaque.
         */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground mb-6 text-balance">
-          Engineering{" "}
+          {t("titleLead")}{" "}
           <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
-            scalable
+            {t("titleHighlight1")}
           </span>{" "}
-          systems for{" "}
+          {t("titleMiddle")}{" "}
           <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-accent">
-            modern
+            {t("titleHighlight2")}
           </span>{" "}
-          products.
+          {t("titleTrail")}
         </h1>
 
         <p
           className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 text-pretty od-anim-fade-up"
           style={{ animationDelay: "0.35s" }}
         >
-          We build high-performance systems and AI-powered platforms focused
-          on scalability, architecture and execution speed.
+          {t("subtitle")}
         </p>
 
         <div
@@ -211,10 +216,10 @@ export function Hero() {
             className="bg-primary hover:bg-accent text-white px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
             asChild
           >
-            <a href="/book">
+            <Link href="/book">
               <Calendar className="mr-2 h-4 w-4" />
-              Book a Call
-            </a>
+              {tCommon("actions.bookCall")}
+            </Link>
           </Button>
           <Button
             variant="outline"
@@ -222,15 +227,14 @@ export function Hero() {
             className="border-border bg-transparent hover:bg-card text-foreground px-8 py-6 text-base font-medium rounded-lg transition-all duration-300 group"
             asChild
           >
-            <a href="/solutions">
-              Explore Systems
+            <Link href="/solutions">
+              {tCommon("actions.exploreSystems")}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            </Link>
           </Button>
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div
         className="absolute bottom-10 left-1/2 -translate-x-1/2 od-anim-fade-in"
         style={{ animationDelay: "1s" }}
