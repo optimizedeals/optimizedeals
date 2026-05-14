@@ -39,8 +39,10 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
 
-  const t = await getTranslations({ locale, namespace: "metadata" });
-  const tCommon = await getTranslations({ locale, namespace: "common" });
+  const [t, tCommon] = await Promise.all([
+    getTranslations({ locale, namespace: "metadata" }),
+    getTranslations({ locale, namespace: "common" }),
+  ]);
 
   return {
     ...buildLocaleMetadata({

@@ -97,16 +97,18 @@ export default async function ArticlePage({ params }: PageProps) {
   // Related uses the article's authoring locale so suggestions stay
   // readable in the same language as the article body, regardless of the
   // interface locale.
-  const relatedArticles = await getRelatedArticles(
-    article.slug,
-    article.category,
-    article.tags,
-    { locale: article.language, limit: 3 },
-  );
-  const latestArticles = await getLatestArticles({
-    locale: locale as Locale,
-    limit: 4,
-  });
+  const [relatedArticles, latestArticles] = await Promise.all([
+    getRelatedArticles(
+      article.slug,
+      article.category,
+      article.tags,
+      { locale: article.language, limit: 3 },
+    ),
+    getLatestArticles({
+      locale: locale as Locale,
+      limit: 4,
+    }),
+  ]);
 
   const articleUrl = localizedUrl(locale as Locale, `/insights/${article.slug}`);
   const ogImageUrl = buildOgImageUrl(locale as Locale, {
