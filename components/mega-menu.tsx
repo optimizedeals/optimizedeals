@@ -289,7 +289,7 @@ function DropdownContent({
       className="absolute top-full left-0 right-0 mt-2"
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-card/95 backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
+        <div className="bg-card backdrop-blur-xl border border-border/60 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
           <div className="absolute inset-0 opacity-5">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -324,9 +324,7 @@ function DropdownContent({
                     {section.items.map((subItem, subIndex) => {
                       const Icon = subItem.icon;
                       const label = t(`${subItem.labelKey}.label`);
-                      const description = t(
-                        `${subItem.labelKey}.description`,
-                      );
+                      const description = t(`${subItem.labelKey}.description`);
                       return (
                         <NavLinkOrAnchor
                           key={subIndex}
@@ -401,9 +399,7 @@ function MobileMenu({
 
   const toggleExpanded = (key: string) => {
     setExpandedItems((prev) =>
-      prev.includes(key)
-        ? prev.filter((item) => item !== key)
-        : [...prev, key],
+      prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key],
     );
   };
 
@@ -466,20 +462,22 @@ function MobileMenu({
                                         </h4>
                                       )}
                                       <div className="space-y-2">
-                                        {section.items.map((subItem, subIndex) => (
-                                          <NavLinkOrAnchor
-                                            key={subIndex}
-                                            href={subItem.href}
-                                            external={subItem.external}
-                                            onClick={onClose}
-                                            className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                                          >
-                                            {t(`${subItem.labelKey}.label`)}
-                                            {subItem.external && (
-                                              <ExternalLink className="w-3 h-3" />
-                                            )}
-                                          </NavLinkOrAnchor>
-                                        ))}
+                                        {section.items.map(
+                                          (subItem, subIndex) => (
+                                            <NavLinkOrAnchor
+                                              key={subIndex}
+                                              href={subItem.href}
+                                              external={subItem.external}
+                                              onClick={onClose}
+                                              className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                                            >
+                                              {t(`${subItem.labelKey}.label`)}
+                                              {subItem.external && (
+                                                <ExternalLink className="w-3 h-3" />
+                                              )}
+                                            </NavLinkOrAnchor>
+                                          ),
+                                        )}
                                       </div>
                                     </div>
                                   ),
@@ -576,9 +574,7 @@ export function MegaMenu() {
               <div
                 key={item.key}
                 className="relative"
-                onMouseEnter={() =>
-                  item.dropdown && handleMouseEnter(item.key)
-                }
+                onMouseEnter={() => item.dropdown && handleMouseEnter(item.key)}
                 onMouseLeave={handleMouseLeave}
               >
                 {item.href ? (

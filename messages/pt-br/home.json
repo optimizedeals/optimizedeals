@@ -53,7 +53,7 @@
   },
   "why": {
     "badge": "Por que a Optimize",
-    "titleLead": "Não somos mais uma",
+    "titleLead": "Não somos uma",
     "titleHighlight": "agência de software",
     "body": "Operamos como um estúdio de engenharia especializado em arquitetura, escalabilidade e sustentabilidade técnica de longo prazo. Nossa abordagem combina expertise profunda em frontend com pensamento de sistemas para entregar soluções que crescem com o seu negócio.",
     "stats": {
@@ -206,11 +206,11 @@
       "focusLabel": "Foco",
       "focusValue": "Arquitetura em primeiro lugar",
       "approachLabel": "Abordagem",
-      "approachValue": "Pensamento de sistemas",
+      "approachValue": "Systems Thinking",
       "deliveryLabel": "Entrega",
       "deliveryValue": "Pronto para produção",
       "teamLabel": "Time",
-      "teamValue": "Engenheiros Sêniores"
+      "teamValue": "Engenheiros Experientes"
     }
   },
   "cta": {
