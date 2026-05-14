@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin("./lib/i18n/request.ts");
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   images: {
+    qualities: [75, 100],
     remotePatterns: [
       {
         protocol: "https",
