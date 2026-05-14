@@ -36,5 +36,55 @@
   },
   "ogPreview": {
     "title": "OG Preview"
+  },
+  "og": {
+    "": {
+      "title": "Estúdio de Arquitetura de Software & Engenharia de Plataforma",
+      "description": "Criamos software de alta performance e plataformas com IA focadas em escalabilidade, arquitetura e velocidade de execução.",
+      "badge": "",
+      "pageType": "homepage"
+    },
+    "solutions": {
+      "title": "Sistemas de engenharia construídos para escala.",
+      "description": "Ajudamos empresas a modernizar produtos, escalar ecossistemas de software e criar experiências AI-native.",
+      "badge": "Serviços de Engenharia",
+      "pageType": "solutions"
+    },
+    "products": {
+      "title": "Produtos construídos com pensamento engineering-first.",
+      "description": "Explore nosso portfólio de aplicações em produção e sistemas experimentais.",
+      "badge": "Portfólio de Produtos",
+      "pageType": "products"
+    },
+    "labs": {
+      "title": "Pesquisa de engenharia e sistemas experimentais.",
+      "description": "Explorando as fronteiras da arquitetura de software, integração de IA e otimização de performance.",
+      "badge": "Pesquisa & Desenvolvimento",
+      "pageType": "labs"
+    },
+    "insights": {
+      "title": "Artigos Técnicos",
+      "description": "Artigos aprofundados sobre arquitetura de software moderna, engenharia de IA e otimização de performance da nossa equipe de engenharia.",
+      "badge": "Artigos Técnicos",
+      "pageType": "insights"
+    },
+    "company": {
+      "title": "Um estúdio construído para excelência em engenharia.",
+      "description": "A OptimizeDeals é um estúdio de engenharia founder-led focado em arquitetura de software e produtos AI-native.",
+      "badge": "Sobre Nós",
+      "pageType": "company"
+    },
+    "careers": {
+      "title": "Construa sistemas que escalam.",
+      "description": "Estamos construindo uma cultura focada em qualidade de engenharia, pensamento sistêmico e excelência técnica.",
+      "badge": "Junte-se à Nossa Equipe",
+      "pageType": "careers"
+    },
+    "book": {
+      "title": "Agende uma Conversa Inicial",
+      "description": "Vamos discutir seus desafios de engenharia e explorar como podemos ajudar.",
+      "badge": "Agendar",
+      "pageType": "default"
+    }
   }
 }

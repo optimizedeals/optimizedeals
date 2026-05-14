@@ -77,7 +77,7 @@ export default function proxy(request: NextRequest): Response | undefined {
 
   // System files (sitemap.xml, robots.txt, llm.txt, assets) must not be
   // localized. Return early so next-intl never sees them.
-  if (shouldBypass(pathname)) return undefined;
+  if (shouldBypass(pathname)) return NextResponse.next();
 
   // Only the bare root performs geo-aware locale detection. Internal
   // pages accept whatever locale prefix the user typed.

@@ -82,10 +82,11 @@ export function buildAlternates(
  */
 export function buildOgImageUrl(
   locale: Locale,
-  params: { title?: string; description?: string; category?: string } = {},
+  params: { title?: string; description?: string; category?: string; path?: string } = {},
 ): string {
   const url = new URL(`${SITE_URL}/api/og`);
   url.searchParams.set("locale", locale);
+  if (params.path) url.searchParams.set("path", params.path);
   if (params.title) url.searchParams.set("title", params.title);
   if (params.description)
     url.searchParams.set("description", params.description);
@@ -134,6 +135,7 @@ export function buildLocaleMetadata(input: LocaleMetadataInput): Metadata {
     unindexable,
   } = input;
 
+  const resolvedPath = typeof path === "function" ? path(locale) : path;
   const alternates = buildAlternates(locale, path);
   const canonical =
     typeof alternates.canonical === "string"
@@ -160,6 +162,7 @@ export function buildLocaleMetadata(input: LocaleMetadataInput): Metadata {
           url: buildOgImageUrl(locale, {
             title: openGraph?.title ?? title,
             description: openGraph?.description ?? description,
+            path: resolvedPath,
           }),
           width: 1200,
           height: 630,
@@ -179,6 +182,7 @@ export function buildLocaleMetadata(input: LocaleMetadataInput): Metadata {
         buildOgImageUrl(locale, {
           title: openGraph?.title ?? title,
           description: openGraph?.description ?? description,
+          path: resolvedPath,
         }),
       ],
     },
