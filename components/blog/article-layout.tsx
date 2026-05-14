@@ -10,6 +10,10 @@ import { Footer } from "@/components/footer";
 import { TableOfContents } from "./table-of-contents";
 import { ReadingProgress } from "./reading-progress";
 import { ShareRow } from "./share-row";
+import {
+  ArticleTranslations,
+  type ArticleTranslationAlternate,
+} from "./article-translations";
 import { ArticleMeta } from "@/lib/mdx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authorInitials, authorSlug } from "@/lib/authors";
@@ -32,6 +36,12 @@ interface ArticleLayoutProps {
   articleLanguage: Locale;
   /** Current interface locale (URL segment). */
   interfaceLocale: Locale;
+  /**
+   * Locales (excluding the article's authored language) where a real
+   * translation of this article is published. Empty array hides the
+   * translations indicator entirely.
+   */
+  translationAlternates: ArticleTranslationAlternate[];
   relatedArticles: ArticleMeta[];
   latestArticles: ArticleMeta[];
   children: React.ReactNode;
@@ -51,6 +61,7 @@ export function ArticleLayout({
   latestArticles,
   articleLanguage,
   interfaceLocale,
+  translationAlternates,
   children,
 }: ArticleLayoutProps) {
   const t = useTranslations("insights.article");
@@ -221,6 +232,12 @@ export function ArticleLayout({
                 <span>{readingTime}</span>
               </div>
             </motion.div>
+
+            {translationAlternates.length > 0 && (
+              <div className="mt-6 pt-6 border-t border-border/30">
+                <ArticleTranslations alternates={translationAlternates} />
+              </div>
+            )}
           </div>
         </header>
 

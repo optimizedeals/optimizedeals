@@ -1,0 +1,434 @@
+---
+language: pt-br
+translationKey: "mdx-component-showcase"
+title: "Vitrine de Componentes MDX"
+description: "Artigo de referência que demonstra cada componente, primitiva de layout e padrão de sintaxe disponível nos artigos MDX da OptimizeDeals."
+date: "2026-05-12"
+author: "OptimizeDeals Engineering"
+category: "Engenharia"
+tags:
+  - "mdx"
+  - "documentacao"
+  - "componentes"
+  - "referencia"
+featured: false
+dev: true
+---
+
+Este artigo é uma referência viva para cada elemento de bloco e inline disponível ao escrever artigos MDX neste codebase. Use como fonte de copy-paste ao escrever peças mais complexas.
+
+## Cabeçalhos e formatação inline
+
+Markdown padrão é totalmente suportado. Elementos inline: **negrito**, *itálico*, `código inline`, [links externos](https://optimize.deals), [âncoras internas](#cabecalhos-e-formatacao-inline), e combinações como ***negrito itálico***. Também é possível encadear código inline com negrito como `useEffect` **precisa** incluir um array de dependências.
+
+Use o atalho <Kbd>Cmd+K</Kbd> para abrir o command palette, ou <Kbd>Ctrl+Shift+P</Kbd> no Windows. <Badge>novo</Badge> <Badge variant="success">estável</Badge> <Badge variant="warning">beta</Badge> <Badge variant="error">depreciado</Badge> são badges inline.
+
+### Subcabeçalho nível 3
+
+Cada cabeçalho recebe um id automático e um link de âncora ao passar o mouse.
+
+#### Subcabeçalho nível 4
+
+Útil para seções aninhadas.
+
+## Listas
+
+Não ordenada:
+
+- Primeiro item com texto **em negrito**
+- Segundo item com `código inline`
+- Itens aninhados também funcionam
+- Misture livremente
+
+Ordenada:
+
+1. Passo um, descreva o que acontece
+2. Passo dois, sinalize os casos extremos
+3. Passo três, verifique o resultado
+
+## Blockquote
+
+> As melhores arquiteturas, requisitos e designs emergem de times auto-organizados.
+
+## Variantes de Callout
+
+<Callout type="info" title="Informação">
+  Use callouts de info para contexto geral que ajuda o leitor a acompanhar, sem ser estritamente obrigatório.
+</Callout>
+
+<Callout type="tip" title="Dica de ouro">
+  Callouts de dica destacam um atalho ou boa prática não óbvia. Mantenha curto.
+</Callout>
+
+<Callout type="success" title="Sucesso">
+  Use isto ao descrever o estado desejado após aplicar uma mudança.
+</Callout>
+
+<Callout type="warning" title="Atenção">
+  Avisos sinalizam uma armadilha: uma restrição fácil de ignorar, uma quebra de compatibilidade ou uma pegadinha.
+</Callout>
+
+<Callout type="error" title="Crítico">
+  Callouts de erro marcam comportamentos que vão quebrar produção. Reserve para os itens mais severos.
+</Callout>
+
+<Callout type="performance" title="Performance">
+  Use a variante de performance ao discutir trade-offs de otimização, tamanho de bundle ou custo em runtime.
+</Callout>
+
+## Blocos de código
+
+Blocos de código com cercas têm syntax highlight server-side via Shiki. Linguagens suportadas incluem `ts`, `tsx`, `js`, `jsx`, `bash`, `json`, `css`, `html`, `python` e muitas outras.
+
+```ts
+import { compileMDX } from "next-mdx-remote/rsc";
+
+export async function render(source: string) {
+  const { content } = await compileMDX({ source });
+  return content;
+}
+```
+
+Também é possível adicionar um título via meta:
+
+```tsx title="components/example.tsx"
+export function Example({ name }: { name: string }) {
+  return <div className="text-[#3B80EC]">Hello, {name}</div>;
+}
+```
+
+Comandos bash:
+
+```bash
+pnpm install
+pnpm dev
+git commit -m "feat: ship new feature"
+```
+
+Para uma apresentação de código mais rica com nome de arquivo e metadados customizados, use o componente `<CodeBlock>` diretamente:
+
+<CodeBlock language="ts" filename="lib/example.ts">
+{`export const config = {
+  cache: 60,
+  revalidate: false,
+};`}
+</CodeBlock>
+
+## Tabelas
+
+Tabelas markdown padrão:
+
+| Padrão | Caso de uso | Trade-off |
+|---------|----------|----------|
+| SSR | Dados dinâmicos por requisição | TTFB mais lento |
+| SSG | Conteúdo estático | Dados desatualizados |
+| ISR | Misto | Complexidade de invalidação de cache |
+| RSC | Dependências server-only na árvore | Modelo de streaming obrigatório |
+
+Para comparações de funcionalidades com checkmarks, use `<ComparisonTable>`:
+
+<ComparisonTable
+  title="Estratégias de renderização frontend"
+  headers={["SSR", "SSG", "ISR", "RSC"]}
+  rows={[
+    { feature: "Dados por requisição", values: [true, false, true, true] },
+    { feature: "Cacheável em CDN", values: [false, true, true, "parcial"] },
+    { feature: "Geração em build-time", values: [false, true, true, false] },
+    { feature: "Streaming", values: [true, false, false, true] },
+    { feature: "Módulos server-only", values: [true, true, true, true] },
+  ]}
+/>
+
+## Quote Block
+
+<QuoteBlock author="Edsger W. Dijkstra" source="The Humble Programmer">
+  Simplicidade é pré-requisito para confiabilidade.
+</QuoteBlock>
+
+## Steps
+
+<Steps
+  steps={[
+    {
+      title: "Instalar dependências",
+      description: "Rode `pnpm install` para baixar todos os pacotes necessários a partir do lockfile.",
+    },
+    {
+      title: "Configurar o ambiente",
+      description: "Copie `.env.example` para `.env.local` e preencha as chaves obrigatórias.",
+    },
+    {
+      title: "Rodar o dev server",
+      description: "Inicie o Next.js com `pnpm dev` e abra http://localhost:3000 para verificar.",
+    },
+    {
+      title: "Rodar os testes",
+      description: "Este projeto não tem testes, verifique manualmente no navegador.",
+    },
+  ]}
+/>
+
+## Metrics Card
+
+<MetricsCard
+  title="Performance após otimização"
+  metrics={[
+    { label: "LCP", value: "1.2s", change: "-58%", trend: "up" },
+    { label: "Tamanho de bundle", value: "184kb", change: "-32%", trend: "up" },
+    { label: "TTI", value: "2.1s", change: "-44%", trend: "up" },
+    { label: "CLS", value: "0.02", change: "estável", trend: "neutral" },
+  ]}
+  columns={4}
+/>
+
+## Architecture Diagram
+
+Use os presets embutidos:
+
+<ArchitectureDiagram
+  title="Topologia Module Federation"
+  description="Aplicação host consumindo remotes federados com dependências compartilhadas."
+  preset="module-federation"
+/>
+
+Ou passe nodes e conexões customizadas:
+
+<ArchitectureDiagram
+  title="Diagrama em camadas customizado"
+  nodes={[
+    { id: "client", label: "Cliente", x: 50, y: 15, type: "primary" },
+    { id: "edge", label: "Edge", x: 50, y: 40, type: "secondary" },
+    { id: "api", label: "API", x: 25, y: 70, type: "secondary" },
+    { id: "db", label: "Banco de dados", x: 75, y: 70, type: "tertiary" },
+  ]}
+  connections={[
+    { from: "client", to: "edge" },
+    { from: "edge", to: "api" },
+    { from: "api", to: "db" },
+  ]}
+/>
+
+## Tabs
+
+<Tabs
+  items={[
+    {
+      label: "npm",
+      content: <CodeBlock language="bash">npm install next-mdx-remote</CodeBlock>,
+    },
+    {
+      label: "pnpm",
+      content: <CodeBlock language="bash">pnpm add next-mdx-remote</CodeBlock>,
+    },
+    {
+      label: "yarn",
+      content: <CodeBlock language="bash">yarn add next-mdx-remote</CodeBlock>,
+    },
+  ]}
+/>
+
+## Accordion (FAQ)
+
+<Accordion
+  items={[
+    {
+      title: "Posso usar features reais de MDX dentro deste artigo?",
+      content: "Sim. MDX real agora é compilado via next-mdx-remote/rsc com rehype-pretty-code e rehype-slug.",
+    },
+    {
+      title: "Componentes podem conter expressões JSX?",
+      content: "Sim. Passe JSX via props usando chaves, igual ao React comum.",
+    },
+    {
+      title: "O que acontece com os artigos existentes?",
+      content: "Eles passam pelo mesmo pipeline. A sintaxe markdown segue inalterada; os componentes suportados antes continuam funcionando.",
+    },
+  ]}
+/>
+
+## File Tree
+
+<FileTree
+  title="content/insights/"
+  data={[
+    {
+      name: "content/insights",
+      type: "folder",
+      children: [
+        { name: "mdx-component-showcase.mdx", highlight: true, comment: "← este artigo" },
+        { name: "rag-systems-are-not-about-ll-ms.mdx" },
+        { name: "module-federation-beyond-micro-frontends.mdx" },
+        { name: "architecting-frontend-systems-for-the-ai-native-era.mdx" },
+      ],
+    },
+    {
+      name: "components/blog",
+      type: "folder",
+      children: [
+        { name: "mdx-content.tsx", comment: "Renderizador MDX" },
+        {
+          name: "mdx-components",
+          type: "folder",
+          children: [
+            { name: "callout.tsx" },
+            { name: "video.tsx" },
+            { name: "tabs.tsx" },
+            { name: "..." },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+## Feature Grid
+
+<FeatureGrid
+  columns={3}
+  features={[
+    { icon: "Zap", title: "Runtime no edge", description: "Sem cold start. TTFB abaixo de 50ms no PoP mais próximo." },
+    { icon: "Shield", title: "Type-safe", description: "TypeScript ponta a ponta com flags de strict mode habilitadas." },
+    { icon: "Layers", title: "Componível", description: "Cada componente MDX é um componente React comum que você pode reutilizar." },
+    { icon: "Cpu", title: "Nativo de RSC", description: "Compilado no servidor; JS no cliente só sai quando o componente precisa." },
+    { icon: "GitBranch", title: "Versionado", description: "O conteúdo dos artigos é texto puro no git, diffs revisam igual a código." },
+    { icon: "Sparkles", title: "Extensível", description: "Solte um componente novo no mapa e use a partir de qualquer artigo." },
+  ]}
+/>
+
+## Imagens
+
+Next/Image padrão (renderiza de ponta a ponta dentro da coluna de conteúdo):
+
+<Image
+  src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif"
+  alt="Diagrama animado"
+  width="600"
+  height="450"
+  className="max-w-md mx-auto"
+/>
+
+Para figuras com legendas e lightbox de zoom ao clicar, use `<ArticleImage>`:
+
+<ArticleImage
+  src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif"
+  alt="Visão geral da arquitetura"
+  caption="Clique para expandir. O lightbox suporta navegação por teclado."
+  width={800}
+  height={500}
+/>
+
+## Image Gallery
+
+<ImageGallery
+  columns={3}
+  images={[
+    {
+      src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif",
+      alt: "Diagrama um",
+      caption: "Primeiro diagrama",
+    },
+    {
+      src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif",
+      alt: "Diagrama dois",
+      caption: "Segundo diagrama",
+    },
+    {
+      src: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTdkZmllY3lrZ3d0c3p4b2F0YzFjcGtvaTdrOWc1Z3Q0YWc1dWZ3byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/23BST5FQOc8k8/giphy.gif",
+      alt: "Diagrama três",
+      caption: "Terceiro diagrama",
+    },
+  ]}
+/>
+
+## Vídeo
+
+MP4 self-hosted com controles customizados:
+
+<Video
+  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+  poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg"
+  caption="MP4 de exemplo com controles que aparecem ao passar o mouse."
+  aspectRatio="16/9"
+/>
+
+Auto-play em loop (mudo) quando entra na viewport, útil para demos curtos em loop:
+
+<Video
+  src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+  autoPlay
+  loop
+  muted
+  controls={false}
+  caption="Toca automaticamente quando 40% está visível. Pausa quando sai da tela."
+/>
+
+## YouTube
+
+<YouTube
+  id="dQw4w9WgXcQ"
+  title="Vídeo do YouTube embutido"
+  caption="Embed via youtube-nocookie, respeitando privacidade."
+/>
+
+## Áudio
+
+<AudioPlayer
+  src="https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
+  title="Faixa de áudio de exemplo"
+  caption="Player de áudio com estilo customizado e barra de seek."
+/>
+
+## Embed Genérico
+
+Para embeds arbitrários em iframe (CodePen, Figma, dashboards):
+
+<Embed
+  src="https://codesandbox.io/embed/new?codemirror=1"
+  title="CodeSandbox"
+  caption="Qualquer URL embedável em iframe funciona aqui."
+  aspectRatio="16/9"
+/>
+
+## Juntando tudo
+
+Eis uma seção mista realista combinando várias primitivas. Modela um tutorial típico de "otimização de performance":
+
+<Callout type="performance" title="Objetivo">
+  Reduzir o LCP postergando JavaScript não crítico e inlinando a imagem hero.
+</Callout>
+
+<Steps
+  steps={[
+    {
+      title: "Auditar a performance atual",
+      description: "Rode o Lighthouse contra produção. Capture LCP, FID e CLS como números de baseline.",
+    },
+    {
+      title: "Identificar o elemento de LCP",
+      description: "No Chrome DevTools, Performance → marcador de LCP. Geralmente a imagem hero ou texto acima da dobra.",
+    },
+    {
+      title: "Aplicar correções direcionadas",
+      description: "Faça preload da imagem do LCP, posterge o JS abaixo da dobra e converta para AVIF se o navegador suportar.",
+    },
+  ]}
+/>
+
+A otimização acima gerou estes resultados:
+
+<MetricsCard
+  metrics={[
+    { label: "LCP", value: "0.9s", change: "-65%", trend: "up" },
+    { label: "JS enviado", value: "112kb", change: "-48%", trend: "up" },
+    { label: "Lighthouse", value: "98", change: "+22", trend: "up" },
+  ]}
+  columns={3}
+/>
+
+<Callout type="tip" title="Próximo passo">
+  Conecte a melhoria de LCP a um budget de CI para que regressões quebrem o build.
+</Callout>
+
+---
+
+Isso cobre cada componente atualmente disponível. Para estender o sistema, solte um novo componente em `components/blog/mdx-components/`, exporte pelo index e registre no mapa de componentes em `components/blog/mdx-content.tsx`.

@@ -12,6 +12,12 @@ export interface ArticleMeta {
   slug: string;
   /** ISO locale ("en-us" / "pt-br") the MDX body was authored in. */
   language: Locale;
+  /**
+   * Stable identity shared across locales. Translations of the same article
+   * carry the same `translationKey` even though their `slug` differs. When the
+   * frontmatter omits it, the loader falls back to the English source slug.
+   */
+  translationKey: string;
   title: string;
   description: string;
   date: string;
@@ -30,25 +36,22 @@ export interface Article extends ArticleMeta {
   content: string;
 }
 
-function normalizeLanguage(raw: unknown): Locale {
-  if (typeof raw === "string") {
-    const lower = raw.toLowerCase();
-    if ((LOCALES as readonly string[]).includes(lower)) return lower as Locale;
-  }
-  return DEFAULT_LOCALE;
-}
-
-function readArticle(file: string): Article | null {
-  const filePath = path.join(CONTENT_DIR, file);
+function readArticle(locale: Locale, file: string): Article | null {
+  const filePath = path.join(CONTENT_DIR, locale, file);
   if (!fs.existsSync(filePath)) return null;
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContent);
   const slug = file.replace(/\.mdx$/, "");
   const stats = readingTime(content);
+  const translationKey =
+    typeof data.translationKey === "string" && data.translationKey.length > 0
+      ? data.translationKey
+      : slug;
 
   return {
     slug,
-    language: normalizeLanguage(data.language),
+    language: locale,
+    translationKey,
     title: data.title || "Untitled",
     description: data.description || "",
     date: data.date || data.publishedAt || new Date().toISOString(),
@@ -66,12 +69,19 @@ function readArticle(file: string): Article | null {
 
 function readAllArticles(): Article[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
-  return fs
-    .readdirSync(CONTENT_DIR)
-    .filter((file) => file.endsWith(".mdx"))
-    .map(readArticle)
-    .filter((a): a is Article => a !== null)
-    .filter((a) => !(IS_PRODUCTION && a.dev));
+  const out: Article[] = [];
+  for (const locale of LOCALES) {
+    const dir = path.join(CONTENT_DIR, locale);
+    if (!fs.existsSync(dir)) continue;
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith(".mdx")) continue;
+      const article = readArticle(locale, file);
+      if (!article) continue;
+      if (IS_PRODUCTION && article.dev) continue;
+      out.push(article);
+    }
+  }
+  return out;
 }
 
 function stripContent({ content: _content, ...rest }: Article): ArticleMeta {
@@ -113,14 +123,16 @@ export async function getAllArticlesAcrossLocales(): Promise<ArticleMeta[]> {
 }
 
 /**
- * Resolve a slug for a given interface locale.
+ * Resolve an article by the URL slug visible inside `locale`.
  *
- * - If the article exists in `locale`, return it.
- * - Otherwise, fall back to the same slug in any other locale (preserving
- *   the interface locale on the rendered page). The returned `article.language`
- *   tells the caller the body language so it can surface a banner and emit
- *   `noindex` to avoid duplicate-content penalties.
- * - Returns `null` only when the slug exists in no locale.
+ * - Primary path: match `(language === locale, slug === slug)`. This is the
+ *   only outcome that participates in `generateStaticParams`, the sitemap,
+ *   and canonical metadata, because each locale owns its own translated slug.
+ * - Defensive fallback: when a request hits a slug that does not exist in
+ *   the active locale (e.g. someone shares a link across locales), try to
+ *   resolve the same slug in any other locale. Such pages render with
+ *   `noindex` so they cannot create duplicate-content issues.
+ * - Returns `null` only when no locale carries the slug.
  */
 export async function getArticleBySlug(
   slug: string,
@@ -132,6 +144,34 @@ export async function getArticleBySlug(
   );
   if (direct) return direct;
   return all.find((a) => a.slug === slug) ?? null;
+}
+
+/**
+ * Group every locale variant of an article by its shared `translationKey`.
+ * Used by route metadata to emit hreflang alternates that point only to
+ * locales where the translation actually exists.
+ */
+export async function getArticleTranslations(
+  translationKey: string,
+): Promise<Partial<Record<Locale, ArticleMeta>>> {
+  const out: Partial<Record<Locale, ArticleMeta>> = {};
+  for (const article of readAllArticles()) {
+    if (article.translationKey !== translationKey) continue;
+    out[article.language] = stripContent(article);
+  }
+  return out;
+}
+
+/**
+ * Returns the slug of the article in `locale` whose `translationKey` matches
+ * the given one, or `null` when no translation exists there.
+ */
+export async function getTranslatedSlug(
+  translationKey: string,
+  locale: Locale,
+): Promise<string | null> {
+  const translations = await getArticleTranslations(translationKey);
+  return translations[locale]?.slug ?? null;
 }
 
 export async function getRelatedArticles(

@@ -37,6 +37,9 @@
     "tagsTitle": "Tags",
     "seeMoreByAuthor": "See more posts by {author}",
     "notFound": "Article Not Found",
-    "fallbackBanner": "This article is only available in {language}. Showing the original version."
+    "fallbackBanner": "This article is only available in {language}. Showing the original version.",
+    "availableIn": "Also available in",
+    "switchTo": "Read this article in {language}",
+    "translationsAria": "Article translations"
   }
 }

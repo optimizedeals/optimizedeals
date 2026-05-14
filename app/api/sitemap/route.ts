@@ -1,7 +1,15 @@
-import { getAllArticlesAcrossLocales } from "@/lib/mdx";
+import {
+  getAllArticlesAcrossLocales,
+  getArticleTranslations,
+} from "@/lib/mdx";
 import { STATIC_ROUTES } from "@/lib/site-routes";
 import { localizedUrl } from "@/lib/seo";
-import { LOCALES, DEFAULT_LOCALE, LOCALE_META } from "@/lib/i18n/config";
+import {
+  LOCALES,
+  DEFAULT_LOCALE,
+  LOCALE_META,
+  type Locale,
+} from "@/lib/i18n/config";
 import { LEGAL_SLUGS } from "@/lib/legal";
 
 /**
@@ -43,6 +51,35 @@ function alternatesFor(path: string): Record<string, string> {
     out[LOCALE_META[locale].hreflang] = localizedUrl(locale, path);
   }
   out["x-default"] = localizedUrl(DEFAULT_LOCALE, path);
+  return out;
+}
+
+/**
+ * Build alternates for a translated resource that has different paths per
+ * locale. Only locales where `pathFor(locale)` returns a string get emitted,
+ * so hreflang links never point at routes that 404. `x-default` falls back
+ * to the default locale or, if missing there, to the first available locale.
+ */
+function alternatesForLocalized(
+  pathFor: (locale: Locale) => string | null,
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const locale of LOCALES) {
+    const p = pathFor(locale);
+    if (p == null) continue;
+    out[LOCALE_META[locale].hreflang] = localizedUrl(locale, p);
+  }
+  const xDefault =
+    pathFor(DEFAULT_LOCALE) ??
+    LOCALES.map(pathFor).find((p): p is string => p != null) ??
+    null;
+  if (xDefault != null) {
+    const xDefaultLocale =
+      pathFor(DEFAULT_LOCALE) != null
+        ? DEFAULT_LOCALE
+        : LOCALES.find((l) => pathFor(l) != null) ?? DEFAULT_LOCALE;
+    out["x-default"] = localizedUrl(xDefaultLocale, xDefault);
+  }
   return out;
 }
 
@@ -108,15 +145,33 @@ export async function GET() {
   }
 
   const articles = await getAllArticlesAcrossLocales();
+  // De-dupe by translationKey so each article emits one entry per locale
+  // it has a translation in, with alternates that only point at locales
+  // where the translation actually exists.
+  const articlesByKey = new Map<string, typeof articles>();
   for (const article of articles) {
-    const path = `/insights/${article.slug}`;
-    entries.push({
-      url: localizedUrl(article.language, path),
-      lastmod: new Date(article.date).toISOString(),
-      changefreq: "monthly",
-      priority: article.featured ? 0.8 : 0.7,
-      alternates: alternatesFor(path),
-    });
+    const list = articlesByKey.get(article.translationKey) ?? [];
+    list.push(article);
+    articlesByKey.set(article.translationKey, list);
+  }
+  for (const [translationKey] of articlesByKey) {
+    const translations = await getArticleTranslations(translationKey);
+    const pathFor = (locale: Locale): string | null => {
+      const t = translations[locale];
+      return t ? `/insights/${t.slug}` : null;
+    };
+    const alternates = alternatesForLocalized(pathFor);
+    for (const locale of LOCALES) {
+      const translated = translations[locale];
+      if (!translated) continue;
+      entries.push({
+        url: localizedUrl(locale, `/insights/${translated.slug}`),
+        lastmod: new Date(translated.date).toISOString(),
+        changefreq: "monthly",
+        priority: translated.featured ? 0.8 : 0.7,
+        alternates,
+      });
+    }
   }
 
   const body = [

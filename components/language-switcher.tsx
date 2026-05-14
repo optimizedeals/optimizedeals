@@ -6,46 +6,6 @@ import { usePathname, useRouter } from "@/lib/i18n/navigation";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 
-/**
- * Inline SVG flag icons. Keeping them inline avoids an extra HTTP round-trip
- * for a 2-flag UI and stays consistent with the icon style used elsewhere
- * (lucide-react glyphs render at the same dimensions).
- */
-function FlagIcon({ code, className }: { code: "us" | "br"; className?: string }) {
-  if (code === "us") {
-    return (
-      <svg
-        viewBox="0 0 60 30"
-        className={cn("h-3.5 w-auto rounded-[2px] overflow-hidden", className)}
-        aria-hidden="true"
-      >
-        <rect width="60" height="30" fill="#B22234" />
-        {[1, 3, 5, 7, 9, 11].map((i) => (
-          <rect
-            key={i}
-            y={(i * 30) / 13}
-            width="60"
-            height={30 / 13}
-            fill="#fff"
-          />
-        ))}
-        <rect width="24" height={(30 / 13) * 7} fill="#3C3B6E" />
-      </svg>
-    );
-  }
-  return (
-    <svg
-      viewBox="0 0 720 504"
-      className={cn("h-3.5 w-auto rounded-[2px] overflow-hidden", className)}
-      aria-hidden="true"
-    >
-      <rect width="720" height="504" fill="#009B3A" />
-      <polygon points="360,63 671,252 360,441 49,252" fill="#FEDF00" />
-      <circle cx="360" cy="252" r="91" fill="#002776" />
-    </svg>
-  );
-}
-
 interface LanguageSwitcherProps {
   className?: string;
 }
@@ -101,7 +61,10 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
               isPending && !isActive && "opacity-60 cursor-progress",
             )}
           >
-            <FlagIcon code={meta.flagCode} />
+            <span
+              className={cn("fi", `fi-${meta.flagCode}`, "h-3.5 w-5 rounded-[2px]")}
+              aria-hidden="true"
+            />
             <span>{t("shortLocales." + locale)}</span>
           </button>
         );

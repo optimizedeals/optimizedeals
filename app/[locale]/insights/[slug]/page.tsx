@@ -1,9 +1,10 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   getArticleBySlug,
   getAllArticlesAcrossLocales,
+  getArticleTranslations,
   getRelatedArticles,
   getLatestArticles,
   formatDate,
@@ -17,31 +18,30 @@ import {
   buildOgImageUrl,
 } from "@/lib/seo";
 import { LOCALES, type Locale } from "@/lib/i18n/config";
+import type { ArticleTranslationAlternate } from "@/components/blog/article-translations";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
-  // Static-generate every (locale, slug) pair. Slugs are shared across
-  // locales: if an article does not exist in a given locale we still
-  // render the same URL there and surface the only-language banner.
+  // Each (locale, slug) pair is only pre-rendered for the locale that
+  // actually owns a translation under that slug. Cross-locale requests fall
+  // back at runtime through `getArticleBySlug`, which redirects when the
+  // current locale has a real translation and renders `noindex` otherwise.
   const articles = await getAllArticlesAcrossLocales();
-  const slugs = Array.from(new Set(articles.map((a) => a.slug)));
-  const params: { locale: Locale; slug: string }[] = [];
-  for (const locale of LOCALES) {
-    for (const slug of slugs) {
-      params.push({ locale, slug });
-    }
-  }
-  return params;
+  return articles.map((article) => ({
+    locale: article.language,
+    slug: article.slug,
+  }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  const article = await getArticleBySlug(slug, { locale: locale as Locale });
+  const localeTyped = locale as Locale;
+  const article = await getArticleBySlug(slug, { locale: localeTyped });
 
   if (!article) {
     const t = await getTranslations({ locale, namespace: "insights.article" });
@@ -51,20 +51,28 @@ export async function generateMetadata({
     };
   }
 
-  const path = `/insights/${slug}`;
-  const ogImage = buildOgImageUrl(locale as Locale, {
+  const translations = await getArticleTranslations(article.translationKey);
+  const pathForLocale = (l: Locale): string | null => {
+    if (l === localeTyped) return `/insights/${slug}`;
+    const translated = translations[l];
+    return translated ? `/insights/${translated.slug}` : null;
+  };
+
+  const ogImage = buildOgImageUrl(localeTyped, {
     title: article.title,
     description: article.description,
     category: article.category,
   });
 
-  // When the article only exists in another locale, mark unindexable to
-  // avoid duplicate-content penalties while keeping the page reachable.
-  const unindexable = article.language !== (locale as Locale);
+  // When the article only exists in another locale, the current URL is
+  // serving a body in a foreign language. Mark it unindexable to prevent
+  // duplicate-content penalties while keeping the page reachable.
+  const unindexable =
+    article.language !== localeTyped && !translations[localeTyped];
 
   return buildLocaleMetadata({
-    locale: locale as Locale,
-    path,
+    locale: localeTyped,
+    path: pathForLocale,
     title: article.title,
     description: article.description,
     openGraph: {
@@ -89,10 +97,35 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: PageProps) {
   const { locale, slug } = await params;
+  const localeTyped = locale as Locale;
   setRequestLocale(locale);
 
-  const article = await getArticleBySlug(slug, { locale: locale as Locale });
+  const article = await getArticleBySlug(slug, { locale: localeTyped });
   if (!article) notFound();
+
+  // When a foreign-locale slug is requested but a real translation exists
+  // for the active locale, redirect to the canonical localized slug so
+  // there is exactly one indexable URL per (locale, article) pair.
+  if (article.language !== localeTyped) {
+    const translations = await getArticleTranslations(article.translationKey);
+    const localized = translations[localeTyped];
+    if (localized && localized.slug !== slug) {
+      redirect(`/${localeTyped}/insights/${localized.slug}`);
+    }
+  }
+
+  // Resolve every locale that publishes a real translation of this article,
+  // then strip the article's own authoring language so the UI lists *other*
+  // available languages. Driven by `translationKey` so adding a new locale
+  // only requires content + a config entry — no UI changes.
+  const translations = await getArticleTranslations(article.translationKey);
+  const translationAlternates: ArticleTranslationAlternate[] = LOCALES
+    .filter((l) => l !== article.language)
+    .map((l) => {
+      const translated = translations[l];
+      return translated ? { locale: l, slug: translated.slug } : null;
+    })
+    .filter((entry): entry is ArticleTranslationAlternate => entry !== null);
 
   // Related uses the article's authoring locale so suggestions stay
   // readable in the same language as the article body, regardless of the
@@ -105,13 +138,13 @@ export default async function ArticlePage({ params }: PageProps) {
       { locale: article.language, limit: 3 },
     ),
     getLatestArticles({
-      locale: locale as Locale,
+      locale: localeTyped,
       limit: 4,
     }),
   ]);
 
-  const articleUrl = localizedUrl(locale as Locale, `/insights/${article.slug}`);
-  const ogImageUrl = buildOgImageUrl(locale as Locale, {
+  const articleUrl = localizedUrl(localeTyped, `/insights/${article.slug}`);
+  const ogImageUrl = buildOgImageUrl(localeTyped, {
     title: article.title,
     description: article.description,
     category: article.category,
@@ -156,7 +189,7 @@ export default async function ArticlePage({ params }: PageProps) {
         slug={article.slug}
         title={article.title}
         description={article.description}
-        date={formatDate(article.date, locale as Locale)}
+        date={formatDate(article.date, localeTyped)}
         author={article.author}
         authorAvatar={article.authorAvatar}
         category={article.category}
@@ -164,7 +197,8 @@ export default async function ArticlePage({ params }: PageProps) {
         readingTime={article.readingTime}
         image={article.image}
         articleLanguage={article.language}
-        interfaceLocale={locale as Locale}
+        interfaceLocale={localeTyped}
+        translationAlternates={translationAlternates}
         relatedArticles={relatedArticles}
         latestArticles={latestArticles}
       >

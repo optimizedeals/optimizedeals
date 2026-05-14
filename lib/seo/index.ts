@@ -17,7 +17,12 @@ import { SITE_URL } from "@/lib/env";
  * `sitemap.ts`, or anywhere else.
  */
 
-export type LocalePathBuilder = (locale: Locale) => string;
+/**
+ * Per-locale path resolver. Return `null` for a locale that does not have a
+ * publishable variant of the resource (e.g. an article that has not been
+ * translated yet) and the alternates / sitemap layers will omit it cleanly.
+ */
+export type LocalePathBuilder = (locale: Locale) => string | null;
 
 /**
  * Normalize an internal path: ensures a leading slash, no trailing slash
@@ -54,23 +59,26 @@ export function buildAlternates(
   currentLocale: Locale,
   pathOrBuilder: string | LocalePathBuilder,
 ): NonNullable<Metadata["alternates"]> {
-  const resolve = (locale: Locale) =>
+  const resolve = (locale: Locale): string | null =>
     typeof pathOrBuilder === "function" ? pathOrBuilder(locale) : pathOrBuilder;
 
   const languages: Record<string, string> = {};
   for (const locale of LOCALES) {
-    languages[LOCALE_META[locale].hreflang] = localizedUrl(
-      locale,
-      resolve(locale),
-    );
+    const p = resolve(locale);
+    if (p == null) continue;
+    languages[LOCALE_META[locale].hreflang] = localizedUrl(locale, p);
   }
-  languages["x-default"] = localizedUrl(
-    DEFAULT_LOCALE,
-    resolve(DEFAULT_LOCALE),
-  );
+  const xDefaultPath = resolve(DEFAULT_LOCALE);
+  if (xDefaultPath != null) {
+    languages["x-default"] = localizedUrl(DEFAULT_LOCALE, xDefaultPath);
+  }
 
+  const currentPath = resolve(currentLocale);
   return {
-    canonical: localizedUrl(currentLocale, resolve(currentLocale)),
+    canonical:
+      currentPath != null
+        ? localizedUrl(currentLocale, currentPath)
+        : localizedUrl(currentLocale),
     languages,
   };
 }
@@ -133,7 +141,8 @@ export function buildLocaleMetadata(input: LocaleMetadataInput): Metadata {
     unindexable,
   } = input;
 
-  const resolvedPath = typeof path === "function" ? path(locale) : path;
+  const resolvedPath =
+    typeof path === "function" ? (path(locale) ?? "/") : path;
   const alternates = buildAlternates(locale, path);
   const canonical =
     typeof alternates.canonical === "string"
