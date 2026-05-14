@@ -21,6 +21,16 @@ function resolvePageType(type: string): PageType {
   return VALID_PAGE_TYPES.includes(type) ? (type as PageType) : "default";
 }
 
+/**
+ * Known static page paths that have corresponding entries in
+ * translation messages (messages/{locale}/metadata.json → og.{path}).
+ * Any path NOT in this set is treated as a dynamic/article page.
+ */
+const STATIC_PAGE_PATHS = new Set([
+  "", "solutions", "products", "labs", "insights",
+  "company", "careers", "book",
+]);
+
 interface OGPageMeta {
   title: string;
   description: string;
@@ -34,8 +44,11 @@ async function loadOGPageMeta(
 ): Promise<OGPageMeta | null> {
   try {
     const t = await getTranslations({ locale, namespace: "metadata" });
-    const title = t(`og.${key}.title`);
-    if (!title || title === `og.${key}.title`) return null;
+    const keyPath = `og.${key}.title`;
+    const title = t(keyPath);
+    if (!title || typeof title !== "string") return null;
+    if (title === keyPath) return null;
+    if (title.endsWith(keyPath)) return null;
     const description = t(`og.${key}.description`);
     const badge = t(`og.${key}.badge`);
     const pageTypeStr = t(`og.${key}.pageType`);
@@ -66,8 +79,13 @@ export async function GET(request: NextRequest) {
   let badge: string | undefined;
   let pageType: PageType = "default";
 
+  // An article is identified by:
+  //   1. An explicit category param, OR
+  //   2. A path that is NOT a known static page (e.g. "insights/some-article")
+  // This handles both the direct article OG URL (with category)
+  // and the Twitter card URL (with path but no category).
   const isArticle = Boolean(articleCategory) ||
-    (path.startsWith("insights/") && path !== "insights" && !articleTitle);
+    (Boolean(path) && !STATIC_PAGE_PATHS.has(path) && path !== "homepage");
 
   if (isArticle) {
     title = articleTitle || "Technical Insights";
