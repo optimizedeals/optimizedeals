@@ -73,6 +73,7 @@ const mdxComponents = {
         height={h}
         className={cn("w-full h-auto rounded-xl mx-auto my-2", className)}
         unoptimized={isGif}
+        quality={100}
         {...rest}
       />
     );

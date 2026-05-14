@@ -25,7 +25,8 @@ export function ImageGallery({ images, columns = 3 }: ImageGalleryProps) {
     4: "grid-cols-2 md:grid-cols-4",
   };
 
-  const next = () => setOpen((i) => (i === null ? null : (i + 1) % images.length));
+  const next = () =>
+    setOpen((i) => (i === null ? null : (i + 1) % images.length));
   const prev = () =>
     setOpen((i) =>
       i === null ? null : (i - 1 + images.length) % images.length,
@@ -46,6 +47,7 @@ export function ImageGallery({ images, columns = 3 }: ImageGalleryProps) {
               fill
               className="object-cover group-hover:scale-105 transition-transform"
               unoptimized={img.src.endsWith(".gif")}
+              quality={100}
               sizes="(max-width: 768px) 50vw, 25vw"
             />
           </button>
@@ -103,6 +105,7 @@ export function ImageGallery({ images, columns = 3 }: ImageGalleryProps) {
                 height={1200}
                 className="w-auto h-auto max-w-[90vw] max-h-[80vh] rounded-xl"
                 unoptimized={images[open].src.endsWith(".gif")}
+                quality={100}
               />
               {images[open].caption && (
                 <p className="mt-4 text-center text-sm text-muted-foreground">

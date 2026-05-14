@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { X, ZoomIn } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState } from "react";
+import Image from "next/image";
+import { X, ZoomIn } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ArticleImageProps {
-  src: string
-  alt: string
-  caption?: string
-  width?: number
-  height?: number
+  src: string;
+  alt: string;
+  caption?: string;
+  width?: number;
+  height?: number;
 }
 
 export function ArticleImage({
@@ -20,13 +20,17 @@ export function ArticleImage({
   width = 800,
   height = 450,
 }: ArticleImageProps) {
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   return (
     <>
       <figure
         className="my-8"
-        style={width !== 800 ? { maxWidth: width, marginLeft: "auto", marginRight: "auto" } : undefined}
+        style={
+          width !== 800
+            ? { maxWidth: width, marginLeft: "auto", marginRight: "auto" }
+            : undefined
+        }
       >
         <div
           className="relative group cursor-zoom-in overflow-hidden rounded-xl border border-border/30"
@@ -38,6 +42,7 @@ export function ArticleImage({
             width={width}
             height={height}
             className="w-full h-auto"
+            quality={100}
             unoptimized={src.endsWith(".gif")}
           />
           <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -81,6 +86,7 @@ export function ArticleImage({
                 width={width * 2}
                 height={height * 2}
                 className="w-full h-auto rounded-xl"
+                quality={100}
                 unoptimized={src.endsWith(".gif")}
               />
               {caption && (
@@ -93,5 +99,5 @@ export function ArticleImage({
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
