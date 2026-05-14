@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -32,6 +32,21 @@ export function ImageGallery({ images, columns = 3 }: ImageGalleryProps) {
       i === null ? null : (i - 1 + images.length) % images.length,
     );
 
+  useEffect(() => {
+    if (open === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        next();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [open]);
+
   return (
     <div className="not-prose my-8">
       <div className={cn("grid gap-3", gridCols[columns])}>
@@ -56,12 +71,12 @@ export function ImageGallery({ images, columns = 3 }: ImageGalleryProps) {
 
       {open !== null && (
         <ImageViewer
-          key={open}
           src={images[open].src}
           alt={images[open].alt}
           open
           onClose={() => setOpen(null)}
           unoptimized={images[open].src.endsWith(".gif")}
+          resetKey={open}
         >
           <button
             className="fixed left-4 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-10 h-10

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, useCallback } from "react";
 import Image from "next/image";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {
@@ -20,6 +20,7 @@ interface ImageViewerProps {
   onClose: () => void;
   unoptimized?: boolean;
   children?: ReactNode;
+  resetKey?: string | number;
 }
 
 function DimensionsBadge() {
@@ -66,6 +67,38 @@ function Controls() {
   );
 }
 
+function ZoomableImage({
+  src,
+  alt,
+  width,
+  height,
+  unoptimized,
+}: {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  unoptimized?: boolean;
+}) {
+  const { resetTransform } = useControls();
+  const onLoad = useCallback(() => resetTransform(), [resetTransform]);
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={width ?? 1600}
+      height={height ?? 1200}
+      className="max-w-[90vw] max-h-[85vh] w-auto h-auto select-none"
+      priority
+      quality={100}
+      unoptimized={unoptimized}
+      draggable={false}
+      onLoad={onLoad}
+    />
+  );
+}
+
 export function ImageViewer({
   src,
   alt,
@@ -75,12 +108,14 @@ export function ImageViewer({
   onClose,
   unoptimized,
   children,
+  resetKey,
 }: ImageViewerProps) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={(o) => !o && onClose()}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl
+          onClick={onClose}
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl cursor-zoom-out
             data-[state=open]:animate-in data-[state=closed]:animate-out
             data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
             duration-200"
@@ -116,7 +151,7 @@ export function ImageViewer({
           </DialogPrimitive.Close>
 
           <TransformWrapper
-            key={src}
+            key={`${src}-${resetKey}`}
             centerOnInit
             minScale={0.5}
             maxScale={15}
@@ -134,16 +169,12 @@ export function ImageViewer({
               wrapperClass="!w-full !h-full"
               contentClass="flex items-center justify-center"
             >
-              <Image
+              <ZoomableImage
                 src={src}
                 alt={alt}
-                width={width ?? 1600}
-                height={height ?? 1200}
-                className="max-w-[90vw] max-h-[85vh] w-auto h-auto select-none"
-                priority
-                quality={100}
+                width={width}
+                height={height}
                 unoptimized={unoptimized ?? src.endsWith(".gif")}
-                draggable={false}
               />
             </TransformComponent>
             <Controls />
