@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LOCALES, LOCALE_META, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/env";
 
 /**
  * Centralized multilingual SEO helpers.
@@ -15,9 +16,6 @@ import { LOCALES, LOCALE_META, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
  * The functions are pure; safe to call inside `generateMetadata`,
  * `sitemap.ts`, or anywhere else.
  */
-
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://optimize.deals";
 
 export type LocalePathBuilder = (locale: Locale) => string;
 

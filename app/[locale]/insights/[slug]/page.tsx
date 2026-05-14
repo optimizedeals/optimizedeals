@@ -10,11 +10,11 @@ import {
 } from "@/lib/mdx";
 import { ArticleLayout } from "@/components/blog/article-layout";
 import { MDXContent } from "@/components/blog/mdx-content";
+import { SITE_URL } from "@/lib/env";
 import {
   buildLocaleMetadata,
   localizedUrl,
   buildOgImageUrl,
-  SITE_URL,
 } from "@/lib/seo";
 import { LOCALES, type Locale } from "@/lib/i18n/config";
 

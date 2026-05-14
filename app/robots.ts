@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/env";
 import { DISALLOWED_PATHS } from "@/lib/site-routes";
-import { SITE_URL } from "@/lib/seo";
 
 /**
  * Standards-compliant robots.txt.

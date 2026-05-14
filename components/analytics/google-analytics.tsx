@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { GoogleAnalytics as GA } from "@next/third-parties/google";
+import { env } from "@/lib/env";
 
 import {
   COOKIE_CONSENT_EVENT,
@@ -25,7 +26,7 @@ export function GoogleAnalytics() {
   }, []);
 
   if (isDev) return null;
-  if (!process.env.NEXT_PUBLIC_GA_ID) {
+  if (!env.NEXT_PUBLIC_GA_ID) {
     if (typeof console !== "undefined") {
       console.warn("Google Analytics ID not found");
     }
@@ -33,5 +34,5 @@ export function GoogleAnalytics() {
   }
   if (!hasConsent) return null;
 
-  return <GA gaId={process.env.NEXT_PUBLIC_GA_ID} />;
+  return <GA gaId={env.NEXT_PUBLIC_GA_ID} />;
 }

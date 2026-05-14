@@ -1,8 +1,7 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@/lib/env";
 import { MegaMenu } from "@/components/mega-menu";
 import { Footer } from "@/components/footer";
-
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
       "We're building a culture focused on engineering quality, systems thinking and technical excellence.",
     images: [
       {
-        url: `${baseUrl}/api/og?path=careers`,
+        url: `${SITE_URL}/api/og?path=careers`,
         width: 1200,
         height: 630,
         alt: "OptimizeDeals Careers - Join Our Team",
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
     title: "Build systems that scale.",
     description:
       "We're building a culture focused on engineering quality, systems thinking and technical excellence.",
-    images: [`${baseUrl}/api/og?path=careers`],
+    images: [`${SITE_URL}/api/og?path=careers`],
   },
 };
 

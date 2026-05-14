@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { GoogleTagManager as GTM } from "@next/third-parties/google";
+import { env } from "@/lib/env";
 
 import {
   COOKIE_CONSENT_EVENT,
@@ -25,7 +26,7 @@ export function GoogleTagManager() {
   }, []);
 
   if (isDev) return null;
-  if (!process.env.NEXT_PUBLIC_GTM_ID) {
+  if (!env.NEXT_PUBLIC_GTM_ID) {
     if (typeof console !== "undefined") {
       console.warn("Google Tag Manager ID not found");
     }
@@ -33,5 +34,5 @@ export function GoogleTagManager() {
   }
   if (!hasConsent) return null;
 
-  return <GTM gtmId={process.env.NEXT_PUBLIC_GTM_ID} />;
+  return <GTM gtmId={env.NEXT_PUBLIC_GTM_ID} />;
 }

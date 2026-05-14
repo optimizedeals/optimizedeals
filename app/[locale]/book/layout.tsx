@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
+import { SITE_URL } from "@/lib/env";
 
 export const metadata: Metadata = {
   title: "Book a Discovery Call",
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
       "Let's discuss your engineering challenges and explore how we can help.",
     images: [
       {
-        url: `${baseUrl}/api/og?path=book`,
+        url: `${SITE_URL}/api/og?path=book`,
         width: 1200,
         height: 630,
         alt: "OptimizeDeals - Book a Discovery Call",
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     title: "Book a Discovery Call",
     description:
       "Let's discuss your engineering challenges and explore how we can help.",
-    images: [`${baseUrl}/api/og?path=book`],
+    images: [`${SITE_URL}/api/og?path=book`],
   },
 };
 

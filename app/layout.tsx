@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
+import { SITE_URL } from "@/lib/env";
+
 /**
  * Root layout is intentionally minimal because the localized layout at
  * `app/[locale]/layout.tsx` renders the real `<html>` / `<body>` shell.
@@ -8,10 +10,8 @@ import type { Metadata, Viewport } from "next";
  * `[locale]` tree using `lib/seo`.
  */
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
+  metadataBase: new URL(SITE_URL),
 };
 
 export const viewport: Viewport = {

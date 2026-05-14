@@ -1,4 +1,5 @@
 import { OG_CONFIG } from "./config";
+import { SITE_URL } from "@/lib/env";
 
 /**
  * Calculates optimal font size based on text length
@@ -42,10 +43,9 @@ export function formatCategory(category: string): string {
  * Generates OG image URL for a given path
  */
 export function getOGImageUrl(path: string): string {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
   // Remove leading slash if present
   const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-  return `${baseUrl}/api/og?path=${encodeURIComponent(cleanPath)}`;
+  return `${SITE_URL}/api/og?path=${encodeURIComponent(cleanPath)}`;
 }
 
 /**
@@ -91,7 +91,6 @@ export function getArticleOGImageUrl(params: {
   description?: string;
   category?: string;
 }): string {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals";
   const searchParams = new URLSearchParams();
 
   searchParams.set("title", params.title);
@@ -102,5 +101,5 @@ export function getArticleOGImageUrl(params: {
     searchParams.set("category", params.category);
   }
 
-  return `${baseUrl}/api/og?${searchParams.toString()}`;
+  return `${SITE_URL}/api/og?${searchParams.toString()}`;
 }

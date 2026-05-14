@@ -10,7 +10,8 @@ import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
 import { routing } from "@/lib/i18n/routing";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/i18n/config";
-import { buildLocaleMetadata, SITE_URL, localizedUrl } from "@/lib/seo";
+import { SITE_URL } from "@/lib/env";
+import { buildLocaleMetadata, localizedUrl } from "@/lib/seo";
 
 const geistSans = Geist({
   subsets: ["latin"],

@@ -1,13 +1,6 @@
 import type { MetadataRoute } from "next";
 
-/**
- * Single source of truth for the production base URL.
- * Falls back to the canonical domain when NEXT_PUBLIC_SITE_URL is unset
- * (e.g. local dev or preview environments without env config).
- */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://optimize.deals"
-).replace(/\/$/, "");
+import { SITE_URL } from "@/lib/env";
 
 type ChangeFrequency = NonNullable<
   MetadataRoute.Sitemap[number]["changeFrequency"]
