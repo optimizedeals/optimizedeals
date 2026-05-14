@@ -59,7 +59,14 @@ const SOCIAL = [
 ];
 
 function FooterLinkItem({ link, label }: { link: FooterLink; label: string }) {
-  if (link.external || link.href.startsWith("http") || link.href.endsWith(".xml") || link.href.endsWith(".txt") || link.href.startsWith("/sitemap") || link.href.startsWith("/llm")) {
+  if (
+    link.external ||
+    link.href.startsWith("http") ||
+    link.href.endsWith(".xml") ||
+    link.href.endsWith(".txt") ||
+    link.href.startsWith("/sitemap") ||
+    link.href.startsWith("/llm")
+  ) {
     return (
       <a
         href={link.href}
@@ -125,9 +132,8 @@ export function Footer() {
               <Image
                 src="/logo-white.svg"
                 alt={tCommon("brand.name")}
-                width={160}
+                width={193}
                 height={36}
-                className="h-9 w-auto"
               />
             </LogoLink>
             <p className="text-sm text-muted-foreground max-w-sm mb-6 leading-relaxed">

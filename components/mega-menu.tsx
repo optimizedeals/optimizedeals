@@ -562,9 +562,8 @@ export function MegaMenu() {
             <Image
               src="/logo-white.svg"
               alt={tCommon("brand.name")}
-              width={160}
+              width={193}
               height={36}
-              className="h-9 w-auto"
               priority
             />
           </LogoLink>

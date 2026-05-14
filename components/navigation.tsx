@@ -46,9 +46,8 @@ export function Navigation() {
             <Image
               src="/logo-white.svg"
               alt="OptimizeDeals"
-              width={160}
+              width={193}
               height={36}
-              className="h-9 w-auto"
               priority
             />
           </LogoLink>
