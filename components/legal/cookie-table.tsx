@@ -105,6 +105,38 @@ const ROWS: Row[] = [
     categoryLabel: "Analytics",
   },
   {
+    name: <code className="font-mono text-foreground">_clck</code>,
+    storage: "Cookie",
+    setBy: "Microsoft Clarity",
+    lifetime: "13 months",
+    purpose:
+      "Stores the Clarity user ID and preferences to enable session recording and behavioral analytics.",
+    category: "analytics",
+    categoryLabel: "Analytics",
+  },
+  {
+    name: <code className="font-mono text-foreground">_clsk</code>,
+    storage: "Cookie",
+    setBy: "Microsoft Clarity",
+    lifetime: "1 day",
+    purpose:
+      "Regulates request rate and stores session-level page view data for replay functionality.",
+    category: "analytics",
+    categoryLabel: "Analytics",
+  },
+  {
+    name: <code className="font-mono text-foreground">CLID</code>,
+    storage: (
+      <code className="font-mono text-xs text-foreground">localStorage</code>
+    ),
+    setBy: "Microsoft Clarity",
+    lifetime: "Persistent",
+    purpose:
+      "Cross-session user identifier used by Clarity to correlate visits from the same user.",
+    category: "analytics",
+    categoryLabel: "Analytics",
+  },
+  {
     name: "Vercel Analytics ping data",
     storage: "None (cookieless)",
     setBy: "Vercel Analytics (production only)",
