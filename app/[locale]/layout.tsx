@@ -8,6 +8,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CookieConsentMount } from "@/components/cookie-consent-mount";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
+import { MicrosoftClarity } from "@/components/analytics/microsoft-clarity";
 import { routing } from "@/lib/i18n/routing";
 import { LOCALES, LOCALE_META, type Locale } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/env";
@@ -124,6 +125,11 @@ export default async function LocaleLayout({
             }
           `}</style>
         </noscript>
+
+        <GoogleAnalytics />
+        <GoogleTagManager />
+        <MicrosoftClarity />
+        {process.env.NODE_ENV === "production" && <Analytics />}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
@@ -168,9 +174,6 @@ export default async function LocaleLayout({
           <div id="main-content">{children}</div>
           <CookieConsentMount />
         </NextIntlClientProvider>
-        <GoogleAnalytics />
-        <GoogleTagManager />
-        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
   );
