@@ -17,7 +17,7 @@ tags:
   - Embeddings
   - Busca Vetorial
   - Design de Sistemas
-featured: true
+featured: false
 ---
 
 ## Prólogo
@@ -86,8 +86,8 @@ Essas não são decisões de engenharia de prompt. São decisões de dados em ru
 <Callout type="performance" title="De onde as alucinações realmente vêm">
   Na vasta maioria das falhas de IA empresarial que auditamos, alucinações não
   foram causadas pelo modelo. Foram causadas pelas camadas de recuperação e
-  ranqueamento alimentando-o com contexto incompleto, contraditório ou
-  obsoleto. O modelo estava respondendo fielmente, mas às entradas erradas.
+  ranqueamento alimentando-o com contexto incompleto, contraditório ou obsoleto.
+  O modelo estava respondendo fielmente, mas às entradas erradas.
 </Callout>
 
 Se um modelo está confiantemente errado, pergunte primeiro o que foi mostrado a ele. A resposta é quase sempre mais interessante do que a inferência.
@@ -100,17 +100,17 @@ Boa parte do que torna um sistema RAG bom (ou ruim) acontece muito antes de qual
 
 Um sistema de recuperação robusto é melhor entendido como uma arquitetura em camadas, cada camada tomando decisões que restringem a próxima:
 
-| Camada              | Responsabilidade                                                  | Modo de falha quando negligenciada                     |
-| ------------------- | ----------------------------------------------------------------- | ------------------------------------------------------ |
-| Ingestão            | Normalizar fontes, extrair estrutura, anexar proveniência         | Lixo a jusante que nenhum modelo consegue salvar       |
-| Chunking            | Preservar continuidade semântica e integridade de referência     | Unidades de recuperação logicamente incompletas        |
-| Embeddings          | Projetar conteúdo em um espaço semântico pesquisável              | Acertos topicamente similares, mas operacionalmente errados |
-| Indexação           | Tornar a recuperação rápida, filtrada e segura entre tenants     | Picos de latência, vazamento entre tenants             |
-| Recuperação         | Compor queries híbridas sob restrições                            | Gaps de recall e falsos positivos                      |
-| Ranqueamento        | Resolver relevância sob ambiguidade e conflito                    | O modelo escolhe o mais barulhento, não o mais verdadeiro |
-| Memória             | Preservar e recuperar estado entre turnos e entre sessões        | Agentes amnésicos, trabalho repetido, intenção perdida |
-| Orquestração de tools | Mediar efeitos colaterais e estado externo                      | Ações inseguras, falhas parciais, bugs de replay       |
-| Observabilidade     | Tornar toda decisão do pipeline inspecionável e replayável        | Degradação silenciosa que ninguém consegue depurar     |
+| Camada                | Responsabilidade                                             | Modo de falha quando negligenciada                          |
+| --------------------- | ------------------------------------------------------------ | ----------------------------------------------------------- |
+| Ingestão              | Normalizar fontes, extrair estrutura, anexar proveniência    | Lixo a jusante que nenhum modelo consegue salvar            |
+| Chunking              | Preservar continuidade semântica e integridade de referência | Unidades de recuperação logicamente incompletas             |
+| Embeddings            | Projetar conteúdo em um espaço semântico pesquisável         | Acertos topicamente similares, mas operacionalmente errados |
+| Indexação             | Tornar a recuperação rápida, filtrada e segura entre tenants | Picos de latência, vazamento entre tenants                  |
+| Recuperação           | Compor queries híbridas sob restrições                       | Gaps de recall e falsos positivos                           |
+| Ranqueamento          | Resolver relevância sob ambiguidade e conflito               | O modelo escolhe o mais barulhento, não o mais verdadeiro   |
+| Memória               | Preservar e recuperar estado entre turnos e entre sessões    | Agentes amnésicos, trabalho repetido, intenção perdida      |
+| Orquestração de tools | Mediar efeitos colaterais e estado externo                   | Ações inseguras, falhas parciais, bugs de replay            |
+| Observabilidade       | Tornar toda decisão do pipeline inspecionável e replayável   | Degradação silenciosa que ninguém consegue depurar          |
 
 Cada linha é seu próprio subsistema com seus próprios SLOs. Cada linha determina o que a próxima pode fazer. O modelo, a camada com que a maioria dos times se obceca, fica bem no final e herda a qualidade de tudo que está acima.
 
@@ -142,10 +142,10 @@ Contextos longos introduzem uma classe diferente, e indiscutivelmente pior, de p
   type="warning"
   title="O modo de falha dominante em designs ingênuos de contexto longo"
 >
-  Sistemas que empurram quantidades grandes de conteúdo indiscriminadamente
-  para uma janela de contexto longa quase sempre *reduzem* a precisão em vez
-  de melhorá-la. Eles parecem impressionantes em demos. Degradam silenciosamente
-  em produção.
+  Sistemas que empurram quantidades grandes de conteúdo indiscriminadamente para
+  uma janela de contexto longa quase sempre *reduzem* a precisão em vez de
+  melhorá-la. Eles parecem impressionantes em demos. Degradam silenciosamente em
+  produção.
 </Callout>
 
 O problema nunca foi quanto contexto o modelo aguenta. O problema é construir o contexto certo: pequeno, denso, atual, atribuído e livre de contradições. Uma janela de 200k tokens não é desculpa para pular o sistema de recuperação. É, na melhor das hipóteses, um alvo mais tolerante para ele.
@@ -183,14 +183,14 @@ Busca vetorial é fundacional, mas similaridade semântica não é correção se
 
 Alguns dos modos de falha aparecem repetidamente:
 
-| Query                          | Semanticamente similar, mas errado                |
-| ------------------------------ | ------------------------------------------------- |
-| Versão atual da API            | Documentação de API depreciada de dois anos atrás |
-| Runbook de deploy de produção  | Procedimento experimental só de staging           |
-| Preço deste trimestre          | Notas históricas de preço de um plano arquivado   |
-| Política de segurança para clientes | Configuração interna de red team             |
-| Regras de reembolso para a região A | Regras de reembolso da região B com frase similar |
-| Postmortem do incidente mais recente | Um incidente antigo, superficialmente similar |
+| Query                                | Semanticamente similar, mas errado                |
+| ------------------------------------ | ------------------------------------------------- |
+| Versão atual da API                  | Documentação de API depreciada de dois anos atrás |
+| Runbook de deploy de produção        | Procedimento experimental só de staging           |
+| Preço deste trimestre                | Notas históricas de preço de um plano arquivado   |
+| Política de segurança para clientes  | Configuração interna de red team                  |
+| Regras de reembolso para a região A  | Regras de reembolso da região B com frase similar |
+| Postmortem do incidente mais recente | Um incidente antigo, superficialmente similar     |
 
 Distância de cosseno não tem opinião sobre qual delas é atual, autoritativa, dentro do escopo ou permitida. Essa opinião precisa ser fornecida pelo próprio sistema de recuperação, por _composição_:
 
@@ -318,9 +318,9 @@ Ranqueamento é uma disciplina própria:
 />
 
 <Callout type="tip" title="Um princípio digno de internalizar">
-  Recuperação determina o que o modelo pode ver. Ranqueamento determina no que
-  o modelo vai confiar. Tratá-los como o mesmo problema é por que tantos
-  sistemas RAG estagnam em "geralmente certo".
+  Recuperação determina o que o modelo pode ver. Ranqueamento determina no que o
+  modelo vai confiar. Tratá-los como o mesmo problema é por que tantos sistemas
+  RAG estagnam em "geralmente certo".
 </Callout>
 
 Times que entregam sistemas de IA confiáveis tratam o ranqueamento como um modelo em evolução por direito próprio: versionado, avaliado, monitorado e melhorado em sua própria cadência. A stack de recuperação tem seu próprio MLOps.
@@ -342,12 +342,12 @@ Uma taxonomia útil:
 Cada tier tem requisitos diferentes de freshness, consistência, retenção e acesso. Cada um tem seu próprio caminho de escrita, caminho de recuperação e política de eviction. As escolhas que você faz aqui interagem diretamente com a recuperação: memória é apenas recuperação com ciclo de vida diferente.
 
 <Callout type="warning" title="O modo de falha silencioso">
-  Muitos produtos de IA tratam memória como "anexar tudo num vector store".
-  Isso funciona por uma semana. Aí memórias começam a se contradizer,
-  preferências obsoletas sobrescrevem as atuais, trocas irrelevantes lotam a
-  janela de contexto, e o sistema começa a se comportar como um narrador não
-  confiável. Memória precisa de schema, resolução de conflitos e TTLs, as
-  mesmas disciplinas que você aplicaria a qualquer outro state store.
+  Muitos produtos de IA tratam memória como "anexar tudo num vector store". Isso
+  funciona por uma semana. Aí memórias começam a se contradizer, preferências
+  obsoletas sobrescrevem as atuais, trocas irrelevantes lotam a janela de
+  contexto, e o sistema começa a se comportar como um narrador não confiável.
+  Memória precisa de schema, resolução de conflitos e TTLs, as mesmas
+  disciplinas que você aplicaria a qualquer outro state store.
 </Callout>
 
 A pergunta de design interessante não é "o que devemos lembrar?". É "o que devemos esquecer, quando e sob qual autoridade?".
@@ -373,7 +373,12 @@ Padrões práticos que se sustentam consistentemente:
   rows={[
     {
       feature: "Latência para refletir mudança",
-      values: ["horas a dias", "segundos", "primeiro miss é lento", "tempo real"],
+      values: [
+        "horas a dias",
+        "segundos",
+        "primeiro miss é lento",
+        "tempo real",
+      ],
     },
     {
       feature: "Custo de armazenamento do índice",
@@ -503,7 +508,10 @@ A stack padrão de produção agora inclui:
           children: [
             { name: "hybrid-query.ts", comment: "Vetor + BM25 + filtros" },
             { name: "rerank.ts", comment: "Passagem com cross-encoder" },
-            { name: "context-builder.ts", comment: "Montagem com orçamento de tokens" },
+            {
+              name: "context-builder.ts",
+              comment: "Montagem com orçamento de tokens",
+            },
           ],
         },
         {

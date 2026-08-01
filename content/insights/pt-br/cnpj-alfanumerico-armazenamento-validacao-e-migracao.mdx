@@ -1,0 +1,507 @@
+---
+language: pt-br
+translationKey: "alphanumeric-cnpj-storage-validation-migration"
+title: "CNPJ Alfanumérico: Como Armazenar, Validar e Migrar Sem Quebrar Produção"
+description: "A Receita Federal emitiu o primeiro CNPJ com letras. Guia prático de banco de dados: tipos de coluna, collation, constraints, índices, dígito verificador e migração."
+date: "2026-08-02"
+author: "Bruno Silva"
+authorAvatar: "/posts/authors/bruno-silva.png"
+category: "Engenharia de Dados"
+tags:
+  - "cnpj-alfanumerico"
+  - "banco-de-dados"
+  - "postgresql"
+  - "sql-server"
+  - "migracao-de-dados"
+  - "validacao"
+  - "receita-federal"
+featured: true
+---
+
+Em 31 de julho de 2026 a Receita Federal gerou o primeiro CNPJ alfanumérico do país: `00.000.000/E08G-12`, atribuído a uma filial do Banco do Brasil S.A. A raiz continua numérica, mas a ordem do estabelecimento agora contém letras. Esse número existe, é válido e, mais cedo ou mais tarde, vai chegar ao seu sistema por um cadastro, uma nota fiscal ou uma integração.
+
+A emissão será gradual ao longo de 2026, começando por poucas empresas. Novos CNPJs ainda podem sair só com dígitos, porque a faixa numérica não se esgotou. E os CNPJs existentes permanecem válidos, não mudam e não precisam ser substituídos. Ou seja: não há big bang. Há uma janela de tempo em que qualquer sistema que trate CNPJ como número vai funcionar normalmente até o dia em que o primeiro cliente alfanumérico aparecer e uma constraint, um cast ou um parser rejeitar uma empresa legítima em silêncio.
+
+Este artigo cobre o que muda no formato e no dígito verificador, e depois entra no que realmente importa para quem mantém sistemas em produção: modelagem, collation, constraints, índices e migração em bancos relacionais.
+
+---
+
+## A anatomia do novo formato
+
+O CNPJ continua com 14 posições e a mesma máscara visual `XX.XXX.XXX/XXXX-DD`. O que muda é o domínio de caracteres de parte dessas posições:
+
+| Posições | Papel                    | Caracteres aceitos         |
+| -------- | ------------------------ | -------------------------- |
+| 1 a 8    | Raiz                     | `0-9` e `A-Z` (maiúsculas) |
+| 9 a 12   | Ordem do estabelecimento | `0-9` e `A-Z` (maiúsculas) |
+| 13 e 14  | Dígitos verificadores    | Somente `0-9`              |
+
+Três consequências práticas:
+
+- O tamanho não muda. Se sua coluna já tem 14 caracteres sem máscara (ou 18 com máscara), o comprimento está resolvido.
+- Os dois DVs continuam exclusivamente numéricos. Isso permite uma regex precisa, sem máscara: `^[A-Z0-9]{12}[0-9]{2}$`.
+- Letras minúsculas não fazem parte do formato. Toda entrada precisa ser normalizada para maiúsculas antes de validar ou persistir.
+
+O formato foi definido pela Nota Técnica COCAD/SUARA/RFB nº 49/2024 e regulamentado pela Instrução Normativa RFB nº 2.229/2024. A lista de caracteres aceitos é `0-9` e `A-Z`, mas quais letras a Receita vai efetivamente usar nas emissões (e em que ordem) é detalhe operacional que pode evoluir. Valide contra o conjunto completo da especificação, não contra o que você observar nas primeiras emissões.
+
+---
+
+## O dígito verificador: a mesma conta, com um truque de ASCII
+
+O cálculo continua sendo módulo 11 com os mesmos pesos de sempre. A única mudança está na conversão de caractere para valor numérico: cada caractere vale seu código decimal na tabela ASCII menos 48.
+
+| Caractere | ASCII | Valor no cálculo |
+| --------- | ----- | ---------------- |
+| `0`       | 48    | 0                |
+| `9`       | 57    | 9                |
+| `A`       | 65    | 17               |
+| `B`       | 66    | 18               |
+| `Z`       | 90    | 42               |
+
+Aqui está o detalhe de design mais elegante da mudança, e o que a maioria dos artigos ignora: essa escolha é retrocompatível por construção. Os dígitos `0` a `9` ocupam os códigos ASCII 48 a 57. Subtrair 48 devolve exatamente o valor numérico que o algoritmo antigo já usava. Para um CNPJ totalmente numérico, a soma ponderada é idêntica byte a byte, e os DVs resultantes são os mesmos. Uma única implementação valida o acervo inteiro de CNPJs já emitidos e todos os alfanuméricos futuros. Não existem "dois algoritmos": existe um algoritmo cujo domínio de entrada foi ampliado.
+
+O procedimento completo, em resumo: aplica-se a soma ponderada sobre os 12 primeiros caracteres para obter o primeiro DV. Depois acrescenta-se esse DV ao final, formando 13 caracteres, e repete-se o procedimento com os pesos correspondentes para obter o segundo.
+
+<Callout type="warning" title="Confira na fonte antes de ir para produção">
+  As tabelas de pesos e os passos do módulo 11 abaixo seguem a especificação
+  publicada, mas a documentação oficial do cálculo na central de conteúdo da
+  Receita Federal é a referência normativa. Antes de colocar uma implementação
+  em produção, confira os pesos e os casos de borda lá, não aqui.
+</Callout>
+
+### C#
+
+```csharp
+using System.Linq;
+using System.Text.RegularExpressions;
+
+public static class CnpjAlfanumerico
+{
+    private static readonly int[] PesosDv1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+    private static readonly int[] PesosDv2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+    private static readonly Regex Formato = new("^[A-Z0-9]{12}[0-9]{2}$", RegexOptions.Compiled);
+
+    public static string Normalizar(string entrada) =>
+        entrada.Replace(".", "").Replace("/", "").Replace("-", "")
+               .Trim().ToUpperInvariant();
+
+    public static bool Validar(string? entrada)
+    {
+        if (string.IsNullOrWhiteSpace(entrada)) return false;
+
+        var cnpj = Normalizar(entrada);
+        if (!Formato.IsMatch(cnpj)) return false;
+
+        // Sequências repetidas (00000000000000, AAAAAAAAAAAA00...) fecham o
+        // módulo 11. A lista fixa de sequências inválidas do CNPJ numérico
+        // ficou incompleta com letras no domínio; rejeite por regra.
+        if (cnpj[..12].All(c => c == cnpj[0])) return false;
+
+        var dv1 = CalcularDv(cnpj[..12], PesosDv1);
+        var dv2 = CalcularDv(cnpj[..12] + (char)('0' + dv1), PesosDv2);
+
+        return cnpj[12] - '0' == dv1 && cnpj[13] - '0' == dv2;
+    }
+
+    private static int CalcularDv(string caracteres, int[] pesos)
+    {
+        var soma = 0;
+        for (var i = 0; i < caracteres.Length; i++)
+        {
+            // ASCII - 48: para dígitos reproduz o valor numérico do algoritmo
+            // antigo; para letras maiúsculas, 'A' vale 17 e 'Z' vale 42.
+            soma += (caracteres[i] - 48) * pesos[i];
+        }
+        var resto = soma % 11;
+        return resto < 2 ? 0 : 11 - resto;
+    }
+}
+```
+
+### TypeScript
+
+```typescript
+const PESOS_DV1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+const PESOS_DV2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+const FORMATO = /^[A-Z0-9]{12}[0-9]{2}$/;
+
+export function normalizarCnpj(entrada: string): string {
+  return entrada.replace(/[./-]/g, "").trim().toUpperCase();
+}
+
+function calcularDv(caracteres: string, pesos: number[]): number {
+  // charCodeAt(0) - 48 é a conversão oficial: dígitos mantêm o valor
+  // numérico, letras maiúsculas assumem valores de 17 ('A') a 42 ('Z').
+  const soma = [...caracteres].reduce(
+    (acc, c, i) => acc + (c.charCodeAt(0) - 48) * pesos[i],
+    0,
+  );
+  const resto = soma % 11;
+  return resto < 2 ? 0 : 11 - resto;
+}
+
+export function validarCnpj(entrada: string): boolean {
+  const cnpj = normalizarCnpj(entrada ?? "");
+  if (!FORMATO.test(cnpj)) return false;
+
+  // Sequências repetidas fecham o módulo 11. Rejeita por regra, não por
+  // lista fixa: com letras no domínio, a lista clássica ficou incompleta.
+  if ([...cnpj.slice(0, 12)].every((c) => c === cnpj[0])) return false;
+
+  const dv1 = calcularDv(cnpj.slice(0, 12), PESOS_DV1);
+  const dv2 = calcularDv(cnpj.slice(0, 12) + String(dv1), PESOS_DV2);
+
+  return cnpj[12] === String(dv1) && cnpj[13] === String(dv2);
+}
+```
+
+### PL/pgSQL
+
+Uma função no banco permite usar a validação em `CHECK` constraints e em rotinas de saneamento de dados, sem depender da aplicação:
+
+```sql
+CREATE OR REPLACE FUNCTION cnpj_alfanumerico_valido(entrada text)
+RETURNS boolean
+LANGUAGE plpgsql
+IMMUTABLE
+-- Fixa o search_path na definição: uma constraint que chama função de
+-- usuário resolve nomes no momento da avaliação, e um dump/restore pode
+-- executar com search_path diferente do esperado.
+SET search_path = pg_catalog, public
+AS $$
+DECLARE
+  cnpj   text;
+  pesos1 int[] := ARRAY[5,4,3,2,9,8,7,6,5,4,3,2];
+  pesos2 int[] := ARRAY[6,5,4,3,2,9,8,7,6,5,4,3,2];
+  soma   int;
+  resto  int;
+  dv1    int;
+  dv2    int;
+  i      int;
+BEGIN
+  -- Normaliza: remove máscara e força maiúsculas antes de validar.
+  cnpj := upper(regexp_replace(coalesce(entrada, ''), '[./-]', '', 'g'));
+
+  IF cnpj !~ '^[A-Z0-9]{12}[0-9]{2}$' THEN
+    RETURN false;
+  END IF;
+
+  -- Sequência repetida nos 12 primeiros caracteres fecha o módulo 11.
+  -- A lista fixa de sequências inválidas ficou incompleta com o domínio
+  -- alfanumérico; rejeite por padrão, não por enumeração.
+  IF cnpj ~ '^(.)\1{11}' THEN
+    RETURN false;
+  END IF;
+
+  soma := 0;
+  FOR i IN 1..12 LOOP
+    -- ascii() - 48: idêntico ao algoritmo antigo para dígitos.
+    soma := soma + (ascii(substr(cnpj, i, 1)) - 48) * pesos1[i];
+  END LOOP;
+  resto := soma % 11;
+  dv1 := CASE WHEN resto < 2 THEN 0 ELSE 11 - resto END;
+
+  soma := 0;
+  FOR i IN 1..12 LOOP
+    soma := soma + (ascii(substr(cnpj, i, 1)) - 48) * pesos2[i];
+  END LOOP;
+  soma := soma + dv1 * pesos2[13];
+  resto := soma % 11;
+  dv2 := CASE WHEN resto < 2 THEN 0 ELSE 11 - resto END;
+
+  RETURN substr(cnpj, 13, 1)::int = dv1
+     AND substr(cnpj, 14, 1)::int = dv2;
+END;
+$$;
+```
+
+Uma nota sobre o guard de sequências repetidas nas três implementações: rejeitar `00000000000000` e afins é convenção defensiva de mercado, não regra da especificação. Valores assim fecham a conta do módulo 11 e por isso passam pela validação de DV, mas nunca correspondem a uma inscrição real. Antes de ligar essa checagem sobre acervo histórico, confira se a sua base não usa algum valor sentinela desse tipo (é comum encontrar `00000000000000` como marcador de "sem CNPJ" em sistemas antigos), ou a limpeza vai reprovar registros que o seu próprio sistema criou.
+
+Duas armadilhas antes de usar essa função dentro de uma `CHECK` constraint. Primeira: constraint que chama função definida pelo usuário depende do `search_path` resolvido no momento da avaliação, e um `pg_dump` seguido de restore pode falhar ou restaurar sem a validação esperada dependendo da ordem dos objetos; o `SET search_path` na definição da função mitiga isso. Segunda: se a função for alterada depois, o PostgreSQL não revalida as linhas já existentes, e a constraint passa a garantir menos do que aparenta sem ninguém perceber.
+
+A recomendação prática: use constraint no banco para **formato** (regex, comprimento, caixa alta), que é barato e estável, e mantenha a validação de **dígito verificador** na aplicação. Se ainda assim quiser DV no banco, saiba que está pagando o custo da função em toda carga massiva e assumindo as duas armadilhas acima.
+
+---
+
+## Modelagem e armazenamento: onde os sistemas vão quebrar
+
+### Tipos numéricos deixam de ser uma opção
+
+Qualquer coluna `INT`, `BIGINT`, `NUMERIC` ou `DECIMAL` guardando CNPJ está com prazo de validade vencido: `E08G` não cabe em nenhum tipo numérico. Mas vale dizer que esse modelo já era errado antes. CNPJ é um identificador, não uma quantidade. Zeros à esquerda são significativos (o CNPJ do primeiro caso alfanumérico começa com `00.000.000`), e tipo numérico os descarta, obrigando todo consumidor a reaplicar padding na formatação. Ninguém soma dois CNPJs. A mudança da Receita só transforma um erro de modelagem tolerado em um erro que rejeita cliente.
+
+O problema não fica restrito ao tipo da coluna. Em SQL Server, uma query como `WHERE cnpj = 12345678000195` contra uma coluna `varchar` força conversão implícita da coluna para numérico. Hoje isso "só" degrada o plano. No dia em que a primeira linha alfanumérica existir na tabela, a mesma query passa a falhar com erro de conversão em runtime. Caçe literais numéricos comparados com colunas de CNPJ agora, antes que virem incidente.
+
+### CHAR(14) ou VARCHAR(14)? Depende do SGBD, e o critério é este
+
+A resposta genérica "tanto faz" esconde diferenças reais de comportamento:
+
+**PostgreSQL.** `char(14)` não economiza nada: `char`, `varchar` e `text` usam a mesma representação interna (varlena) e o `char(n)` ainda paga o padding com espaços até o comprimento fixo. Pior: o padding gera surpresas semânticas, porque a comparação de igualdade ignora espaços à direita, mas `LIKE`, concatenação e conversão para `text` não ignoram. A própria documentação do PostgreSQL desaconselha `char(n)`. Use `varchar(14)` ou `text` com constraint de formato. O limite de 14 na coluna é uma segunda linha de defesa barata contra dados com máscara entrando por engano.
+
+**SQL Server.** `char(14)` ocupa 14 bytes fixos; `varchar(14)` ocupa o tamanho real mais 2 bytes de overhead. Para um valor que tem sempre exatamente 14 caracteres, `char(14)` é legitimamente mais compacto e evita o overhead por linha. O cuidado é com `ANSI_PADDING` e comparações com strings de outros comprimentos, que envolvem regras de espaços à direita. Ambos funcionam; `char(14)` é defensável aqui de um jeito que não é no PostgreSQL.
+
+**MySQL/MariaDB.** Aqui o detalhe que importa é o charset, não a escolha entre `char` e `varchar`. Com charset `utf8mb4`, `CHAR(14)` reserva 4 bytes por caractere: a coluna e toda chave de índice que a contenha passam a ocupar 56 bytes em vez de 14. Como o domínio do CNPJ é restrito a `[A-Z0-9]`, a recomendação é:
+
+```sql
+ALTER TABLE empresa
+  MODIFY cnpj VARCHAR(14) CHARACTER SET ascii COLLATE ascii_bin NOT NULL;
+```
+
+Essa escolha resolve dois problemas de uma vez. O charset `ascii` devolve a chave de índice para 14 bytes. E a collation `ascii_bin` é binária, portanto case-sensitive, o que impede que `E08G` e `e08g` colidam em índice único. A alternativa `utf8mb4_bin` também resolve a case sensitivity, mas mantém o custo de 4 bytes por caractere. Definir charset e collation na própria coluna evita depender do default do banco ou da tabela, que pode mudar por baixo de você.
+
+### Normalize na escrita, formate na leitura
+
+Armazene sempre sem máscara e sempre em maiúsculas. Máscara é apresentação, e apresentação pertence à borda do sistema. Persistir `00.000.000/E08G-12` em uma tabela e `00000000E08G12` em outra é receita para JOIN que não casa e deduplicação que não deduplica.
+
+Onde forçar a normalização? Nos dois lugares, com papéis diferentes:
+
+- **Aplicação**: normaliza (remove máscara, `toUpperCase`) e valida DV antes de persistir. É a camada que devolve mensagem de erro decente ao usuário.
+- **Banco**: `CHECK` constraint garantindo o formato canônico. O banco é a última linha de defesa contra o script de carga, o job de integração e o `UPDATE` manual de madrugada que não passam pela aplicação.
+
+A constraint do banco não substitui a validação de DV da aplicação (dá para incluir a função de DV na constraint, como a PL/pgSQL acima, mas avalie o custo em cargas massivas). O formato, porém, é barato de garantir sempre.
+
+### Collation: o risco subestimado
+
+Este é o item desta lista com maior chance de virar incidente silencioso.
+
+Em SQL Server, a collation padrão da maioria das instalações é case-insensitive (`SQL_Latin1_General_CP1_CI_AS` e similares). Em MySQL 8, `utf8mb4_0900_ai_ci` também é. Nesses bancos, `'E08G' = 'e08g'` é verdadeiro. As consequências:
+
+- Um índice único sobre a coluna de CNPJ trata `00000000E08G12` e `00000000e08g12` como duplicatas. Se um sistema upstream mandar minúsculas, o INSERT falha com violação de chave única para um valor que, aos olhos da aplicação, é "outro".
+- JOINs entre bases com collations diferentes passam a ter semântica divergente: o mesmo par de valores casa em um banco e não casa em outro.
+- Caches de aplicação indexados pela string crua (Redis, memória local) são sempre case-sensitive. `e08g` e `E08G` viram duas entradas de cache para a mesma empresa, com todos os bugs de invalidação que isso implica.
+
+Já o PostgreSQL tem o problema espelhado: comparações são case-sensitive por padrão, então `'e08g'` e `'E08G'` são valores distintos, e um índice único aceita os dois. Você não ganha erro: ganha a mesma empresa cadastrada duas vezes.
+
+No PostgreSQL, a solução aparentemente óbvia é `citext`, e é a errada aqui. Ele resolve a comparação tolerante a caixa e, com isso, esconde o problema real: minúscula persistida na base. O objetivo não é comparar de forma tolerante, é garantir que só a forma canônica maiúscula exista. A mesma lógica vale para quem pensar em resolver com `LOWER()` em índice funcional: o índice passa a casar, mas o dado continua sujo e vaza para cache, exportação e integração do mesmo jeito.
+
+A defesa é a mesma nos dois cenários: garanta que só a forma canônica maiúscula exista no banco. Normalize na aplicação e trave no banco com constraint que rejeite minúsculas. Em SQL Server, isso exige forçar collation binária na comparação, porque um `LIKE '[A-Z]'` sob collation CI aceita minúsculas:
+
+```sql
+-- SQL Server: formato canônico, à prova de collation case-insensitive.
+ALTER TABLE dbo.Empresa WITH CHECK
+ADD CONSTRAINT CK_Empresa_Cnpj CHECK (
+  cnpj COLLATE Latin1_General_BIN2 LIKE
+    '[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]' +
+    '[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][0-9][0-9]'
+);
+```
+
+### CHECK constraints: o antes e o depois
+
+Uma constraint escrita para o formato antigo passa a rejeitar empresa legítima sem nenhum log de erro além da exceção genérica de violação:
+
+```sql
+-- ANTES: rejeita 00000000E08G12, que é um CNPJ válido desde 31/07/2026.
+CHECK (cnpj ~ '^\d{14}$')
+
+-- DEPOIS (PostgreSQL): adiciona a nova antes de remover a antiga.
+ALTER TABLE empresa ADD CONSTRAINT chk_empresa_cnpj_alfanum
+  CHECK (cnpj ~ '^[A-Z0-9]{12}[0-9]{2}$') NOT VALID;
+
+-- Valida o acervo em segundo plano, com lock leve.
+ALTER TABLE empresa VALIDATE CONSTRAINT chk_empresa_cnpj_alfanum;
+
+-- Só então remove a constraint antiga.
+ALTER TABLE empresa DROP CONSTRAINT chk_empresa_cnpj;
+```
+
+A ordem importa: se o `DROP` vier primeiro, a tabela fica sem nenhuma proteção de formato na janela entre os dois comandos, e qualquer escrita nesse intervalo entra sem validação. O padrão `NOT VALID` seguido de `VALIDATE CONSTRAINT` também importa em produção: a nova constraint passa a valer imediatamente para escritas novas, e a varredura do histórico acontece sem segurar `ACCESS EXCLUSIVE` na tabela inteira. Em SQL Server, o equivalente é criar a constraint `WITH NOCHECK` e depois auditar o acervo por query, ou aceitar o scan do `WITH CHECK` em janela controlada.
+
+Faça o inventário: procure em `pg_constraint`, `sys.check_constraints` e no repositório de migrations por padrões como `\d{14}`, `[0-9]{14}`, `ISNUMERIC`, `^\d+$` aplicados a colunas de CNPJ. Inclua triggers e stored procedures que validam formato manualmente.
+
+### Índices: chave maior, ordenação diferente
+
+Migrar a coluna de `BIGINT` para texto muda a mecânica dos índices:
+
+- **Tamanho da chave**: um `BIGINT` ocupa 8 bytes por entrada de índice; uma string de 14 caracteres em charset de 1 byte ocupa 14, mais o overhead do tipo variável. Faça a conta na sua base, porque ela escala com o número de índices. Um cenário hipotético para ilustrar o raciocínio: tabela com 50 milhões de linhas onde o CNPJ aparece em 4 índices (o único e três compostos ou com `INCLUDE`). São no mínimo 6 bytes a mais por entrada, vezes 50 milhões de linhas, vezes 4 índices: na ordem de 1,2 GB só de crescimento de chave. É estimativa de ordem de grandeza, ignorando overhead de página e fator de preenchimento, mas mostra que o custo é mensurável e que você deve medi-lo na própria base antes da migração. Índices compostos, colunas incluídas, índices secundários em InnoDB e índices não clusterizados sobre um clustered index que contenha o CNPJ herdam o crescimento.
+- **Fragmentação e rebuild**: a migração de tipo implica reconstruir os índices envolvidos. Planeje o rebuild explícito (e o espaço em disco temporário que ele exige) em vez de deixá-lo implícito no `ALTER`.
+- **Ordenação**: ordenação numérica e lexicográfica não coincidem em geral. Para CNPJs sempre com 14 caracteres e zeros à esquerda preservados, a ordem lexicográfica de dígitos coincide com a numérica, mas letras se intercalam segundo a collation. Qualquer lógica que dependa de `ORDER BY cnpj`, `BETWEEN` sobre faixas ou paginação por keyset sobre a coluna precisa ser revisada.
+- **Planos de execução**: estatísticas e estimativas de cardinalidade são recalculadas para o novo tipo. Depois da migração, revise os planos das queries críticas que filtram ou fazem JOIN por CNPJ.
+
+### Dependências: o grafo em volta da coluna
+
+A coluna de CNPJ raramente vive sozinha. Antes de qualquer `ALTER`, mapeie:
+
+- **Chaves estrangeiras**: se o CNPJ participa de uma FK (modelagem discutível, mas comum), os dois lados precisam mudar de tipo de forma coordenada.
+- **Views e computed columns**: em SQL Server, views com `SCHEMABINDING`, colunas computadas e índices sobre elas bloqueiam o `ALTER COLUMN` com erro de objeto dependente. O roteiro vira: derrubar dependentes, alterar, recriar.
+- **Stored procedures e triggers**: procedures com variáveis `BIGINT` recebendo o CNPJ, triggers que formatam ou validam, funções de formatação com `RIGHT('00000000000000' + ...)`.
+- **Custo do ALTER em si**: em SQL Server, `ALTER COLUMN` mudando o tipo de dados é uma operação de tamanho de dados: o motor reescreve linha a linha, como um `UPDATE` de tabela inteira, segurando lock de schema e gerando log de transação proporcional ao tamanho da tabela. Em tabela de dezenas de milhões de linhas, isso não cabe em janela improvisada.
+
+### Migração com baixo downtime: coluna paralela ou ALTER direto
+
+Para tabelas pequenas ou sistemas com janela de manutenção real, o `ALTER` direto é honesto e simples: menos partes móveis, um único momento de verdade. Ensaie em staging com volume realista, meça o tempo e o log gerado, e execute.
+
+Para tabelas grandes em sistemas 24x7, o padrão de coluna paralela (expand and contract) é mais seguro:
+
+1. **Expand**: crie `cnpj_novo varchar(14)` nullable ao lado da coluna atual. Adicione a constraint de formato já no novo padrão.
+2. **Dual write**: a aplicação (ou um trigger, se há escritores fora da aplicação) passa a gravar nas duas colunas em toda escrita.
+3. **Backfill em lotes**: preencha o histórico em batches pequenos (dezenas de milhares de linhas por transação), com pausa entre lotes, para não saturar log, replicação e vacuum.
+4. **Validação registro a registro**: compare as colunas com uma query de reconciliação (`WHERE cnpj_novo IS DISTINCT FROM lpad(cnpj::text, 14, '0')` no PostgreSQL, por exemplo). O objetivo é zero divergências, não "quase zero".
+5. **Contract**: troque as leituras para a coluna nova, crie os índices definitivos, e só então remova a coluna antiga e renomeie.
+
+O rollback nesse desenho é trivial até o passo 5: a coluna antiga continua íntegra e sendo escrita. É exatamente por isso que o padrão vale o custo operacional extra. Defina antecipadamente o critério de abortar (divergências na reconciliação, degradação de latência durante o backfill) e o ponto de não retorno.
+
+### Particionamento, sharding e roteamento por faixa
+
+Qualquer lógica que use a natureza numérica do CNPJ como critério de distribuição quebra de forma sutil: particionamento por faixa (`PARTITION BY RANGE` sobre valor numérico), sharding por módulo do número, roteamento de tenant por prefixo numérico. `E08G` não cai em nenhuma faixa numérica. A correção estrutural é migrar para hash sobre a string canônica, que distribui uniformemente e não assume nada sobre o domínio. Se a lógica de faixa usa apenas a raiz (posições 1 a 8) e ela continuar numérica na sua base, você tem prazo, mas não garantia: a raiz também é alfanumérica na especificação.
+
+### Data warehouse, ETL e CDC: o ponto cego
+
+O dado não para no OLTP. Ferramentas de ingestão que inferem tipos automaticamente são o ponto cego clássico dessa migração:
+
+- Leitores de CSV e crawlers de data lake (pandas, Spark, Glue e afins) veem 14 dígitos e inferem inteiro: zeros à esquerda somem hoje, e o job passa a falhar (ou pior, a poluir a coluna com nulos) quando a primeira letra aparecer.
+- Pipelines de CDC replicam o tipo da origem. Se o destino foi criado como `BIGINT` a partir de um snapshot antigo, a replicação quebra no primeiro registro alfanumérico, e a fila de mudanças para.
+- Tabelas de staging, modelos de ferramentas de transformação e planilhas intermediárias costumam ter o tipo re-inferido em cada camada. A migração precisa varrer o lineage completo, não só a tabela de origem.
+
+Trave o schema explicitamente como string em cada salto do pipeline. Inferência de tipo e identificador fiscal não convivem.
+
+---
+
+## Prisma: os pontos de atenção específicos
+
+Se a sua base TypeScript usa Prisma, os problemas do capítulo anterior continuam existindo. O que muda é que a abstração do ORM decide alguns deles por você, nem sempre do jeito certo. As APIs do Prisma mudam entre versões; o código abaixo usa a sintaxe atual, mas confira a documentação da versão que você usa, em especial para Client Extensions e para o comportamento de `migrate diff` com objetos que não existem no schema.
+
+### O tipo da coluna e o default traiçoeiro
+
+Um campo `String` sem anotação nativa não vira `VARCHAR(14)`. O mapeamento padrão depende do provider: no PostgreSQL gera `text`, no MySQL um `varchar` largo, e no SQL Server em particular gera uma coluna larguíssima em `NVARCHAR`, com 2 bytes por caractere. Anote o tipo nativo explicitamente:
+
+```prisma
+model Empresa {
+  id   Int    @id @default(autoincrement())
+  // Sem @db.VarChar(14): text no PostgreSQL, varchar largo no MySQL,
+  // NVARCHAR largo (2 bytes por caractere) no SQL Server.
+  cnpj String @unique @db.VarChar(14)
+}
+```
+
+O que o Prisma não expressa no schema: charset e collation por coluna. Quem precisa de `ascii_bin` no MySQL ou de collation binária no SQL Server tem que aplicar isso via SQL dentro da migration, e garantir que uma futura geração automática não reverta a coluna para o default (revise o SQL gerado em todo `migrate dev` que tocar a tabela).
+
+### Migration de tipo numérico para texto é destrutiva por padrão
+
+Este é o ponto mais importante da seção. Trocar `BigInt` por `String` no schema faz o Prisma gerar um `ALTER` que, dependendo do provider, o motor recusa por não haver cast implícito. A saída natural do desenvolvedor apressado é aceitar a migration que dropa e recria a coluna, perdendo os dados. E mesmo quando o cast passa, os zeros à esquerda somem, porque o valor numérico nunca os teve.
+
+Nunca aceite essa migration como o Prisma a gera. Use `--create-only` e edite o SQL à mão:
+
+```bash
+pnpm prisma migrate dev --create-only --name cnpj_bigint_para_varchar
+```
+
+```sql
+-- PostgreSQL: conversão explícita com preservação dos zeros à esquerda.
+-- Substitui o DROP/ADD que o Prisma gera quando não há cast implícito.
+ALTER TABLE "Empresa"
+  ALTER COLUMN "cnpj" TYPE varchar(14)
+  USING lpad("cnpj"::text, 14, '0');
+```
+
+Para tabelas grandes, o `ALTER` direto tem os custos de lock e reescrita já discutidos. O padrão expand and contract descrito acima se aplica igual com Prisma: a coluna paralela entra no schema como campo novo, o backfill roda em SQL fora do ORM, e o rename final vira a última migration.
+
+### CHECK constraints não existem no schema do Prisma
+
+A constraint de formato precisa ser adicionada em migration customizada (o mesmo `--create-only`, acrescentando o `ADD CONSTRAINT` ao SQL). Dois cuidados: `prisma db push` e resets de ambiente de desenvolvimento podem descartar objetos que não estão versionados em migration, e `prisma migrate diff` tende a ignorá-los na comparação de drift, então a constraint some silenciosamente de ambientes recriados se viver fora do diretório de migrations.
+
+### Normalização e validação na camada de acesso
+
+Para que nenhum caminho da aplicação grave valor não canônico, intercepte as escritas com uma Client Extension de query:
+
+```typescript
+import { PrismaClient } from "@prisma/client";
+import { normalizarCnpj, validarCnpj } from "./cnpj";
+
+function exigirCnpjCanonico(valor: unknown): string {
+  const cnpj = normalizarCnpj(String(valor));
+  if (!validarCnpj(cnpj)) {
+    throw new Error("CNPJ inválido");
+  }
+  return cnpj;
+}
+
+export const prisma = new PrismaClient().$extends({
+  query: {
+    empresa: {
+      async create({ args, query }) {
+        args.data.cnpj = exigirCnpjCanonico(args.data.cnpj);
+        return query(args);
+      },
+      async update({ args, query }) {
+        // Cobre o caso de valor direto; se o código usa a forma
+        // { set: ... }, normalize também esse caminho.
+        if (typeof args.data.cnpj === "string") {
+          args.data.cnpj = exigirCnpjCanonico(args.data.cnpj);
+        }
+        return query(args);
+      },
+      async upsert({ args, query }) {
+        args.create.cnpj = exigirCnpjCanonico(args.create.cnpj);
+        if (typeof args.update.cnpj === "string") {
+          args.update.cnpj = exigirCnpjCanonico(args.update.cnpj);
+        }
+        return query(args);
+      },
+    },
+  },
+});
+```
+
+O middleware `$use` é a forma antiga desse intercepto e está sendo substituído pelas extensions. E note o limite da abordagem: a extensão não cobre `$queryRaw` nem `$executeRaw`. Todo SQL cru passa por fora dela, o que reforça a necessidade da constraint de formato no banco como última linha de defesa.
+
+### Case sensitivity e findUnique
+
+Um `findUnique` com CNPJ em minúsculas devolve resultado em SQL Server com collation case-insensitive e não devolve nada no PostgreSQL. O mesmo código passa no teste e falha em produção quando os ambientes usam providers diferentes (SQLite ou SQL Server no CI, PostgreSQL em produção, por exemplo). O filtro `mode: 'insensitive'` do Prisma não está disponível em todos os providers, e depender dele para CNPJ é tratar sintoma: a busca deve receber o valor já normalizado pela mesma função usada na escrita.
+
+### Seed e testes
+
+Fixtures e factories precisam gerar CNPJ alfanumérico válido. O gerador do seed deve usar o mesmo algoritmo da aplicação (gerar 12 caracteres em `[A-Z0-9]` e calcular os DVs com as funções de produção), não uma constante numérica hardcoded. Uma constante fixa significa que a suíte inteira roda sem nunca exercitar o caminho alfanumérico.
+
+O resumo da seção: o Prisma facilita muita coisa, mas neste caso específico a abstração esconde exatamente as decisões que precisam ser tomadas de forma explícita: tipo nativo, collation e constraint.
+
+---
+
+## Além do banco: o inventário completo
+
+Checklist para varrer o resto do sistema. Cada item é um lugar onde CNPJ pode estar tipado como número ou validado como `\d{14}`:
+
+- **DTOs e serializers**: campos `long`/`number` em contratos internos; serializações que aplicam `parseInt` ou equivalente.
+- **OpenAPI e JSON Schema**: `type: integer` vira `type: string` com `pattern: ^[A-Z0-9]{12}[0-9]{2}$`. Versione o contrato e comunique os consumidores.
+- **Filas e mensageria**: schemas Avro/Protobuf com campo numérico exigem evolução de schema, não só deploy.
+- **Webhooks**: payloads que você emite e que terceiros parseiam. O erro vai acontecer do lado deles; avise antes.
+- **Importadores e exportadores CSV**: além do tipo, atenção ao Excel, que converte a coluna para notação científica ao abrir o arquivo.
+- **Relatórios e BI**: formatações que assumem número, ordenações e agrupamentos.
+- **Frontend**: máscaras de input que só aceitam dígitos, `inputmode="numeric"`, `type="number"` e validadores client-side em campos de CNPJ. Troque para `type="text"` com `inputmode` padrão e máscara alfanumérica.
+- **Autocomplete e busca**: normalização de maiúsculas na indexação e na query.
+- **Código de barras**: o CODE-128C só codifica pares de dígitos. Documentos com CNPJ em barras precisam migrar para CODE-128A, que suporta letras maiúsculas. A Nota Técnica Conjunta ENCAT 2025.001 cobre os ajustes nos documentos fiscais eletrônicos (NF-e, NFC-e, CT-e, MDF-e e demais), com ambiente de homologação desde 06/04/2026 e produção desde 06/07/2026; os schemas XSD e as regras de validação dos ambientes autorizadores já foram atualizados.
+- **Legados sem manutenção ativa**: o sistema que ninguém quer tocar é exatamente o que vai rejeitar o cliente. Se não dá para corrigir, pelo menos identifique e monitore.
+
+---
+
+## Estratégia de testes
+
+Não use CNPJs reais de terceiros em massa de teste. A Receita Federal disponibiliza, junto à documentação técnica do cálculo do DV, um simulador para gerar CNPJs alfanuméricos fictícios com DV válido. Use-o para compor a suíte, e complemente com um gerador próprio baseado no algoritmo oficial (gere 12 caracteres em `[A-Z0-9]`, calcule os DVs).
+
+Casos de borda que precisam estar na suíte:
+
+- CNPJ totalmente numérico válido, incluindo pelo menos um com zeros à esquerda. Este é o teste mais importante da migração: o de **rejeição indevida**. A regressão mais provável não é aceitar lixo, é recusar cliente antigo e legítimo depois de mexer em validação, constraint e tipo.
+- O caso real: `00.000.000/E08G-12`, com e sem máscara.
+- Letra apenas na ordem do estabelecimento, letra na raiz, e combinação de ambas.
+- Entrada em minúsculas: deve ser normalizada e aceita na borda, e nunca persistida em minúsculas.
+- DV incorreto em CNPJ numérico e em alfanumérico.
+- Sequência repetida com DV que fecha (`00000000000000`): deve ser rejeitada pelo guard defensivo, se a sua validação o adotou.
+- Comprimento errado, caracteres fora de `[A-Z0-9]`, máscara malformada, string vazia e nulo.
+- Round-trip completo: entrada mascarada → normalização → persistência → leitura → formatação → comparação com a entrada original.
+
+Nos testes de integração, inclua o caminho do banco: um INSERT de CNPJ alfanumérico deve passar pela constraint nova, e um INSERT em minúsculas deve falhar. Se o seu ambiente de homologação conversa com os autorizadores de documentos fiscais, exercite o fluxo com CNPJ alfanumérico fictício no ambiente de homologação da SEFAZ, disponível desde abril de 2026.
+
+---
+
+## Fechamento
+
+O CNPJ alfanumérico não é um problema de algoritmo: a conversão ASCII menos 48 resolve o DV com retrocompatibilidade total, e a regex do formato cabe em uma linha. O trabalho real está no acervo de decisões antigas espalhadas pelo sistema: a coluna `BIGINT` de 2014, a constraint `\d{14}`, o índice único sob collation case-insensitive, o crawler que infere tipos. A emissão é gradual e começou por poucas empresas, o que significa que ainda há tempo de fazer essa varredura com calma. O pior plano é esperar o primeiro erro de conversão em produção para começar.
+
+---
+
+## Referências
+
+- [Receita Federal gera o primeiro CNPJ em formato alfanumérico (notícia oficial, julho de 2026)](https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/julho/receita-federal-gera-o-primeiro-cnpj-em-formato-alfanumerico)
+- [Documentos técnicos do CNPJ, incluindo o cálculo do dígito verificador (Receita Federal)](https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj)
+- Nota Técnica COCAD/SUARA/RFB nº 49/2024: define o formato alfanumérico e o cálculo do dígito verificador.
+- Instrução Normativa RFB nº 2.229/2024: regulamenta a adoção do CNPJ alfanumérico.
+- Nota Técnica Conjunta ENCAT 2025.001: ajustes nos documentos fiscais eletrônicos (NF-e, NFC-e, CT-e, CT-e OS, GTV-e, MDF-e, BP-e, BP-e TM, NF3e e NFCom), disponível no [Portal da NF-e](https://www.nfe.fazenda.gov.br/).

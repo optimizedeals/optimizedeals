@@ -17,7 +17,7 @@ tags:
   - "ferramentas-de-desenvolvimento"
   - "inteligencia-de-repositorio"
   - "typescript"
-featured: true
+featured: false
 ---
 
 ## Prólogo
@@ -33,7 +33,10 @@ O Next.js 16 é o exemplo mais claro que vi até agora. Depois de passar uma noi
 Este artigo é um teardown do que eles realmente entregaram, o que isso implica para o design de frameworks, e por que acho que `node_modules/` está prestes a virar uma camada de inteligência por si só.
 
 <Callout type="tip" title="Tese central">
-  O desenvolvimento assistido por IA moderno está migrando do conhecimento estático de framework pré-treinado para **inteligência de repositório em runtime**. O framework que você tem instalado localmente está se tornando mais autoritativo do que qualquer coisa cozida no modelo.
+  O desenvolvimento assistido por IA moderno está migrando do conhecimento
+  estático de framework pré-treinado para **inteligência de repositório em
+  runtime**. O framework que você tem instalado localmente está se tornando mais
+  autoritativo do que qualquer coisa cozida no modelo.
 </Callout>
 
 ## O problema do conhecimento pré-treinado de framework
@@ -58,8 +61,8 @@ A resposta da Vercel no Next.js 16 é mais agressiva. Eles moveram a fonte de ve
 >
   O Next.js entrega documentação atrelada à versão dentro do pacote `next`,
   permitindo que agentes de código de IA referenciem APIs e padrões precisos e
-  atualizados. Um arquivo `AGENTS.md` na raiz do seu projeto direciona os agentes
-  para essas docs empacotadas em vez de seus dados de treino.
+  atualizados. Um arquivo `AGENTS.md` na raiz do seu projeto direciona os
+  agentes para essas docs empacotadas em vez de seus dados de treino.
 </QuoteBlock>
 
 ## O que o Next.js 16 realmente entrega
@@ -143,7 +146,11 @@ Três detalhes pequenos merecem atenção porque revelam mais do que o snippet s
 Para projetos que antecedem o Next.js 16.2, existe um codemod (`npx @next/codemod@latest agents-md`) que materializa as docs em `.next-docs/` em vez de `node_modules/`, e aponta o `AGENTS.md` gerado para essa localização. O caminho exato é negociável. O princípio de que as docs vão junto com o código não é.
 
 <Callout type="info" title="O que isto é, estruturalmente">
-  `AGENTS.md` é um arquivo de manifesto para um consumidor separado do seu repositório. Está para agentes de IA como `package.json` está para gerenciadores de pacote, ou como `robots.txt` está para crawlers. O framework reconhece que agora existem múltiplas populações de leitores, e entrega configuração apontada para uma não humana.
+  `AGENTS.md` é um arquivo de manifesto para um consumidor separado do seu
+  repositório. Está para agentes de IA como `package.json` está para
+  gerenciadores de pacote, ou como `robots.txt` está para crawlers. O framework
+  reconhece que agora existem múltiplas populações de leitores, e entrega
+  configuração apontada para uma não humana.
 </Callout>
 
 ### O endpoint MCP: estado vivo, não só docs estáticas
@@ -166,21 +173,25 @@ O Next.js 16 expõe um endpoint MCP embutido em `/_next/mcp`. Combine com o paco
 
 As tools que o agente recebe não são acesso shell genérico; são introspecção específica de domínio do runtime do Next.js:
 
-| Tool                      | O que o agente pode perguntar                                                                              |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `get_errors`              | Erros de build ao vivo, erros em runtime e erros de tipo vindos do dev server.                             |
-| `get_logs`                | Caminho do arquivo de log do dev, incluindo saída do console do navegador e logs de servidor.              |
+| Tool                      | O que o agente pode perguntar                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `get_errors`              | Erros de build ao vivo, erros em runtime e erros de tipo vindos do dev server.                                     |
+| `get_logs`                | Caminho do arquivo de log do dev, incluindo saída do console do navegador e logs de servidor.                      |
 | `get_routes`              | Lista de rotas derivada do filesystem, agrupada por `appRouter` / `pagesRouter`, com padrões de segmento dinâmico. |
-| `get_page_metadata`       | Metadados por rota: quais componentes renderizam, quais configs de segmento se aplicam.                    |
-| `get_project_metadata`    | Estrutura do projeto, configuração e URL do dev server.                                                    |
-| `get_server_action_by_id` | Lookup reverso: converte um ID de Server Action de volta para arquivo fonte e função.                       |
+| `get_page_metadata`       | Metadados por rota: quais componentes renderizam, quais configs de segmento se aplicam.                            |
+| `get_project_metadata`    | Estrutura do projeto, configuração e URL do dev server.                                                            |
+| `get_server_action_by_id` | Lookup reverso: converte um ID de Server Action de volta para arquivo fonte e função.                              |
 
 Essa é a segunda metade da virada. Docs estáticas respondem "qual é a API atual?". O endpoint MCP responde "como a aplicação rodando parece neste momento?".
 
 Juntos substituem os dois modos de falha que descrevi antes: priors desatualizados são substituídos por docs com versão presa, e estrutura inferida da aplicação é substituída por introspecção. Rotas alucinadas se tornam impossíveis, porque o agente consegue listar as reais.
 
 <Callout type="performance" title="Por que isso importa para o custo de tokens">
-  Sem um endpoint MCP de introspecção, o agente precisa caminhar seu filesystem, parsear sua árvore de rotas e re-derivar metadados a cada sessão, pagando isso em tokens de entrada. Com `get_routes` e companhia, a mesma informação chega como resposta estruturada, geralmente algumas centenas de tokens no máximo. Eficiência de tokens está começando a ser uma preocupação de framework.
+  Sem um endpoint MCP de introspecção, o agente precisa caminhar seu filesystem,
+  parsear sua árvore de rotas e re-derivar metadados a cada sessão, pagando isso
+  em tokens de entrada. Com `get_routes` e companhia, a mesma informação chega
+  como resposta estruturada, geralmente algumas centenas de tokens no máximo.
+  Eficiência de tokens está começando a ser uma preocupação de framework.
 </Callout>
 
 ## node_modules como camada de inteligência
@@ -198,7 +209,10 @@ Olhe o que agora está embutido dentro de um único pacote instalado:
     { label: "Arquivos .d.ts para esses entrypoints", value: "1:1" },
     { label: "Endpoint MCP embutido em dev", value: "/_next/mcp" },
     { label: "Dicas inline para agentes nas docs", value: "sim" },
-    { label: "Manifesto default de agente em novos projetos", value: "AGENTS.md" },
+    {
+      label: "Manifesto default de agente em novos projetos",
+      value: "AGENTS.md",
+    },
   ]}
 />
 
@@ -264,7 +278,10 @@ O velho contrato entre LLMs e frameworks parecia mais ou menos assim:
     },
     {
       feature: "Modo de falha primário",
-      values: ["Alucinações confiantes", "Contexto local desatualizado ou ausente"],
+      values: [
+        "Alucinações confiantes",
+        "Contexto local desatualizado ou ausente",
+      ],
     },
   ]}
 />
@@ -345,7 +362,10 @@ Algumas coisas seguem de onde estamos agora.
 **Benchmarks migram de código genérico para tarefas de framework.** A Vercel publica `nextjs.org/evals` especificamente para medir o quão bem agentes lidam com trabalho real de Next.js. Conforme mais frameworks investirem em superfícies legíveis para agente, espere benchmarks específicos de framework se multiplicarem, e espere que adoção de framework seja em parte impulsionada por eles.
 
 <Callout type="warning" title="A armadilha a evitar">
-  Nada disso significa despejar tudo em `AGENTS.md`. Manifestos de agente longos e prescritivos são ruído; são cacheados, relidos, retokenizados a cada turno. O default do Next.js é uma única instrução precisamente porque tem que ser: redirecione o agente para uma fonte mais rica, não tente ser a fonte.
+  Nada disso significa despejar tudo em `AGENTS.md`. Manifestos de agente longos
+  e prescritivos são ruído; são cacheados, relidos, retokenizados a cada turno.
+  O default do Next.js é uma única instrução precisamente porque tem que ser:
+  redirecione o agente para uma fonte mais rica, não tente ser a fonte.
 </Callout>
 
 ## Pensamento final
